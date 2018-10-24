@@ -847,7 +847,7 @@ ttest1
 .small[.comment[Regardez les moyennes des 2 groupes]]
 
 ---
-## Violation of Assumptions
+## Non respect des suppositions
 
 - **Correction de Welch** : lorsque les écarts entre les groupes ne sont pas égaux (par défaut dans R !)
 - **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les suppositions ne sont pas respectées
@@ -936,7 +936,7 @@ Nous pouvons changer l'ordre des niveaux afin qu'il suivent l'ordre croissant de
 
 ```{r, fig.height=3.5, fig.width=7, echo=-1}
 par(mar=c(4,4,.1,1))
-med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+med <- sort(tapply(bird$logMaxAbund, median))
 boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
         ylab = expression("log"[10]*"(Abondance maximale)"), xlab = 'Régime alimentaire')
 ```
@@ -1082,8 +1082,8 @@ Représentation graphique de l'ANOVA à l'aide de la fonction `barplot()`
 .small[
 ```{r, fig.height=3, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
-sd <- tapply(bird$logMaxAbund, list(bird$Diet), sd)
-means <- tapply(bird$logMaxAbund, list(bird$Diet), mean)
+sd <- tapply(bird$logMaxAbund, sd)
+means <- tapply(bird$logMaxAbund, mean)
 n <- length(bird$logMaxAbund)
 se <- 1.96*sd/sqrt(n)
 bp <- barplot(means, ylim = c(0, max(bird$logMaxAbund) - 0.5))
@@ -1606,7 +1606,7 @@ L'estimation de l'ordonnée à l'origine est le niveau de référence et corresp
 Calculez l'ordonnée à l'origine de référence + l'ordonnée à l'origine de chaque niveau de Diet .comment[*Que remarquez-vous ?*]
 
 ```{r}
-tapply(bird$logMaxAbund, bird$Diet, mean)
+tapply(bird$logMaxAbund, mean)
 coef(anov1)
 coef(anov1)[1] + coef(anov1)[2] # InsectVert
 coef(anov1)[1] + coef(anov1)[3] # Plant
