@@ -3,7 +3,7 @@
 #***************************************************************************************#
 
 #### Loading and transform the data ####
-setwd("~/Dropbox/CSBQ:QCBS R Ateliers:Workshops (1)/Workshop 4-lm/English Final")
+
 bird<-read.csv("birdsdiet.csv")
 bird$logMaxAbund <- log10(bird$MaxAbund)
 bird$logMass <- log10(bird$Mass)
@@ -30,14 +30,14 @@ points(bird$logMass[I],bird$logMaxAbund[I], pch=19, col=rgb(124,255,0,200,maxCol
 par(mfrow=c(1,2))
 
 # Model lm2 plot
-plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"), 
+plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"),
      xlab = expression("log"[10]*"(Mass)"), pch=19, col=rgb(124,255,0,200,maxColorValue=255))
 polygon(xx,yy,col=rgb(0,30,70,20,maxColorValue=225),border=rgb(0,30,70,20,maxColorValue=225))
 abline(lm2,lwd=2)
 
 # Model lm3 plot
 lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Aquatic == 0)
-plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",ylab = expression("log"[10]*"(Maximum Abundance)"), 
+plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",ylab = expression("log"[10]*"(Maximum Abundance)"),
      xlab = expression("log"[10]*"(Mass)"), pch=19, col=rgb(176,196,222,200,maxColorValue=225))
 abline(lm3,lwd=2)
 bird_t <- subset(bird,bird$Aquatic == 0)  # yet another way of subsetting
@@ -58,12 +58,12 @@ polygon(xx_lm3,yy_lm3,col=rgb(0,30,70,20,maxColorValue=225),border=rgb(0,30,70,2
 lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
 
 par(mfrow=c(1,2))
-plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"), 
+plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"),
      xlab = expression("log"[10]*"(Mass)"), pch=19, col=rgb(124,255,0,150,maxColorValue=255))
 polygon(xx,yy,col=rgb(0,30,70,20,maxColorValue=225),border=rgb(0,30,70,20,maxColorValue=225))
 abline(lm2,lwd=2)
 
-plot(logMaxAbund ~ logMass, subset=Passerine == 1, data=bird, main="Passerine birds",ylab = expression("log"[10]*"(Maximum Abundance)"), 
+plot(logMaxAbund ~ logMass, subset=Passerine == 1, data=bird, main="Passerine birds",ylab = expression("log"[10]*"(Maximum Abundance)"),
      xlab = expression("log"[10]*"(Mass)"), pch=19, col=rgb(30,144,255,100,maxColorValue=255))
 bird_p <- subset(bird,Passerine == 1)  # yet another way of subsetting
 confit_lm4<-predict(lm4,interval="confidence")
@@ -90,7 +90,7 @@ par(mfrow=c(1,1)); boxplot(MaxAbund ~ Diet, data=bird, col=rgb(30,144,255,100,ma
 
 kruskal.test(MaxAbund ~ Diet, data=bird)
 # This converts the response values to ranks, and tests whether the ranks are distributed equally
-# across Diets, as expected under the null hypothesis. 
+# across Diets, as expected under the null hypothesis.
 
 #***************************************************************************************#
 
@@ -99,10 +99,10 @@ kruskal.test(MaxAbund ~ Diet, data=bird)
 # The default contrast in R is called the "contr.treatment" (each level is compared to the
 # baseline level)
 
-# The Intercept Estimate (here = 1.1539) is the baseline or control group and corresponds 
-# to the mean of the first (alphabetically) diet group (i.e. DietInsect) 
+# The Intercept Estimate (here = 1.1539) is the baseline or control group and corresponds
+# to the mean of the first (alphabetically) diet group (i.e. DietInsect)
 
-# Notice that the Intercept Estimate + Estimates of each Diet return the mean for each Diet 
+# Notice that the Intercept Estimate + Estimates of each Diet return the mean for each Diet
 tapply(bird$logMaxAbund, bird$Diet, mean)
 anov1 <- lm(logMaxAbund ~ Diet, data=bird)
 coef(anov1)
@@ -115,14 +115,14 @@ med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 med
 bird$Diet2 <- factor(bird$Diet, levels=names(med)) # reorder levels according to median
 anov_rl <- lm(logMaxAbund ~ Diet2, data=bird)
-summary(anov_rl) # note  the significance of each levels 
-anova(anov_rl) 
+summary(anov_rl) # note  the significance of each levels
+anova(anov_rl)
 
 # Or, we may want to relevel the baseline
 bird$Diet2 <- relevel(bird$Diet, ref="Plant")
 anov_rl <- lm(logMaxAbund ~ Diet2, data=bird)
-summary(anov_rl) # note  the significance of each levels 
-anova(anov_rl) 
+summary(anov_rl) # note  the significance of each levels
+anova(anov_rl)
 # note that we are now comparing the "Plant" diet to all other diet levels
 
 # To view how the levels differ
@@ -131,25 +131,25 @@ levels(bird$Diet2)
 
 # The default treatment contrast (comparison to one baseline) corresponds to a contrast of (4,-1,-1,-1,-1)
 
-# Alternatively, we can compare different subsets of diets such as "Insect" and "InsectVert" to 
+# Alternatively, we can compare different subsets of diets such as "Insect" and "InsectVert" to
 # "PlantInsect" and "Vertebrate" (i.e. 0,1,1,-1,-1)
 
-# Or just two diets such as "PlantInsect" with "Vertebrate" (i.e. 0,0,0,1,-1), 
+# Or just two diets such as "PlantInsect" with "Vertebrate" (i.e. 0,0,0,1,-1),
 # Or "Insect" with "InsectVert" (i.e. 0,1,-1,0,0).
 
 # To run the above comparison, we would manually change the contrast matrix as follows
 contrasts(bird$Diet2) <- cbind(c(4,-1,-1,-1,-1), c(0,1,1,-1,-1), c(0,0,0,1,-1), c(0,1,-1,0,0))
 contrasts(bird$Diet2)
 anov_rl <- lm(logMaxAbund ~ Diet2, data=bird)
-summary(anov_rl) 
+summary(anov_rl)
 # This will produce your matrix of contrast coefficients
-# The important restriction is that all columns must sum to zero, and that the product of 
+# The important restriction is that all columns must sum to zero, and that the product of
 # any two columns must sum to zero (that all contrasts are orthogonal)
 
 # Compare this to the default treatment contrast:
 contr.treatment(5) # 5 because there are 5 diet levels
 
-# An important thing to note at this point about the default contrast in R ("contr.treatment") is 
+# An important thing to note at this point about the default contrast in R ("contr.treatment") is
 # that it is NOT orthogonal
 
 # Recall: To be orthogonal the following properties must be met
@@ -159,7 +159,7 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 # Property 1 is not met with the Treatment contrast, therefore matrix is not orthogonal
 
-# We may change the contrast altogether so that no longer comparing all levels to a given 
+# We may change the contrast altogether so that no longer comparing all levels to a given
 # baseline (i.e. choose to change our contrast a priori)
 options(contrasts=c("contr.helmert", "contr.poly"))
 contrasts(bird$Diet)
@@ -179,11 +179,11 @@ summary(anov_ct)
 tapply(bird$logMaxAbund, bird$Diet, mean)
 coef(anov_ct)[1] + coef(anov_ct)[2] # no longer equal to mean of InsectVert
 # The Helmert contrasts will contrast the second level with the first, the third with the
-# average of the first two, and so on. 
+# average of the first two, and so on.
 
 # Disadvantages: Parameter estimates and their standard errors are much more difficult to
 # understand in Helmert than in Treatment contrasts
-# Advantages: Gives you proper orthogonal contrasts, and thus a clearer picture of which factor 
+# Advantages: Gives you proper orthogonal contrasts, and thus a clearer picture of which factor
 # levels need to be retained
 
 # Reset the contrast to Treatment if you are navigating between Workshop 4 and this Advanced Workshop 4
@@ -196,8 +196,8 @@ options(contrasts=c("contr.treatment", "contr.poly"))
 
 # We will now examine the Sums of Squares (SSE) and the effect of variable order in unbalanced designs
 # To do, we will need the "Anova" command (upper case A), which is part of the "car" package
-# This Anova() will do Type II and III SSE 
-install.packages("car") 
+# This Anova() will do Type II and III SSE
+install.packages("car")
 library(car)
 
 # Birdsdiet data is actually unbalanced: Number of Aquatic and non-Aquatic is not equal
@@ -211,11 +211,11 @@ anova(unb.anov2)
 
 # Now try type III Anova()
 Anova(unb.anov1,type="III")
-Anova(unb.anov2,type="III")  
+Anova(unb.anov2,type="III")
 # What have you noticed?
 
 # Alternatively, we could  have reset the contrasts to "contr.sum":
-# options(contrasts=c("contr.sum", "contr.poly")) 
+# options(contrasts=c("contr.sum", "contr.poly"))
 # contrasts(bird$Diet)
 # and anova(unb.anov1) would have given us the same results as Anova(unb.anov1, type="III")
 
@@ -260,7 +260,7 @@ summary(lm.quad)$adj.r.squared
 #### Stepwise regression ####
 
 # Run a model with everything except the Present variable
-lm.full <- lm(abund ~ . - Present, data=Dickcissel) 
+lm.full <- lm(abund ~ . - Present, data=Dickcissel)
 # note the period
 summary(lm.full)
 
@@ -279,15 +279,15 @@ library(HH)
 ?vif # a diagnostic of collinearity among explanatory variables
 vif(clDD ~ clFD + clTmi + clTma + clP + grass, data=Dickcissel) # values exceeding 5 are considered evidence of collinearity
 
-# Can use the function varpart() to partition the variance in abund with all land cover 
+# Can use the function varpart() to partition the variance in abund with all land cover
 # variables in one set and all climate variables in the other set (leaving out NDVI).
 # Note: Collinear variables do not have to be removed prior to partitioning
 install.packages("vegan")
 library(vegan)
 ?varpar
 
-part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")], 
-                  Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")]) 
+part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")],
+                  Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
 part.lm
 
 par(mfrow=c(1,1))
@@ -301,7 +301,7 @@ plot(part.lm,digits=2, bg=rgb(30,144,255,100,maxColorValue=255), col=rgb(30,144,
 # Test significance of each fraction
 
 # Climate set
-out.1 = rda(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")], 
+out.1 = rda(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")],
             Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
 anova(out.1, step=1000, perm.max=1000)
 
