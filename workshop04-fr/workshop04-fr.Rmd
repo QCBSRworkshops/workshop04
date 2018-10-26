@@ -323,7 +323,7 @@ Exemple d'indépendance .comment[(ce que nous recherchons !)]
 
 ```{r, echo = FALSE, fig.height=4.2, fig.width=5.5}
   set.seed(1234564)
-  x <- rnorm(100,10,10)
+  x <- abs(rnorm(100,10,10))
   y <- 2*x+0 + rnorm(100)
   lm <- lm(y~x)
   plot(lm, which = 1)
@@ -336,13 +336,13 @@ Example de non-indépendance .comment[(ce que nous ne voulons pas !)]
 ```{r, echo=FALSE, fig.height=4, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
 set.seed(1234564)
-x = rnorm(100,10,10)
+x = abs(rnorm(100,10,10))
 y = (x)^2 + rnorm(length(x),0,30)
 lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Non-linéaire", col.main="red")
 
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
 ```
@@ -364,8 +364,8 @@ lm=lm(y~x)
 plot(lm,which = 3)
 
 set.seed(2)
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm,which = 3)
 ```
@@ -388,7 +388,7 @@ lm=lm(y~x)
 plot(lm, which = 2)
 
 set.seed(2)
-x = rnorm(100,10,10)
+x = abs(rnorm(100,10,10))
 y = (x) + 0 + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm, which = 2)
@@ -448,7 +448,7 @@ lm=lm(y~x)
 plot(lm, which = 5)
 
 set.seed(1234564)
-x = rnorm(100,10,10)
+x = abs(rnorm(100,10,10))
 y = (x) + 0 + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm, which = 5)
@@ -476,7 +476,7 @@ Effet de levier et influence élevée
 ```{r, echo=FALSE, fig.height=3.5, fig.width=4, warning=FALSE}
 par(mar = c(4, 4, 1, 0))
 set.seed(1234564)
-x = rnorm(100,10,10)
+x = abs(rnorm(100,10,10))
 y = (x) + 0 + rnorm(length(x), 0, x)
 y[29] <- 100
 lm=lm(y~scale(x))
@@ -936,7 +936,7 @@ Nous pouvons changer l'ordre des niveaux afin qu'il suivent l'ordre croissant de
 
 ```{r, fig.height=3.5, fig.width=7, echo=-1}
 par(mar=c(4,4,.1,1))
-med <- sort(tapply(bird$logMaxAbund, median))
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
         ylab = expression("log"[10]*"(Abondance maximale)"), xlab = 'Régime alimentaire')
 ```
@@ -1082,8 +1082,8 @@ Représentation graphique de l'ANOVA à l'aide de la fonction `barplot()`
 .small[
 ```{r, fig.height=3, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
-sd <- tapply(bird$logMaxAbund, sd)
-means <- tapply(bird$logMaxAbund, mean)
+sd <- tapply(bird$logMaxAbund, bird$Diet, sd)
+means <- tapply(bird$logMaxAbund, bird$Diet, mean)
 n <- length(bird$logMaxAbund)
 se <- 1.96*sd/sqrt(n)
 bp <- barplot(means, ylim = c(0, max(bird$logMaxAbund) - 0.5))
@@ -1606,7 +1606,7 @@ L'estimation de l'ordonnée à l'origine est le niveau de référence et corresp
 Calculez l'ordonnée à l'origine de référence + l'ordonnée à l'origine de chaque niveau de Diet .comment[*Que remarquez-vous ?*]
 
 ```{r}
-tapply(bird$logMaxAbund, mean)
+tapply(bird$logMaxAbund, bird$Diet, mean)
 coef(anov1)
 coef(anov1)[1] + coef(anov1)[2] # InsectVert
 coef(anov1)[1] + coef(anov1)[3] # Plant

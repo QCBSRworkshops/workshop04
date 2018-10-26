@@ -339,8 +339,8 @@ y = (x)^2 + rnorm(length(x),0,30)
 lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Nonlinear", col.main="red")
 
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 ```
@@ -361,8 +361,8 @@ lm=lm(y~x)
 plot(lm,which = 3)
 
 set.seed(2)
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm,which = 3)
 ```
@@ -385,8 +385,8 @@ lm=lm(y~x)
 plot(lm, which = 2)
 
 set.seed(2)
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm, which = 2)
 ```
@@ -444,8 +444,8 @@ lm=lm(y~x)
 plot(lm, which = 5)
 
 set.seed(1234564)
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm, which = 5)
 ```
@@ -472,8 +472,8 @@ High leverage point and high influence
 ```{r, echo=FALSE, fig.height=3.5, fig.width=4, warning=FALSE}
 par(mar = c(4, 4, 1, 0))
 set.seed(1234564)
-x = rnorm(100,10,10)
-y = (x) + 0 + rnorm(length(x), 0, x)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
 y[29] <- 100
 lm=lm(y~scale(x))
 plot(lm, which = 5)
