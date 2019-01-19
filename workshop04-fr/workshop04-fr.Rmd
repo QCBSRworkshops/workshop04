@@ -1762,7 +1762,7 @@ Lorsque vous connaissez le degré, vous pouvez lui donner un nom :
 
 ```{r echo=FALSE, warning=FALSE}
 
-poly.reg=data.frame(degré = 0:5,
+poly.reg=data.frame(degre = 0:5,
                     Nom = c("Constante","Linéaire","Quadratique",
                              "Cubique","Quartique","Quintique"),
                     Example = c("\\(3\\)",
