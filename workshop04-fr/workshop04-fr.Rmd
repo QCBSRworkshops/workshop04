@@ -269,7 +269,7 @@ lm1 <- lm(Y~X)
 Télécharger les donées <span style="color:blue"> *birdsdiet* </span>:
 
 ```{r, eval=TRUE, echo=FALSE}
-bird <- read.csv("Scripts_and_data/birdsdiet.csv")
+bird <- read.csv("data/birdsdiet.csv")
 ```
 
 ```{r, eval = FALSE}
@@ -1424,7 +1424,7 @@ En utilisant le jeu de données `Dickcissel` comparez l'importance relative du c
 
 .small[
 ```{r, eval=TRUE}
-Dickcissel = read.csv("Scripts_and_data/dickcissel.csv")
+Dickcissel = read.csv("data/dickcissel.csv")
 str(Dickcissel)
 ```
 ]

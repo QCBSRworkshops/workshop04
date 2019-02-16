@@ -268,7 +268,7 @@ lm1 <- lm(Y~X)
 Download the <span style="color:blue"> *birdsdiet* </span> dataset:
 
 ```{r, eval=TRUE, echo=FALSE}
-bird <- read.csv("Scripts_and_data/birdsdiet.csv")
+bird <- read.csv("data/birdsdiet.csv")
 ```
 
 ```{r, eval = FALSE}
@@ -1399,7 +1399,7 @@ Using the `Dickcissel` datast to test effect of climate (`clTma`), productivity 
 
 .small[
 ```{r, eval=TRUE}
-Dickcissel = read.csv("Scripts_and_data/dickcissel.csv")
+Dickcissel = read.csv("data/dickcissel.csv")
 str(Dickcissel)
 ```
 ]
