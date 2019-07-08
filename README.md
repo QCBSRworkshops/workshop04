@@ -12,8 +12,32 @@ Le contenu de cet atelier a été révisé par plusieurs membres du CSBQ. Si vou
 
 # Workshop 4: Linear models
 
-In this workshop, you will learn how to implement in R basic linear models commonly used in ecology such as simple regression, analysis of variance (ANOVA), analysis of covariance (ANCOVA), and multiple regression. After verifying visually and statistically the assumptions of these models and transforming your data when necessary, the interpretation of model outputs and the plotting of your final model will no longer keep secrets from you! 
+[![Build Status](https://travis-ci.org/QCBSRworkshops/workshop04.svg?branch=dev)](https://travis-ci.org/QCBSRworkshops/workshop04)
+
+In this workshop, you will learn how to implement in R basic linear models commonly used in ecology such as simple regression, analysis of variance (ANOVA), analysis of covariance (ANCOVA), and multiple regression. After verifying visually and statistically the assumptions of these models and transforming your data when necessary, the interpretation of model outputs and the plotting of your final model will no longer keep secrets from you!
 
 # Atelier 4: Modéles linéaires
 
+[![Build Status](https://travis-ci.org/QCBSRworkshops/workshop04.svg?branch=dev)](https://travis-ci.org/QCBSRworkshops/workshop04)
+
 Dans cet atelier, vous apprendrez comment effectuer en R les modèles linéaires fréquemment utilisés en écologie tels que la régression simple, l’analyse de variance (ANOVA), l’analyse de covariance (ANCOVA) et la régression multiple. Après avoir vérifié les postulats de ces modèles (visuellement et statistiquement) et transformé vos données si nécessaire, l’interprétation des résultats et leur représentation graphique n’auront plus de secrets pour vous!
+
+
+
+# Links
+
+#### [English](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.html)
+
+#### [Français](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.html)
+
+# Developers
+
+1. Set the working directory set to this folder.
+2. then use:
+
+``` r
+install.packages("remotes")
+remotes::install_github("QCBSRworkshops/qcbsRworkshops")
+library("qcbsRworkshops")
+build_workshops()
+```
