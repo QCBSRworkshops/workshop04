@@ -18,7 +18,7 @@ output:
 knitr::opts_chunk$set(
   comment = "#",
   collapse = TRUE,
-  cache = TRUE,
+  #cache = TRUE,
   warning = FALSE,
   message = FALSE,
   fig.width=6, fig.height=6,
@@ -51,7 +51,6 @@ if (!require(car)) install.packages("car")
 library(car)
 ```
 
----
 class: inverse, center, middle
 
 # Concepts importants
@@ -88,12 +87,12 @@ $$D_{i} = |x_{i} - \bar{x}|$$
 --
 **L'écart moyen**:
 
-$$D = \frac{1}{N} \sum_{i=1}^{n} |x_{i} - \bar{x}|$$
+$$D = \frac{1}{n} \sum_{i=1}^{n} |x_{i} - \bar{x}|$$
 --
 
 Au lieu de valeurs absolues, nous pouvons également mettre la valeur au carré, donnant la **variance**:
 
-$$V = \frac{1}{N} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
+$$V = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
 
 ---
 ## Variation
@@ -136,8 +135,8 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - $β_0$ est l'ordonnée à l'origine de la droite de régression
 - $β_1$est le coefficient de variation de la $1^{ère}$ variable explicative
 - $β_p$ est le coefficient de variation de la $p^{ème}$ variable explicative
-- $x_{i1}$ est la variable explicative quantitative pour la $1^{ère}$ observation
-- $x_ip$ est la variable explicative quantitative pour la $p^{ème}$ observation
+- $x_{i1}$ est la variable explicative pour la $1^{ère}$ observation
+- $x_{ip}$ est la variable explicative pour la $p^{ème}$ observation
 - $ε_i$ sont les résidus du modèle (i.e. la variance inexpliquée)
 
 ---
@@ -145,7 +144,7 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 
 - Le but d'un modèle linéaire est de trouver la meilleure estimation des paramètres (les variables $\beta$), puis d'évaluer la qualité de l'ajustement du modèle
 
-- Plusieurs méthodes ont été développées pour calculer l'intercept et les coefficient de modèles linéaires
+- Plusieurs méthodes ont été développées pour calculer l'intercept et les coefficients de modèles linéaires
   -  Le choix approprié dépend du type de variables explicatives considérées et de leur nombre
 
 .center[.large[Le concept général de ces méthodes consiste à minimiser les résidus]]
@@ -167,7 +166,7 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 
 .alert[Ces 4 conditions concernent les résidus, et non les variables réponses ou explicatives]
 
-.small[.comment[Dans les sections suivantes, nous ne répétons pas les conditions ci-dessus pour chaque modèle parce que ces conditions de base s'appliquent à tous les modèles linéaires]]
+.comment[Dans les sections suivantes, nous ne répétons pas les conditions ci-dessus pour chaque modèle parce que ces conditions de base s'appliquent à tous les modèles linéaires]
 
 ---
 ## Flux de travail
@@ -194,7 +193,7 @@ class: inverse, center, middle
 
 $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 
-- Estimation de l'**ordonnée à l'origine** ( $\beta_0$ ) et un **coefficient de corrélation** ( $\beta_1$ )
+- Estimation de l'**ordonnée à l'origine** ( $\beta_0$ ) et d'un **coefficient de corrélation** ( $\beta_1$ )
 
 - Méthode des moindres carrés
   - méthode la plus couramment utilisée (défaut sur R)
@@ -209,11 +208,11 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 .pull-right[
 **Suppositions**
 
-- $Y_i$ : valeur observé (mesurée) pour $X_i$
+- $Y_i$ : valeur observée (mesurée) pour $X_i$
 - $\widehat{Y}_i$ : valeur prédite pour $X_i$
 - $\bar{Y}$ : moyenne de tout les $Y_i$
 - $V_E$ : résidus (erreur)
-- $V_R$ : variance expliqué par la régression
+- $V_R$ : variance expliquée par la régression
 - $V_T$ : variance totale
 - $R^2 = \frac{V_R}{V_T}$
 ]
@@ -226,6 +225,8 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 
 **Étape 2**. Vérifier les suppositions
 ]
+
+<br>
 
 .pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
 
@@ -322,7 +323,7 @@ Exemple d'indépendance .comment[(ce que nous recherchons !)]
 
 - Devrait montrer une dispersion de points sans patron
 
-```{r, echo = FALSE, fig.height=4.2, fig.width=5.5}
+```{r, echo = FALSE, fig.height=5.5, fig.width=6.5}
   set.seed(1234564)
   x <- abs(rnorm(100,10,10))
   y <- 2*x+0 + rnorm(100)
@@ -334,7 +335,7 @@ Exemple d'indépendance .comment[(ce que nous recherchons !)]
 ## Graph. #1 - Résidus vs valeurs prédites
 
 Example de non-indépendance .comment[(ce que nous ne voulons pas !)]
-```{r, echo=FALSE, fig.height=4, fig.width=8.5, warning=FALSE}
+```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
 set.seed(1234564)
 x = abs(rnorm(100,10,10))
@@ -356,7 +357,7 @@ plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
 
 Devrait montrer une dispersion de points sans patron
 
-```{r, echo=FALSE, fig.height=3.8, fig.width=8, warning=FALSE}
+```{r, echo=FALSE, fig.height=4.5, fig.width=9, warning=FALSE}
 par(mfrow=c(1,2))
 set.seed(1234564)
 x <- 1:100
@@ -380,7 +381,7 @@ plot(lm,which = 3)
 - Compare la distribution (quantiles) des résidus aux quantiles d'une distribution normale
 - Si les points se situent de façon linéaire sur la ligne 1: 1, les résidus suivent une distribution normale
 
-```{r, echo=FALSE, fig.height=3, fig.width=8, warning=FALSE}
+```{r, echo=FALSE, fig.height=4, fig.width=9, warning=FALSE}
 par(mfrow=c(1,2), mar = c(4, 4, 1.5, 3))
 set.seed(1234564)
 x <- 1:100
@@ -409,28 +410,28 @@ plot(lm, which = 2)
 ---
 ## Effet levier vs influence
 
-```{r, echo=FALSE, fig.height=6, fig.width=5, warning=FALSE}
-par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 0.75)
+```{r, echo=FALSE, fig.height=8, fig.width=7.7, warning=FALSE}
+par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
 set.seed(1234564)
 x <- 1:20
 y <- rnorm(x, x, 2)
 lm0 <- lm(y ~ x)
 # plot 1
-plot(x, y, ylim = c(-4, 22)); abline(lm0, col = 2); points(11, -3, pch = 15)
+plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 11); yy <- c(y, -3)
 abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-20, 10, srt=0, adj = 0, labels = "* Pas d'effet de levier \n* Faible influence
 ", xpd = TRUE, cex = 1.5)
 # plot 2
-plot(x, y, ylim = c(-4, 32), xlim = c(0, 31)); abline(lm0, col = 2); points(30, 30, pch = 15)
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 30)
 abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-33, 15, srt=0, adj = 0, labels = "* Effet de levier \n* Pas d'influence", xpd = TRUE, cex = 1.5)
 
 # plot 3
-plot(x, y, ylim = c(-4, 32), xlim = c(0, 31)); abline(lm0, col = 2); points(30, 15, pch = 15)
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 15)
 abline(lm(yy ~ xx), col = 2, lty = 3)
@@ -494,7 +495,7 @@ plot(lm, which = 5)
 ---
 ## **Étape 2**. Vérifier les suppositions de `lm1`
 
-```{r, fig.height=4.9, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
@@ -505,7 +506,7 @@ plot(lm1)
 Traçons le graphique Y ~ X avec la droite de régression et les histogrammes de Y et X pour explorer leurs distributions
 
 .small[
-```{r, fig.height=2.7, fig.width=9, echo = -1}
+```{r, fig.height=3, fig.width=10, echo = -1}
 par(mfrow=c(1,3), mar = c(4,4,3,1), cex = 0.8)
 plot(bird$MaxAbund ~ bird$Mass)
 abline(lm1) # adds the best-fit line
@@ -557,7 +558,7 @@ lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ---
 ## **Étape 2**: Vérifier les suppositions de `lm2`
 
-```{r, fig.height=4.4, fig.width=5.9}
+```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
@@ -567,7 +568,7 @@ plot(lm2)
 ---
 ## **Étape 2**: Vérifier les suppositions de `lm2`
 
-```{r, echo=-1, fig.height=3.4, fig.width=9}
+```{r, echo=-1, fig.height=4, fig.width=11}
 par(mfrow=c(1,3), mar=c(4,4,1.15,1.2))
 plot(logMaxAbund ~ logMass, data=bird)
 abline(lm2)
@@ -576,7 +577,9 @@ hist(log10(bird$Mass))
 ```
 
 ---
-## **Étape 3**: Estimer les paramètres et leur seuil de signification
+## **Étape 3**
+
+**Estimer les paramètres et leur seuil de signification**
 
 La fonction `summary()` est utilisée pour obtenir les paramètres, leur importance, etc
 
@@ -587,12 +590,14 @@ summary(lm2)
 ]
 
 ---
-## **Étape 3**: Estimer les paramètres et leur seuil de signification
+## **Étape 3**
+
+**Estimer les paramètres et leur seuil de signification**
 
 Nous pouvons aussi extraire les paramètres du modèle, par exemple :
 
 ```{r}
-lm2$coef
+lm2$coefficients
 summary(lm2)$coefficients
 summary(lm2)$r.squared
 ```
@@ -641,7 +646,7 @@ plot(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
 
 `R2-adj` a changé de 0,05 à 0,25 quand nous avons exclu les oiseaux aquatiques :
 
-```{r, fig.height=3.5, fig.width=7}
+```{r, fig.height=4.5, fig.width=9}
 par(mfrow=c(1,2), mar = c(4, 4, 3, 1))
 plot(logMaxAbund~logMass, data=bird, main = 'Tous les oiseaux')
 abline(lm2, col = 'red')
@@ -672,7 +677,7 @@ summary(lm4)
 ---
 ## Défi 1 - Solution ![:cube]()
 
-```{r, echo=-3,fig.height=4.8, fig.width=6.5}
+```{r,fig.height=6, fig.width=8}
 # diagnostic plots
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm4)
@@ -719,6 +724,15 @@ Variable réponse continue
 
 .large[.center[Compare la variation intra-groupe et inter-groupe afin de déterminer si les moyennes des groupes diffèrent]]
 
+---
+## ANOVA
+
+.center[Compare la variation intra-groupe et inter-groupe afin de déterminer si les moyennes des groupes diffèrent]
+
+```{r, echo = FALSE, fig.height=3, fig.width=6.5}
+source('script/figAnova.R')
+```
+
 Somme des carrés : variance intra-traitement *vs* variance inter-traitement
 
 Si variance inter traitements $>$ variance intra traitements:
@@ -735,9 +749,11 @@ Si variance inter traitements $>$ variance intra traitements:
 2. ANOVA à deux critères de classification
   - Deux variables explicatives catégoriques ou plus
   - Chaque facteur peut avoir plusieurs niveaux
-  - Les interactions entre chaque variable explicative catégorique doivent être testées
+  - Les interactions entre chaque facteur doivent être testées
 
-3. Mesures répétées ?
+--
+
+Mesures répétées ?
   - L'ANOVA peut être utilisée pour des mesures répétées, mais ce sujet n'est pas abordé dans cet atelier
   - Modèle linéaire mixte peut également être utilisé pour ce type de données (voir l'atelier 6)
 
@@ -794,7 +810,7 @@ anova(lm.t)
 
 Premièrement, visualiser les données à l'aide de la fonction `boxplot()`
 
-```{r eval=TRUE,fig.height=4.8, fig.width=6.5}
+```{r eval=TRUE,fig.height=5.2, fig.width=6.5}
 boxplot(logMass ~ Aquatic,
         data = bird, names = c("Non aquatique", "Aquatique"))
 ```
@@ -828,7 +844,7 @@ Vérifiez que `t.test()` et `lm()` donnent le même modèle :
 
 ```{r}
 ttest1$statistic^2
-anova(ttest.lm1)$F
+anova(ttest.lm1)$`F value`
 # réponse : F=60.3845 dans les deux cas
 ```
 
@@ -837,11 +853,13 @@ anova(ttest.lm1)$F
 ---
 ## Exécuter un test T dans R
 
-Si $p<0,01$ (ou $0,05$ ), l'hypothèse de l'absence de différence entre les moyenne des 2 groupe (*H0*) peut être rejetée, avec un risque de $0,01$ (ou $0,05$ ) de se tromper
+Si $p<0,01$ (ou $0,05$ ), l'hypothèse de l'absence de différence entre les moyenne des 2 groupes (*H0*) peut être rejetée, avec un risque de $0,01$ (ou $0,05$ ) de se tromper
 
+.small[
 ```{r}
 ttest1
 ```
+]
 
 .small[.comment[Il existe une différence entre la masse des oiseaux aquatiques et terrestres - `p-value`]]
 
@@ -876,11 +894,9 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
 uni.ttest1
 ```
 
-.small[
 Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :
 
 p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
-]
 
 ---
 class: inverse, center, middle
@@ -924,7 +940,7 @@ str(bird)
 
 Visualisons tout d'abord les données avec la fonction `boxplot()`
 
-```{r, fig.height=4.2, fig.width=7,echo=-1}
+```{r, fig.height=5, fig.width=7,echo=-1}
 par(mar = c(4, 4, 0.5, 1))
 boxplot(logMaxAbund ~ Diet, data = bird,
   ylab = expression("log"[10]*"(Abondance maximale)"), xlab = 'Régime alimentaire')
@@ -935,7 +951,7 @@ boxplot(logMaxAbund ~ Diet, data = bird,
 
 Nous pouvons changer l'ordre des niveaux afin qu'il suivent l'ordre croissant de leurs médianes respectives en utilisant les fonctions `tapply()` et `sort()`
 
-```{r, fig.height=3.5, fig.width=7, echo=-1}
+```{r, fig.height=4.5, fig.width=7, echo=-1}
 par(mar=c(4,4,.1,1))
 med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
@@ -949,7 +965,7 @@ boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
 Une autre façon de visualiser graphiquement les tailles d’effet est d’utiliser la fonction `plot.design()`
 
 .small[
-```{r, fig.height=3, fig.width=6, echo=-1}
+```{r, fig.height=3.8, fig.width=6, echo=-1}
 par(mar=c(4,4,.4,1))
 plot.design(logMaxAbund ~ Diet, data=bird,
   ylab = expression("log"[10]*"(Abondance maximale)"))
@@ -978,18 +994,18 @@ aov1 <- aov(logMaxAbund ~ Diet,
 .comment[Essayez-les et comparez les sorties !]
 
 ---
-## Exécuter une ANOVA à un critère de classification dans R
+## Exécuter une ANOVA
+
+#### À un critère de classification dans R
 
 Comparer les sorties
 
-.small[
 ```{r}
 anova(anov1)
 ```
 ```{r}
 summary(aov1)
 ```
-]
 
 ---
 ## Vérifier les suppositions
@@ -998,8 +1014,7 @@ summary(aov1)
 
 .small[
 ```{r}
-bartlett.test(logMaxAbund ~ Diet,
-              data = bird)
+bartlett.test(logMaxAbund ~ Diet, data = bird)
 ```
 ]
 
@@ -1025,7 +1040,7 @@ data$logY <- log10(data$Y)
 * ré-exécuter votre modèle avec la variable transformée et vérifier à nouveau les hypothèses
 
 **Test de Kruskal-Wallis**: équivalent non paramétrique de l'ANOVA si vous ne pouvez pas
-(*ou ne voulez pas*)
+(*ou ne voulez pas*) transformer les données
 
 ```{r eval=FALSE}
 kruskal.test(Y~X, data)
@@ -1081,7 +1096,7 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 Représentation graphique de l'ANOVA à l'aide de la fonction `barplot()`
 
 .small[
-```{r, fig.height=3, fig.width=7,echo=-1}
+```{r, fig.height=3.5, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
 sd <- tapply(bird$logMaxAbund, bird$Diet, sd)
 means <- tapply(bird$logMaxAbund, bird$Diet, mean)
@@ -1123,9 +1138,10 @@ chaque facteur séparément (pas d'interaction)]
 ---
 ## ANOVA à deux critères de classification
 
+.small[
+
 Exemple d'interaction non significative
 
-.small[
 ```r
 aov <- lm(Y ~ X * Z, data)
 summary(aov)
@@ -1159,9 +1175,9 @@ Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du r
 - .comment[où A est le premier facteur, B le deuxième et "*" décrit l'interaction]
 
 ---
-## Défi 2 - Solution ![:cube]()
+## ![:cube]()
 
-.tiny[
+.small[
 ```{r}
 anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data = bird)
 summary(anov2)
@@ -1179,6 +1195,12 @@ anova(anov2)
 ]
 
 .comment[Le seul terme significatif du modèle est le facteur régime alimentaire]
+
+.comment[Selon le principe de parcimonie, nous devrions supprimer le terme d'interaction:]
+
+```r
+anov2 <- lm(logMaxAbund ~ Diet, data = bird)
+```
 
 ---
 ## Objectif d'enseignement
@@ -1488,7 +1510,7 @@ summary(lm.mult)
 
 Vérifiez les autres suppositions, comme pour la régression linéaire simple
 
-```{r, fig.height=4.4, fig.width=6,echo=-2}
+```{r, fig.height=5.5, fig.width=8,echo=-2}
 par(mfrow = c(2, 2))
 par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
 plot(lm.mult)
@@ -1519,7 +1541,7 @@ R2-aj: le modèle explique 11.28% de la variabilité de l'abondance de dickcisse
 
 Il est important de noter que la variable réponse ne varie pas de façon linéaire avec les variables explicatives
 
-```{r, fig.height=3, fig.width=9,echo=-1}
+```{r, fig.height=3.5, fig.width=11,echo=-1}
 par(mfrow=c(1,3), mar=c(4, 4, 0.5, 0.5), cex = 1)
 plot(abund ~ clTma, data = Dickcissel)
 plot(abund ~ NDVI,  data = Dickcissel)
