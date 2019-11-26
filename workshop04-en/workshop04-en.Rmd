@@ -51,7 +51,6 @@ if (!require(car)) install.packages("car")
 library(car)
 ```
 
----
 class: inverse, center, middle
 
 # Important concepts
@@ -64,7 +63,7 @@ class: inverse, center, middle
 
 Mean is a measure of the average value of a population (*x*):
 
-$$\bar{x} = \frac{1}{N} \sum_{i=1}^{n} x_{i}$$
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
 
 ---
 ## Variation
@@ -88,12 +87,12 @@ $$D_{i} = |x_{i} - \bar{x}|$$
 --
 **Mean deviation**:
 
-$$D = \frac{1}{N} \sum_{i=1}^{n} |x_{i} - \bar{x}|$$
+$$D = \frac{1}{n} \sum_{i=1}^{n} |x_{i} - \bar{x}|$$
 --
 
 Instead of absolute values, we can also square the value, giving the **variation**:
 
-$$V = \frac{1}{N} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
+$$V = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
 
 ---
 ## Variation
@@ -136,8 +135,8 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - $β_0$ is the intercept of the regression line
 - $β_1$ is the coefficient of variation for the first explanatory variable
 - $β_p$ is the coefficient of variation for the *nth* explanatory variable
-- $x_i1$ is the first explanatory variable
-- $x_ip$ is the *nth* explanatory variable
+- $x_{i1}$ is the first explanatory variable
+- $x_{ip}$ is the *nth* explanatory variable
 - $ε_i$ are the residuals of the model
 
 ---
@@ -167,7 +166,8 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 
 .alert[These assumptions concern the residuals, not the response or explanatory variables]
 
-.small[.comment[In the following sections, we do not always explicitly restate the above assumptions for every model because these assumption are implicit in all linear models]]
+.comment[In the following sections, we do not always explicitly restate the above assumptions for every model because these assumption are implicit in all linear models]
+
 ---
 ## Work follow
 
@@ -225,6 +225,8 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 
 **Step 2**. Verify assumptions
 ]
+
+<br>
 
 .pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
 
@@ -304,7 +306,7 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 
 **Step 2**. Verify assumptions using diagnostic plots
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, fig.height=6, fig.width=8}
 opar <- par(mfrow=c(2,2))
 plot(lm1)
 ```
@@ -321,7 +323,7 @@ Example of independence (what we want!)
 
 - Should show a scatter across and no pattern
 
-```{r, echo = FALSE, fig.height=4.2, fig.width=5.5}
+```{r, echo = FALSE, fig.height=5.5, fig.width=6.5}
   set.seed(1234564)
   x <- rnorm(100,10,10)
   y <- 2*x+0 + rnorm(100)
@@ -332,7 +334,7 @@ Example of independence (what we want!)
 ---
 ## Diagnostic plot # 1 - Residuals vs Fitted
 
-```{r, echo=FALSE, fig.height=4, fig.width=8.5, warning=FALSE}
+```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
 set.seed(1234564)
 x = rnorm(100,10,10)
@@ -353,7 +355,7 @@ plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 
 - Should show a scatter across and no pattern
 
-```{r, echo=FALSE, fig.height=3.8, fig.width=8, warning=FALSE}
+```{r, echo=FALSE, fig.height=4.5, fig.width=9, warning=FALSE}
 par(mfrow=c(1,2))
 set.seed(1234564)
 x <- 1:100
@@ -377,7 +379,7 @@ plot(lm,which = 3)
 - Compares the distribution (quantiles) of the residuals of the current model to those of a normal distribution
 - If points lie linearly on the 1:1 line, data follow a normal distribution
 
-```{r, echo=FALSE, fig.height=3, fig.width=8, warning=FALSE}
+```{r, echo=FALSE, fig.height=4, fig.width=9, warning=FALSE}
 par(mfrow=c(1,2), mar = c(4, 4, 1.5, 3))
 set.seed(1234564)
 x <- 1:100
@@ -406,27 +408,27 @@ plot(lm, which = 2)
 ---
 ## Leverage vs influence
 
-```{r, echo=FALSE, fig.height=6, fig.width=5, warning=FALSE}
-par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 0.75)
+```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
+par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
 set.seed(1234564)
 x <- 1:20
 y <- rnorm(x, x, 2)
 lm0 <- lm(y ~ x)
 # plot 1
-plot(x, y, ylim = c(-4, 22)); abline(lm0, col = 2); points(11, -3, pch = 15)
+plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 11); yy <- c(y, -3)
 abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-18, 10, srt=0, adj = 0, labels = '* No leverage \n* Low influence', xpd = TRUE, cex = 1.5)
 # plot 2
-plot(x, y, ylim = c(-4, 32), xlim = c(0, 31)); abline(lm0, col = 2); points(30, 30, pch = 15)
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 30)
 abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* No influence', xpd = TRUE, cex = 1.5)
 
 # plot 3
-plot(x, y, ylim = c(-4, 32), xlim = c(0, 31)); abline(lm0, col = 2); points(30, 15, pch = 15)
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 15)
 abline(lm(yy ~ xx), col = 2, lty = 3)
@@ -490,7 +492,7 @@ plot(lm, which = 5)
 ---
 ## **Step 2**. Verify assumptions of `lm1`
 
-```{r, fig.height=4.9, fig.width=5.5}
+```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
@@ -500,7 +502,7 @@ plot(lm1)
 
 Plot Y ~ X with corresponding best-fit regression line, and a histogram of Y and X to explore their distributions
 
-```{r, fig.height=2.7, fig.width=9, echo = -1}
+```{r, fig.height=4, fig.width=11, echo = -1}
 par(mfrow=c(1,3), mar = c(4,4,3,1), cex = 0.8)
 plot(bird$MaxAbund ~ bird$Mass)
 abline(lm1) # adds the best-fit line
@@ -550,7 +552,7 @@ lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ---
 ## **Step 2**: Verify assumptions of model `lm2`
 
-```{r, fig.height=4.4, fig.width=5.9}
+```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
@@ -560,7 +562,7 @@ plot(lm2)
 ---
 ## **Step 2**: Verify assumptions of model `lm2`
 
-```{r, echo=-1, fig.height=3.4, fig.width=9}
+```{r, echo=-1, fig.height=4, fig.width=11}
 par(mfrow=c(1,3), mar=c(4,4,1.15,1.2))
 plot(logMaxAbund ~ logMass, data=bird)
 abline(lm2)
@@ -569,7 +571,9 @@ hist(log10(bird$Mass))
 ```
 
 ---
-## **Step 3**: Estimate parameters and test significance
+## **Step 3**
+
+**Estimate parameters and test significance**
 
 The function `summary()` is used to obtain parameter estimates, significance, etc.
 
@@ -580,12 +584,14 @@ summary(lm2)
 ]
 
 ---
-## **Step 3**: Estimate parameters and test significance
+## **Step 3**
+
+**Estimate parameters and test significance**
 
 We can also call out specific parameters of the model, for example:
 
 ```{r}
-lm2$coef
+lm2$coefficients
 summary(lm2)$coefficients
 summary(lm2)$r.squared
 ```
@@ -634,7 +640,7 @@ plot(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
 
 `R2-adj` changed from $0.05$ to $0.25$ when we dropped aquatic birds:
 
-```{r, fig.height=3.5, fig.width=7}
+```{r, fig.height=4.5, fig.width=9}
 par(mfrow=c(1,2), mar = c(4, 4, 3, 1))
 plot(logMaxAbund~logMass, data=bird, main = 'All birds')
 abline(lm2, col = 'red')
@@ -665,7 +671,7 @@ summary(lm4)
 ---
 ## Challenge 1 - Solution ![:cube]()
 
-```{r, echo=-3,fig.height=4.8, fig.width=6.5}
+```{r,fig.height=6, fig.width=8}
 # diagnostic plots
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm4)
@@ -710,6 +716,15 @@ Continuous response variable
 
 .large[.center[ANOVA tests whether the means of the response variable differs between the levels]]
 
+---
+## ANOVA
+
+.center[ANOVA tests whether the means of the response variable differs between the levels]
+
+```{r, echo = FALSE, fig.height=3.7, fig.width=6.5}
+source('script/figAnova.R')
+```
+
 Sum of squares: within-treatment variance *vs* between-treatment variance
 
 If between-treatment variance $>$ within-treatment variance:
@@ -728,7 +743,10 @@ If between-treatment variance $>$ within-treatment variance:
   - Each factor can have multiple levels
   - The interactions between each factor must be tested
 
-3. Repeated measures?
+--
+
+Repeated measures?
+
   - ANOVA can be used for repeated measures, but we won't cover this today
   - Linear Mixed-effect Models can also be used for this kind of data (you'll see it on Workshop 6)
 
@@ -785,7 +803,7 @@ anova(lm.t)
 
 First, lets visualize the data using the function `boxplot()`
 
-```{r eval=TRUE,fig.height=4.8, fig.width=6.5}
+```{r eval=TRUE,fig.height=5.2, fig.width=6.5}
 boxplot(logMass ~ Aquatic,
         data = bird, names = c("Non-Aquatic", "Aquatic"))
 ```
@@ -819,7 +837,7 @@ You can verify that `t.test()` and `lm()` provide the same model:
 
 ```{r}
 ttest1$statistic^2
-anova(ttest.lm1)$F
+anova(ttest.lm1)$`F value`
 # answer: F=60.3845 in both cases
 ```
 
@@ -830,9 +848,11 @@ anova(ttest.lm1)$F
 
 If $p<0.01$ (or $0.05$ ), the null hypothesis of no difference between the two groups (*H0*) can be rejected, with a risk of $0.01$ (or $0.05$ ) that we made a mistake in this conclusion
 
+.small[
 ```{r}
 ttest1
 ```
+]
 
 .small[.comment[There exists a difference in mass between the aquatic and terrestrial birds - `p-value`]]
 
@@ -867,9 +887,7 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
 uni.ttest1
 ```
 
-.small[
 Yes, aquatic birds are heavier than terrestrial birds: p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
-]
 
 ---
 class: inverse, center, middle
@@ -913,7 +931,7 @@ str(bird)
 
 First, visualize the data using `boxplot()` (alphabetically by default)
 
-```{r, fig.height=4.2, fig.width=7,echo=-1}
+```{r, fig.height=5, fig.width=7,echo=-1}
 par(mar = c(4, 4, 0.5, 1))
 boxplot(logMaxAbund ~ Diet,
         data = bird, ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = 'Diet')
@@ -924,7 +942,7 @@ boxplot(logMaxAbund ~ Diet,
 
 We can reorder factor levels according to group medians using the `tapply()` and `sort()` functions
 
-```{r, fig.height=3.5, fig.width=7, echo=-1}
+```{r, fig.height=4.5, fig.width=7, echo=-1}
 par(mar=c(4,4,.1,1))
 med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
@@ -936,7 +954,7 @@ boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
 
 Another way to graphically view the effect sizes is to use `plot.design()`
 
-```{r, fig.height=3.5, fig.width=7, echo=-1}
+```{r, fig.height=3.8, fig.width=7, echo=-1}
 par(mar=c(4,4,.4,1))
 plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
 ```
@@ -978,8 +996,7 @@ summary(aov1)
 
 .small[
 ```{r}
-bartlett.test(logMaxAbund ~ Diet,
-              data = bird)
+bartlett.test(logMaxAbund ~ Diet, data = bird)
 ```
 ]
 
@@ -1058,7 +1075,7 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 The ANOVA results can be graphically illustrated using the `barplot()` function
 
 .small[
-```{r, fig.height=3, fig.width=7,echo=-1}
+```{r, fig.height=3.5, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
 sd <- tapply(bird$logMaxAbund, list(bird$Diet), sd)
 means <- tapply(bird$logMaxAbund, list(bird$Diet), mean)
@@ -1100,9 +1117,10 @@ More than one factor
 ---
 ## Two-way ANOVA
 
+.small[
+
 Example of a non-significant interaction
 
-.small[
 ```r
 aov <- lm(Y ~ X * Z, data)
 summary(aov)
@@ -1117,10 +1135,10 @@ summary(aov)
 # ---
 # Signif. codes: 0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
-]
 
 According to law of **parsimony**, select model that explain the most variance with the least model parameters possible
 - Thus, remove the interaction term if non-signficant and re-evaluate
+]
 
 ```r
 aov <- lm(Y ~ X + Z, data)
@@ -1137,7 +1155,7 @@ e.g. `lm(Y ~ A*B)`]
 - .comment[where A is your first factor, B is your second and ` * ` is the command for interaction in R]
 
 ---
-## Challenge 2 - Solution ![:cube]()
+### ![:cube]()
 
 .small[
 ```{r}
@@ -1157,6 +1175,12 @@ anova(anov2)
 ]
 
 .comment[In this case, the only significant term of the model is the diet factor]
+
+.comment[According to law of parsimony, we should remove the interaction term:]
+
+```r
+anov2 <- lm(logMaxAbund ~ Diet, data = bird)
+```
 
 ---
 ## Learning objectives
@@ -1463,7 +1487,7 @@ summary(lm.mult)
 
 Verify diagnostic plots, as you did for the simple linear regression
 
-```{r, fig.height=4.4, fig.width=6,echo=-2}
+```{r, fig.height=5.5, fig.width=8,echo=-2}
 par(mfrow = c(2, 2))
 par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
 plot(lm.mult)
@@ -1493,7 +1517,7 @@ Model explains ~11% of the dickcissel variance (R²-adj = 0.11)
 
 However, the response variable `abund` is not linearly related to the explanatory variables
 
-```{r, fig.height=3, fig.width=9,echo=-1}
+```{r, fig.height=3.5, fig.width=11,echo=-1}
 par(mfrow=c(1,3), mar=c(4, 4, 0.5, 0.5), cex = 1)
 plot(abund ~ clTma, data = Dickcissel)
 plot(abund ~ NDVI,  data = Dickcissel)
