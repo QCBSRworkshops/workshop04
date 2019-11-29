@@ -1,4 +1,4 @@
-# [QCBS R Workshop series](https://wiki.qcbs.ca/r)
+# [QCBS R Workshop Series](https://wiki.qcbs.ca/r)
 
 This series of 10 workshops walks participants through the steps required to use R for a wide array of statistical analyses relevant to research in biology and ecology. These open-access workshops were created by members of the QCBS both for members of the QCBS and the larger community.
 
