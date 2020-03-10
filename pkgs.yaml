@@ -1,8 +1,0 @@
-cran_pkgs:
-    - tidyverse
-    - kableExtra
-    - vegan
-    - knitr
-    - e1071
-    - MASS
-    - car

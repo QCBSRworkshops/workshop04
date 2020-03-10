@@ -21,35 +21,32 @@ knitr::opts_chunk$set(
   cache = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.width=6, fig.height=6,
+  fig.width = 6, fig.height = 6,
   fig.retina = 3,
   fig.align = 'center'
 )
-```
-
-```{r, echo =F}
 options(repos=structure(c(CRAN="http://cran.r-project.org")))
 ```
 
-```{r, include = FALSE}
-if (!require(dplyr)) install.packages("dplyr")
-library(dplyr)
+class: inverse, center, middle
 
-if (!require(kableExtra)) install.packages("kableExtra")
-library(kableExtra)
-
-if (!require(vegan)) install.packages("vegan")
-library(vegan)
-
-if (!require(e1071)) install.packages("e1071")
-library(e1071)
-
-if (!require(MASS)) install.packages("MASS")
-library(MASS)
-
-if (!require(car)) install.packages("car")
-library(car)
+```{R install_pkgs, echo = FALSE, results = "asis"}
+cat(
+  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car'))
+)
 ```
+
+---
+# Learning Objectives
+
+### Do a t-test with R
+
+### Use `lm()` to perform a linear model with R
+
+### Use `anova()` to do a analysis if variance
+
+
+---
 
 class: inverse, center, middle
 
@@ -66,7 +63,7 @@ Mean is a measure of the average value of a population (*x*):
 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
 
 ---
-## Variation
+# Variation
 
 - Variation is the spread around the mean
   - Mean deviation
@@ -79,7 +76,7 @@ $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
 $$D_{i} = |x_{i} - \bar{x}|$$
 
 ---
-## Variation
+# Variation
 
 **Deviation**:
 
@@ -95,7 +92,7 @@ Instead of absolute values, we can also square the value, giving the **variation
 $$V = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
 
 ---
-## Variation
+# Variation
 
 But by squaring each value, our variables are no longer in meaningful units
 
@@ -114,7 +111,7 @@ class: inverse, center, middle
 # Linear models
 
 ---
-## What are linear models
+# What are linear models
 
 Linear relationship between response ( $Y$ ) and explanatory ( $X$ ) variable, using the concepts of **mean** and **variation**
 
@@ -125,7 +122,7 @@ Linear relationship between response ( $Y$ ) and explanatory ( $X$ ) variable, u
 - $\epsilon$ : what is not explained by the explanatory variable(s) ![:faic](arrow-right) residuals or error
 
 ---
-## Defining linear models
+# Defining linear models
 
 Putting everything together:
 
@@ -140,7 +137,7 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - $ε_i$ are the residuals of the model
 
 ---
-## The goal of linear models
+# The goal of linear models
 
 - The goal is to find the **best estimation** of the parameters (the $\beta$ variables) and then assess the goodness of fit of the model
 
@@ -150,14 +147,14 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 .center[.large[The general concept behind these methods is that the residuals are minimized]]
 
 ---
-## Learning objectives
+# Learning objectives
 
 .center[
 ![:scale 100%](images/schema.png)
 ]
 
 ---
-## Linear model assumptions
+# Linear model assumptions
 
 1. The residuals are independent
 2. The residuals are normally distributed
@@ -169,7 +166,7 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 .comment[In the following sections, we do not always explicitly restate the above assumptions for every model because these assumption are implicit in all linear models]
 
 ---
-## Work follow
+# Work follow
 
 .center[
 ![:scale 62%](images/schema.png)
@@ -187,7 +184,7 @@ class: inverse, center, middle
 # Simple linear regression
 
 ---
-## Simple linear regression
+# Simple linear regression
 
 - Type of linear model which contains a single, continuous explanatory variable
 
@@ -199,7 +196,7 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
   - Most used method and corresponds to the default function in R
 
 ---
-## Least squares methods
+# Least squares methods
 
 .pull-left[
 .center[![:scale 80%](images/graph_lm.png)]
@@ -218,7 +215,7 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 ]
 
 ---
-## Running a regression in R
+# Running a regression in R
 
 .small[
 **Step 1**. Run your linear model
@@ -251,7 +248,7 @@ No: Try GLM that might better suit your data
 ]]]
 
 ---
-## Running a regression in R
+# Running a regression in R
 
 **Step 1**. Run your linear model
 
@@ -266,7 +263,7 @@ lm1 <- lm(Y~X)
 - `X` : Explanatory variable
 
 ---
-## Running a regression in R
+# Running a regression in R
 
 Download the <span style="color:blue"> *birdsdiet* </span> dataset:
 
@@ -285,7 +282,7 @@ str(bird)
 ```
 
 ---
-## Running a regression in R
+# Running a regression in R
 
 Response variable: **Bird abundance**  ![:faic](arrow-right) num: continuous
 
@@ -302,7 +299,7 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 ```
 
 ---
-## Running a regression in R
+# Running a regression in R
 
 **Step 2**. Verify assumptions using diagnostic plots
 
@@ -317,7 +314,7 @@ plot(lm1)
 The output will provide the four built-in diagnostic plots of the `lm()` function
 
 ---
-## Diagnostic plot # 1 - Residuals vs Fitted
+# Diagnostic plot # 1 - Residuals vs Fitted
 
 Example of independence (what we want!)
 
@@ -332,7 +329,7 @@ Example of independence (what we want!)
 ```
 
 ---
-## Diagnostic plot # 1 - Residuals vs Fitted
+# Diagnostic plot # 1 - Residuals vs Fitted
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
@@ -351,7 +348,7 @@ plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 - Solution: Transform your data or try another distribution than linear (Gaussian) (i.e., a generalized linear model (GLM): Poisson, binomial, negative binomial, etc.)
 
 ---
-## Diagnostic plot # 2 - Scale Location
+# Diagnostic plot # 2 - Scale Location
 
 - Should show a scatter across and no pattern
 
@@ -374,7 +371,7 @@ plot(lm,which = 3)
 .pull-left[.center[No pattern in the residuals]] .pull-right[.center[Strong pattern in the residuals]]
 
 ---
-## Diagnostic plot # 3 - Normal QQ
+# Diagnostic plot # 3 - Normal QQ
 
 - Compares the distribution (quantiles) of the residuals of the current model to those of a normal distribution
 - If points lie linearly on the 1:1 line, data follow a normal distribution
@@ -399,14 +396,14 @@ plot(lm, which = 2)
 .pull-left[.center[Good!]] .pull-right[.center[Not that good...]]
 
 ---
-## Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs Leverage
 
 - Looks for influential values
 - **Leverage points**: observations at extreme/ outlying values of the explanatory variable. Because they lack neighboring observations, the regression model passes close to leverage points. **They may OR may not have a high influence on the regression.**
 - High leverage points with high influence can be identified with a **Cook's distance greater than 0.5**
 
 ---
-## Leverage vs influence
+# Leverage vs influence
 
 ```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
 par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
@@ -436,7 +433,7 @@ text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* High influence', xpd
 ```
 
 ---
-## Leverage vs influence
+# Leverage vs influence
 
 ```{r, echo=FALSE, fig.height=3.5, fig.width=9, warning=FALSE}
 par(mfrow=c(1,2), mar = c(4, 4, 1.5, 3))
@@ -465,7 +462,7 @@ plot(lm, which = 5)
 .comment[Point 29 has high leverage but its influence is acceptable (inside the 0.5 Cook's distance limits)]
 
 ---
-## Leverage vs influence
+# Leverage vs influence
 
 High leverage point and high influence
 
@@ -490,7 +487,7 @@ plot(lm, which = 5)
 .alert[You should never remove outliers if you don't have good reasons to do so (ex: error of measurement)]
 
 ---
-## **Step 2**. Verify assumptions of `lm1`
+# **Step 2**. Verify assumptions of `lm1`
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
@@ -498,7 +495,7 @@ plot(lm1)
 ```
 
 ---
-## Assumptions not met - what is wrong?
+# Assumptions not met - what is wrong?
 
 Plot Y ~ X with corresponding best-fit regression line, and a histogram of Y and X to explore their distributions
 
@@ -511,7 +508,7 @@ hist(bird$Mass)
 ```
 
 ---
-## Assumptions not met - what is wrong?
+# Assumptions not met - what is wrong?
 
 Can also use the **`Shapiro-Wilk`** and the `Skewness` tests to see if variables follow a normal distribuon:
 
@@ -522,18 +519,19 @@ shapiro.test(bird$Mass)
 .comment[In both cases, distributions are significantly different from normal]
 
 ---
-## Assumptions not met - what is wrong?
+# Assumptions not met - what is wrong?
 
 Can also use the `Shapiro-Wilk` and the **`Skewness`** tests to see if variables follow a normal distribuon:
 
 ```{r}
+library(e1071)
 skewness(bird$MaxAbund)
 skewness(bird$Mass)
 ```
 .comment[The positive skewness values also indicate that the distributions are left skewed]
 
 ---
-## Transform the data
+# Transform the data
 
 - Lets try normalizing data with a `log10()` transformation
 - Add the log-transformed variables to our data frame
@@ -550,7 +548,7 @@ lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ```
 
 ---
-## **Step 2**: Verify assumptions of model `lm2`
+# **Step 2**: Verify assumptions of model `lm2`
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
@@ -560,7 +558,7 @@ plot(lm2)
 .comment[.center[Much improved!]]
 
 ---
-## **Step 2**: Verify assumptions of model `lm2`
+# **Step 2**: Verify assumptions of model `lm2`
 
 ```{r, echo=-1, fig.height=4, fig.width=11}
 par(mfrow=c(1,3), mar=c(4,4,1.15,1.2))
@@ -571,7 +569,7 @@ hist(log10(bird$Mass))
 ```
 
 ---
-## **Step 3**
+# **Step 3**
 
 **Estimate parameters and test significance**
 
@@ -584,7 +582,7 @@ summary(lm2)
 ]
 
 ---
-## **Step 3**
+# **Step 3**
 
 **Estimate parameters and test significance**
 
@@ -597,7 +595,7 @@ summary(lm2)$r.squared
 ```
 
 ---
-## Group discussion
+# Group discussion
 
 - Can you write down the equation of the regression line for your model `lm2`?
 - Are the parameters significant?
@@ -610,7 +608,7 @@ summary(lm2)
 ]
 
 ---
-## Group discussion
+# Group discussion
 
 Can we improve the model if we only use terrestrial birds?
 
@@ -636,7 +634,7 @@ plot(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
 ```
 
 ---
-## Plot
+# Plot
 
 `R2-adj` changed from $0.05$ to $0.25$ when we dropped aquatic birds:
 
@@ -649,7 +647,7 @@ abline(lm3, col = 'red')
 ```
 
 ---
-## Challenge 1 ![:cube]()
+# Challenge 1 ![:cube]()
 
 - Examine the relationship between `log(MaxAbund)` and `log(Mass)` for passerine birds
 - Save the model object as `lm4`
@@ -659,7 +657,7 @@ abline(lm3, col = 'red')
 - Compare the variance explained by `lm2`, `lm3` and `lm4`
 
 ---
-## Challenge 1 - Solution ![:cube]()
+# Challenge 1 - Solution ![:cube]()
 
 <br>
 ```{r}
@@ -669,7 +667,7 @@ summary(lm4)
 ```
 
 ---
-## Challenge 1 - Solution ![:cube]()
+# Challenge 1 - Solution ![:cube]()
 
 ```{r,fig.height=6, fig.width=8}
 # diagnostic plots
@@ -678,7 +676,7 @@ plot(lm4)
 ```
 
 ---
-## Challenge 1 - Solution ![:cube]()
+# Challenge 1 - Solution ![:cube]()
 
 Compare variance explained by `lm2`, `lm3` and `lm4`
 
@@ -692,7 +690,7 @@ summary(lm4)$adj.r.squared
 .comment[The best model among the three models is `lm3` *(only terrestrial birds)*]
 
 ---
-## Learning objectives
+# Learning objectives
 
 .center[
 ![:scale 100%](images/schema_ttest.png)
@@ -706,7 +704,7 @@ class: inverse, center, middle
 ## *t*-test, One-way ANOVA, Two-way ANOVA
 
 ---
-## Analysis of Variance (ANOVA)
+# Analysis of Variance (ANOVA)
 
 $Y$: Response variable is **continuous**
 
@@ -716,7 +714,7 @@ $X$: Explanatory variable(s) is **categorical**, and usually have  **two or more
 .large[.center[ANOVA tests whether the means of the response variable differs between the levels]]
 
 ---
-## ANOVA
+# ANOVA
 
 .center[ANOVA tests whether the means of the response variable differs between the levels]
 
@@ -731,7 +729,7 @@ If between-treatment variance $>$ within-treatment variance:
   - The explanatory variable is likely to be significantly influenced by the treatments
 
 ---
-## Types of ANOVA
+# Types of ANOVA
 
 1. One-way ANOVA
   - One factor with 2 or more levels
@@ -755,7 +753,7 @@ class: inverse, center, middle
 # T-test
 
 ---
-## T-test
+# T-test
 
 - **Response variable** ![:faic](arrow-right) Continuous
 - **Explanatory variable** ![:faic](arrow-right) Categorical with **2 levels**
@@ -767,7 +765,7 @@ class: inverse, center, middle
 .comment[robustness of this test increases with sample size and is higher when groups have equal sizes]
 
 ---
-## Running a T-test in R
+# Running a T-test in R
 
 Use the function `t.test()`
 
@@ -790,7 +788,7 @@ anova(lm.t)
 ```
 
 ---
-## Running a T-test in R
+# Running a T-test in R
 
 .large[Are aquatic birds heavier than non-aquatic birds?]
 
@@ -798,7 +796,7 @@ anova(lm.t)
 - Explanatory variable: `Aquatic` ![:faic](arrow-right) 2 levels: 1 or 0 (yes or no)
 
 ---
-## Running a T-test in R
+# Running a T-test in R
 
 First, lets visualize the data using the function `boxplot()`
 
@@ -808,7 +806,7 @@ boxplot(logMass ~ Aquatic,
 ```
 
 ---
-## Running a T-test in R
+# Running a T-test in R
 
 Next, test the assumption of equality of variance using `var.test()`
 
@@ -821,7 +819,7 @@ var.test(logMass ~ Aquatic, data = bird)
 .comment[We may now proceed with the t-test!]
 
 ---
-## Running a T-test in R
+# Running a T-test in R
 
 ```{r}
 ttest1 <- t.test(logMass ~ Aquatic, var.equal = TRUE, data = bird)
@@ -843,7 +841,7 @@ anova(ttest.lm1)$`F value`
 .comment[When the assumption of equal variance is met $t^2$ follows an F distribution]
 
 ---
-## Running a T-test in R
+# Running a T-test in R
 
 If $p<0.01$ (or $0.05$ ), the null hypothesis of no difference between the two groups (*H0*) can be rejected, with a risk of $0.01$ (or $0.05$ ) that we made a mistake in this conclusion
 
@@ -858,14 +856,14 @@ ttest1
 .small[.comment[Look at the mean of the two groups]]
 
 ---
-## Violation of Assumptions
+# Violation of Assumptions
 
 - If variances between groups are not equal, can use corrections like the Welch correction (DEFAULT in R!)
 - If assumptions cannot be respected, the **non-parametric** equivalent of t-test is the Mann-Whitney test
 - If two groups **are not independent** (e.g. measurements on the same individual at 2 different years), you should use a paired t-test
 
 ---
-## Group discussion
+# Group discussion
 
 .large[Are aquatic birds heavier than terrestrial birds?]
 
@@ -880,7 +878,7 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
 .comment[What did you conclude?]
 
 ---
-## Group discussion
+# Group discussion
 
 ```{r}
 uni.ttest1
@@ -894,7 +892,7 @@ class: inverse, center, middle
 # ANOVA
 
 ---
-## Analysis of Variance (ANOVA)
+# Analysis of Variance (ANOVA)
 
 Generalization of the $t$-test for categorical variables with **two or more levels**.
 
@@ -904,7 +902,7 @@ Subsets variation in the response variable into additive effects of one or sever
 $$Y = \underbrace{\mu}_{\Large{\text{The average outcome}\atop\text{over all individuals}}} + \overbrace{\tau_{i}}^{\Large{\text{The average outcome over}\atop\text{all individuals in group i}}} + \underbrace{\epsilon}_{\text{Residuals}}$$
 
 ---
-## Review: ANOVA
+# Review: ANOVA
 
 Assumptions
 - Normality of residuals
@@ -917,7 +915,7 @@ Complementary test
 - You may also compare between groups using **planned comparisons**. This is more elegant, because it expects that you have an *a priori* expectation for the differences between groups.
 
 ---
-## Running an ANOVA in `R`
+# Running an ANOVA in `R`
 
 ##### Does abundance vary across different diets?
 - Response variable: `MaxAbund`  ![:faic](arrow-right) `num`: continuous
@@ -928,20 +926,20 @@ str(bird)
 ```
 
 ---
-## Visualize data
+# Visualize data
 
 First, visualize the data using `boxplot()` (alphabetical order, by default).
 
 ```{r, fig.height=5, fig.width=6.5, echo = -1}
 par(mar = c(4, 4, 0.5, 1))
 boxplot(logMaxAbund ~ Diet,
-        data = bird, 
-        ylab = expression("log"[10]*"(Maximum Abundance)"), 
+        data = bird,
+        ylab = expression("log"[10]*"(Maximum Abundance)"),
         xlab = 'Diet')
 ```
 
 ---
-## Visualize data
+# Visualize data
 
 We can reorder factor levels according to group medians using the `tapply()` and `sort()` functions.
 
@@ -953,20 +951,20 @@ boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
 ```
 
 ---
-## Visualize data
+# Visualize data
 
 Another way to represent the effect sizes is to use `plot.design()`.
 
 ```{r, fig.height=4, fig.width=6, echo=-1}
 par(mar=c(4,4,.4,1))
-plot.design(logMaxAbund ~ Diet, data=bird, 
+plot.design(logMaxAbund ~ Diet, data=bird,
             ylab = expression("log"[10]*"(Maximum Abundance)"))
 ```
 
 .comment[Levels of a particular factor are displayed along a vertical line, and the overall value of the response variable, in a horizontal line.]
 
 ---
-## Running an One-Way ANOVA in `R` 
+# Running an One-Way ANOVA in `R`
 
 We can use the function `stats::lm()` to run an ANOVA:
 ```{r}
@@ -983,7 +981,7 @@ aov1 <- aov(logMaxAbund ~ Diet,
 .comment[Let's work together: Try both of them and compare the outputs!]
 
 ---
-## Running an One-Way ANOVA in `R` 
+# Running an One-Way ANOVA in `R`
 
 And, here are the outputs!
 ```{r}
@@ -994,11 +992,11 @@ summary(aov1)
 ```
 
 ---
-## Did we violate the model assumptions?
+# Did we violate the model assumptions?
 
 *Are the variances in each of the groups (samples) the same?*
 
-**Bartlett's test** of homogeneity of variances: 
+**Bartlett's test** of homogeneity of variances:
 .small[
 ```{r}
 bartlett.test(logMaxAbund ~ Diet, data = bird)
@@ -1009,6 +1007,7 @@ bartlett.test(logMaxAbund ~ Diet, data = bird)
 
 .small[
 ```{r}
+library(car)
 leveneTest(logMaxAbund ~ Diet, data = bird)
 ```
 ]
@@ -1028,7 +1027,7 @@ shapiro.test(resid(anov1))
 .comment[Assumptions of homocedasticity and normality of residuals *not violated!*]
 
 ---
-## What if the assumptions were **not** met?
+# What if the assumptions were **not** met?
 
 #### Alternatives####
 
@@ -1049,7 +1048,7 @@ stats::kruskal.test(Y~X, data)
 ```
 
 ---
-## Output of our ANOVA model
+# Output of our ANOVA model
 
 .small[
 ```{r}
@@ -1077,7 +1076,7 @@ summary.lm(aov1)
 ]]
 
 ---
-## *A posteriori* test
+# *A posteriori* test
 
 If the ANOVA detects significant differences between means, a post-hoc test is required to determine which treatment(s) differ from each other. This can be done with the `TukeyHSD()` function:
 
@@ -1094,7 +1093,7 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 ]
 
 ---
-## Representation
+# Representation
 
 ANOVA results can be graphically illustrated using the `barplot()` function:
 
@@ -1108,9 +1107,9 @@ se <- 1.96*sd/sqrt(n)
 bp <- barplot(means, ylim = c(0, max(bird$logMaxAbund) - 0.5))
 epsilon = 0.1
 segments(bp, means - se, bp, means + se, lwd=2) # vertical bars
-segments(bp - epsilon, means - se, 
+segments(bp - epsilon, means - se,
          bp + epsilon, means - se, lwd = 2) # horizontal bars
-segments(bp - epsilon, means + se, 
+segments(bp - epsilon, means + se,
          bp + epsilon, means + se, lwd = 2) # horizontal bars
 ```
 ]
@@ -1121,7 +1120,7 @@ class: inverse, center, middle
 # Two-way ANOVA
 
 ---
-## Two-way ANOVA
+# Two-way ANOVA
 
 .pull-left[
 One-Way ANOVA:
@@ -1149,12 +1148,12 @@ $Z$: Explanatory variable(s) is **categorical**, and usually have  **two or more
 
 .comment[If use the "`+`" symbol, the main effects, but not their interaction are included.]
 ]
-We can also represent our model with: 
+We can also represent our model with:
 `aov <- lm(Y ~ X + Z + ..., data)`
 
 
 ---
-### Two-Way ANOVA
+## Two-Way ANOVA
 
 .small[
 
@@ -1186,7 +1185,7 @@ aov <- lm(Y ~ X + Z, data)
 ```
 ]
 ---
-## Challenge 2 ![:cube]()
+# Challenge 2 ![:cube]()
 
 Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
 
@@ -1197,9 +1196,9 @@ Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
 .comment[where `A` is your first factor, `B` is your second and `*` is the interaction term in `R`].
 
 ---
-### Challenge 2 - Solution ![:cube]()
+## Challenge 2 - Solution ![:cube]()
 
-.small[
+.xsmall[
 ```{r}
 anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data = bird)
 summary(anov2)
@@ -1207,9 +1206,9 @@ summary(anov2)
 ]
 
 ---
-## Challenge 2 - Solution ![:cube]()
+# Challenge 2 - Solution ![:cube]()
 
-.small[
+.xsmall[
 ```{r}
 anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data = bird)
 anova(anov2)
@@ -1225,7 +1224,7 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ```
 
 ---
-## Learning objectives
+# Learning objectives
 
 .center[
 ![:scale 100%](images/schema_ancova.png)
@@ -1234,12 +1233,12 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ---
 class: inverse, center, middle
 
-# ANCOVA 
+# ANCOVA
 
 ## Analysis of Covariance
 
 ---
-## Analysis of Covariance (ANCOVA)
+# Analysis of Covariance (ANCOVA)
 
 Here, consider the following:
 $$Y = X * Z$$
@@ -1258,7 +1257,7 @@ $$Y = \mu + \text{Main Effects of Factors} + \\
             \text{Interactions between covariates and factors} + \epsilon$$
 
 ---
-## Review: ANCOVA
+# Review: ANCOVA
 
 #### Assumptions ####
 
@@ -1276,7 +1275,7 @@ In addition to the other assumptions of linear models, **ANCOVA** must have:
 .small[.comment[*[Workshop 6](aa) will cover linear-mixed effects models.*]]
 
 ---
-## Types of ANCOVA
+# Types of ANCOVA
 
 You can have any number of factors and/or covariates, but as their number increases, the interpretation of results gets more complex.
 
@@ -1291,7 +1290,7 @@ Frequently used ANCOVA models:
 .small[.comment[We will only see the first case today, but this will help you understand the other two kinds!]]
 
 ---
-## ANCOVA with 1 covariate and 1 factor
+# ANCOVA with 1 covariate and 1 factor
 
 To imagine possible goals of this analysis, you may be interested in the:
 
@@ -1304,7 +1303,7 @@ To imagine possible goals of this analysis, you may be interested in the:
 .center[.alert[You can only meet these goals if your factor and your covariate are not related!]]
 
 ---
-## ANCOVA with 1 covariate and 1 factor
+# ANCOVA with 1 covariate and 1 factor
 
 <br>
 
@@ -1345,7 +1344,7 @@ mtext('No interaction', side = 3, line = 2, cex = 1.5)
 
 
 ---
-## ANCOVA: adjusted mean comparisons
+# ANCOVA: adjusted mean comparisons
 
 To compare the mean values of each factor, conditional on the effect of the other
 
@@ -1353,7 +1352,7 @@ The `effects::effect()` function uses the output of the ANCOVA model to estimate
 
 .small[
 ```{r eval=FALSE, warning=FALSE}
-ancova.example <- lm(Y ~ X*Z, data=data) 
+ancova.example <- lm(Y ~ X*Z, data=data)
 # X = quantitative; Z = categorical
 
 library(effects)
@@ -1377,7 +1376,7 @@ mtext(c('Level 1', 'Level 2'), 1, at = 1:2, line = 0.5) # add labels to ticks
 ```
 
 ---
-## ANCOVA with 1 covariate and 1 factor
+# ANCOVA with 1 covariate and 1 factor
 
 When parsimoniality is the way to go:
 
@@ -1390,11 +1389,11 @@ When parsimoniality is the way to go:
 - This is very similar to what we have done so far!
 
 ---
-## Running an ANCOVA in R
+# Running an ANCOVA in R
 
 ##### Is `MaxAbund` a function of `Diet` and `Mass`?
 
-Response variable: **MaxAbund** 
+Response variable: **MaxAbund**
 ![:faic](arrow-right) num : quantitative continuous
 
 Explanatory variables:
@@ -1406,7 +1405,7 @@ str(bird)
 ```
 
 ---
-## Challenge 3 ![:cube]()
+# Challenge 3 ![:cube]()
 
   1. Use an ANCOVA to test the effect of `Diet` and `Mass` (as well as their interaction) on `MaxAbund`
 ```{r eval=FALSE}
@@ -1421,7 +1420,7 @@ summary(ancova.example2)
 ```
 
 ---
-## Challenge 3 - Solution ![:cube]()
+# Challenge 3 - Solution ![:cube]()
 
 <br>
 .small[
@@ -1435,7 +1434,7 @@ anova(ancov1)
 .comment[Interaction between `logMass` and `Diet` is non-significant]
 
 ---
-## Challenge 3 - Solution ![:cube]()
+# Challenge 3 - Solution ![:cube]()
 
 Remove the interaction term and re-evaluate the model (with only the main effects of `Diet` and `logMass`).
 
@@ -1446,7 +1445,7 @@ anova(ancov2)
 ```
 
 ---
-## Learning objectives
+# Learning objectives
 
 .center[
 ![:scale 100%](images/schema_multReg.png)
@@ -1458,7 +1457,7 @@ class: inverse, center, middle
 # Multiple linear regression
 
 ---
-## Multiple linear regression
+# Multiple linear regression
 
 .center[
 $$Y_i = \alpha + \beta_1x_{1i}+\beta_2x_{2i}+\beta_3x_{3i}+...+\beta_kx_{ki} + \epsilon$$
@@ -1488,7 +1487,7 @@ If variables are colinear:
 3. Try a pseudo-orthogonal analysis.
 ]
 ---
-##  Multiple linear regression in R
+#  Multiple linear regression in R
 
 Using the `Dickcissel` datast to test effect of climate (`clTma`), productivity (`NDVI`) and grassland cover (`grass`) on bird abundance (`abund`):
 
@@ -1500,7 +1499,7 @@ str(Dickcissel)
 ]
 
 ---
-## Verify assumptions!
+# Verify assumptions!
 
 .small[
 Collinearity:
@@ -1509,7 +1508,7 @@ Collinearity:
 .pull-left[
 ```{r, fig.height=6, fig.width=7}
 # select variables
-var <- c('clTma', 'NDVI', 
+var <- c('clTma', 'NDVI',
          'grass', 'abund')
 plot(Dickcissel[, var])
 ```
@@ -1524,7 +1523,7 @@ They are likely to explain the same variability of the response variable and the
 ]]]
 
 ---
-## Multiple linear regression in R
+# Multiple linear regression in R
 .small[
 Run a multiple linear regression with `abund` as a function of `clTma + NDVI + grass`.
 
@@ -1542,7 +1541,7 @@ plot(lm.mult)
 ```
 ]]
 ---
-## Multiple linear regression in R
+# Multiple linear regression in R
 .small[
 Run the multiple linear regression in R with `abund` as a function of `clTma + NDVI + grass`.
 
@@ -1553,7 +1552,7 @@ summary(lm.mult)
 ]
 
 ---
-## Multiple linear regression in R
+# Multiple linear regression in R
 
 Verify diagnostic plots, as you have done for the simple linear regression.
 
@@ -1564,7 +1563,7 @@ plot(lm.mult)
 ```
 
 ---
-## Find the best-fit model
+# Find the best-fit model
 
 Recall the principle of parsimony: we want to explain the most of the variance using the least number of terms as possible.
 
@@ -1583,7 +1582,7 @@ Model explains ~11% of the dickcissel variance ($R²_{adj}$ = 0.11).
 ]]]
 
 ---
-## Find the best-fit model
+# Find the best-fit model
 
 However, the response variable `abund` is not linearly related to the explanatory variables.
 
@@ -1604,7 +1603,7 @@ class: inverse, center, middle
 ## *if time and disposition allows*
 
 ---
-## Optional section
+# Optional section
 
 1. Stepwise regression
 2. Interpreting contrasts
@@ -1648,7 +1647,7 @@ lm.step <- step(lm.full)
 ]
 
 ---
-## Stepwise regression
+# Stepwise regression
 
 .pull-left[
 .tiny[
@@ -1674,7 +1673,7 @@ class: inverse, center, middle
 # Interpreting contrasts
 
 ---
-## Interpreting contrasts
+# Interpreting contrasts
 
 DEFAULT: contrast compares each level of a factor to baseline level
 
@@ -1692,7 +1691,7 @@ coef(anov1)[1] + coef(anov1)[3] # Plant
 .comment[What did you notice?]
 
 ---
-## Interpreting contrasts
+# Interpreting contrasts
 
 We may want to relevel the baseline:
 
@@ -1718,7 +1717,7 @@ anova(anov2)
 .comment[Did you see change in the significance of each Diet level?]
 
 ---
-## Interpreting contrasts
+# Interpreting contrasts
 
 .comment[NOTE: the DEFAULT contrast `contr.treatment` is NOT orthogonal]
 
@@ -1732,7 +1731,7 @@ sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
 ---
-## Interpreting contrasts
+# Interpreting contrasts
 
 Change the contrast to make levels orthogonal (e.g. Helmert contrast will contrast the second level with the first, the third with the average of the first two, and so on)
 
@@ -1756,7 +1755,7 @@ class: inverse, center, middle
 # Unbalanced ANOVA
 
 ---
-## Unbalanced ANOVA
+# Unbalanced ANOVA
 
 The `birdsdiet` data is actually unbalanced (number of `Aquatic` and `non-Aquatic` is not equal)
 
@@ -1772,7 +1771,7 @@ unb.anov2 <- lm(logMaxAbund ~ Diet + Aquatic, data = bird)
 ```
 
 ---
-## Unbalanced ANOVA
+# Unbalanced ANOVA
 
 ```{r}
 anova(unb.anov1)
@@ -1783,7 +1782,7 @@ anova(unb.anov2)
 ```
 
 ---
-## Unbalanced ANOVA
+# Unbalanced ANOVA
 
 Now try type III ANOVA using the `Anova()` function
 
@@ -1808,7 +1807,7 @@ class: inverse, center, middle
 # Polynomial regression
 
 ---
-## Polynomial regression
+# Polynomial regression
 
 As we noticed in the section on **multiple linear regression**, `MaxAbund` was non-linearly related to some variables
 
@@ -1821,7 +1820,7 @@ To test for non-linear relationships, polynomial models of different degrees are
 .comment[this polynomial has 3 terms]
 
 ---
-## Polynomial regression
+# Polynomial regression
 
 For a polynomial with one variable (x), the *degree* is the largest exponent of that variable
 
@@ -1830,7 +1829,7 @@ For a polynomial with one variable (x), the *degree* is the largest exponent of 
 $$2x^\overbrace{4} + 3x - 2$$
 
 ---
-## Polynomial regression
+# Polynomial regression
 
 When you know a degree, you can also give it a name
 
@@ -1849,7 +1848,7 @@ knitr::kable(poly.reg, format = "html", escape=FALSE)
 ```
 
 ---
-## Polynomial regression
+# Polynomial regression
 
 Using the `Dickcissel` dataset, test the non-linear relationship between max abundance and temperature by comparing three sets of nested polynomial models (of degrees 0, 1, and 3):
 
@@ -1863,13 +1862,13 @@ summ_lm.cubic <- capture.output(summary(lm.cubic))[c(9:14, 17, 18)]
 ```
 
 ---
-## Polynomial regression
+# Polynomial regression
 
 - Compare the polynomial models and determine which nested model we should keep
 - Run a summary of this model, report the regression formula, p-values and $R^2$-adj
 
 ---
-## Polynomial regression
+# Polynomial regression
 
 Compare the polynomial models; .comment[which nested model we should keep?]
 
@@ -1893,7 +1892,7 @@ class: inverse, center, middle
 # Variance Partitioning
 
 ---
-## Variance Partitioning
+# Variance Partitioning
 
 Some of the selected explanatory variables in the **multiple linear regression** section were highly correlated
 
@@ -1906,7 +1905,7 @@ car::vif(mod)
 ```
 
 ---
-## Variance Partitioning
+# Variance Partitioning
 
 Use `varpart()` to partition the variance in max abundance with all land cover variables in one set and all climate variables in the other set (leaving out NDVI)
 
@@ -1925,7 +1924,7 @@ part.lm
 ]
 
 ---
-## Variance Partitioning
+# Variance Partitioning
 
 .pull-left[
 ```{r,fig.height=4,echo=-1}
@@ -1956,7 +1955,7 @@ plot(part.lm,
 .small[.comment[Proportion of variance explained by climate alone is 28.5% (given by X1|X2), by land cover alone is ~0% (X2|X1), and by both combined is 2.4%]]
 
 ---
-## Variance Partitioning
+# Variance Partitioning
 
 Test significance of each fraction
 
@@ -1985,7 +1984,7 @@ out.2 = rda(Dickcissel$abund,
 ```
 
 ---
-## Variance Partitioning
+# Variance Partitioning
 
 .pull-left[
 .small[
@@ -2010,4 +2009,4 @@ class: inverse, center, bottom
 
 # Thank you for attending!
 
-![:scale 50%](images/QCBS_logo.png)
+![:scale 50%](images/qcbs_logo.png)
