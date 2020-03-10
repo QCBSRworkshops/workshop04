@@ -14,8 +14,8 @@ cache:
     - $HOME/bin
 
 script:
-  - Rscript --no-init-file -e "qcbsRworkshops::build_workshops()"
-
+  - Rscript -e "qcbsRworkshops::build_workshops(update_template = TRUE, pdf = TRUE, script = TRUE)"
+  
 before_deploy:
   - mkdir public
   - cp README.md public
