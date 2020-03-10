@@ -14,7 +14,7 @@ output:
 
 ---
 
-```{r setup, echo = F}
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
   comment = "#",
   collapse = TRUE,
@@ -55,8 +55,7 @@ class: inverse, center, middle
 ## mean and variation
 
 ---
-
-## Mean
+# Mean
 
 Mean is a measure of the average value of a population (*x*):
 
@@ -886,6 +885,8 @@ uni.ttest1
 
 Yes, aquatic birds are heavier than terrestrial birds: p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
 
+
+
 ---
 class: inverse, center, middle
 
@@ -1003,6 +1004,10 @@ bartlett.test(logMaxAbund ~ Diet, data = bird)
 ```
 ]
 
+---
+# Did we violate the model assumptions?
+
+
 **Levene's test** of homogeneity of variances:
 
 .small[
@@ -1013,6 +1018,10 @@ leveneTest(logMaxAbund ~ Diet, data = bird)
 ]
 
 .comment[Levene's test performs better, but has a slightly higher Type II error.]
+
+
+---
+# Did we violate the model assumptions?
 
 *Are the model residuals normally distributed?*
 
@@ -1057,9 +1066,9 @@ summary(anov1)
 
 Factor levels in alphabetical order and all levels are compared to the reference level (`Insect`).
 ]
----
 
-## Output of our ANOVA model
+---
+# Output of our ANOVA model
 
 On the other hand, if `lm()` is used:
 
@@ -1617,8 +1626,7 @@ class: inverse, center, middle
 # Stepwise regression
 
 ---
-
-### Stepwise regression
+## Stepwise regression
 
 .small[
 Run a model with everything in except the `Present` variable.

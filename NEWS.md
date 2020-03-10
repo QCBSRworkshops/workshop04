@@ -1,3 +1,7 @@
+# version 0.1.0.9000
+
+* update readme 
+
 # version 0.1.0
 
 * Use `first_slides()` from the helper package to generate the 2 first slides.

@@ -40,7 +40,7 @@ cat(
 
 # Objectifs d'apprentissage
 
-### Faire un t-test avec R 
+### Faire un t-test avec R
 
 ### Utiliser `lm()` pour faire un modèle linéaire avec R
 
@@ -57,8 +57,7 @@ class: inverse, center, middle
 ## Définir la moyenne et la variation
 
 ---
-
-## Moyenne
+# Moyenne
 
 La moyenne est une mesure de la valeur moyenne d'une population (*x*):
 
