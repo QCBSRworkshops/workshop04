@@ -1,6 +1,6 @@
 language: r
 pandoc_version: 2.2.1
-dist: trusty
+dist: bionic
 sudo: required
 
 branches:
@@ -15,7 +15,7 @@ cache:
 
 script:
   - Rscript -e "qcbsRworkshops::build_workshops(update_template = TRUE, pdf = TRUE, script = TRUE)"
-  
+
 before_deploy:
   - mkdir public
   - cp README.md public
