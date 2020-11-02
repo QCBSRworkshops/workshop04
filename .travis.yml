@@ -25,7 +25,7 @@ deploy:
   provider: pages
   token: $GH_TOKEN
   strategy: git 
-  cleanup: false
+  skip_cleanup: true
   keep_history: false
   target_branch: master
   local_dir: public
