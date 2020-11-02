@@ -268,12 +268,12 @@ lm1 <- lm(Y~X)
 
 Télécharger les donées <span style="color:blue"> *birdsdiet* </span>:
 
-```{r, eval=TRUE, echo=FALSE}
-bird <- read.csv("data/birdsdiet.csv")
+```{r, eval = TRUE, echo = FALSE}
+bird <- read.csv("data/birdsdiet.csv", stringsAsFactors = TRUE)
 ```
 
 ```{r, eval = FALSE}
-bird <- read.csv("birdsdiet.csv")
+bird <- read.csv("birdsdiet.csv", stringsAsFactors = TRUE)
 ```
 
 Visualisez le tableau de la structure des données en utilisant la fonction `str()` :
@@ -778,12 +778,12 @@ class: inverse, center, middle
 Vous pouvez utiliser la fonction `t.test()`
 
 ```r
-t.test(Y~X2, data= data, alternative = "two.sided")
+t.test(Y ~ X2, data= data, alternative = "two.sided")
 ```
 
   - `Y`: variable réponse
   - `X2`: facteur (2 niveaux)
-  - `data`: nom du jeu de donées
+  - `data`: nom du jeu de données
   - hypothèse `alternative` : `"two.sided"` (par défaut), `"less"`, ou `"greater"`
 
 Le test de t est un modèle linéaire et un cas spécifique de l'ANOVA avec un facteur à 2 niveaux
@@ -791,7 +791,7 @@ Le test de t est un modèle linéaire et un cas spécifique de l'ANOVA avec un f
 Vous pouvez donc aussi utiliser la fonction `lm()`
 
 ```r
-lm.t <-lm(Y~X2, data = data)
+lm.t < -lm(Y ~ X2, data = data)
 anova(lm.t)
 ```
 
@@ -949,8 +949,8 @@ boxplot(logMaxAbund ~ Diet, data = bird,
 
 Nous pouvons changer l'ordre des niveaux afin qu'il suivent l'ordre croissant de leurs médianes respectives en utilisant les fonctions `tapply()` et `sort()`
 
-```{r, fig.height=4.5, fig.width=7, echo=-1}
-par(mar=c(4,4,.1,1))
+```{r, fig.height = 4.5, fig.width = 7, echo = -1}
+par(mar = c(4, 4, .1, 1))
 med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
         ylab = expression("log"[10]*"(Abondance maximale)"), xlab = 'Régime alimentaire')
@@ -964,8 +964,8 @@ Une autre façon de visualiser graphiquement les tailles d’effet est d’utili
 
 .small[
 ```{r, fig.height=3.8, fig.width=6, echo=-1}
-par(mar=c(4,4,.4,1))
-plot.design(logMaxAbund ~ Diet, data=bird,
+par(mar = c(4,4,.4,1))
+plot.design(logMaxAbund ~ Diet, data = bird,
   ylab = expression("log"[10]*"(Abondance maximale)"))
 ```
 ]

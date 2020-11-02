@@ -267,11 +267,11 @@ lm1 <- lm(Y~X)
 Download the <span style="color:blue"> *birdsdiet* </span> dataset:
 
 ```{r, eval=TRUE, echo=FALSE}
-bird <- read.csv("data/birdsdiet.csv")
+bird <- read.csv("data/birdsdiet.csv", stringsAsFactors = TRUE)
 ```
 
 ```{r, eval = FALSE}
-bird <- read.csv("birdsdiet.csv")
+bird <- read.csv("birdsdiet.csv", stringsAsFactors = TRUE)
 ```
 
 Visualize the data using the structure `str()` command:
