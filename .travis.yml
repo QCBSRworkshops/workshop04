@@ -1,7 +1,7 @@
 language: r
-pandoc_version: 2.2.1
+pandoc_version: 2.9.2
+os: linux
 dist: focal
-sudo: required
 
 branches:
   only:
@@ -9,7 +9,7 @@ branches:
     - master
 
 cache:
-  packages: yes
+  packages: true
   directories:
     - $HOME/bin
 
@@ -23,9 +23,10 @@ before_deploy:
 
 deploy:
   provider: pages
-  skip_cleanup: true
-  github_token: $GH_TOKEN
-  keep_history: true
+  token: $GH_TOKEN
+  strategy: git 
+  cleanup: false
+  keep_history: false
   target_branch: master
   local_dir: public
   on:

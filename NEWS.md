@@ -1,6 +1,7 @@
 # version 0.1.0.9000
 
-* update readme 
+* update travis CI file.
+* update README.
 
 # version 0.1.0
 

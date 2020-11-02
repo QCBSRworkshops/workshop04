@@ -3,7 +3,7 @@ Type: Tutorial
 Title: QCBS R Workshop 04
 Version: 0.1.0.9000
 Authors@R: c(
-  person("Team", "QCBS", role = c("aut", "cre"), email = "kevin.cazelles@gmail.com")
+  person("Team", "QCBS", role = c("aut", "cre"), email = "qcbs.csbq.r@gmail.com")
   )
 Imports:
   car,
