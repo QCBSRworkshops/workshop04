@@ -32,7 +32,7 @@ class: inverse, center, middle
 
 ```{R install_pkgs, echo = FALSE, results = "asis"}
 cat(
-  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car'), lang = "fr")
+  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect'), lang = "fr")
 )
 ```
 
@@ -60,6 +60,10 @@ class: inverse, center, middle
 La moyenne est une mesure de la valeur moyenne d'une population (*x*):
 
 $$\bar{x} = \frac{1}{N} \sum_{i=1}^{n} x_{i}$$
+
+
+
+.comment[Les notations mathémathiques sont rarement utilisées dans R et sont souvent différentes. Par  exemple, en mathématique, *x* représente la population à l'étude. Dans R, *X* représente habituellement un objec en utilisation au sein d'une fonction, ou fait référence à un axe d'un graphique. Faites attention de bein comprendre la notation utilisée lorsque vous roulez une fonction.]
 
 ---
 # Variation

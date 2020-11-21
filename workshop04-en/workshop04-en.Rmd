@@ -32,7 +32,7 @@ class: inverse, center, middle
 
 ```{R install_pkgs, echo = FALSE, results = "asis"}
 cat(
-  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car'))
+  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect'))
 )
 ```
 
@@ -60,7 +60,10 @@ class: inverse, center, middle
 Mean is a measure of the average value of a population (*x*):
 
 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
-.comment[Mathematical notations are not usually used within R. For example in mathematical notation, *x* represents the population. In R, *X* usually represents an object to be use in a formula, or an axis when making plots.]
+
+
+
+.comment[Mathematical notations are not usually used within R and are often different. For example, in mathematical notation, *x* represents the population. In R, *X* usually represents an object to be use in a function, or an axis when making plots. Make sur you understand the notation you are using before running a function.]
 
 ---
 # Variation
