@@ -1,7 +1,7 @@
 ---
 title: "Workshop 4: Linear models"
 subtitle: "QCBS R Workshop Series"
-author: "Québec Centre for Biodiversity Science"
+author: "Quebec Centre for Biodiversity Science"
 output:
   xaringan::moon_reader:
     includes:
@@ -60,6 +60,7 @@ class: inverse, center, middle
 Mean is a measure of the average value of a population (*x*):
 
 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
+.comment[Mathematical notations are not usually used within R. For example in mathematical notation, *x* represents the population. In R, *X* usually represents an object to be use in a formula, or an axis when making plots.]
 
 ---
 # Variation
@@ -86,7 +87,7 @@ $$D_{i} = |x_{i} - \bar{x}|$$
 $$D = \frac{1}{n} \sum_{i=1}^{n} |x_{i} - \bar{x}|$$
 --
 
-Instead of absolute values, we can also square the value, giving the **variation**:
+Instead of absolute values, we can also square the value, giving the **variance**:
 
 $$V = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
 
@@ -95,7 +96,7 @@ $$V = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
 
 But by squaring each value, our variables are no longer in meaningful units
 
-So we just root square the **variation** ( $V$ ), giving the **standard variation**:
+So we just root square the **variance** ( $V$ ), giving the **standard deviation**:
 
 $$\sigma = \sqrt{V}$$
 --
