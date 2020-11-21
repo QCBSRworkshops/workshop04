@@ -46,8 +46,6 @@ cat(
 
 ### Utiliser `anova()` pour réaliser une analyse de variance avec R
 
-
-
 ---
 
 class: inverse, center, middle
@@ -221,19 +219,19 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 .small[
 **Étape 1**. Exécuter votre modèle linéaire
 
-**Étape 2**. Vérifier les suppositions
+**Étape 2**. Vérifier les conditions d'application
 ]
 
 <br>
 
 .pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
 
-.pull-left[.center[*Suppositions sont satisfaites ?*]
+.pull-left[.center[*Conditions sont satisfaites ?*]
 
 .small[**Étape 3**. Estimer les paramètres de régression, test de signification, tracer votre modèle
 ]]
 
-.pull-right[.center[*Suppositions non satisfaites ?*]
+.pull-right[.center[*Conditions non satisfaites ?*]
 
 .small[*Pouvez-vous transformer vos variables (est-ce justifié) ?*]
 
@@ -302,7 +300,7 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 ---
 # Exécution du modèle linéaire dans R
 
-**Étape 2**. Vérifier les suppositions avec les graphiques diagnostics
+**Étape 2**. Vérifier les conditions d'application avec les graphiques diagnostics
 
 ```{r, eval=FALSE}
 opar <- par(mfrow=c(2,2))
@@ -491,7 +489,7 @@ plot(lm, which = 5)
 .alert[Vous ne devriez jamais supprimer les valeurs aberrantes si vous n'avez pas de bonnes raisons de le faire (ex: erreur de mesure)]
 
 ---
-# **Étape 2**. Vérifier les suppositions de `lm1`
+# **Étape 2**. Vérifier les conditions d'application de `lm1`
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
@@ -499,7 +497,7 @@ plot(lm1)
 ```
 
 ---
-# Suppositions non-respectées - quelle est la cause?
+# conditions d'applications non-respectées - quelle est la cause?
 
 Traçons le graphique Y ~ X avec la droite de régression et les histogrammes de Y et X pour explorer leurs distributions
 
@@ -514,7 +512,7 @@ hist(bird$Mass)
 ]
 
 ---
-# Suppositions non-respectées - quelle est la cause?
+# conditions d'applications non-respectées - quelle est la cause?
 
 Vérifions la normalité des données à l'aide d'un test de `Shapiro-Wilk` et d'un test d'asymétrie (**`skewness`**) :
 
@@ -526,7 +524,7 @@ shapiro.test(bird$Mass)
 ]
 
 ---
-# Suppositions non-respectées - quelle est la cause?
+# conditions d'applications non-respectées - quelle est la cause?
 
 Vérifions la normalité des données à l'aide d'un test de `Shapiro-Wilk` et d'un test d'asymétrie (**`skewness`**) :
 
@@ -555,7 +553,7 @@ lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ```
 
 ---
-# **Étape 2**: Vérifier les suppositions de `lm2`
+# **Étape 2**: Vérifier les conditions d'applications de `lm2`
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
@@ -565,7 +563,7 @@ plot(lm2)
 .comment[.center[Beaucoup mieux !]]
 
 ---
-# **Étape 2**: Vérifier les suppositions de `lm2`
+# **Étape 2**: Vérifier les conditions d'applications de `lm2`
 
 ```{r, echo=-1, fig.height=4, fig.width=11}
 par(mfrow=c(1,3), mar=c(4,4,1.15,1.2))
@@ -766,7 +764,7 @@ class: inverse, center, middle
 - **Variable réponse** ![:faic](arrow-right) quantitative
 - **Variable explicative** ![:faic](arrow-right) qualitative avec **2 niveaux**
 
-**Suppositions**
+**conditions d'applications**
 - Les résidus suivent une distribution normale
 - Les variances des groupes sont homogènes
 
@@ -864,10 +862,10 @@ ttest1
 .small[.comment[Regardez les moyennes des 2 groupes]]
 
 ---
-# Non respect des suppositions
+# Non respect des conditions d'applications
 
 - **Correction de Welch** : lorsque les écarts entre les groupes ne sont pas égaux (par défaut dans R !)
-- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les suppositions ne sont pas respectées
+- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les conditions d'applications ne sont pas respectées
 - **Test de t apparié** : lorsque les deux groupes ne sont **pas indépendants** (par exemple, des mesures sur la même personne récoltées lors de 2 années différentes)
 
 ---
@@ -914,7 +912,7 @@ $$Y = \underbrace{\mu}_{\Large{\text{moyenne globale de la variable réponse}\at
 ---
 # Rappel : ANOVA
 
-Suppositions
+conditions d'applications
 - Normalité des résidus
 - L'égalité de la variance inter-groupes
 
@@ -1006,7 +1004,7 @@ summary(aov1)
 ```
 
 ---
-# Vérifier les suppositions
+# Vérifier les conditions d'application
 
 **Test de Bartlett**: égalité de la variance entre les groupes
 
@@ -1015,6 +1013,23 @@ summary(aov1)
 bartlett.test(logMaxAbund ~ Diet, data = bird)
 ```
 ]
+---
+# Vérifier les conditions d'application
+
+
+**Test de Levene** pour l'homog�n�it� de la variance:
+
+.small[
+```{r}
+library(car)
+leveneTest(logMaxAbund ~ Diet, data = bird)
+```
+]
+
+.comment[Le test de Levene performe mieux, mais a une erreur de Type II un peu plus �lev�e.]
+
+---
+#Vérifier les conditions d'application
 
 **Test de Shapiro-Wilk**:  normalité des résidus
 
@@ -1027,7 +1042,7 @@ shapiro.test(resid(anov1))
 .comment[Les deux tests sont non-significatifs; les résidus du modèle peuvent être considérés normaux et les variances homogènes]
 
 ---
-# Et si les suppositions ne sont pas respectées...
+# Et si les conditions d'applications ne sont pas respectées...
 
 **Transformer vos données** : pourrait égaliser les variances et normaliser les résidus, et peut convertir un effet multiplicatif en un effet additif
 
@@ -1226,7 +1241,7 @@ $$Y = \mu + \text{Effets principaux des facteurs} + \\
 ---
 # Rappel : ANCOVA
 
-En plus des suppositions des modèles linéaires, les modèles **ANCOVA** doivent respecter :
+En plus des conditions d'applications des modèles linéaires, les modèles **ANCOVA** doivent respecter :
 
 - Les covariables ont toutes la **même étendue de valeurs**
 - Les variables sont **fixes**
@@ -1346,7 +1361,7 @@ mtext(c('Level 1', 'Level 2'), 1, at = 1:2, line = 0.5) # add labels to ticks
 - Si seulement votre covariable est significative, éliminer le facteur -> vous avez une **régression linéaire simple**
 - Si votre interaction covariable * facteur est significative, vous voudrez peut-être tester quel(s) niveau(x) du facteur a(ont) des pentes différentes
 
-.alert[Vérifier vos suppositions ! ]
+.alert[Vérifier vos conditions d'applications ! ]
 
 - Très similaire à ce que vous avez fait précédemment
 
@@ -1429,7 +1444,7 @@ Il s'agit d'une généralisation de la régression linéaire simple
 
 $$Y_i = \alpha + \beta_1x_{1i}+\beta_2x_{2i}+\beta_3x_{3i}+...+\beta_kx_{ki} + \epsilon$$
 
-Suppositions (.small[*En plus des suppositions habituelles des modèles linéaires*])
+conditions d'applications (.small[*En plus des conditions d'applications habituelles des modèles linéaires*])
 - La relation entre chaque variable explicative et la variable réponse est de type linéaire
 - Les variables explicatives sont orthogonales (pas de colinéarité)
 
@@ -1451,7 +1466,7 @@ str(Dickcissel)
 ]
 
 ---
-# Vérifier les suppositions
+# Vérifier les conditions d'applications
 
 La colinéarité :
 - Vérifier la colinéarité de toutes les variables explicatives et d'intérêt
@@ -1483,7 +1498,7 @@ lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
 summary(lm.mult)
 ```
 
-Vérifiez les autres suppositions, comme pour la régression linéaire simple
+Vérifiez les autres conditions d'applications, comme pour la régression linéaire simple
 
 ```{r,eval=FALSE,echo=-2}
 par(mfrow = c(2, 2))
@@ -1506,7 +1521,7 @@ summary(lm.mult)
 ---
 # Régression linéaire multiple dans R
 
-Vérifiez les autres suppositions, comme pour la régression linéaire simple
+Vérifiez les autres conditions d'applications, comme pour la régression linéaire simple
 
 ```{r, fig.height=5.5, fig.width=8,echo=-2}
 par(mfrow = c(2, 2))
