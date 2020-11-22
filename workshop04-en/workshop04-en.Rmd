@@ -220,6 +220,8 @@ This method assumes that each point are drawn for a normal distribution, its mea
 - $R^2 = \frac{V_R}{V_T}$
 ]
 
+??? Presenter notes: EACH point is drawn from its own normal distribution, represented by the histograms on the graph. By looking at the relationship between the mean (linear relationship) and the observations, we can calculate multiple values (e.g. the error) that allows us to create de model.
+
 ---
 # Running a regression in R
 
@@ -1621,18 +1623,19 @@ class: inverse, center, middle
 ---
 # Optional section
 
-1. Stepwise regression
-2. Interpreting contrasts
-3. Unbalanced ANOVA
-4. Polynomial regression
-5. Variance partitioning
+1. Interpreting contrasts
+2. Unbalanced ANOVA
+3. Polynomial regression
+4. Variance partitioning
 
 ---
+exclude:true
 class: inverse, center, middle
 
 # Stepwise regression
 
 ---
+exclude:true
 ## Stepwise regression
 
 .small[
@@ -1662,6 +1665,7 @@ lm.step <- step(lm.full)
 ]
 
 ---
+exclude:true
 # Stepwise regression
 
 .pull-left[
@@ -1690,11 +1694,11 @@ class: inverse, center, middle
 ---
 # Interpreting contrasts
 
-DEFAULT: contrast compares each level of a factor to baseline level
+Contrasts compare each level of a factor to a baseline level. We can determine if each level of a factor are significantly different from each other.
 
-The intercept is the baseline group and corresponds to the mean of the first (alphabetically) Diet level (`Insect`)
+--
 
-Add Intercept + coefficient estimates of each Diet level
+The *intercept* is the baseline group and corresponds to the mean of the first (alphabetically) Diet level (`Insect`). **Add Intercept + coefficient estimates of each Diet level**
 
 ```{r}
 tapply(bird$logMaxAbund, bird$Diet, mean)
@@ -1745,6 +1749,8 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
+???Presenter notes:Two contrasts are orthogonal if the sum of the products of their coefficients is null. 
+
 ---
 # Interpreting contrasts
 
@@ -1772,6 +1778,8 @@ class: inverse, center, middle
 ---
 # Unbalanced ANOVA
 
+A dataset is considered unbalanced when the sample sizes of two factor levels are not equal.
+
 The `birdsdiet` data is actually unbalanced (number of `Aquatic` and `non-Aquatic` is not equal)
 
 ```{r}
@@ -1795,6 +1803,20 @@ anova(unb.anov1)
 ```{r}
 anova(unb.anov2)
 ```
+---
+# Unbalanced ANOVA
+
+To fix this problem, we can use a different approach to test the effects of each predictor.
+
+**Type I** : Tests the effects in sequence, starting with the first predictor.
+
+**Type II**: Tests for the presence of a main effect after the other main effect.
+
+**Type III**: Tests for the presence of a main effect after the other main effect and interaction. 
+
+.comment[Type I is the default type used in R which creates our problem with unbalanced data.]
+
+.alert[If you are considering using Type II or III for your own dataset, you should read more about the subject. You can start with this] [**link**](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
 
 ---
 # Unbalanced ANOVA
@@ -1904,10 +1926,10 @@ print(summ_lm.cubic)
 ---
 class: inverse, center, middle
 
-# Variance Partitioning
+# Variation Partitioning
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 Some of the selected explanatory variables in the **multiple linear regression** section were highly correlated
 
@@ -1920,9 +1942,9 @@ car::vif(mod)
 ```
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
-Use `varpart()` to partition the variance in max abundance with all land cover variables in one set and all climate variables in the other set (leaving out NDVI)
+Use `varpart()` to partition the variation in max abundance with all land cover variables in one set and all climate variables in the other set (leaving out NDVI)
 
 .pull-left2[
 .tiny[
@@ -1939,7 +1961,7 @@ part.lm
 ]
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 .pull-left[
 ```{r,fig.height=4,echo=-1}
@@ -1970,7 +1992,7 @@ plot(part.lm,
 .small[.comment[Proportion of variance explained by climate alone is 28.5% (given by X1|X2), by land cover alone is ~0% (X2|X1), and by both combined is 2.4%]]
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 Test significance of each fraction
 
@@ -1999,7 +2021,7 @@ out.2 = rda(Dickcissel$abund,
 ```
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 .pull-left[
 .small[

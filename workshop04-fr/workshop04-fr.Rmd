@@ -219,6 +219,8 @@ Cette méthode assume que chaque point proviennent d'une distribution normale, l
 - $R^2 = \frac{V_R}{V_T}$
 ]
 
+???Note aux présentateurs: CHAQUE point est issu de sa propre distribution normal, représentée par les histogrammes sur le graphique. En étudiant la relation entre la moyenne (relation linéaire) et les observations (points), il est possible de calculer plusieurs types de valeurs permettant la création du modele.
+
 ---
 # Effectuer un modèle linéaire
 
@@ -1023,7 +1025,7 @@ bartlett.test(logMaxAbund ~ Diet, data = bird)
 # Vérifier les conditions d'application
 
 
-**Test de Levene** pour l'homog�n�it� de la variance:
+**Test de Levene** pour l'homogénéité de la variance:
 
 .small[
 ```{r}
@@ -1032,7 +1034,7 @@ leveneTest(logMaxAbund ~ Diet, data = bird)
 ```
 ]
 
-.comment[Le test de Levene performe mieux, mais a une erreur de Type II un peu plus �lev�e.]
+.comment[Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.]
 
 ---
 #Vérifier les conditions d'application
@@ -1579,18 +1581,21 @@ class: inverse, center, middle
 ---
 # Optionnel
 
-1. Régression pas à pas
-2. Interprétation des contrastes
-3. ANOVA non équilibrée
-4. Régression polynomiale
-5. Partitionnement de la variation
+1. Interprétation des contrastes
+2. ANOVA non équilibrée
+3. Régression polynomiale
+4. Partitionnement de la variation
 
 ---
+exclude:true
+
 class: inverse, center, middle
 
 # Régression pas à pas
 
 ---
+exclude:true
+
 # Régression pas à pas
 
 Exécuter un modèle avec tout dedans sauf les variables de "Présent/absence"
@@ -1612,6 +1617,8 @@ lm.step <- step(lm.full)
 ```
 
 ---
+exclude:true
+
 # Régression pas à pas
 
 .pull-left[
@@ -1641,7 +1648,7 @@ class: inverse, center, middle
 # Interprétation des contrastes
 
 .small[
-Par défaut, `contr.treatment` compare chaque niveau du facteur à un niveau de référence
+Les constrastes servent à comparer chaque niveau du facteur à un niveau de référence, et de détecter des différences significatives entre chaque niveau.
 
 L'estimation de l'ordonnée à l'origine est le niveau de référence et correspond à la moyenne du premier niveau (en ordre alphabétique) du facteur `Diet`
 
@@ -1695,6 +1702,8 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
+???Note aux présentateurs:Deux contrastes sont orthogonaux si la somme des produits de leurs coefficients est nulle. 
+
 ---
 # Interprétation des contrastes
 
@@ -1726,13 +1735,17 @@ class: inverse, center, middle
 ---
 # ANOVA non équilibrée
 
+Un jeu de données est considéré non équilibré lorsque le nombre d'échantillons entre deux niveaux n'est pas égal.
+
 Le jeu de données `Birdsdiet` est en réalité non équilibré (le nombre d'espèces aquatiques n'égale pas le nombre d'espèces non-aquatiques)
 
 ```{r}
 table(bird$Aquatic)
 ```
 
-L'ordre des covariables a changé la valeur de la somme des carrés
+Dans une telle situation, l'ordre des covariable affecte la calculation de la somme des carrés, et donc la valeur de `p`. 
+
+Testons-le avec le jeu de données `Birdsdet`.
 
 ```{r}
 unb.anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data = bird)
@@ -1751,6 +1764,22 @@ anova(unb.anov2)
 ```
 
 ---
+# ANOVA non équilibrée
+
+Afin de règler ce problème est de prendre une nouvelle approche pour tester les effets de chaque variable.
+
+**Type I** : Teste les effets en séquentiel, en débutant avec la première variable.
+
+**Type II**: Teste les effets de chaque facteur, mais après avoir tester l'autre facteur.
+
+**Type III**: Teste les effets de chaque facteur, mais après avoir tester l'autre facteur et l'intéraction.
+
+.comment[Le type I est celui par défault dans R et qui crée le problème avec des données non équilibré]
+
+.alert[Si vous considérez utiliser le Type II ou III avec vos propres données, vous devriez en lire plus sur le sujet avant de choisir. Vous pouvez commencer avec ce] [**lien**](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
+
+---
+
 # ANOVA non équilibrée
 
 Maintenant essayez une `Anova()` de type III
