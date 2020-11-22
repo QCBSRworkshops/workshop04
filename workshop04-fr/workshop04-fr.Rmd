@@ -137,7 +137,7 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - $β_p$ est le coefficient de variation de la $p^{ème}$ variable explicative
 - $x_{i1}$ est la variable explicative pour la $1^{ère}$ observation
 - $x_{ip}$ est la variable explicative pour la $p^{ème}$ observation
-- $ε_i$ sont les résidus du modèle (i.e. la variance inexpliquée)
+- $\epsilon_{i}$ sont les résidus du modèle (i.e. la variance inexpliquée)
 
 ---
 # Le but des modèles linéaires

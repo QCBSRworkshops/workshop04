@@ -137,7 +137,7 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - $β_p$ is the coefficient of variation for the *nth* explanatory variable
 - $x_{i1}$ is the first explanatory variable
 - $x_{ip}$ is the *nth* explanatory variable
-- $ε_i$ are the residuals of the model
+- $\epsilon_{i}$ are the residuals of the model
 
 ---
 # The goal of linear models
