@@ -61,9 +61,9 @@ Mean is a measure of the average value of a population (*x*):
 
 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
 
+.alert[Mathematical notations are not usually different from R notations.] 
 
-
-.comment[Mathematical notations are not usually used within R and are often different. For example, in mathematical notation, *x* represents the population. In R, *X* usually represents an object to be use in a function, or an axis when making plots. Make sur you understand the notation you are using before running a function.]
+.comment[For example, in mathematical notation, *x* represents the population. In R, *X* usually represents an object to be use in a function, or an axis when making plots. Make sur you understand the notation you are using before running a function.]
 
 ---
 # Variation
@@ -201,11 +201,14 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 ---
 # Least squares methods
 
+This method assumes that each point are drawn for a normal distribution, its mean being the linear predictor.
+
 .pull-left[
-.center[![:scale 80%](images/graph_lm.png)]
+.center[![:scale 75%](images/graph_lm.png)]
 ]
 
 .pull-right[
+
 **Assumptions**
 
 - $Y_i$ : Observed value (measured) at $X_i$

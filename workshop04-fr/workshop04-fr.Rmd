@@ -61,9 +61,9 @@ La moyenne est une mesure de la valeur moyenne d'une population (*x*):
 
 $$\bar{x} = \frac{1}{N} \sum_{i=1}^{n} x_{i}$$
 
+.alert[Les notations mathémathiques sont différentes des notations utilisées dans R .] 
 
-
-.comment[Les notations mathémathiques sont rarement utilisées dans R et sont souvent différentes. Par  exemple, en mathématique, *x* représente la population à l'étude. Dans R, *X* représente habituellement un objec en utilisation au sein d'une fonction, ou fait référence à un axe d'un graphique. Faites attention de bein comprendre la notation utilisée lorsque vous roulez une fonction.]
+.comment[Par  exemple, en mathématique, *x* représente la population à l'étude. Dans R, *X* représente habituellement un objec en utilisation au sein d'une fonction, ou fait référence à un axe d'un graphique. Faites attention de bein comprendre la notation utilisée lorsque vous roulez une fonction.]
 
 ---
 # Variation
@@ -200,6 +200,8 @@ $$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
 
 ---
 # Méthode des moindres carrés
+
+Cette méthode assume que chaque point proviennent d'une distribution normale, la moyenne de cette distribution étant la relation linéaire.
 
 .pull-left[
 .center[![:scale 80%](images/graph_lm.png)]
