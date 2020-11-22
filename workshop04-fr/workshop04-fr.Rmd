@@ -47,7 +47,9 @@ cat(
 ![:scale 80%](images/schema.png)
 ]
 
-???Note au présentateur: Ce shéma représente les différentes variantes d'un modèle linéaire qui sera présentées durant l'atelier.
+???
+
+Note au présentateur: Ce shéma représente les différentes variantes d'un modèle linéaire qui sera présentées durant l'atelier. 
 
 ---
 # Objectifs d'apprentissage
@@ -231,7 +233,9 @@ Cette méthode assume que chaque point proviennent d'une distribution normale, l
 - $R^2 = \frac{V_R}{V_T}$
 ]
 
-???Note aux présentateurs: CHAQUE point est issu de sa propre distribution normal, représentée par les histogrammes sur le graphique. En étudiant la relation entre la moyenne (relation linéaire) et les observations (points), il est possible de calculer plusieurs types de valeurs permettant la création du modele.
+???
+
+Note aux présentateurs: CHAQUE point est issu de sa propre distribution normal, représentée par les histogrammes sur le graphique. En étudiant la relation entre la moyenne (relation linéaire) et les observations (points), il est possible de calculer plusieurs types de valeurs permettant la création du modele.
 
 ---
 # Effectuer un modèle linéaire
@@ -1714,7 +1718,9 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
-???Note aux présentateurs:Deux contrastes sont orthogonaux si la somme des produits de leurs coefficients est nulle. 
+???
+
+Note aux présentateurs:Deux contrastes sont orthogonaux si la somme des produits de leurs coefficients est nulle. 
 
 ---
 # Interprétation des contrastes

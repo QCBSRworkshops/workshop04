@@ -47,6 +47,10 @@ cat(
 ![:scale 80%](images/schema.png)
 ]
 
+???
+
+Presenter notes: This flow chats represents all the variants of a linear modal that will be presented in this presentation.
+
 ---
 # Learning Objectives
 
@@ -230,7 +234,9 @@ This method assumes that each point are drawn for a normal distribution, its mea
 - $R^2 = \frac{V_R}{V_T}$
 ]
 
-??? Presenter notes: EACH point is drawn from its own normal distribution, represented by the histograms on the graph. By looking at the relationship between the mean (linear relationship) and the observations, we can calculate multiple values (e.g. the error) that allows us to create de model.
+???
+
+Presenter notes: EACH point is drawn from its own normal distribution, represented by the histograms on the graph. By looking at the relationship between the mean (linear relationship) and the observations, we can calculate multiple values (e.g. the error) that allows us to create de model.
 
 ---
 # Running a regression in R
@@ -1759,7 +1765,9 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
-???Presenter notes:Two contrasts are orthogonal if the sum of the products of their coefficients is null. 
+???
+
+Presenter notes:Two contrasts are orthogonal if the sum of the products of their coefficients is null. 
 
 ---
 # Interpreting contrasts
