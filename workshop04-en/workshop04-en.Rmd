@@ -39,12 +39,22 @@ cat(
 ---
 # Learning Objectives
 
-### Do a t-test with R
+-Learn the structure of a linear models and its *different variants*
 
-### Use `lm()` to perform a linear model with R
+--
 
-### Use `anova()` to do a analysis if variance
+.center[
+![:scale 80%](images/schema.png)
+]
 
+---
+# Learning Objectives
+
+-Learn the structure of a linear models and its different variants
+
+-Learn how to perform a linear model with R with `lm()` and `anova()`
+
+-Learn how to identify when assumptions are not met and ways to fix it
 
 ---
 
@@ -145,12 +155,12 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - The goal is to find the **best estimation** of the parameters (the $\beta$ variables) and then assess the goodness of fit of the model
 
 - Several methods to calculate the intercept and coefficients of linear models
-  - the appropriate choice depends on the kind of explanatory variables considered and their number
+  - the appropriate choice depends on the *types of explanatory variables* considered and *their number*
 
 .center[.large[The general concept behind these methods is that the residuals are minimized]]
 
 ---
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema.png)

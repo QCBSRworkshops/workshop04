@@ -37,14 +37,26 @@ cat(
 ```
 
 ---
-
 # Objectifs d'apprentissage
 
-### Faire un t-test avec R
+-Apprendre la structure d'un modèle linéaire et ses *différentes variantes*.
 
-### Utiliser `lm()` pour faire un modèle linéaire avec R
+--
 
-### Utiliser `anova()` pour réaliser une analyse de variance avec R
+.center[
+![:scale 80%](images/schema.png)
+]
+
+???Note au présentateur: Ce shéma représente les différentes variantes d'un modèle linéaire qui sera présentées durant l'atelier.
+
+---
+# Objectifs d'apprentissage
+
+-Apprendre la structure d'un modèle linéaire et ses différentes variantes.
+
+-Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`
+
+-Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème. 
 
 ---
 
@@ -145,19 +157,19 @@ $$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i
 - Le but d'un modèle linéaire est de trouver la meilleure estimation des paramètres (les variables $\beta$), puis d'évaluer la qualité de l'ajustement du modèle
 
 - Plusieurs méthodes ont été développées pour calculer l'intercept et les coefficients de modèles linéaires
-  -  Le choix approprié dépend du type de variables explicatives considérées et de leur nombre
+  -  Le choix approprié dépend du *type de variables explicatives* considérées et de *leur nombre*
 
 .center[.large[Le concept général de ces méthodes consiste à minimiser les résidus]]
 
 ---
-# Objectif d'enseignement
+# Modéles linéaires
 
 .center[
 ![:scale 100%](images/schema.png)
 ]
 
 ---
-# Conditions de base du modèle linéaire
+# Conditions d'application du modèle linéaire
 
 1. Les résidus sont indépendants
 2. Les résidus suivent une distribution normale
