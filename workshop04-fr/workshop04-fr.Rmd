@@ -37,9 +37,9 @@ cat(
 ```
 
 ---
-# Objectifs d'apprentissage
+# Modéles linéaires
 
--Apprendre la structure d'un modèle linéaire et ses *différentes variantes*.
+.large[-Apprendre la structure d'un modèle linéaire et ses *différentes variantes*.]
 
 --
 
@@ -54,11 +54,13 @@ Note au présentateur: Ce shéma représente les différentes variantes d'un mod
 ---
 # Objectifs d'apprentissage
 
--Apprendre la structure d'un modèle linéaire et ses différentes variantes.
-
--Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`
-
--Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème. 
+.large[-Apprendre la structure d'un modèle linéaire et ses différentes variantes.]
+<br>
+<br>
+.large[-Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`]
+<br>
+<br>
+.large[-Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème.] 
 
 ---
 
@@ -74,10 +76,14 @@ class: inverse, center, middle
 La moyenne est une mesure de la valeur moyenne d'une population (*x*):
 
 $$\bar{x} = \frac{1}{N} \sum_{i=1}^{n} x_{i}$$
-
+<br>
+<br>
+<br>
 .alert[Les notations mathémathiques sont différentes des notations utilisées dans R .] 
-
-.comment[Par  exemple, en mathématique, *x* représente la population à l'étude. Dans R, *X* représente habituellement un objec en utilisation au sein d'une fonction, ou fait référence à un axe d'un graphique. Faites attention de bein comprendre la notation utilisée lorsque vous roulez une fonction.]
+<br>
+<br>
+<br>
+.comment[Par  exemple, en mathématique, **x** représente la population à l'étude. Dans R, **X** représente habituellement un objet en utilisation au sein d'une fonction, ou fait référence à un axe d'un graphique. Faites attention de bein comprendre la notation utilisée lorsque vous roulez une fonction.]
 
 ---
 # Variation
@@ -718,7 +724,7 @@ summary(lm4)$adj.r.squared
 .comment[Le meilleur modèle parmi les trois est `lm3` *(seulement les oiseaux terrestres)*]
 
 ---
-# Objectif d'enseignement
+# 
 
 .center[
 ![:scale 100%](images/schema_ttest.png)
@@ -889,10 +895,11 @@ ttest1
 # Non respect des conditions d'applications
 
 - **Correction de Welch** : lorsque les écarts entre les groupes ne sont pas égaux (par défaut dans R !)
-- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les conditions d'applications ne sont pas respectées
+- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de T lorsque les conditions d'applications ne sont pas respectées
 - **Test de t apparié** : lorsque les deux groupes ne sont **pas indépendants** (par exemple, des mesures sur la même personne récoltées lors de 2 années différentes)
 
 ---
+exclude:True
 # Discussion de groupe
 
 .large[Les oiseaux aquatiques sont-ils plus lourds que les oiseaux terrestres ?]
@@ -906,17 +913,62 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
 ```
 
 .comment[Qu'avez-vous conclu ?]
-
 ---
+exclude:True
 # Discussion de groupe
 
 ```{r}
 uni.ttest1
 ```
 
-Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :
+Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
+---
+# Sondage
 
-p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
+.large[Avec un test de T, il est possible d'être plus précis et de donner une direction à notre hypothèse avec `alternative`.] 
+<br>
+<br>
+<br>
+Nous voulons tester si **les oiseaux aquatiques sont plus lourds que les oiseaux terrestres **. 
+
+Lequel devrait être utilisé? `alternative = "???"`
+
+1.`"two.sided"`
+
+2.`"less"`
+
+3.`"greater"`
+
+```{r,eval=F,echo=T}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "???")
+```
+
+---
+# Réponse
+
+.xsmall[
+```{r}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "less")
+uni.ttest1
+
+```
+]
+
+Pourquoi `"greater"` n'aurait pas marché?
+
+.comment[Indice: retournez à vos données. Quelle est la nature de la variable Aquatic?]
+
+???
+
+Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, R will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
 
 ---
 class: inverse, center, middle
@@ -1165,9 +1217,10 @@ Plus d'un facteur
 
  `aov <- lm(Y ~ X * Z * ..., data)`
 
-.comment[lorsque vous utilisez le symbole "*" avec `lm()`, le modèle inclut les effets de chaque facteur séparément, ainsi que leur interaction]
-
-.comment[lorsque vous utilisez le symbole "+" avec `lm()`, le modèle inclut les effets de
+.comment[Lorsque vous utilisez le symbole "*" avec `lm()`, le modèle inclut les effets de chaque facteur séparément, ainsi que leur interaction]
+<br>
+<br>
+.comment[Lorsque vous utilisez le symbole "+" avec `lm()`, le modèle inclut les effets de
 chaque facteur séparément (pas d'interaction)]
 
 `aov <- lm(Y ~ X + Z + ..., data)`
@@ -1203,13 +1256,30 @@ aov <- lm(Y ~ X + Z, data)
 ]
 
 ---
+exclude:true
 # Défi 2 ![:cube]()
 
-Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`)
+Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`).
 
-- .comment[INDICE: Examinez les facteurs Diet, Aquatic et leur interaction avec une ANOVA à deux critères de classification e.g. `lm(Y ~ A*B)`]
+.comment[INDICE: Examinez les facteurs Diet, Aquatic et leur interaction avec une ANOVA à deux critères de classification e.g. `lm(Y ~ A*B)`]
 
-- .comment[où A est le premier facteur, B le deuxième et "\*" décrit l'interaction]
+.comment[où A est le premier facteur, B le deuxième et "\*" décrit l'interaction]
+
+---
+# Défi 2 ![:cube]()
+
+Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`).
+<br>
+<br>
+.comment[INDICE: Assurez-vous d'ajouter une interaction avec `*`]
+<br>
+<br>
+<br>
+<br>
+.large[
+.center[
+.alert[Break out rooms!]
+]]
 
 ---
 # ![:cube]()
@@ -1240,7 +1310,7 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ```
 
 ---
-# Objectif d'enseignement
+# Modéles linéaires
 
 .center[
 ![:scale 100%](images/schema_ancova.png)
@@ -1407,6 +1477,7 @@ str(bird)
 ]
 
 ---
+exclude: true
 # Défi 3 ![:cube]()
 
 1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
@@ -1422,7 +1493,24 @@ summary(ancova.exemple)
 ancova.exemple2 <- lm(Y~X+Z, data=data)
 summary(ancova.exemple2)
 ```
+---
 
+# Défi 3 ![:cube]()
+
+1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
+
+<br>
+
+2- Vérifiez si votre interaction est significative
+<br>
+<br>
+<br>
+<br>
+
+.large[
+.center[
+.alert[Break out rooms!]
+]]
 ---
 # Défi 3 - Solution ![:cube]()
 
@@ -1434,7 +1522,7 @@ ancov1 <- lm(logMaxAbund ~ logMass*Diet,
 anova(ancov1)
 ```
 
-.comment[Interaction entre `logMass` et `Diet` est non-significative]
+Interaction entre `logMass` et `Diet` n'est pas significative
 
 ---
 # Défi 3 - Solution ![:cube]()
@@ -1448,7 +1536,7 @@ anova(ancov2)
 ```
 
 ---
-# Objectif d'enseignement
+# Modéles linéaires
 
 .center[
 ![:scale 100%](images/schema_multReg.png)

@@ -37,9 +37,9 @@ cat(
 ```
 
 ---
-# Learning Objectives
+# Linear models
 
--Learn the structure of a linear models and its *different variants*
+.large[-Learn the structure of a linear models and its *different variants*]
 
 --
 
@@ -52,13 +52,15 @@ cat(
 Presenter notes: This flow chats represents all the variants of a linear modal that will be presented in this presentation.
 
 ---
-# Learning Objectives
+# Learning objectives
 
--Learn the structure of a linear models and its different variants
-
--Learn how to perform a linear model with R with `lm()` and `anova()`
-
--Learn how to identify when assumptions are not met and ways to fix it
+.large[-Learn the structure of a linear models and its different variants]
+<br>
+<br>
+.large[-Learn how to perform a linear model with R with `lm()` and `anova()`]
+<br>
+<br>
+.large[-Learn how to identify when assumptions are not met and ways to fix it]
 
 ---
 
@@ -74,9 +76,13 @@ class: inverse, center, middle
 Mean is a measure of the average value of a population (*x*):
 
 $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$$
-
+<br>
+<br>
+<br>
 .alert[Mathematical notations are not usually different from R notations.] 
-
+<br>
+<br>
+<br>
 .comment[For example, in mathematical notation, *x* represents the population. In R, *X* usually represents an object to be use in a function, or an axis when making plots. Make sur you understand the notation you are using before running a function.]
 
 ---
@@ -714,7 +720,7 @@ summary(lm4)$adj.r.squared
 .comment[The best model among the three models is `lm3` *(only terrestrial birds)*]
 
 ---
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema_ttest.png)
@@ -885,12 +891,11 @@ ttest1
 - If variances between groups are not equal, can use corrections like the Welch correction (DEFAULT in R!)
 - If assumptions cannot be respected, the **non-parametric** equivalent of t-test is the Mann-Whitney test
 - If two groups **are not independent** (e.g. measurements on the same individual at 2 different years), you should use a paired t-test
-
 ---
+exclue:true
 # Group discussion
 
 .large[Are aquatic birds heavier than terrestrial birds?]
-
 ```{r}
 # Unilateral t-test
 uni.ttest1 <- t.test(logMass ~ Aquatic,
@@ -898,18 +903,67 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
                      data = bird,
                      alternative = "less")
 ```
-
 .comment[What did you conclude?]
 
 ---
+exclue:true
 # Group discussion
 
 ```{r}
 uni.ttest1
 ```
-
 Yes, aquatic birds are heavier than terrestrial birds: p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
 
+---
+# Poll
+
+.large[With T-test we can be more specific and give a direction to our hypothesis with  `alternative`.] 
+<br>
+<br>
+<br>
+We want to test whether **aquatic birds are heavier than terrestrial birds**. 
+
+Which one should we use? `alternative = "???"`
+
+1.`"two.sided"`
+
+2.`"less"`
+
+3.`"greater"`
+
+```{r,eval=F, echo=T}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "???")
+```
+
+???
+Presenter note: a poll is already set up on zoom for this slide. The host simply need to activate it for it to work. Otherwise tou can always ask the students to answer in the chat.
+
+---
+#Answer
+
+.xsmall[
+```{r}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "less")
+uni.ttest1
+
+```
+]
+
+Why would `"greater"` not have work?
+
+.comment[Hint: check the dataset. What is the nature of the variable Aquatic?]
+
+???
+
+Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, R will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
 
 
 ---
@@ -1219,6 +1273,7 @@ aov <- lm(Y ~ X + Z, data)
 ```
 ]
 ---
+exclude: true
 # Challenge 2 ![:cube]()
 
 Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
@@ -1228,6 +1283,22 @@ Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
 *e*.*g*. `lm(Y ~ A*B)`],
 
 .comment[where `A` is your first factor, `B` is your second and `*` is the interaction term in `R`].
+
+---
+# Challenge 2 ![:cube]()
+
+Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
+<br>
+<br>
+.comment[Hint: add an interaction with `*`],
+<br>
+<br>
+<br>
+<br>
+.large[
+.center[
+.alert[Break out rooms!]
+]]
 
 ---
 ## Challenge 2 - Solution ![:cube]()
@@ -1258,7 +1329,7 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ```
 
 ---
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema_ancova.png)
@@ -1439,6 +1510,7 @@ str(bird)
 ```
 
 ---
+exclude: true
 # Challenge 3 ![:cube]()
 
   1. Use an ANCOVA to test the effect of `Diet` and `Mass` (as well as their interaction) on `MaxAbund`
@@ -1447,25 +1519,42 @@ ancova.example <- lm(Y ~ X * Z, data=data)
 summary(ancova.example)
 ```
 
-  2. Test whether the interaction is signifiant
+  2. Test whether the interaction is significant
 ```{r eval=FALSE}
 ancova.example2 <- lm(Y ~ X + Z, data=data)
 summary(ancova.example2)
 ```
 
 ---
+# Challenge 3 ![:cube]()
+
+1- Use an ANCOVA to test the effect of `Diet` and `Mass` (as well as their interaction) on `MaxAbund`
+
+<br>
+
+2- Test whether the interaction is significant
+<br>
+<br>
+<br>
+<br>
+
+.large[
+.center[
+.alert[Break out rooms!]
+]]
+---
 # Challenge 3 - Solution ![:cube]()
 
 <br>
-.small[
+
 ```{r}
 ancov1 <- lm(logMaxAbund ~ logMass*Diet,
              data = bird)
 anova(ancov1)
 ```
-]
 
-.comment[Interaction between `logMass` and `Diet` is non-significant]
+
+Interaction between `logMass` and `Diet` is not significant
 
 ---
 # Challenge 3 - Solution ![:cube]()
@@ -1479,7 +1568,7 @@ anova(ancov2)
 ```
 
 ---
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema_multReg.png)
