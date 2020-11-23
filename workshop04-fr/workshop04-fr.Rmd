@@ -1140,7 +1140,7 @@ kruskal.test(Y~X, data)
 
 Triage en ordre alphabétique des niveaux et comparaison au niveau de référence (`Insect`)
 
-.small[
+.xsmall[
 ```{r}
 summary(anov1)
 ```
@@ -1184,8 +1184,8 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 
 Représentation graphique de l'ANOVA à l'aide de la fonction `barplot()`
 
-.small[
-```{r, fig.height=3.5, fig.width=7,echo=-1}
+.xsmall[
+```{r, fig.height=3, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
 sd <- tapply(bird$logMaxAbund, bird$Diet, sd)
 means <- tapply(bird$logMaxAbund, bird$Diet, mean)

@@ -1138,12 +1138,12 @@ stats::kruskal.test(Y~X, data)
 ---
 # Output of our ANOVA model
 
-.small[
+.xsmall[
+Factor levels in alphabetical order and all levels are compared to the reference level (`Insect`).
+
 ```{r}
 summary(anov1)
 ```
-
-Factor levels in alphabetical order and all levels are compared to the reference level (`Insect`).
 ]
 
 ---
@@ -1185,8 +1185,8 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 
 ANOVA results can be graphically illustrated using the `barplot()` function:
 
-.small[
-```{r, fig.height=3.5, fig.width=7,echo=-1}
+.xsmall[
+```{r, fig.height=3, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
 sd <- tapply(bird$logMaxAbund, list(bird$Diet), sd)
 means <- tapply(bird$logMaxAbund, list(bird$Diet), mean)
@@ -1241,7 +1241,7 @@ We can also represent our model with:
 
 
 ---
-## Two-Way ANOVA
+# Two-Way ANOVA
 
 .small[
 
@@ -1285,6 +1285,7 @@ Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
 .comment[where `A` is your first factor, `B` is your second and `*` is the interaction term in `R`].
 
 ---
+
 # Challenge 2 ![:cube]()
 
 Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
@@ -1301,7 +1302,8 @@ Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
 ]]
 
 ---
-## Challenge 2 - Solution ![:cube]()
+
+# Challenge 2 - Solution ![:cube]()
 
 .xsmall[
 ```{r}
