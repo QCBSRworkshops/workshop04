@@ -1278,7 +1278,7 @@ Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du r
 <br>
 .large[
 .center[
-.alert[Break out rooms!]
+.alert[Salle de réunion!]
 ]]
 
 ---
@@ -1509,7 +1509,7 @@ summary(ancova.exemple2)
 
 .large[
 .center[
-.alert[Break out rooms!]
+.alert[Salle de réunion!]
 ]]
 ---
 # Défi 3 - Solution ![:cube]()
