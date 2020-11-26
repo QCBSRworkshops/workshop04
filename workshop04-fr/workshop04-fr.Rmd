@@ -50,225 +50,62 @@ cat(
 
 ---
 
-class: inverse, center, middle
+# Qu'est-ce qu'un modèle linéaire ?
 
-# Concepts importants
+#### Un **modèle linéaire** ...
 
-## Définir la moyenne et la variation
+... décrit la relation entre une variable (la **réponse**) et une ou plusieurs autres variables (les **prédicteurs**).
 
----
-# Moyenne
+... est utilisé pour analyser une **hypothèse bien formulée**, souvent associée à une question de recherche plus générale.
 
-La moyenne est une mesure de la valeur moyenne d'une population (*x*):
+... est utilisé pour faire des inférences sur la **direction** et la **force** d'une relation, et notre **confiance** dans les estimations de l'effet.
 
-$$\bar{x} = \frac{1}{N} \sum_{i=1}^{n} x_{i}$$
 
----
-# Variation
+???
 
-- La variation est la dispersion des observations autour de la moyenne
-  - Écart moyen
-  - Variance
-  - Écart type
-  - Coefficient de variation
+- Point important : Il y a beaucoup de travail scientifique à faire avant de formuler un modèle linéaire.
+- Il est recommandé de formuler clairement les attentes concernant la direction et la force d'une relation en tant que prédictions avant d'effectuer un modèle linéaire.
 
-**Mais qu'est-ce que c'est l'écart ?**
-
-$$D_{i} = |x_{i} - \bar{x}|$$
 
 ---
-# Variation
 
-**L'écart**:
+# Exemple : Abondance et masse des espèces d'oiseaux
 
-$$D_{i} = |x_{i} - \bar{x}|$$
+#### Hypothèse
+
+> Pour différentes espèces d'oiseaux, la masse moyenne d'un individu a un effet sur l'abondance maximale de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+#### Prédiction
+> Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.
+
 --
-**L'écart moyen**:
-
-$$D = \frac{1}{n} \sum_{i=1}^{n} |x_{i} - \bar{x}|$$
---
-
-Au lieu de valeurs absolues, nous pouvons également mettre la valeur au carré, donnant la **variance**:
-
-$$V = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$$
-
----
-# Variation
-
-Mais en mettant chaque valeur au carré, ces variables ne sont plus en unités significatives
-
-On fait donc la racine carrée de la **variance** ( $V$ ), donnant l'**écart type**:
-
-$$\sigma = \sqrt{V}$$
---
-
-L'écart type relatif, en pourcentage, est le **coefficient de variation**:
-
-$$cv = \frac{\sigma}{\bar{x}}$$
-
----
-class: inverse, center, middle
-
-# Les modèles linéaires
-
----
-# Les modèles linéaires
-
-Relation linéaire entre une variable réponse ( $Y$ ) et une/des explicative ( $X$ ), en utilisant les concepts de **moyenne** et **variance**
-
-- $Y$ : variable que vous voulez expliquer (une seule variable réponse)
-- $X$ : variable pour expliquer variable réponse (une ou plusieurs variables explicatives)
-- $Y$ : doit être quantitative
-- $X$ : quantitative ou qualitative
-- $\epsilon$ : ce qui n'est pas expliqué par la ou les variables explicatives ![:faic](arrow-right) résidus ou erreur
-
----
-# Définir des modèles linéaires
-
-Rassembler tous ensemble :
-
-$$Y_{i} = \beta_{0} + \beta_{1} x_{i1} + \cdots + \beta_{p} x_{ip} + \epsilon_{i}$$
-
-- $Y_i$ est la variable réponse
-- $β_0$ est l'ordonnée à l'origine de la droite de régression
-- $β_1$est le coefficient de variation de la $1^{ère}$ variable explicative
-- $β_p$ est le coefficient de variation de la $p^{ème}$ variable explicative
-- $x_{i1}$ est la variable explicative pour la $1^{ère}$ observation
-- $x_{ip}$ est la variable explicative pour la $p^{ème}$ observation
-- $ε_i$ sont les résidus du modèle (i.e. la variance inexpliquée)
-
----
-# Le but des modèles linéaires
-
-- Le but d'un modèle linéaire est de trouver la meilleure estimation des paramètres (les variables $\beta$), puis d'évaluer la qualité de l'ajustement du modèle
-
-- Plusieurs méthodes ont été développées pour calculer l'intercept et les coefficients de modèles linéaires
-  -  Le choix approprié dépend du type de variables explicatives considérées et de leur nombre
-
-.center[.large[Le concept général de ces méthodes consiste à minimiser les résidus]]
-
----
-# Objectif d'enseignement
 
 .center[
-![:scale 100%](images/schema.png)
+
+**Discussion en groupe**
+
+*Quelle variable est la réponse ? Quelle est le prédicteur ?*
+  
+*Quelles sont nos attentes concernant la direction et la force de la relation ?*
 ]
 
----
-# Conditions de base du modèle linéaire
+???
 
-1. Les résidus sont indépendants
-2. Les résidus suivent une distribution normale
-3. Les résidus ont une moyenne de 0
-4. Les résidus sont homoscédastiques (i.e. leur variance est constante)
-
-.alert[Ces 4 conditions concernent les résidus, et non les variables réponses ou explicatives]
-
-.comment[Dans les sections suivantes, nous ne répétons pas les conditions ci-dessus pour chaque modèle parce que ces conditions de base s'appliquent à tous les modèles linéaires]
+- Court : Oiseaux plus grands -> moins de nourriture et d'espace
+- Réponse : Abondance maximale
+- Prédicteur : Poids moyen (d'un individu)
+- Direction : Inverse ou "négative" (une masse plus élevé entraîne une abondance plus faible)
+- La force : Aucune attente !
 
 ---
-# Flux de travail
 
-.center[
-![:scale 62%](images/schema.png)
-]
+# Exemple : Abondance et masse des espèces d'oiseaux
 
-- Visualiser les données
-- Créer un modèle
-- Tester les 4 conditions de base du modèle
-- Ajuster le modèle si les conditions de base ne sont pas respectées
-- Interpréter les résultats du modèle
+#### Regardons les données ...
 
----
-class: inverse, center, middle
+Importer le jeu de données "birdsdiet" :
 
-# Régression linéaire simple
-
----
-# Régression linéaire simple
-
-- Type de modèle linéaire qui contient seulement une variable explicative continue
-
-$$Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
-
-- Estimation de l'**ordonnée à l'origine** ( $\beta_0$ ) et d'un **coefficient de corrélation** ( $\beta_1$ )
-
-- Méthode des moindres carrés
-  - méthode la plus couramment utilisée (défaut sur R)
-
----
-# Méthode des moindres carrés
-
-.pull-left[
-.center[![:scale 80%](images/graph_lm.png)]
-]
-
-.pull-right[
-**Suppositions**
-
-- $Y_i$ : valeur observée (mesurée) pour $X_i$
-- $\widehat{Y}_i$ : valeur prédite pour $X_i$
-- $\bar{Y}$ : moyenne de tout les $Y_i$
-- $V_E$ : résidus (erreur)
-- $V_R$ : variance expliquée par la régression
-- $V_T$ : variance totale
-- $R^2 = \frac{V_R}{V_T}$
-]
-
----
-# Effectuer un modèle linéaire
-
-.small[
-**Étape 1**. Exécuter votre modèle linéaire
-
-**Étape 2**. Vérifier les suppositions
-]
-
-<br>
-
-.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
-
-.pull-left[.center[*Suppositions sont satisfaites ?*]
-
-.small[**Étape 3**. Estimer les paramètres de régression, test de signification, tracer votre modèle
-]]
-
-.pull-right[.center[*Suppositions non satisfaites ?*]
-
-.small[*Pouvez-vous transformer vos variables (est-ce justifié) ?*]
-
-.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
-
-.small[
-.pull-left[
-Oui: retourner à l'étape 1 avec des variables transformées
-]
-
-.pull-right[
-Non: essayer GLM qui pourrait mieux convenir aux données
-]]]
-
----
-# Exécution du modèle linéaire dans R
-
-**Étape 1**. créer votre modèle linéaire
-
-Dans R, la fonction `lm()` est utilisée pour ajuster un modèle linéaire
-
-```{r, eval = FALSE}
-lm1 <- lm(Y~X)
-```
-
-- `lm1` : Nouvel objet contenant le modèle linéaire
-- `Y` : Variable réponse
-- `X` : Variable indépendante
-
----
-# Exécution du modèle linéaire dans R
-
-Télécharger les donées <span style="color:blue"> *birdsdiet* </span>:
-
-```{r, eval = TRUE, echo = FALSE}
+```{r, eval=TRUE, echo=FALSE}
 bird <- read.csv("data/birdsdiet.csv", stringsAsFactors = TRUE)
 ```
 
@@ -276,67 +113,481 @@ bird <- read.csv("data/birdsdiet.csv", stringsAsFactors = TRUE)
 bird <- read.csv("birdsdiet.csv", stringsAsFactors = TRUE)
 ```
 
-Visualisez le tableau de la structure des données en utilisant la fonction `str()` :
+Visualiser le tableau de la structure des données en utilisant la fonction `str()` :
 
 ```{r}
 str(bird)
+```
+
+???
+
+- Il suffit pour l'instant d'expliquer les variables d'intérêt (vous trouverez plus d'informations sur l'ensemble des données dans le wiki : <https://wiki.qcbs.ca/r_atelier4#effectuer_un_modele_lineaire>)
+- "MaxAbund" : La plus grande abondance observée sur un site en Amérique du Nord (continu / numérique)
+- "Masse" : La taille du corps moyenne en grammes (continue / numérique)
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+#### Regardons les données ...
+
+
+
+.pull-left[
+Mesures communes de **localisation** (tendance centrale) :
+
+<br>
+
+- Moyenne **arithmétique** $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$
+```{r}
+mean(bird$MaxAbund)
+```
+<br>
+- **Médiane** (valeur séparant la moitié supérieure de la moitié inférieure d'un échantillon)
+```{r}
+median(bird$MaxAbund)
+```
+]
+
+.pull-right[
+
+Mesure communes de **variation** (dispersion) :
+
+<br>
+
+- **Variance** $\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$
+```{r}
+var(bird$MaxAbund)
+```
+<br>
+- **Écart type** $\sigma$ 
+```{r}
+sd(bird$MaxAbund)
+```
+]
+
+???
+
+- Cette diapositive n'a pour but que de rappeler des concepts de base. 
+- Les participant.e.s qui ont des difficultés avec ces mesures peuvent avoir des difficultés de comprendre les autres concepts présentés dans l'atelier.
+- Oui, il existe d'autres types de moyens dont nous n'avons généralement pas besoin pour les modèles linéaires : moyenne géométrique, harmonique, ...
+- La définition de la médiane est omise car elle peut être source de confusion pour certains participant.e.s : $\mathrm {median} (x)={\frac {1}{2}}(x_{\lfloor (n+1)/2\rfloor }+x_{\lceil (n+1)/2\rceil })$
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+Tracer la réponse en fonction du prédicteur:
+
+```{r}
+plot(bird$Mass, bird$MaxAbund)
+```
+
+???
+- Assurer que les participants comprennent comment le graphique est lié à l'hypothèse !
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+Comment trouver la "meilleure" estimation de la relation ?
+
+```{r, eval=FALSE}
+plot(bird$Mass, bird$MaxAbund)
+```
+
+```{r, echo=FALSE}
+plot(bird$Mass, bird$MaxAbund)
+abline(coef = c(70, -.03),  lwd = 1.5, lty = 2, col = palette()[2])
+abline(coef = c(20, -.005), lwd = 1.5, lty = 2, col = palette()[4])
+abline(coef = c(200, -.1),  lwd = 1.5, lty = 2, col = palette()[6])
+```
+
+
+???
+- La question est destinée à rester sans réponse pour l'instant.
+- La "meilleure" estimation est la ligne qui minimise la somme des carrés, ce qui devrait devenir clair à travers les prochaines diapositives
+- La "meilleure" estimation peut également dire : Il n'y a pas de relation (similaire à la ligne bleue dans le graphique).
+
+---
+
+# Formulation d'un modèle linéaire
+
+#### Variables
+
+- $y_i$ est une observation de la **réponse** $y$  
+  (par exemple, l'abondance maximale des espèces $i$)
+
+- $x_i$ est une observation correspondante du **prédicteur** $x$  
+  (par exemple, le poids moyen d'un individu d'une espèce $i$)
+
+#### Relation supposée
+
+$$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+
+- Le paramètre $\beta_0$ est **l'ordonnée à l'origine** (ou constante)
+- Le paramètre $\beta_1$ quantifie **l'effet** de $x$ sur $y$.
+- Le résidu $\epsilon_i$ représent la variation **non expliquée**
+- La **valeur prédite** de $y_i$ se définit comme : $\hat{y}_i = \beta_0 + \beta_1 \times x_i$
+
+
+???
+
+- Prener du temps avec cette diapositive, toutes les définitions sont importantes.
+- Comprendre les paramètres : important pour savoir ce qui sera estimé et interprété ultérieurement
+- Comprendre les résidus et les valeurs ajustées : Important pour la vérification des modèles par la suite
+- En théorie, les participants devraient savoir tout cela grâce à leurs cours de statistiques ; en pratique, la connaissance des définitions est parfois faible
+
+
+---
+
+# Suppositions du modèle linéaire
+
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+#### Distribution normale
+
+Les **résidus** $\epsilon$ suivent une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+```{r, echo=FALSE, fig.height=4, fig.width=6}
+x <- seq(-5, 5, length=100)
+p <- dnorm(x, 0, 1)
+plot(x, p, type = "l", lty = 2, lwd = 1.5,  xlab = "Residuals", ylab = "Probability", xaxt = "n")
 ```
 
 ---
-# Exécution du modèle linéaire dans R
 
-Variable réponse : **abondance d'oiseaux**  ![:faic](arrow-right) num : quantitative
+# Suppositions du modèle linéaire
 
-Variable explicative : **masse**   ![:faic](arrow-right)  num : quantitative
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+#### Distribution normale
+
+Les **résidus** $\epsilon$ suivent une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+**Cela veut dire :** Chaque obsevation $y_i$ suit une distribution normale,  
+avec moyenne $\hat{y} = \beta_0 + \beta_1 \times x_i$ et variance $\sigma^2$: 
+
+$$y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)$$
+
+.alert[**Cela ne veut pas dire**] que l'ensemble des valeurs observées $y$ ~~doit suivre une distribution normale~~.
+
+???
+
+- L'idée fausse selon laquelle $y$ plutôt que $\epsilon$ doit suivre une distribution normale est très courante.
+
+
+---
+
+# Suppositions du modèle linéaire
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+
+#### Homoscédasticité
+- Tous les résidus $\epsilon$ suivent la même distribution, la **variance** $\sigma^2$ **reste constante**.
+
+<br>
+<br>
+
+#### Indépendance des résidus
+- Chaque résidu $\epsilon_i$ est **indépendant** de tout autre résidu. 
+
+
+---
+
+# Suppositions du modèle linéaire
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+#### Résumé des suppositions
+- Relation linéaire entre la réponse et le prédicteur
+- Les résidus suivent une distribution normale avec une moyenne de $0$
+- Les résidus sont distribués de manière identique (*homoscédasticité*)
+- Les résidus sont indépendants les uns des autres
+
+
+???
+
+- La définition complète d'un modèle linéaire se compose toujours des deux équations présentées
+
+
+---
+
+# Notation des modèles linéaires
+
+#### Notation mathématique (pour des manuscrits)
+
+- Observations individuelles :  
+  $y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$
+
+<br>
+
+- Toutes les observations (notation matricielle, interception incluse dans $\mathbf{X}$ et $\boldsymbol{\beta}$) :   
+  $\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$  
+
+<br>
+
+#### Notation en R
+
+.pull-left[
+- Formule du modèle :  
+  ```{r, eval=FALSE}
+  y ~ 1 + x
+  ```  
+]
+
+.pull-right[
+- Ou encore plus simple : 
+  ```{r, eval=FALSE}
+  y ~ x
+  ```  
+  (inclut aussi la constante)
+]
+  
+.alert[Il ne faut jamais mélanger les différentes types de notation !]
+
+
+???
+
+- Cette diapositive est destinée àaider les participant.e.s à comprendre les différents types de description qu'on peut rencontrer
+- Il n'est pas du tout nécessaire d'entrer dans le détail de la notation matricielle.
+- La notation R n'est pas adéquate pour préparer une publication.
+
+---
+
+# Effectuer une modèle linéaire
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+#### Estimation du modèle
+
+- Trouver les "meilleures" estimations des paramètres $\beta_0,\, \beta_1$.
+- Les "meilleurs" paramètres sont ceux qui minimisent la somme des résidus au carré $\sum{\epsilon_i^2}$
+- Cette méthode est appelée la méthode de **moindres carrés ordinaire** (MCO)
+
+
+---
+
+# Objectifs d'apprentissage
+
+.center[
+![:scale 100%](images/schema_multReg.png)
+]
+
+
+---
+
+class: inverse, center, middle
+
+# Régression linéaire avec R
+
+---
+
+# Régression linéaire avec R
+
+Revenons sur les oiseaux ...
 
 ```{r}
-str(bird)
+plot(bird$Mass, bird$MaxAbund)
 ```
 
-Nous voulons d'abord vérifier si l'abondance maximale des oiseaux (`maxAbund`) est une fonction de la masse des oiseaux (`Mass`)
+---
+
+# Régression linéaire avec R
+
+#### Formulation du modèle
+
+> *Hypothèse*: Pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+
+--
+
+**Équation du modéle**
+
+$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$
+
+<br>
+
+--
+
+**Formule du modèle en R**
+
+```{r, eval=FALSE}
+MaxAbund ~ Mass
+```
+
+???
+- La formulation du modèle peut être posée comme question aux participant.e.s
+
+
+---
+
+# Régression linéaire avec R
+
+.center[.small[
+**Étape 1**   
+Formuler et excécuter un modèle linéaire basé sur un hypothèse
+
+**Étape 2**  
+Vérifier les suppositions du modèle linéaire
+]]
+
+<br>
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.pull-left[.center[*Conditions sont satisfaits ?*]
+
+.small[.center[**Étape 3**  ]
+- Analyser les paramètres de régression
+- Tracer le modèle
+- Effectuer des tests de signification sur les estimations des paramètres (si nécessaire)
+]]
+
+.pull-right[.center[*Conditions non satisfaites ?*]
+
+.center[Envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données]
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.small[
+.pull-left[
+Utiliser un GLM mieux adapté aux données
+]
+
+.pull-right[
+Retourner à l'Étape 1 avec des variables transformées
+]]]
+
+---
+
+# Régression linéaire avec R
+
+#### **Étape 1.** Formuler et excécuter un modèle linéaire
+
+La fonction `lm()` est utilisée pour ajuster un modèle linéaire, en fournissant la formule du modèle comme premier argument ::
+
 
 ```{r eval=TRUE}
 lm1 <- lm(MaxAbund ~ Mass, data = bird)
 ```
 
+- `lm1` : Nouvel objet contenant le modèle linéaire
+- `MaxAbund ~ Mass` : Formule du modèle 
+- `bird` : objet contenant les variables
+
+
 ---
-# Exécution du modèle linéaire dans R
 
-**Étape 2**. Vérifier les suppositions avec les graphiques diagnostics
+# Régression linéaire avec R
 
-```{r, eval=FALSE}
-opar <- par(mfrow=c(2,2))
+#### **Étape 1.** Formuler et excécuter un modèle linéaire
+
+Examinons les estimations des paramètres :
+
+```{r, eval=TRUE}
+lm1
+```
+
+.center[
+*Comment les paramètres se comparent-ils à nos prédictions ?*
+]
+
+--
+
+.center[
+**Peut-on se fier aux estimations du modèle ?**
+]
+
+
+???
+- Les questions peuvent être utilisées pour une discussion en groupe
+- La prédiction était : *Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.*
+- Le paramètre pour la "masse" *ne correspond pas à notre prédiction* car il est positif !
+- Nous ne savons pas si nous pouvons nous fier aux estimations - pour cela, nous avons besoin de l'étape 2
+
+---
+
+# Régression linéaire avec R
+
+#### **Étape 2.** Vérifier les suppositions avec les graphiques diagnostics
+
+Nous pouvons produire **quatre graphiques diagnostics** d'un objet `lm` :
+
+```{r, eval=FALSE, fig.height=6, fig.width=8}
+par(mfrow=c(2,2))
 plot(lm1)
 ```
 
-- `par( )`: définit les paramètres du graphique, par exemple, l'argument `mfrow` spécifie le nombre de rangées et colonnes
-- `plot( )`: est la fonction pour faire le graphique
+- `par()` : Fonction pour définir les paramètres du graphique
+- `mfrow=c(2,2)`:  Paramètre graphique permettant d'afficher une grille de 2 x 2 graphiques à la fois
+- `plot()`: Fonction pour produire les graphiques
 
-La sortie comprend les quatre graphiques diagnostics de la fonction `lm()`
+???
+
+- Comment faire pour ne montrer qu'une seule parcelle à la fois : `par(mfrow=1)`.
 
 ---
+
+# Régression linéaire avec R
+
+#### **Étape 2.** Vérifier les suppositions avec les graphiques diagnostics
+
+```{r, eval=FALSE}
+par(mfrow=c(2,2)
+plot(lm1)
+```
+
+```{r, echo=FALSE, fig.height=4.75, fig.width=5.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
+```
+
+.center[**Comment interpréter ces graphiques ?**]
+
+---
+
 # Graph. #1 - Résidus vs valeurs prédites
 
-Exemple d'indépendance .comment[(ce que nous recherchons !)]
+**Ce qu'on voit :**  
+* Axe des **Y** : Residus $\epsilon_i$
+* Axe des **X** : Valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
 
-- Devrait montrer une dispersion de points sans patron
+<span style="color:green">**Ce qu'on espère voir :**</span> Dispersion de points sans patron
 
-```{r, echo = FALSE, fig.height=5.5, fig.width=6.5}
+
+**Motivation :** Indiquation si les résidus sont *indépendants* et *identiquement distribués*.
+
+```{r, echo = FALSE, fig.height=5, fig.width=6.5}
   set.seed(1234564)
-  x <- abs(rnorm(100,10,10))
+  x <- rnorm(100,10,10)
   y <- 2*x+0 + rnorm(100)
   lm <- lm(y~x)
   plot(lm, which = 1)
 ```
 
----
-# Graph. #1 - Résidus vs valeurs prédites
+???
 
-Example de non-indépendance .comment[(ce que nous ne voulons pas !)]
+- La dispersion sans patron est parfois décrite comme "des étoiles dans le firmament".
+
+---
+# Graphique # 1 - Résidus vs valeurs prédites
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
 ```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
 set.seed(1234564)
-x = abs(rnorm(100,10,10))
+x = rnorm(100,10,10)
 y = (x)^2 + rnorm(length(x),0,30)
 lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Non-linéaire", col.main="red")
@@ -347,66 +598,107 @@ lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
 ```
 
+**Quoi faire ?**
 
-- Solution: Transformer vos données ou essayer une distribution autre que linéaire (gaussienne); modèle linéaire généralisé (GLM) (ex: Poisson, binomial, binomial négatif, etc.)
+- Utiliser plutôt un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions : Poisson, binomial, binomial négatif, etc.)
+- Essayer de **transformaer** la réponse et/ou prédicteurs
+
+???
+
+- Expliquez que "hétéroscédastique" est l'opposé de "homoscédastique", ce qui signifie que la supposition de normalité est non-respectée.
 
 ---
-# Graph. #2 - échelle localité
 
-Devrait montrer une dispersion de points sans patron
+# Graphique # 2 - Échelle localité
+**Ce qu'on voit :**  
+* Axe des **Y** : Racine carrée des residus standardisés $\sqrt{\frac{\epsilon_i}{\sigma}}$
+* Axe des **X** : Valuers prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
 
-```{r, echo=FALSE, fig.height=4.5, fig.width=9, warning=FALSE}
-par(mfrow=c(1,2))
+<span style="color:green">**Ce qu'on espère voir :**</span> Dispersion de points sans patron
+
+**Motivation :** Parfois plus facile de détecter si les suppositions ne sont pas respectées, surtout quand le prédicteur est distribué de manière inégale.
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(1234564)
 x <- 1:100
 y <- x + rnorm(100,sd=5)
 lm=lm(y~x)
 plot(lm,which = 3)
+```
 
+---
+
+# Graphique # 2 - Échelle localité
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(2)
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm,which = 3)
 ```
-.pull-left[.center[![:faic](arrow-up)]] .pull-right[.center[![:faic](arrow-up)]]
 
-.pull-left[.center[Aucun patron dans les résidus]] .pull-right[.center[Forte tendance dans les résidus]]
+.center[*Forte tendance dans les résidus*]
+
+???
+
+- Quoi fair ? Voire graphique #1
 
 ---
-# Graph. # 3 - Normal QQ
 
-- Compare la distribution (quantiles) des résidus aux quantiles d'une distribution normale
-- Si les points se situent de façon linéaire sur la ligne 1: 1, les résidus suivent une distribution normale
+# Graphique # 3 - Normal QQ
 
-```{r, echo=FALSE, fig.height=4, fig.width=9, warning=FALSE}
-par(mfrow=c(1,2), mar = c(4, 4, 1.5, 3))
+**Ce qu'on voit :**  
+* **Y**-axis: Residus standardisés $\frac{\epsilon_i}{\sigma}$
+* **X**-axis: Distribution normale standard $\mathcal{N}(0, \sigma^2)$
+
+<span style="color:green">**Ce qu'on espère voir :**</span> Points sur la ligne 1:1
+
+**Motivation :** Comparer la distribution (quantiles) des résidus à une distribution normale standard
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(1234564)
 x <- 1:100
 y <- x + rnorm(100,sd=5)
 lm=lm(y~x)
 plot(lm, which = 2)
 
+```
+
+---
+
+# Graphique # 3 - Normal QQ
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(2)
 x = abs(rnorm(100,10,10))
-y = (x) + 0 + rnorm(length(x), 0, x)
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
 plot(lm, which = 2)
 ```
 
-.pull-left[.center[![:faic](arrow-up)]] .pull-right[.center[![:faic](arrow-up)]]
+.center[*Les résidus ne suivent pas une distribution normale*]
 
-.pull-left[.center[C'est bien !]] .pull-right[.center[Pas très bien...]]
-
----
-# Graph. # 4 - Résidus vs effet de levier
-
-- Recherche les valeurs influentes
-- **Points de levier** : observations extrêmes ou périphériques de la variable explicative. Parce qu'ils n'ont pas d'observations voisines, la ligne de régression passe près de ces points. **Ils peuvent (ou pas) avoir une grande influence sur la régression**
-- Les points de levier avec une forte influence peuvent être identifiés avec une **distance de Cook supérieure à 0,5**
 
 ---
-# Effet levier vs influence
+
+# Diagnostic plot # 4 - Résidus vs effet de levier
+
+**Motivation :**
+
+- Le modèle ne devrait **pas dépendre fortement d'observations isolées**.
+- Les **points de levier** sont des observations extrêmes du prédicteur. 
+- Le **modèle passe près des points de levier**, car ils manquent d'observations voisines.
+- Les points de levier **<span style="color:red">peuvent</span> (ou <span style="color:green">pas</span>) avoir une grande influence sur la régression**
+- L'influence peut être quantifiée par **la distance Cook : plus de 0,5 est problématique**.
+
+---
+
+# Examples: Effet levier et influence
 
 ```{r, echo=FALSE, fig.height=8, fig.width=7.7, warning=FALSE}
 par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
@@ -436,266 +728,498 @@ abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-33, 15, srt=0, adj = 0, labels = '* Effet de levier \n* Influence élevée', xpd = TRUE, cex = 1.5)
 ```
 
----
-# Effet levier vs influence
 
-```{r, echo=FALSE, fig.height=3.5, fig.width=9, warning=FALSE}
-par(mfrow=c(1,2), mar = c(4, 4, 1.5, 3))
+???
+
+- Tous les graphiques ont la réponse sur l'axe des y et le prédicteur sur l'axe des x
+- Pour éviter la confusion : Il ne s'agit pas de graphiques diagnostics sue cette diapositive !
+
+---
+
+# Diagnostic plot # 4 - Résidus vs effet de levier
+
+**Ce qu'on voit :**  
+* Axe des **Y** : Residus standardisés $\frac{\epsilon_i}{\sigma}$
+* Axe des **X** : Effet de levier
+* Ligne rouge en tirets : distance Cook de 0.5
+
+<span style="color:green">**Ce qu'on espère voir :**</span> Pas de points de levier avec influence elevée
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=9, warning=FALSE}
+par(mfrow=c(1,2))
 set.seed(1234564)
 x <- 1:100
 y <- x + rnorm(100,sd=5)
 lm=lm(y~x)
-plot(lm, which = 5)
+plot(lm, which = 5, main = "Aucune observation influente", col.main=palette()[3])
 
 set.seed(1234564)
 x = abs(rnorm(100,10,10))
-y = (x) + 0 + rnorm(length(x), 0, x)
+y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
-plot(lm, which = 5)
+plot(lm, which = 5, main = "Effet de levier et faible influence",  col.main=palette()[3])
 ```
 
-.pull-left[.center[![:faic](arrow-up)]] .pull-right[.center[![:faic](arrow-up)]]
-
-.pull-left[.center[Aucune valeur influente]]
-.pull-right[.center[Effet de levier élevé et influence raisonnable]]
-
-<br />
-<br />
-<br />
-
-.comment[Ici, le point 29 a un effet de levier élevé, mais son influence est acceptable (à l'intérieur des limites de la distance Cook de 0,5)]
-
 ---
-# Effet levier vs influence
 
-Effet de levier et influence élevée
+# Diagnostic plot # 4 - Residuals vs Leverage
+
+.alert[Ce qui devrait nous rendre méfiants :]
 
 <br />
 
-.pull-left[
-```{r, echo=FALSE, fig.height=3.5, fig.width=4, warning=FALSE}
-par(mar = c(4, 4, 1, 0))
+```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
 set.seed(1234564)
 x = abs(rnorm(100,10,10))
-y = (x) + 0 + rnorm(length(x), 0, x)
+y = (x) + rnorm(length(x), 0, x)
 y[29] <- 100
 lm=lm(y~scale(x))
-plot(lm, which = 5)
+plot(lm, which = 5, main = "Effet de levier et influence élevée")
 ```
-]
-.pull-right[
-- Points en dehors de la limite de 0,5 de la distance Cook
-- Ces points ont trop d'influence sur la régression
-]
 
-.alert[Vous ne devriez jamais supprimer les valeurs aberrantes si vous n'avez pas de bonnes raisons de le faire (ex: erreur de mesure)]
+<br>
+
+.alert[Il ne faut jamais supprimer les valeurs aberrantes sans avoir des bonnes raisons de le faire]
+
+???
+
+- Point 29 a un effet de levier élevé et une distance Cook > 0,5
+- Raison potentielle pour supprimir les valeurs aberrantes : Erreur de mesure évidente
 
 ---
-# **Étape 2**. Vérifier les suppositions de `lm1`
 
-```{r, fig.height=5.5, fig.width=7.5}
+# **Étape 2**. Vérifier les suppositions pour `lm1`
+
+```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2))
+plot(lm1)
+```
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
 
+**Discussion :** Le modèle `lm1` respecte-t-il les supposition du modèle linéaire ?
+
+???
+
+- Graphiques 1 et 2 : présence de fortes tendances
+- Graphique 3 : les résidus ne suivent pas une distribution normale
+- Graphique 4 : point 32 a un effet de levier important et une influence (très élevé)
+
+
 ---
-# Suppositions non-respectées - quelle est la cause?
 
-Traçons le graphique Y ~ X avec la droite de régression et les histogrammes de Y et X pour explorer leurs distributions
+# Conditions non-respectées - Quelle est la cause ?
 
-.small[
-```{r, fig.height=3, fig.width=10, echo = -1}
-par(mfrow=c(1,3), mar = c(4,4,3,1), cex = 0.8)
-plot(bird$MaxAbund ~ bird$Mass)
-abline(lm1) # adds the best-fit line
-hist(bird$MaxAbund) # hist() produces a histogram of the variable
-hist(bird$Mass)
+Traçons le modèle avec les observations ...
+
+```{r, fig.height=4, fig.width=11}
+par(mfrow = c(1,2))
+coef(lm1) # constante et pente
+plot(MaxAbund ~ Mass, data=bird) # graphique à gauche
+abline(lm1) # ligne définie par les paramètres du modèle
+hist(residuals(lm1)) # graphique à droite : distribution des residus
 ```
-]
 
 ---
-# Suppositions non-respectées - quelle est la cause?
 
-Vérifions la normalité des données à l'aide d'un test de `Shapiro-Wilk` et d'un test d'asymétrie (**`skewness`**) :
+# Conditions non-respectées - Quelle est la cause ?
+
+On peut verifier si les residus suivent une distribution normle à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
 
 ```{r}
-shapiro.test(bird$MaxAbund)
-shapiro.test(bird$Mass)
-```
-.comment[Dans les deux cas, les distributions ne sont pas normales
-]
+shapiro.test(residuals(lm1))
 
----
-# Suppositions non-respectées - quelle est la cause?
-
-Vérifions la normalité des données à l'aide d'un test de `Shapiro-Wilk` et d'un test d'asymétrie (**`skewness`**) :
-
-```{r skewness}
 library(e1071)
-skewness(bird$MaxAbund)
-skewness(bird$Mass)
+skewness(residuals(lm1))
 ```
-.comment[La valeur positive indique que la distribution des données est décalée vers la gauche]
+.comment[La distribution est significativement différente d'une distribution normale, décalée vers la gauche (valeur positive d'asymétrie)]
+
 
 ---
-# Transformer les données
 
-- Normalisons les données en appliquant une transformation `log10()`
-- Ajoutons ces variables transformées à notre base de données
+# Conditions non-respectées - Comment proceder ?
+
+
+*Il y a deux options quand les suppositions du modèle linéaire ne sont pas respectées :*
+
+<br>
+
+1. Utiliser un **autre type de modèle** mieux adapté à l'hypothèse et aux données (ateliers 6 - 8 du CSBQ R).
+2. Essayer de **transformer** la réponse et / ou le prédicteurs
+  - Il existe **plusieurs types de transformations** et leur utilité dépend de la distribution de la variable et du type de modèle.
+  - La transformation peut **régler certains** problèmes mais peut en **créer d'autres**.
+  - Les **résultats des tests de signification** sur les données transformées ne sont **pas automatiquement valables** pour les données non transformées.
+
+???
+
+- La transformation des variables peut être utile, mais elle est souvent délicate en pratique
+
+---
+
+# Défi 1: Un modèle sur variables transformées ![:cube]
+
+*Essayons de résoudre nos problèmes avec une transformation logarithmique.*
+
+Ajoutons des variables transformées à notre jeu de données :
 
 ```{r}
 bird$logMaxAbund <- log10(bird$MaxAbund)
 bird$logMass <- log10(bird$Mass)
 ```
 
-**Étape 1**: Exécuter une régression linéaire sur les données transformées
+--
+
+#### Défi
+
+**Étape 1.** Exécuter une régression linéaire sur les variables transformées `logMaxAbund` et `logMass`.
+Sauvegarder l'objet du modèle sous `lm2`
+
+**Étape 2**: Vérifier les supposition pour `lm2` en utilisant les graphique diagnostics.
 
 ```{r}
 lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ```
 
+???
+
+- Se répartir en petits groupes. Puis disctuter des résultats avec l'ensemble des participant.e.s
+
 ---
-# **Étape 2**: Vérifier les suppositions de `lm2`
+
+# Défi 1: Un modèle sur variables transformées ![:cube]
+
+**Étape 1.** Exécuter une régression linéaire sur les variables transformées 
+
+```{r}
+lm2 <- lm(logMaxAbund ~ logMass, data = bird)
+
+lm2
+```
+
+.center[
+*Comment les paramètres se comparent-ils à nos prédictions ?*
+]
+
+.center[
+**Peut-on se fier aux estimations du modèle ?**
+]
+
+???
+
+- Cette fois, les paramètres s'alignent avec nos prédictions.
+- MAIS : Bien sûr, nous devons encore vérifier les hypothèses 
+
+---
+
+# Défi 1: Un modèle sur variables transformées ![:cube]
+
+**Étape 2**: Vérifier les supposition pour `lm2` 
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
 
-.comment[.center[Beaucoup mieux !]]
+--
+
+.comment[.center[Beaucoup mieux, mais il reste des problèmes]]
+
+???
+
+- Il y a encore des tendances visibles dans les graphiques
 
 ---
-# **Étape 2**: Vérifier les suppositions de `lm2`
 
-```{r, echo=-1, fig.height=4, fig.width=11}
-par(mfrow=c(1,3), mar=c(4,4,1.15,1.2))
-plot(logMaxAbund ~ logMass, data=bird)
-abline(lm2)
-hist(log10(bird$MaxAbund))
-hist(log10(bird$Mass))
+# **Étape 2.** Vérifier les suppositions pour `lm2`
+
+```{r, fig.height=4, fig.width=11,}
+par(mfrow = c(1,2))
+coef(lm2) # constante et pente
+plot(logMaxAbund ~ logMass, data=bird) # graphique à gauche
+abline(lm2) # ligne définie par les paramètres du modèle
+hist(residuals(lm2)) # graphique à droite : distribution des residus
 ```
 
 ---
-# **Étape 3**
 
-**Estimer les paramètres et leur seuil de signification**
+# **Étape 3.** Analyser les paramètres
 
-La fonction `summary()` est utilisée pour obtenir les paramètres, leur importance, etc
+La fonction `summary()` est utiliée pour obtenir plus d'informations sure le modèle ajusté. 
 
 .small[
-```{r}
+```{r, comment=""}
 summary(lm2)
 ```
 ]
 
+???
+
+- Prendre le temps d'expliquer les résultat de `summary()` :
+  1. Estimations des paramètres et leur écarts type
+  2. Résultats d'un test t visant à déterminer si les paramètres sont différents de 0
+  3. Adjusted R squared (R au carré ajusté) : Dans quelle mesure le modèle explique-t-il les données ?
+  4. F-statistic (statistique F) (ANOVA) : Le modèle est-il significativement différent d'un modèle sans prédicteur (modèle nul) ?
+- Mentionner que les tests t et l'ANOVA seront abordés plus tard
+- Dans ce cas : notre modèle est à peine meilleur que le modèle nul
+
+
 ---
-# **Étape 3**
 
-**Estimer les paramètres et leur seuil de signification**
+# **Étape 3.** Analyser les paramètres
 
-Nous pouvons aussi extraire les paramètres du modèle, par exemple :
+Nous pouvons aussi extraire les paramètres du modèle et des autres résultats :
 
 ```{r}
-lm2$coefficients
-summary(lm2)$coefficients
-summary(lm2)$r.squared
+# Vecteurs de residus et valeures prédites
+e <- residuals(lm2)
+y <- fitted(lm2)
+
+coefficients(lm2) # coefficients
+summary(lm2)$coefficients # coefficients avec test t
+
+summary(lm2)$adj.r.squared # R au carré ajusté
 ```
 
 ---
-# Discussion de groupe
 
-- Pouvez-vous écrire l'équation de la droite de régression pour votre modèle `lm2`
-- Les paramètres sont-ils importants ?
-- Quelle proportion de la variance est expliquée par le modèle `lm2` ?
+# Interprétation du modèle
 
-.small[
-```{r}
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+#### Hypothèse
+
+> Pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+
+---
+
+# Interprétation du modèle
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+```{r, comment=""}
 summary(lm2)
 ```
-]
 
 ---
-# Discussion de groupe
 
-Pouvons-nous améliorer le modèle si nous analysons que les oiseaux terrestres?
+# Interprétation du modèle
 
-.comment[Vous pouvez exclure des objets en utilisant `=!`]
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+Il n'y a que très **peu de preuves à l'appui** de notre hypothèse parce que :
+- Le modèle n'explique pas bien la réponse (*faible R au carré ajusté*)
+- Le modèle n'est que légèrement meilleur qu'un modèle sans variables prédictives (*F-test à peine significatif*)
+- L'estimation du paramètre "logMass" est à peine différente de 0 (*t-test à peine significatif*)
+
+???
+
+- In this case, the F-test and t-test are equivalent because there is only one predictor variable)
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+*Peut-être devrions-nous formuler une hypothèse plus précise ?*
+
+--
+
+#### Hypothèse
+
+> Pour différentes espèces d'oiseaux <span style="color:green">**terrestres**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+Exclure tous les oiseaux aquatiques (en utilisant `!`) et ajuster un modèle linéaire :
 
 ```{r}
 lm3 <- lm(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
-# removes aquatic birds (= TRUE)
-# or equivalently
-lm3 <- lm(logMaxAbund~logMass, data=bird, subset=bird$Aquatic == 0)
+# exclut les oiseaux aquatiques (!birdsAquatic == TRUE)
+# ou de façon équivalente :
+# lm3 <- lm(logMaxAbund~logMass, data=bird, subset=bird$Aquatic == 0)
+
+lm3
 ```
 
-```{r eval=FALSE}
-# Examine the diagnostic plots
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2))
 plot(lm3)
+```
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm3)
+```
+
+.comment[.center[Suppositions respectées]]
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+```{r, comment=""}
 summary(lm3)
-
-# Compare both models
-par(mfrow=c(1,2))
-plot(logMaxAbund~logMass, data=bird)
-plot(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
 ```
 
 ---
-# Plot
 
-Sans les oiseaux aquatiques, le `R2-adj` passe de 0.05 à 0.25 :
+# Trouver un meilleur modèle : oiseaux terrestres
 
-```{r, fig.height=4.5, fig.width=9}
-par(mfrow=c(1,2), mar = c(4, 4, 3, 1))
-plot(logMaxAbund~logMass, data=bird, main = 'Tous les oiseaux')
-abline(lm2, col = 'red')
-plot(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic, main = 'Oiseaux terrestres')
-abline(lm3, col = 'red')
-```
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
 
----
-# Défi 1 ![:cube]()
+Le modèle fournit des **preuves à l'appui** de notre hypothèse, parce que :
 
-- Examiner la relation entre `log(MaxAbund)` et `log(Mass)` chez les passereaux ("passerine birds")
-- Sauvegarder l'objet du modèle sous `lm4`
+- Le modèle est raisonnablement bien ajusté aux données (*R au carré ajusté*)
+- Le modèle est clairement meilleur qu'un modèle sans variables prédictives (*F-test*)
+- L'estimation du paramètre "logMass" est clairement différente de 0 (*t-test*)
 
-.comment[INDICE: comme les espèces aquatiques, les passereaux sont codées 0/1, ce qui peut être vérifié à partir de la structure de la base de données]
-
-- Comparer la variance expliquée par `lm2`, `lm3` and `lm4`
 
 ---
-# Défi 1 - Solution ![:cube]()
+
+# Défi 2 ![:cube]()
+
+Rassemblons tout les étapes :
+
+<br>
+1. Formuler une autre hypothèse similaire sur l'abondance maximale et la masse moyenne d'un individu, cette fois pour les **passereaux** ("passerine birds").
+2. Ajuster un **modèle** pour évaluer cette hypothèse, en utilisant les variables transformées (c'est-à-dire `logMaxAbund` et `logMass`). Sauvegarder le modèle sous le nom de `lm4`.
+3. **Vérifier les suppositions** du modèle linéaire à l'aide des graphiques diagnostics.
+4. Interpréter les résultats : Le modèle fournit-il des **preuves à l'appui de l'hypothèse ?**
+
+
+.comment[Indice : Comme les espèces aquatiques, les passereaux (variable `Passerine` sont codées 0/1 (vérifier avec `str(bird)`)]
+
+---
+
+# Défi 2 - Solution ![:cube]()
+
+#### Hypothesis
+
+> Pour différentes espèces de <span style="color:green">**passereaux**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+---
+
+# Défi 2 - Solution ![:cube]()
+
+ajuster le modèle :
 
 ```{r}
-# Run the model
-lm4 <- lm(logMaxAbund ~ logMass, data = bird, subset=bird$Passerine == 1)
-summary(lm4)
+lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
+lm4
 ```
 
 ---
-# Défi 1 - Solution ![:cube]()
 
-```{r,fig.height=6, fig.width=8}
-# diagnostic plots
+# Défi 2 - Solution ![:cube]()
+
+Vérifier les suppositions :
+
+```{r, eval=FALSE}
+par(mfrow=c(2,2))
+plot(lm4)
+```
+
+```{r,fig.height=6, fig.width=8, echo=FALSE}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm4)
 ```
 
 ---
-# Défi 1 - Solution ![:cube]()
 
-Comparer la variance expliquée par `lm2`, `lm3` and `lm4`
+# Challenge 2 - Solution ![:cube]()
 
-```{r}
-# Recall: we want adj.r.squared
-summary(lm2)$adj.r.squared
-summary(lm3)$adj.r.squared
-summary(lm4)$adj.r.squared
+Vaut-il la peine d'interpréter les résultats ?
+
+```{r, comment=""}
+summary(lm4)
 ```
 
-.comment[Le meilleur modèle parmi les trois est `lm3` *(seulement les oiseaux terrestres)*]
+???
+
+- Les résultats du modèle ne doivent pas être interprétés car les suppositions du modèle linéaire ne sont pas respectées!
 
 ---
+
+# Régression linéaire avec R
+
+.center[.small[
+**Étape 1**   
+Formuler et excécuter un modèle linéaire basé sur un hypothèse
+
+**Étape 2**  
+Vérifier les suppositions du modèle linéaire
+]]
+
+<br>
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.pull-left[.center[*Conditions sont satisfaits ?*]
+
+.small[.center[**Étape 3**  ]
+- Analyser les paramètres de régression
+- Tracer le modèle
+- Effectuer des tests de signification sur les estimations des paramètres (si nécessaire)
+]]
+
+.pull-right[.center[*Conditions non satisfaites ?*]
+
+.center[Envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données]
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.small[
+.pull-left[
+Utiliser un GLM mieux adapté aux données
+]
+
+.pull-right[
+Retourner à l'Étape 1 avec des variables transformées
+]]]
+
+---
+
+# Noms de variables
+
+Des termes différents sont utilisés pour la *réponse* et le *prédicteur*, , en fonction du contexte et du domaine scientifique (les termes ne sont pas toujours synonymes).
+
+<br>
+
+.center[
+|résponse          | prédicteur       |
+|:-----------------|:-----------------|
+|var. expliqué     |var. explicatif   |
+|                  |covariable        |
+|var. endogène     |var. exogène      |
+|var. dépendante   |var. indépendante |
+]
+
+<br>
+
+.center[
+|response          | predictor        |
+|:-----------------|:-----------------|
+|                  |explanatory var.  |
+|                  |covariate         |
+|outcome           |                  |
+|output var.       |input var.        |
+|dependent var.    |independent var.  |
+]
+
+
+---
+
 # Objectif d'enseignement
 
 .center[
@@ -703,6 +1227,7 @@ summary(lm4)$adj.r.squared
 ]
 
 ---
+
 class: inverse, center, middle
 
 # ANOVA
@@ -758,10 +1283,10 @@ Mesures répétées ?
 ---
 class: inverse, center, middle
 
-# Test T
+# Test t
 
 ---
-# Test T
+# Test t
 
 - **Variable réponse** ![:faic](arrow-right) quantitative
 - **Variable explicative** ![:faic](arrow-right) qualitative avec **2 niveaux**
@@ -773,7 +1298,7 @@ class: inverse, center, middle
 .comment[Le test est plus robuste lorsque la taille de l'échantillon est plus élevée et lorsque les groupes ont des tailles égales]
 
 ---
-# Exécuter un test T dans R
+# Exécuter un test t dans R
 
 Vous pouvez utiliser la fonction `t.test()`
 
@@ -796,7 +1321,7 @@ anova(lm.t)
 ```
 
 ---
-# Exécuter un test T dans R
+# Exécuter un test t dans R
 
 .large[Les oiseaux aquatiques sont-ils plus lourds que les oiseaux terrestres ?]
 
@@ -804,7 +1329,7 @@ anova(lm.t)
 - Variable explicative : `Aquatic` ![:faic](arrow-right) 2 niveaux : 1 ou 0 (oui ou non)
 
 ---
-# Exécuter un test T dans R
+# Exécuter un test t dans R
 
 Premièrement, visualiser les données à l'aide de la fonction `boxplot()`
 
@@ -814,7 +1339,7 @@ boxplot(logMass ~ Aquatic,
 ```
 
 ---
-# Exécuter un test T dans R
+# Exécuter un test t dans R
 
 Testons l'homogénéité des variances avec la fonction `var.test()`
 
@@ -827,7 +1352,7 @@ var.test(logMass ~ Aquatic, data = bird)
 .comment[Nous pouvons maintenant procéder au test t !]
 
 ---
-# Exécuter un test T dans R
+# Exécuter un test t dans R
 
 ```{r}
 ttest1 <- t.test(logMass ~ Aquatic, var.equal = TRUE, data = bird)
@@ -849,7 +1374,7 @@ anova(ttest.lm1)$`F value`
 .comment[Lorsque la supposition d'égalité de variance est confirmée, t^2 = F]
 
 ---
-# Exécuter un test T dans R
+# Exécuter un test t dans R
 
 Si $p<0,01$ (ou $0,05$ ), l'hypothèse de l'absence de différence entre les moyenne des 2 groupes (*H0*) peut être rejetée, avec un risque de $0,01$ (ou $0,05$ ) de se tromper
 
@@ -1164,7 +1689,7 @@ aov <- lm(Y ~ X + Z, data)
 ]
 
 ---
-# Défi 2 ![:cube]()
+# Défi 3 ![:cube]()
 
 Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`)
 
@@ -1183,7 +1708,7 @@ summary(anov2)
 ]
 
 ---
-# Défi 2 - Solution ![:cube]()
+# Défi 3 - Solution ![:cube]()
 
 .xsmall[
 ```{r}
@@ -1368,7 +1893,7 @@ str(bird)
 ]
 
 ---
-# Défi 3 ![:cube]()
+# Défi 4 ![:cube]()
 
 1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
 
@@ -1385,7 +1910,7 @@ summary(ancova.exemple2)
 ```
 
 ---
-# Défi 3 - Solution ![:cube]()
+# Défi 4 - Solution ![:cube]()
 
 <br>
 
@@ -1398,7 +1923,7 @@ anova(ancov1)
 .comment[Interaction entre `logMass` et `Diet` est non-significative]
 
 ---
-# Défi 3 - Solution ![:cube]()
+# Défi 4 - Solution ![:cube]()
 
 Éliminer le terme d'interaction, puis ré-évaluer le modèle contenant les effets simples de `logMass` et `Diet`
 
@@ -1409,6 +1934,7 @@ anova(ancov2)
 ```
 
 ---
+
 # Objectif d'enseignement
 
 .center[
@@ -1416,29 +1942,67 @@ anova(ancov2)
 ]
 
 ---
+
 class: inverse, center, middle
 
 # Régression linéaire multiple
 
 ---
+
 # Régression linéaire multiple
-- **Variables explicatives** ![:faic](arrow-right) 2 ou plusieurs variables continues
-- **Variable réponse** ![:faic](arrow-right) 1 variable continue
 
-Il s'agit d'une généralisation de la régression linéaire simple
+Seule différence avec la régression linéaire simple : **plusieurs variables explicatives** sont incluses dans le modèle. 
 
-$$Y_i = \alpha + \beta_1x_{1i}+\beta_2x_{2i}+\beta_3x_{3i}+...+\beta_kx_{ki} + \epsilon$$
+#### Variables
 
-Suppositions (.small[*En plus des suppositions habituelles des modèles linéaires*])
-- La relation entre chaque variable explicative et la variable réponse est de type linéaire
-- Les variables explicatives sont orthogonales (pas de colinéarité)
+- $y$ : Variable réponse (**continue**)
+- $x$ : Plusieurs variables explicatives (**continues** ou **catégoriques**)
 
-Si colinéarité
-1. Gardez seulement **une** des variables colinéaires
-2. Essayez une analyse multidimensionnelle (voir l'atelier 9)
-3. Essayez une analyse pseudo-orthogonale
+#### Relation supposée
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+- Le paramètre $\beta_0$ est **l'ordonnée à l'origine** (ou constante)
+- Les paramètre $\beta_1$ quantifie **l'effet** de $x$ sur $y$.
+- Le résidu $\epsilon_i$ représent la variation **non expliquée**
+- La **valeur prédite** de $y_i$ se définit comme : $\hat{y}_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i}$.
 
 ---
+
+# Régression linéaire multiple
+
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+
+#### Suppositions
+
+En plus des suppositions habituelles des modèles linéaires :
+- **Relation linéaire** entre **chaque** variable explicative et la variable réponse.
+- Les variables explicatives sont indépendantes les unes des autres (il n'y a pas de **colinéarité**).
+
+---
+
+# Régression linéaire multiple
+
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+
+
+#### En cas de colinéarité
+
+- Garder seulement une des variables colinéaires
+- Essayer une analyse multidimensionnelle (voir l'atelier 9)
+- Essayer une analyse pseudo-orthogonale
+
+---
+
+
 #  Régression linéaire multiple dans R
 
 En utilisant le jeu de données `Dickcissel` comparez l'importance relative du climat (`clTma`), de la productivité (`NDVI`) et de la couverture du sol (`grass`) comme prédicteurs de l'abondance de dickcissels (`abund`)
@@ -1515,24 +2079,28 @@ plot(lm.mult)
 ```
 
 ---
+
 # Quel est le meilleur modèle ?
+
 .small[
 Souvenez-vous du principe de parcimonie: expliquer le plus de variation avec le plus petit nombre de termes dans votre modèle ![:faic](arrow-right) enlevez la variable qui est la moins significative
 ]
 
-.pull-left2[
-.small[
+
 ```{r}
-summary(lm.mult)
+summary(lm.mult)$coefficients
 ```
-]]
-.pull-right2[
-.small[.comment[
+
 <br>
+
 Les 3 variables sont importantes. On garde tout !
 
-R2-aj: le modèle explique 11.28% de la variabilité de l'abondance de dickcissels
-]]]
+Le modèle explique 11.28% de la variabilité de l'abondance de dickcissels ( $R²_{adj} = 0.11$ ).
+
+--
+
+.alert[Toutefois, ces informations ne sont pas valables car les suppositions du modèle linéaire ne sont pas respectées.]
+
 
 ---
 # Quel est le meilleur modèle ?
