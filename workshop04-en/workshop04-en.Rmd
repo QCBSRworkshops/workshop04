@@ -2195,7 +2195,7 @@ summary(lm.mult)$coefficients
 <br>
 Parameters for all 3 predictor variables are significantly different from 0.
 
-Model explains ~11% of variance in dickcissel abundance ( $R²_{adj} = 0.11$ ).
+Model explains ~11% of variance in dickcissel abundance $R²_{adj} = 0.11$.
 
 --
 

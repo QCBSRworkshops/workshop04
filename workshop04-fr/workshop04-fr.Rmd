@@ -38,10 +38,12 @@ cat(
 
 ---
 
-# Modéles linéaires
+# Objectifs d'apprentissage
 
 .large[-Apprendre la structure d'un modèle linéaire et ses *différentes variantes*.]
-
+<br>
+<br>
+<br>
 --
 
 .center[
@@ -258,7 +260,7 @@ $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
 ---
 
-# Suppositions du modèle linéaire
+# Conditions d'application du modèle linéaire
 
 
 $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
@@ -276,7 +278,7 @@ plot(x, p, type = "l", lty = 2, lwd = 1.5,  xlab = "Residuals", ylab = "Probabil
 
 ---
 
-# Suppositions du modèle linéaire
+# Conditions d'application du modèle linéaire
 
 
 $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
@@ -300,7 +302,7 @@ $$y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)$$
 
 ---
 
-# Suppositions du modèle linéaire
+# Conditions d'application du modèle linéaire
 
 $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
@@ -318,12 +320,12 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 ---
 
-# Suppositions du modèle linéaire
+# Conditions d'application du modèle linéaire
 
 $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
-#### Résumé des suppositions
+#### Résumé des conditions d'application
 - Relation linéaire entre la réponse et le prédicteur
 - Les résidus suivent une distribution normale avec une moyenne de $0$
 - Les résidus sont distribués de manière identique (*homoscédasticité*)
@@ -393,10 +395,10 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 ---
 
-# Objectifs d'apprentissage
+# Modèles linéaires
 
 .center[
-![:scale 100%](images/schema_multReg.png)
+![:scale 100%](images/schema.png)
 ]
 
 
@@ -427,7 +429,7 @@ plot(bird$Mass, bird$MaxAbund)
 
 --
 
-**Équation du modéle**
+**Équation du modèle**
 
 $\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$
 
@@ -451,10 +453,10 @@ MaxAbund ~ Mass
 
 .center[.small[
 **Étape 1**   
-Formuler et excécuter un modèle linéaire basé sur un hypothèse
+Formuler et exécuter un modèle linéaire basé sur un hypothèse
 
 **Étape 2**  
-Vérifier les suppositions du modèle linéaire
+Vérifier les conditions d'application du modèle linéaire
 ]]
 
 <br>
@@ -488,7 +490,7 @@ Retourner à l'Étape 1 avec des variables transformées
 
 # Régression linéaire avec R
 
-#### **Étape 1.** Formuler et excécuter un modèle linéaire
+#### **Étape 1.** Formuler et exécuter un modèle linéaire
 
 La fonction `lm()` est utilisée pour ajuster un modèle linéaire, en fournissant la formule du modèle comme premier argument ::
 
@@ -506,7 +508,7 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 
 # Régression linéaire avec R
 
-#### **Étape 1.** Formuler et excécuter un modèle linéaire
+#### **Étape 1.** Formuler et exécuter un modèle linéaire
 
 Examinons les estimations des paramètres :
 
@@ -535,7 +537,7 @@ lm1
 
 # Régression linéaire avec R
 
-#### **Étape 2.** Vérifier les suppositions avec les graphiques diagnostics
+#### **Étape 2.** Vérifier les conditions d'application avec les graphiques diagnostics
 
 Nous pouvons produire **quatre graphiques diagnostics** d'un objet `lm` :
 
@@ -556,7 +558,7 @@ plot(lm1)
 
 # Régression linéaire avec R
 
-#### **Étape 2.** Vérifier les suppositions avec les graphiques diagnostics
+#### **Étape 2.** Vérifier les conditions d'application avec les graphiques diagnostics
 
 ```{r, eval=FALSE}
 par(mfrow=c(2,2)
@@ -581,7 +583,7 @@ plot(lm1)
 <span style="color:green">**Ce qu'on espère voir :**</span> Dispersion de points sans patron
 
 
-**Motivation :** Indiquation si les résidus sont *indépendants* et *identiquement distribués*.
+**Motivation :** Indication si les résidus sont *indépendants* et *uniformément distribués*.
 
 ```{r, echo = FALSE, fig.height=5, fig.width=6.5}
   set.seed(1234564)
@@ -617,22 +619,22 @@ plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
 **Quoi faire ?**
 
 - Utiliser plutôt un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions : Poisson, binomial, binomial négatif, etc.)
-- Essayer de **transformaer** la réponse et/ou prédicteurs
+- Essayer de **transformer** la réponse et/ou prédicteurs
 
 ???
 
-- Expliquez que "hétéroscédastique" est l'opposé de "homoscédastique", ce qui signifie que la supposition de normalité est non-respectée.
+- Expliquez que "hétéroscédastique" est l'opposé de "homoscédastique", ce qui signifie que la condition de normalité est non-respectée.
 
 ---
 
-# Graphique # 2 - Échelle localité
+# Graphique # 2 - Échelle localisé
 **Ce qu'on voit :**  
-* Axe des **Y** : Racine carrée des residus standardisés $\sqrt{\frac{\epsilon_i}{\sigma}}$
-* Axe des **X** : Valuers prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
+* Axe des **Y** : Racine carrée des résidus standardisés $\sqrt{\frac{\epsilon_i}{\sigma}}$
+* Axe des **X** : Valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
 
 <span style="color:green">**Ce qu'on espère voir :**</span> Dispersion de points sans patron
 
-**Motivation :** Parfois plus facile de détecter si les suppositions ne sont pas respectées, surtout quand le prédicteur est distribué de manière inégale.
+**Motivation :** Parfois plus facile de détecter si les conditions d'application ne sont pas respectées, surtout quand le prédicteur est distribué de manière inégale.
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(1234564)
@@ -644,7 +646,7 @@ plot(lm,which = 3)
 
 ---
 
-# Graphique # 2 - Échelle localité
+# Graphique # 2 - Échelle localisé
 
 .alert[Ce qui devrait nous rendre méfiants :]
 
@@ -702,7 +704,7 @@ plot(lm, which = 2)
 
 ---
 
-# Diagnostic plot # 4 - Résidus vs effet de levier
+# Graphique # 4 - Résidus vs effet de levier
 
 **Motivation :**
 
@@ -752,7 +754,7 @@ text(-33, 15, srt=0, adj = 0, labels = '* Effet de levier \n* Influence élevée
 
 ---
 
-# Diagnostic plot # 4 - Résidus vs effet de levier
+# Graphique # 4 - Résidus vs effet de levier
 
 **Ce qu'on voit :**  
 * Axe des **Y** : Residus standardisés $\frac{\epsilon_i}{\sigma}$
@@ -778,7 +780,7 @@ plot(lm, which = 5, main = "Effet de levier et faible influence",  col.main=pale
 
 ---
 
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Graphique # 4 - Résidus vs effet de levier
 
 .alert[Ce qui devrait nous rendre méfiants :]
 
@@ -800,11 +802,11 @@ plot(lm, which = 5, main = "Effet de levier et influence élevée")
 ???
 
 - Point 29 a un effet de levier élevé et une distance Cook > 0,5
-- Raison potentielle pour supprimir les valeurs aberrantes : Erreur de mesure évidente
+- Raison potentielle pour supprimer les valeurs aberrantes : Erreur de mesure évidente
 
 ---
 
-# **Étape 2**. Vérifier les suppositions pour `lm1`
+# **Étape 2**. Vérifier les conditions d'application pour `lm1`
 
 ```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2))
@@ -816,7 +818,7 @@ par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
 
-**Discussion :** Le modèle `lm1` respecte-t-il les supposition du modèle linéaire ?
+**Discussion :** Le modèle `lm1` respecte-t-il les conditions du modèle linéaire ?
 
 ???
 
@@ -836,14 +838,14 @@ par(mfrow = c(1,2))
 coef(lm1) # constante et pente
 plot(MaxAbund ~ Mass, data=bird) # graphique à gauche
 abline(lm1) # ligne définie par les paramètres du modèle
-hist(residuals(lm1)) # graphique à droite : distribution des residus
+hist(residuals(lm1)) # graphique à droite : distribution des résidus
 ```
 
 ---
 
 # Conditions non-respectées - Quelle est la cause ?
 
-On peut verifier si les residus suivent une distribution normle à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
+On peut verifier si les résidus suivent une distribution normale à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
 
 ```{r}
 shapiro.test(residuals(lm1))
@@ -856,14 +858,16 @@ skewness(residuals(lm1))
 
 ---
 
-# Conditions non-respectées - Comment proceder ?
+# Conditions non-respectées - Comment proéeder ?
 
 
-*Il y a deux options quand les suppositions du modèle linéaire ne sont pas respectées :*
+*Il y a deux options quand les conditions d'application du modèle linéaire ne sont pas respectées :*
 
 <br>
 
 1. Utiliser un **autre type de modèle** mieux adapté à l'hypothèse et aux données (ateliers 6 - 8 du CSBQ R).
+<br>
+<br>
 2. Essayer de **transformer** la réponse et / ou le prédicteurs
   - Il existe **plusieurs types de transformations** et leur utilité dépend de la distribution de la variable et du type de modèle.
   - La transformation peut **régler certains** problèmes mais peut en **créer d'autres**.
@@ -893,7 +897,7 @@ bird$logMass <- log10(bird$Mass)
 **Étape 1.** Exécuter une régression linéaire sur les variables transformées `logMaxAbund` et `logMass`.
 Sauvegarder l'objet du modèle sous `lm2`
 
-**Étape 2**: Vérifier les supposition pour `lm2` en utilisant les graphique diagnostics.
+**Étape 2**: Vérifier les conditions pour `lm2` en utilisant les graphique diagnostics.
 
 ```{r}
 lm2 <- lm(logMaxAbund ~ logMass, data = bird)
@@ -932,7 +936,7 @@ lm2
 
 # Défi 1: Un modèle sur variables transformées ![:cube]
 
-**Étape 2**: Vérifier les supposition pour `lm2` 
+**Étape 2**: Vérifier les conditions pour `lm2` 
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
@@ -949,14 +953,14 @@ plot(lm2)
 
 ---
 
-# **Étape 2.** Vérifier les suppositions pour `lm2`
+# **Étape 2.** Vérifier les conditions d'application pour `lm2`
 
 ```{r, fig.height=4, fig.width=11,}
 par(mfrow = c(1,2))
 coef(lm2) # constante et pente
 plot(logMaxAbund ~ logMass, data=bird) # graphique à gauche
 abline(lm2) # ligne définie par les paramètres du modèle
-hist(residuals(lm2)) # graphique à droite : distribution des residus
+hist(residuals(lm2)) # graphique à droite : distribution des résidus
 ```
 
 ---
@@ -975,7 +979,7 @@ summary(lm2)
 
 - Prendre le temps d'expliquer la sortie de `summary()` :
   1. Estimations des paramètres et leur écarts type
-  2. Résultats d'un test t visant à déterminer si les paramètres sont différents de 0
+  2. Résultats d'un test de t visant à déterminer si les paramètres sont différents de 0
   3. Adjusted R squared (R au carré ajusté) : Dans quelle mesure le modèle explique-t-il les données ?
   4. F-statistic (statistique F) (ANOVA) : Le modèle est-il significativement différent d'un modèle sans prédicteur (modèle nul) ?
 - Mentionner que les tests t et l'ANOVA seront abordés plus tard
@@ -989,12 +993,12 @@ summary(lm2)
 Nous pouvons aussi extraire les paramètres du modèle et des autres résultats :
 
 ```{r}
-# Vecteurs de residus et valeures prédites
+# Vecteurs de résidus et valeures prédites
 e <- residuals(lm2)
 y <- fitted(lm2)
 
 coefficients(lm2) # coefficients
-summary(lm2)$coefficients # coefficients avec test t
+summary(lm2)$coefficients # coefficients avec test de t
 
 summary(lm2)$adj.r.squared # R au carré ajusté
 ```
@@ -1029,7 +1033,7 @@ summary(lm2)
 Il n'y a que très **peu de preuves à l'appui** de notre hypothèse parce que :
 - Le modèle n'explique pas bien la réponse (*faible R au carré ajusté*)
 - Le modèle n'est que légèrement meilleur qu'un modèle sans variables prédictives (*F-test à peine significatif*)
-- L'estimation du paramètre "logMass" est à peine différente de 0 (*t-test à peine significatif*)
+- L'estimation du paramètre "logMass" est à peine différente de 0 (*valeur de t à peine significatif*)
 
 ???
 
@@ -1076,7 +1080,7 @@ par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm3)
 ```
 
-.comment[.center[Suppositions respectées]]
+.comment[.center[Conditions d'application respectées]]
 
 ---
 
@@ -1110,7 +1114,7 @@ Rassemblons tout les étapes :
 <br>
 1. Formuler une autre hypothèse similaire sur l'abondance maximale et la masse moyenne d'un individu, cette fois pour les **passereaux** ("passerine birds").
 2. Ajuster un **modèle** pour évaluer cette hypothèse, en utilisant les variables transformées (c'est-à-dire `logMaxAbund` et `logMass`). Sauvegarder le modèle sous le nom de `lm4`.
-3. **Vérifier les suppositions** du modèle linéaire à l'aide des graphiques diagnostics.
+3. **Vérifier les conditions d'application** du modèle linéaire à l'aide des graphiques diagnostics.
 4. Interpréter les résultats : Le modèle fournit-il des **preuves à l'appui de l'hypothèse ?**
 
 
@@ -1120,7 +1124,7 @@ Rassemblons tout les étapes :
 
 # Défi 2 - Solution ![:cube]()
 
-#### Hypothesis
+#### Hypothèse
 
 > Pour différentes espèces de <span style="color:green">**passereaux**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
 
@@ -1139,7 +1143,7 @@ lm4
 
 # Défi 2 - Solution ![:cube]()
 
-Vérifier les suppositions :
+Vérifier les conditions d'application :
 
 ```{r, eval=FALSE}
 par(mfrow=c(2,2))
@@ -1153,7 +1157,7 @@ plot(lm4)
 
 ---
 
-# Challenge 2 - Solution ![:cube]()
+# Défi 2 - Solution ![:cube]()
 
 Vaut-il la peine d'interpréter les résultats ?
 
@@ -1163,7 +1167,7 @@ summary(lm4)
 
 ???
 
-- Les résultats du modèle ne doivent pas être interprétés car les suppositions du modèle linéaire ne sont pas respectées!
+- Les résultats du modèle ne doivent pas être interprétés car les conditions d'application du modèle linéaire ne sont pas respectées!
 
 ---
 
@@ -1171,10 +1175,10 @@ summary(lm4)
 
 .center[.small[
 **Étape 1**   
-Formuler et excécuter un modèle linéaire basé sur un hypothèse
+Formuler et exécuter un modèle linéaire basé sur un hypothèse
 
 **Étape 2**  
-Vérifier les suppositions du modèle linéaire
+Vérifier les conditions d'application du modèle linéaire
 ]]
 
 <br>
@@ -1236,7 +1240,7 @@ Des termes différents sont utilisés pour la *réponse* et le *prédicteur*, , 
 
 ---
 
-# Modéles linéaires
+# Modèles linéaires
 
 .center[
 ![:scale 100%](images/schema_ttest.png)
@@ -1261,7 +1265,7 @@ Variable réponse continue
 
 - Deux niveaux ou plus (groupes)
 
-.large[.center[Compare la variation intra-groupe et inter-groupe afin de déterminer si les moyennes des groupes diffèrent]]
+.large[.center[Compare la variation intra-groupe et inter-groupe afin de déterminer si les moyennes des groupes différent]]
 
 ---
 # ANOVA
@@ -1283,7 +1287,7 @@ Si variance inter traitements $>$ variance intra traitements:
 
 1. ANOVA à un critère de classification
   - Une variable explicative catégorique avec au moins 2 niveaux
-  - S'il y a 2 niveaux, un **test t** peut être utilisé alternativement
+  - S'il y a 2 niveaux, un **test de t** peut être utilisé alternativement
 
 2. ANOVA à deux critères de classification
   - Deux variables explicatives catégoriques ou plus
@@ -1299,22 +1303,22 @@ Mesures répétées ?
 ---
 class: inverse, center, middle
 
-# Test t
+# Test de t
 
 ---
-# Test t
+# Test de t
 
 - **Variable réponse** ![:faic](arrow-right) quantitative
 - **Variable explicative** ![:faic](arrow-right) qualitative avec **2 niveaux**
 
-**conditions d'applications**
+**conditions d'application**
 - Les résidus suivent une distribution normale
 - Les variances des groupes sont homogènes
 
 .comment[Le test est plus robuste lorsque la taille de l'échantillon est plus élevée et lorsque les groupes ont des tailles égales]
 
 ---
-# Exécuter un test t dans R
+# Exécuter un test de t dans R
 
 Vous pouvez utiliser la fonction `t.test()`
 
@@ -1337,7 +1341,7 @@ anova(lm.t)
 ```
 
 ---
-# Exécuter un test t dans R
+# Exécuter un test de t dans R
 
 .large[Les oiseaux aquatiques sont-ils plus lourds que les oiseaux terrestres ?]
 
@@ -1345,7 +1349,7 @@ anova(lm.t)
 - Variable explicative : `Aquatic` ![:faic](arrow-right) 2 niveaux : 1 ou 0 (oui ou non)
 
 ---
-# Exécuter un test t dans R
+# Exécuter un test de t dans R
 
 Premièrement, visualiser les données à l'aide de la fonction `boxplot()`
 
@@ -1355,7 +1359,7 @@ boxplot(logMass ~ Aquatic,
 ```
 
 ---
-# Exécuter un test t dans R
+# Exécuter un test de t dans R
 
 Testons l'homogénéité des variances avec la fonction `var.test()`
 
@@ -1365,10 +1369,10 @@ var.test(logMass ~ Aquatic, data = bird)
 
 .comment[Le rapport des variances n'est pas statistiquement différent de 1, celles-ci peuvent donc être considérées comme égales]
 
-.comment[Nous pouvons maintenant procéder au test t !]
+.comment[Nous pouvons maintenant procéder au test de t !]
 
 ---
-# Exécuter un test t dans R
+# Exécuter un test de t dans R
 
 ```{r}
 ttest1 <- t.test(logMass ~ Aquatic, var.equal = TRUE, data = bird)
@@ -1387,10 +1391,10 @@ anova(ttest.lm1)$`F value`
 # réponse : F=60.3845 dans les deux cas
 ```
 
-.comment[Lorsque la supposition d'égalité de variance est confirmée, t^2 = F]
+.comment[Lorsque la condition d'égalité de variance est confirmée, t^2 = F]
 
 ---
-# Exécuter un test t dans R
+# Exécuter un test de t dans R
 
 Si $p<0,01$ (ou $0,05$ ), l'hypothèse de l'absence de différence entre les moyenne des 2 groupes (*H0*) peut être rejetée, avec un risque de $0,01$ (ou $0,05$ ) de se tromper
 
@@ -1405,10 +1409,10 @@ ttest1
 .small[.comment[Regardez les moyennes des 2 groupes]]
 
 ---
-# Non respect des conditions d'applications
+# Non respect des conditions d'application
 
 - **Correction de Welch** : lorsque les écarts entre les groupes ne sont pas égaux (par défaut dans R !)
-- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de T lorsque les conditions d'applications ne sont pas respectées
+- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les conditions d'application ne sont pas respectées
 - **Test de t apparié** : lorsque les deux groupes ne sont **pas indépendants** (par exemple, des mesures sur la même personne récoltées lors de 2 années différentes)
 
 ---
@@ -1439,7 +1443,7 @@ Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :p-value
 ---
 # Sondage
 
-.large[Avec un test de T, il est possible d'être plus précis et de donner une direction à notre hypothèse avec `alternative`.] 
+.large[Avec un test de t, il est possible d'être plus précis et de donner une direction à notre hypothèse avec `alternative`.] 
 <br>
 <br>
 <br>
@@ -1492,7 +1496,7 @@ class: inverse, center, middle
 ---
 # Analyse de Variance (ANOVA)
 
-Généralisation du test t à $>2$ groupes, et/ou ≥ $2$ facteurs explicatifs
+Généralisation du test de t à $>2$ groupes, et/ou ≥ $2$ facteurs explicatifs
 
 Décomposition de la variance observée de la variable réponse en effets additifs d'un ou de plusieurs facteurs et de leurs interactions
 
@@ -1502,13 +1506,13 @@ $$Y = \underbrace{\mu}_{\Large{\text{moyenne globale de la variable réponse}\at
 ---
 # Rappel : ANOVA
 
-conditions d'applications
+conditions d'application
 - Normalité des résidus
 - L'égalité de la variance inter-groupes
 
 Test complémentaire
 - Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s)
-- Un test couramment utilisé a posteriori pour répondre à cette question est le **Test de Tukey**
+- Un test couramment utilisé *a posteriori* pour répondre à cette question est le **Test de Tukey**
 
 ---
 # Exécuter une ANOVA dans R
@@ -1632,7 +1636,7 @@ shapiro.test(resid(anov1))
 .comment[Les deux tests sont non-significatifs; les résidus du modèle peuvent être considérés normaux et les variances homogènes]
 
 ---
-# Et si les conditions d'applications ne sont pas respectées...
+# Et si les conditions d'application ne sont pas respectées...
 
 **Transformer vos données** : pourrait égaliser les variances et normaliser les résidus, et peut convertir un effet multiplicatif en un effet additif
 
@@ -1677,9 +1681,9 @@ summary.lm(aov1)
 .comment[Différence significative entre les groupes, mais nous ne savons pas lesquels !]]
 
 ---
-# Test a posteriori
+# Test *a posteriori*
 
-Lorsque l'ANOVA détecte un effet significatif de la variable explicative, un test post-hoc avec la fonction `TkeyHSD()`, doit être effectué pour déterminer quel(s) tratement(s) diffère(nt)
+Lorsque l'ANOVA détecte un effet significatif de la variable explicative, un test post-hoc avec la fonction `TukeyHSD()`, doit être effectué pour déterminer quel(s) tratement(s) diffère(nt)
 
 .pull-left2[
 .small[
@@ -1824,7 +1828,7 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ```
 
 ---
-# Modéles linéaires
+# Modèles linéaires
 
 .center[
 ![:scale 100%](images/schema_ancova.png)
@@ -1849,7 +1853,7 @@ $$Y = \mu + \text{Effets principaux des facteurs} + \\
 ---
 # Rappel : ANCOVA
 
-En plus des conditions d'applications des modèles linéaires, les modèles **ANCOVA** doivent respecter :
+En plus des conditions d'application des modèles linéaires, les modèles **ANCOVA** doivent respecter :
 
 - Les covariables ont toutes la **même étendue de valeurs**
 - Les variables sont **fixes**
@@ -1969,7 +1973,7 @@ mtext(c('Level 1', 'Level 2'), 1, at = 1:2, line = 0.5) # add labels to ticks
 - Si seulement votre covariable est significative, éliminer le facteur -> vous avez une **régression linéaire simple**
 - Si votre interaction covariable * facteur est significative, vous voudrez peut-être tester quel(s) niveau(x) du facteur a(ont) des pentes différentes
 
-.alert[Vérifier vos conditions d'applications ! ]
+.alert[Vérifier vos conditions d'application ! ]
 
 - Très similaire à ce que vous avez fait précédemment
 
@@ -2051,7 +2055,7 @@ anova(ancov2)
 
 ---
 
-# Objectif d'enseignement
+# Modèles linéaires
 
 .center[
 ![:scale 100%](images/schema_multReg.png)
@@ -2069,7 +2073,7 @@ class: inverse, center, middle
 - **Variables explicatives** ![:faic](arrow-right) 2 ou plusieurs variables continues
 - **Variable réponse** ![:faic](arrow-right) 1 variable continue
 
-Seule différence avec la régression linéaire simple : **plusieurs variables explicatives** sont incluses dans le modèle. 
+.xsmall[Seule différence avec la régression linéaire simple : **plusieurs variables explicatives** sont incluses dans le modèle.] 
 
 #### Variables
 
@@ -2095,9 +2099,9 @@ $$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i
 $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 
-#### Suppositions
+#### Conditions d'application
 
-En plus des suppositions habituelles des modèles linéaires :
+En plus des conditions d'application habituelles des modèles linéaires :
 - **Relation linéaire** entre **chaque** variable explicative et la variable réponse.
 - Les variables explicatives sont indépendantes les unes des autres (il n'y a pas de **colinéarité**).
 
@@ -2133,7 +2137,7 @@ str(Dickcissel)
 ]
 
 ---
-# Vérifier les conditions d'applications
+# Vérifier les conditions d'application
 
 La colinéarité :
 - Vérifier la colinéarité de toutes les variables explicatives et d'intérêt
@@ -2165,7 +2169,7 @@ lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
 summary(lm.mult)
 ```
 
-Vérifiez les autres conditions d'applications, comme pour la régression linéaire simple
+Vérifiez les autres conditions d'application, comme pour la régression linéaire simple
 
 ```{r,eval=FALSE,echo=-2}
 par(mfrow = c(2, 2))
@@ -2188,7 +2192,7 @@ summary(lm.mult)
 ---
 # Régression linéaire multiple dans R
 
-Vérifiez les autres conditions d'applications, comme pour la régression linéaire simple
+Vérifiez les autres conditions d'application, comme pour la régression linéaire simple
 
 ```{r, fig.height=5.5, fig.width=8,echo=-2}
 par(mfrow = c(2, 2))
@@ -2213,11 +2217,11 @@ summary(lm.mult)$coefficients
 
 Les 3 variables sont importantes. On garde tout !
 
-Le modèle explique 11.28% de la variabilité de l'abondance de dickcissels ( $R²_{adj} = 0.11$ ).
+Le modèle explique 11.28% de la variabilité de l'abondance de dickcissels $R²_{adj} = 0.11$.
 
 --
 
-.alert[Toutefois, ces informations ne sont pas valables car les suppositions du modèle linéaire ne sont pas respectées.]
+.alert[Toutefois, ces informations ne sont pas valables car les conditions d'application du modèle linéaire ne sont pas respectées.]
 
 
 ---
