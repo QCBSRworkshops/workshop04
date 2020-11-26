@@ -32,21 +32,37 @@ class: inverse, center, middle
 
 ```{R install_pkgs, echo = FALSE, results = "asis"}
 cat(
-  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car'), lang = "fr")
+  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect'), lang = "fr")
 )
 ```
 
 ---
 
+# Modéles linéaires
+
+.large[-Apprendre la structure d'un modèle linéaire et ses *différentes variantes*.]
+
+--
+
+.center[
+![:scale 80%](images/schema.png)
+]
+
+???
+
+Note au présentateur: Ce shéma représente les différentes variantes d'un modèle linéaire qui sera présentées durant l'atelier. 
+
+
+---
 # Objectifs d'apprentissage
 
-### Faire un t-test avec R
-
-### Utiliser `lm()` pour faire un modèle linéaire avec R
-
-### Utiliser `anova()` pour réaliser une analyse de variance avec R
-
-
+.large[-Apprendre la structure d'un modèle linéaire et ses différentes variantes.]
+<br>
+<br>
+.large[-Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`]
+<br>
+<br>
+.large[-Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème.] 
 
 ---
 
@@ -957,7 +973,7 @@ summary(lm2)
 
 ???
 
-- Prendre le temps d'expliquer les résultat de `summary()` :
+- Prendre le temps d'expliquer la sortie de `summary()` :
   1. Estimations des paramètres et leur écarts type
   2. Résultats d'un test t visant à déterminer si les paramètres sont différents de 0
   3. Adjusted R squared (R au carré ajusté) : Dans quelle mesure le modèle explique-t-il les données ?
@@ -1220,7 +1236,7 @@ Des termes différents sont utilisés pour la *réponse* et le *prédicteur*, , 
 
 ---
 
-# Objectif d'enseignement
+# Modéles linéaires
 
 .center[
 ![:scale 100%](images/schema_ttest.png)
@@ -1291,7 +1307,7 @@ class: inverse, center, middle
 - **Variable réponse** ![:faic](arrow-right) quantitative
 - **Variable explicative** ![:faic](arrow-right) qualitative avec **2 niveaux**
 
-**Suppositions**
+**conditions d'applications**
 - Les résidus suivent une distribution normale
 - Les variances des groupes sont homogènes
 
@@ -1389,13 +1405,14 @@ ttest1
 .small[.comment[Regardez les moyennes des 2 groupes]]
 
 ---
-# Non respect des suppositions
+# Non respect des conditions d'applications
 
 - **Correction de Welch** : lorsque les écarts entre les groupes ne sont pas égaux (par défaut dans R !)
-- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les suppositions ne sont pas respectées
+- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de T lorsque les conditions d'applications ne sont pas respectées
 - **Test de t apparié** : lorsque les deux groupes ne sont **pas indépendants** (par exemple, des mesures sur la même personne récoltées lors de 2 années différentes)
 
 ---
+exclude:True
 # Discussion de groupe
 
 .large[Les oiseaux aquatiques sont-ils plus lourds que les oiseaux terrestres ?]
@@ -1411,15 +1428,61 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
 .comment[Qu'avez-vous conclu ?]
 
 ---
+exclude:True
 # Discussion de groupe
 
 ```{r}
 uni.ttest1
 ```
 
-Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :
+Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
+---
+# Sondage
 
-p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
+.large[Avec un test de T, il est possible d'être plus précis et de donner une direction à notre hypothèse avec `alternative`.] 
+<br>
+<br>
+<br>
+Nous voulons tester si **les oiseaux aquatiques sont plus lourds que les oiseaux terrestres **. 
+
+Lequel devrait être utilisé? `alternative = "???"`
+
+1.`"two.sided"`
+
+2.`"less"`
+
+3.`"greater"`
+
+```{r,eval=F,echo=T}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "???")
+```
+
+---
+# Réponse
+
+.xsmall[
+```{r}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "less")
+uni.ttest1
+
+```
+]
+
+Pourquoi `"greater"` n'aurait pas marché?
+
+.comment[Indice: retournez à vos données. Quelle est la nature de la variable Aquatic?]
+
+???
+
+Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, R will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
 
 ---
 class: inverse, center, middle
@@ -1439,7 +1502,7 @@ $$Y = \underbrace{\mu}_{\Large{\text{moyenne globale de la variable réponse}\at
 ---
 # Rappel : ANOVA
 
-Suppositions
+conditions d'applications
 - Normalité des résidus
 - L'égalité de la variance inter-groupes
 
@@ -1531,7 +1594,7 @@ summary(aov1)
 ```
 
 ---
-# Vérifier les suppositions
+# Vérifier les conditions d'application
 
 **Test de Bartlett**: égalité de la variance entre les groupes
 
@@ -1540,6 +1603,23 @@ summary(aov1)
 bartlett.test(logMaxAbund ~ Diet, data = bird)
 ```
 ]
+---
+# Vérifier les conditions d'application
+
+
+**Test de Levene** pour l'homogénéité de la variance:
+
+.small[
+```{r}
+library(car)
+leveneTest(logMaxAbund ~ Diet, data = bird)
+```
+]
+
+.comment[Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.]
+
+---
+#Vérifier les conditions d'application
 
 **Test de Shapiro-Wilk**:  normalité des résidus
 
@@ -1552,7 +1632,7 @@ shapiro.test(resid(anov1))
 .comment[Les deux tests sont non-significatifs; les résidus du modèle peuvent être considérés normaux et les variances homogènes]
 
 ---
-# Et si les suppositions ne sont pas respectées...
+# Et si les conditions d'applications ne sont pas respectées...
 
 **Transformer vos données** : pourrait égaliser les variances et normaliser les résidus, et peut convertir un effet multiplicatif en un effet additif
 
@@ -1574,7 +1654,7 @@ kruskal.test(Y~X, data)
 
 Triage en ordre alphabétique des niveaux et comparaison au niveau de référence (`Insect`)
 
-.small[
+.xsmall[
 ```{r}
 summary(anov1)
 ```
@@ -1618,8 +1698,8 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 
 Représentation graphique de l'ANOVA à l'aide de la fonction `barplot()`
 
-.small[
-```{r, fig.height=3.5, fig.width=7,echo=-1}
+.xsmall[
+```{r, fig.height=3, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
 sd <- tapply(bird$logMaxAbund, bird$Diet, sd)
 means <- tapply(bird$logMaxAbund, bird$Diet, mean)
@@ -1651,9 +1731,10 @@ Plus d'un facteur
 
  `aov <- lm(Y ~ X * Z * ..., data)`
 
-.comment[lorsque vous utilisez le symbole "*" avec `lm()`, le modèle inclut les effets de chaque facteur séparément, ainsi que leur interaction]
-
-.comment[lorsque vous utilisez le symbole "+" avec `lm()`, le modèle inclut les effets de
+.comment[Lorsque vous utilisez le symbole "*" avec `lm()`, le modèle inclut les effets de chaque facteur séparément, ainsi que leur interaction]
+<br>
+<br>
+.comment[Lorsque vous utilisez le symbole "+" avec `lm()`, le modèle inclut les effets de
 chaque facteur séparément (pas d'interaction)]
 
 `aov <- lm(Y ~ X + Z + ..., data)`
@@ -1689,13 +1770,30 @@ aov <- lm(Y ~ X + Z, data)
 ]
 
 ---
+exclude:true
 # Défi 3 ![:cube]()
 
-Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`)
+Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`).
 
-- .comment[INDICE: Examinez les facteurs Diet, Aquatic et leur interaction avec une ANOVA à deux critères de classification e.g. `lm(Y ~ A*B)`]
+.comment[INDICE: Examinez les facteurs Diet, Aquatic et leur interaction avec une ANOVA à deux critères de classification e.g. `lm(Y ~ A*B)`]
 
-- .comment[où A est le premier facteur, B le deuxième et "\*" décrit l'interaction]
+.comment[où A est le premier facteur, B le deuxième et "\*" décrit l'interaction]
+
+---
+# Défi 3 ![:cube]()
+
+Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`).
+<br>
+<br>
+.comment[INDICE: Assurez-vous d'ajouter une interaction avec `*`]
+<br>
+<br>
+<br>
+<br>
+.large[
+.center[
+.alert[Salle de réunion!]
+]]
 
 ---
 # ![:cube]()
@@ -1726,7 +1824,7 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ```
 
 ---
-# Objectif d'enseignement
+# Modéles linéaires
 
 .center[
 ![:scale 100%](images/schema_ancova.png)
@@ -1751,7 +1849,7 @@ $$Y = \mu + \text{Effets principaux des facteurs} + \\
 ---
 # Rappel : ANCOVA
 
-En plus des suppositions des modèles linéaires, les modèles **ANCOVA** doivent respecter :
+En plus des conditions d'applications des modèles linéaires, les modèles **ANCOVA** doivent respecter :
 
 - Les covariables ont toutes la **même étendue de valeurs**
 - Les variables sont **fixes**
@@ -1871,7 +1969,7 @@ mtext(c('Level 1', 'Level 2'), 1, at = 1:2, line = 0.5) # add labels to ticks
 - Si seulement votre covariable est significative, éliminer le facteur -> vous avez une **régression linéaire simple**
 - Si votre interaction covariable * facteur est significative, vous voudrez peut-être tester quel(s) niveau(x) du facteur a(ont) des pentes différentes
 
-.alert[Vérifier vos suppositions ! ]
+.alert[Vérifier vos conditions d'applications ! ]
 
 - Très similaire à ce que vous avez fait précédemment
 
@@ -1893,6 +1991,7 @@ str(bird)
 ]
 
 ---
+exclude: true
 # Défi 4 ![:cube]()
 
 1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
@@ -1908,7 +2007,24 @@ summary(ancova.exemple)
 ancova.exemple2 <- lm(Y~X+Z, data=data)
 summary(ancova.exemple2)
 ```
+---
 
+# Défi 4 ![:cube]()
+
+1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
+
+<br>
+
+2- Vérifiez si votre interaction est significative
+<br>
+<br>
+<br>
+<br>
+
+.large[
+.center[
+.alert[Salle de réunion!]
+]]
 ---
 # Défi 4 - Solution ![:cube]()
 
@@ -1920,7 +2036,7 @@ ancov1 <- lm(logMaxAbund ~ logMass*Diet,
 anova(ancov1)
 ```
 
-.comment[Interaction entre `logMass` et `Diet` est non-significative]
+Interaction entre `logMass` et `Diet` n'est pas significative
 
 ---
 # Défi 4 - Solution ![:cube]()
@@ -1950,6 +2066,8 @@ class: inverse, center, middle
 ---
 
 # Régression linéaire multiple
+- **Variables explicatives** ![:faic](arrow-right) 2 ou plusieurs variables continues
+- **Variable réponse** ![:faic](arrow-right) 1 variable continue
 
 Seule différence avec la régression linéaire simple : **plusieurs variables explicatives** sont incluses dans le modèle. 
 
@@ -2015,7 +2133,7 @@ str(Dickcissel)
 ]
 
 ---
-# Vérifier les suppositions
+# Vérifier les conditions d'applications
 
 La colinéarité :
 - Vérifier la colinéarité de toutes les variables explicatives et d'intérêt
@@ -2047,7 +2165,7 @@ lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
 summary(lm.mult)
 ```
 
-Vérifiez les autres suppositions, comme pour la régression linéaire simple
+Vérifiez les autres conditions d'applications, comme pour la régression linéaire simple
 
 ```{r,eval=FALSE,echo=-2}
 par(mfrow = c(2, 2))
@@ -2070,7 +2188,7 @@ summary(lm.mult)
 ---
 # Régression linéaire multiple dans R
 
-Vérifiez les autres suppositions, comme pour la régression linéaire simple
+Vérifiez les autres conditions d'applications, comme pour la régression linéaire simple
 
 ```{r, fig.height=5.5, fig.width=8,echo=-2}
 par(mfrow = c(2, 2))
@@ -2126,18 +2244,21 @@ class: inverse, center, middle
 ---
 # Optionnel
 
-1. Régression pas à pas
-2. Interprétation des contrastes
-3. ANOVA non équilibrée
-4. Régression polynomiale
-5. Partitionnement de la variation
+1. Interprétation des contrastes
+2. ANOVA non équilibrée
+3. Régression polynomiale
+4. Partitionnement de la variation
 
 ---
+exclude:true
+
 class: inverse, center, middle
 
 # Régression pas à pas
 
 ---
+exclude:true
+
 # Régression pas à pas
 
 Exécuter un modèle avec tout dedans sauf les variables de "Présent/absence"
@@ -2159,6 +2280,8 @@ lm.step <- step(lm.full)
 ```
 
 ---
+exclude:true
+
 # Régression pas à pas
 
 .pull-left[
@@ -2188,7 +2311,7 @@ class: inverse, center, middle
 # Interprétation des contrastes
 
 .small[
-Par défaut, `contr.treatment` compare chaque niveau du facteur à un niveau de référence
+Les constrastes servent à comparer chaque niveau du facteur à un niveau de référence, et de détecter des différences significatives entre chaque niveau.
 
 L'estimation de l'ordonnée à l'origine est le niveau de référence et correspond à la moyenne du premier niveau (en ordre alphabétique) du facteur `Diet`
 
@@ -2242,6 +2365,10 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
+???
+
+Note aux présentateurs:Deux contrastes sont orthogonaux si la somme des produits de leurs coefficients est nulle. 
+
 ---
 # Interprétation des contrastes
 
@@ -2273,13 +2400,17 @@ class: inverse, center, middle
 ---
 # ANOVA non équilibrée
 
+Un jeu de données est considéré non équilibré lorsque le nombre d'échantillons entre deux niveaux n'est pas égal.
+
 Le jeu de données `Birdsdiet` est en réalité non équilibré (le nombre d'espèces aquatiques n'égale pas le nombre d'espèces non-aquatiques)
 
 ```{r}
 table(bird$Aquatic)
 ```
 
-L'ordre des covariables a changé la valeur de la somme des carrés
+Dans une telle situation, l'ordre des covariable affecte la calculation de la somme des carrés, et donc la valeur de `p`. 
+
+Testons-le avec le jeu de données `Birdsdet`.
 
 ```{r}
 unb.anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data = bird)
@@ -2298,6 +2429,22 @@ anova(unb.anov2)
 ```
 
 ---
+# ANOVA non équilibrée
+
+Afin de règler ce problème est de prendre une nouvelle approche pour tester les effets de chaque variable.
+
+**Type I** : Teste les effets en séquentiel, en débutant avec la première variable.
+
+**Type II**: Teste les effets de chaque facteur, mais après avoir tester l'autre facteur.
+
+**Type III**: Teste les effets de chaque facteur, mais après avoir tester l'autre facteur et l'intéraction.
+
+.comment[Le type I est celui par défault dans R et qui crée le problème avec des données non équilibré]
+
+.alert[Si vous considérez utiliser le Type II ou III avec vos propres données, vous devriez en lire plus sur le sujet avant de choisir. Vous pouvez commencer avec ce] [**lien**](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
+
+---
+
 # ANOVA non équilibrée
 
 Maintenant essayez une `Anova()` de type III

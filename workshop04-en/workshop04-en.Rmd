@@ -32,21 +32,27 @@ class: inverse, center, middle
 
 ```{R install_pkgs, echo = FALSE, results = "asis"}
 cat(
-  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car'))
+  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect'))
 )
 ```
 
 ---
-# Learning Objectives
+# Linear models
 
-### Do a t-test with R
+.large[-Learn the structure of a linear models and its *different variants*]
 
-### Use `lm()` to perform a linear model with R
+--
 
-### Use `anova()` to do a analysis if variance
+.center[
+![:scale 80%](images/schema.png)
+]
 
+???
+
+Presenter notes: This flow chats represents all the variants of a linear modal that will be presented in this presentation.
 
 ---
+# Learning objectives
 
 # What is a linear model?
 
@@ -1181,7 +1187,7 @@ Different terms are used for *response* and *predictor* variables, depending on 
 
 ---
 
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema_ttest.png)
@@ -1354,6 +1360,7 @@ ttest1
 - If two groups **are not independent** (e.g. measurements on the same individual at 2 different years), you should use a paired t-test
 
 ---
+exclude:true
 # Group discussion
 
 .large[Are aquatic birds heavier than terrestrial birds?]
@@ -1369,6 +1376,7 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
 .comment[What did you conclude?]
 
 ---
+exclude:true
 # Group discussion
 
 ```{r}
@@ -1377,6 +1385,56 @@ uni.ttest1
 
 Yes, aquatic birds are heavier than terrestrial birds: p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
 
+---
+# Poll
+
+.large[With T-test we can be more specific and give a direction to our hypothesis with  `alternative`.] 
+<br>
+<br>
+<br>
+We want to test whether **aquatic birds are heavier than terrestrial birds**. 
+
+Which one should we use? `alternative = "???"`
+
+1.`"two.sided"`
+
+2.`"less"`
+
+3.`"greater"`
+
+```{r,eval=F, echo=T}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "???")
+```
+
+???
+Presenter note: a poll is already set up on zoom for this slide. The host simply need to activate it for it to work. Otherwise tou can always ask the students to answer in the chat.
+
+---
+#Answer
+
+.xsmall[
+```{r}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "less")
+uni.ttest1
+
+```
+]
+
+Why would `"greater"` not have work?
+
+.comment[Hint: check the dataset. What is the nature of the variable Aquatic?]
+
+???
+
+Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, R will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
 
 
 ---
@@ -1551,12 +1609,12 @@ stats::kruskal.test(Y~X, data)
 ---
 # Output of our ANOVA model
 
-.small[
+.xsmall[
+Factor levels in alphabetical order and all levels are compared to the reference level (`Insect`).
+
 ```{r}
 summary(anov1)
 ```
-
-Factor levels in alphabetical order and all levels are compared to the reference level (`Insect`).
 ]
 
 ---
@@ -1598,8 +1656,8 @@ TukeyHSD(aov(anov1), ordered = TRUE)
 
 ANOVA results can be graphically illustrated using the `barplot()` function:
 
-.small[
-```{r, fig.height=3.5, fig.width=7,echo=-1}
+.xsmall[
+```{r, fig.height=3, fig.width=7,echo=-1}
 par(mar=c(3,3,0.5,0.5))
 sd <- tapply(bird$logMaxAbund, list(bird$Diet), sd)
 means <- tapply(bird$logMaxAbund, list(bird$Diet), mean)
@@ -1654,7 +1712,7 @@ We can also represent our model with:
 
 
 ---
-## Two-Way ANOVA
+# Two-Way ANOVA
 
 .small[
 
@@ -1686,6 +1744,7 @@ aov <- lm(Y ~ X + Z, data)
 ```
 ]
 ---
+exclude: true
 # Challenge 3 ![:cube]()
 
 Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
@@ -1697,7 +1756,25 @@ Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
 .comment[where `A` is your first factor, `B` is your second and `*` is the interaction term in `R`].
 
 ---
-## Challenge 3 - Solution ![:cube]()
+
+# Challenge 3 ![:cube]()
+
+Evaluate how `log10(MaxAbund)` varies with `Diet` and `Aquatic`
+<br>
+<br>
+.comment[Hint: add an interaction with `*`],
+<br>
+<br>
+<br>
+<br>
+.large[
+.center[
+.alert[Break out rooms!]
+]]
+
+---
+
+# Challenge 2 - Solution ![:cube]()
 
 .xsmall[
 ```{r}
@@ -1725,7 +1802,7 @@ anov2 <- lm(logMaxAbund ~ Diet, data = bird)
 ```
 
 ---
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema_ancova.png)
@@ -1906,6 +1983,7 @@ str(bird)
 ```
 
 ---
+exclude: true
 # Challenge 4 ![:cube]()
 
   1. Use an ANCOVA to test the effect of `Diet` and `Mass` (as well as their interaction) on `MaxAbund`
@@ -1914,25 +1992,42 @@ ancova.example <- lm(Y ~ X * Z, data=data)
 summary(ancova.example)
 ```
 
-  2. Test whether the interaction is signifiant
+  2. Test whether the interaction is significant
 ```{r eval=FALSE}
 ancova.example2 <- lm(Y ~ X + Z, data=data)
 summary(ancova.example2)
 ```
 
 ---
-# Challenge 4 - Solution ![:cube]()
+# Challenge 4 ![:cube]()
+
+1- Use an ANCOVA to test the effect of `Diet` and `Mass` (as well as their interaction) on `MaxAbund`
 
 <br>
-.small[
+
+2- Test whether the interaction is significant
+<br>
+<br>
+<br>
+<br>
+
+.large[
+.center[
+.alert[Break out rooms!]
+]]
+---
+# Challenge 3 - Solution ![:cube]()
+
+<br>
+
 ```{r}
 ancov1 <- lm(logMaxAbund ~ logMass*Diet,
              data = bird)
 anova(ancov1)
 ```
-]
 
-.comment[Interaction between `logMass` and `Diet` is non-significant]
+
+Interaction between `logMass` and `Diet` is not significant
 
 ---
 # Challenge 4 - Solution ![:cube]()
@@ -1946,7 +2041,7 @@ anova(ancov2)
 ```
 
 ---
-# Learning objectives
+# Linear models
 
 .center[
 ![:scale 100%](images/schema_multReg.png)
@@ -2131,18 +2226,19 @@ class: inverse, center, middle
 ---
 # Optional section
 
-1. Stepwise regression
-2. Interpreting contrasts
-3. Unbalanced ANOVA
-4. Polynomial regression
-5. Variance partitioning
+1. Interpreting contrasts
+2. Unbalanced ANOVA
+3. Polynomial regression
+4. Variance partitioning
 
 ---
+exclude:true
 class: inverse, center, middle
 
 # Stepwise regression
 
 ---
+exclude:true
 ## Stepwise regression
 
 .small[
@@ -2172,6 +2268,7 @@ lm.step <- step(lm.full)
 ]
 
 ---
+exclude:true
 # Stepwise regression
 
 .pull-left[
@@ -2200,11 +2297,11 @@ class: inverse, center, middle
 ---
 # Interpreting contrasts
 
-DEFAULT: contrast compares each level of a factor to baseline level
+Contrasts compare each level of a factor to a baseline level. We can determine if each level of a factor are significantly different from each other.
 
-The intercept is the baseline group and corresponds to the mean of the first (alphabetically) Diet level (`Insect`)
+--
 
-Add Intercept + coefficient estimates of each Diet level
+The *intercept* is the baseline group and corresponds to the mean of the first (alphabetically) Diet level (`Insect`). **Add Intercept + coefficient estimates of each Diet level**
 
 ```{r}
 tapply(bird$logMaxAbund, bird$Diet, mean)
@@ -2255,6 +2352,10 @@ sum(contrasts(bird$Diet)[,1])
 sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
 ```
 
+???
+
+Presenter notes:Two contrasts are orthogonal if the sum of the products of their coefficients is null. 
+
 ---
 # Interpreting contrasts
 
@@ -2282,6 +2383,8 @@ class: inverse, center, middle
 ---
 # Unbalanced ANOVA
 
+A dataset is considered unbalanced when the sample sizes of two factor levels are not equal.
+
 The `birdsdiet` data is actually unbalanced (number of `Aquatic` and `non-Aquatic` is not equal)
 
 ```{r}
@@ -2305,6 +2408,20 @@ anova(unb.anov1)
 ```{r}
 anova(unb.anov2)
 ```
+---
+# Unbalanced ANOVA
+
+To fix this problem, we can use a different approach to test the effects of each predictor.
+
+**Type I** : Tests the effects in sequence, starting with the first predictor.
+
+**Type II**: Tests for the presence of a main effect after the other main effect.
+
+**Type III**: Tests for the presence of a main effect after the other main effect and interaction. 
+
+.comment[Type I is the default type used in R which creates our problem with unbalanced data.]
+
+.alert[If you are considering using Type II or III for your own dataset, you should read more about the subject. You can start with this] [**link**](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
 
 ---
 # Unbalanced ANOVA
@@ -2414,10 +2531,10 @@ print(summ_lm.cubic)
 ---
 class: inverse, center, middle
 
-# Variance Partitioning
+# Variation Partitioning
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 Some of the selected explanatory variables in the **multiple linear regression** section were highly correlated
 
@@ -2430,9 +2547,9 @@ car::vif(mod)
 ```
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
-Use `varpart()` to partition the variance in max abundance with all land cover variables in one set and all climate variables in the other set (leaving out NDVI)
+Use `varpart()` to partition the variation in max abundance with all land cover variables in one set and all climate variables in the other set (leaving out NDVI)
 
 .pull-left2[
 .tiny[
@@ -2449,7 +2566,7 @@ part.lm
 ]
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 .pull-left[
 ```{r,fig.height=4,echo=-1}
@@ -2480,7 +2597,7 @@ plot(part.lm,
 .small[.comment[Proportion of variance explained by climate alone is 28.5% (given by X1|X2), by land cover alone is ~0% (X2|X1), and by both combined is 2.4%]]
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 Test significance of each fraction
 
@@ -2509,7 +2626,7 @@ out.2 = rda(Dickcissel$abund,
 ```
 
 ---
-# Variance Partitioning
+# Variation Partitioning
 
 .pull-left[
 .small[
