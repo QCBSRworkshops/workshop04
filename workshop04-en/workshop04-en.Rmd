@@ -62,7 +62,7 @@ cat(
 ???
 
 - Bring across: There is a large amount of scientific work involved before formulating a linear model.
-- It is good practicve to explicitely formulate expectations about direction and strength of a relationshp as predictions before fitting a linear model.
+- It is good practice to explicitly formulate expectations about direction and strength of a relationship as predictions before fitting a linear model.
 
 ---
 
@@ -70,7 +70,7 @@ cat(
 
 #### Hypothesis
 
-> For bird species, the average size of an individual has an effect on the maximum abundance of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> For bird species, the average mass of an individual has an effect on the maximum abundance of the species, due to ecological constraints (food sources, habitat availablity, etc.).
 
 #### Prediction
 > Species with larger individuals have a lower maximum abundance.
@@ -169,9 +169,10 @@ sd(bird$MaxAbund)
 - The definition for the median is omitted because it can be confusing to some participants: $\mathrm {median} (x)={\frac {1}{2}}(x_{\lfloor (n+1)/2\rfloor }+x_{\lceil (n+1)/2\rceil })$
 
 ---
+
 # Example: Abundance and mass of bird species
 
-Plot the response against the predictor
+Plot the response against the predictor:
 
 ```{r}
 plot(bird$Mass, bird$MaxAbund)
@@ -199,9 +200,9 @@ abline(coef = c(200, -.1),  lwd = 1.5, lty = 2, col = palette()[6])
 
 
 ???
-- The question is intended to remain unanswered for know.
-- The "best" estimate is the line theat minimizes the sum of squares, which should become clear through the next slides
-- The "best" estiamte can also be: There is no relationship (similar to the blue line in the plot).
+- The question is intended to remain unanswered for now.
+- The "best" estimate is the line that minimizes the sum of squares, which should become clear through the next slides
+- The "best" estimate can also be: There is no relationship (similar to the blue line in the plot).
 
 ---
 
@@ -228,7 +229,7 @@ $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 - Take time with this slide, all definitions are important.
 - Understanding parameters: important for knowing what will be estimated and later interpreted
 - Understanding residuals and fitted values: Important for model checking later on
-- Theoretically, participants should know all this from their stats courses; in practice, knowledge of the definitions is particularly shaky at this point.
+- Theoretically, participants should know all this from their stats courses; in practice, knowledge of the definitions sometimes shaky 
 
 ---
 
@@ -241,6 +242,7 @@ $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
 The **residuals** $\epsilon$ follow a **normal distribution** with mean $0$ and variance $\sigma^2$: 
 $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
 ```{r, echo=FALSE, fig.height=4, fig.width=6}
 x <- seq(-5, 5, length=100)
 p <- dnorm(x, 0, 1)
@@ -248,6 +250,7 @@ plot(x, p, type = "l", lty = 2, lwd = 1.5,  xlab = "Residuals", ylab = "Probabil
 ```
 
 ---
+
 # Assumptions of the linear model
 
 
@@ -301,13 +304,14 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 
 ???
+
 - The full definition of a linear model always consists of both equations shown.
 
 
 
 ---
 
-# Notation of linear models
+# Notation for linear models
 
 #### Mathematical notation (for manuscripts)
 
@@ -331,7 +335,7 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 ]
 
 .pull-right[
-- Or even simpler 
+- Or even simpler: 
   ```{r, eval=FALSE}
   y ~ x
   ```  
@@ -342,7 +346,8 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 
 ???
-- This is meant to help participants to understand model descriptions they may encounter
+
+- This is meant to help participants understand different model descriptions they may encounter
 - It is not necessary to go into detail of the matrix notation.
 - R notation is not adequate for publication.
 
@@ -431,8 +436,8 @@ Verify assumptions of the linear model
 
 .small[.center[**Step 3**  ]
 - Analyze regression parameters
-- plot your model
-- test for significance of parameter estimates (if necessary) 
+- Plot your model
+- Test for significance of parameter estimates (if necessary) 
 ]]
 
 .pull-right[.center[*Assumptions are not met?*]
@@ -451,6 +456,7 @@ Go back to Step 1 with transformed variables
 ]]]
 
 ---
+
 # Linear regression in R
 
 #### **Step 1.** Fit a linear model
@@ -471,14 +477,15 @@ Let's look at the parameter estimates:
 lm1
 ```
 
-**Can we trust the estimates?**
 
 ---
+
 # Linear regression in R
 
 #### **Step 1.** Fit a linear model
 
 Let's look at the parameter estimates:
+
 ```{r, eval=TRUE}
 lm1
 ```
@@ -518,7 +525,7 @@ plot(lm1)
 
 ???
 
-- How to go back to show on plot again: `par(mfrow=1)`
+- How to go back to show only one plot at a time: `par(mfrow=1)`
 
 ---
 
@@ -559,7 +566,7 @@ plot(lm1)
 ```
 
 ???
-- The random scatter is sometimes described as "stars in a clear night sky"
+- The random scatter is sometimes described as "stars in the night sky"
 
 ---
 # Diagnostic plot # 1 - Residuals vs Fitted
@@ -636,7 +643,7 @@ plot(lm,which = 3)
 
 <span style="color:green">**What we hope to see:**</span> Points clearly on the 1:1 line 
 
-**Why:** Compares the distribution (quantiles) of the residuals of to those of a standard normal distribution
+**Why:** Compares the distribution (quantiles) of the residuals with a standard normal distribution
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(1234564)
@@ -666,11 +673,12 @@ plot(lm, which = 2)
 
 
 ---
+
 # Diagnostic plot # 4 - Residuals vs Leverage
 
 **Why:**
 
-- The model  should **not depend strongly on single observations**
+- The model should **not depend strongly on single observations**
 - **Leverage points** are extreme observations of the predictor. 
 - The **model passes close to leverage points**, because they lack neighboring observations.
 - Leverage points **<span style="color:red">may</span> or <span style="color:green">may not</span> have a high influence on the regression**
@@ -819,7 +827,7 @@ skewness(residuals(lm1))
 
 1. Use a **different type of model** better suited to the hypothesis and data (QCBS R workshops 6 - 8).
 2. Attempt **transformation** of the predictor and / or response variables
-  - **Several types of transformations exist**. Their usefulsness depends on the distribution of the variable and the type of model.
+  - **Several types of transformations exist**. Their usefulness depends on the distribution of the variable and the type of model.
   - Transformation can **fix some** problems but might **create others**.
   - The **results of statistical tests** on transformed data **do not automatically hold** for the untransformed data.
 
@@ -912,23 +920,26 @@ hist(residuals(lm2)) # right plot: distribution of residuals
 
 The `summary()` function provides more information on the fitted model.
 
+.small[
 ```{r, comment=""}
 summary(lm2)
 ```
+]
 
 ???
+
 - Take time to explain the summary:
   1. Parameter estimates and their standard deviation
   2. Results of a t-test whether the parameters are different from 0
   3. Adjusted R-squared: How well does the model explain the data?
   4. F-statistic (ANOVA): Is the model significantly different from an intercept-only model?
 - Mention that t-tests and ANOVA will be discussed later
-- In this case: our model is *barely* better than an intercept-only model, it explains very little
+- In this case: our model is *barely* better than an intercept-only model
 
 ---
 # **Step 3**
 
-We can also extract out specific parameters and results from the model and summary:
+We can also extract specific parameters and results from the model and summary:
 
 ```{r}
 # Vectors of residuals and fitted values:
@@ -961,8 +972,6 @@ summary(lm2)$adj.r.squared # Adjusted R squared
 summary(lm2)
 ```
 
-???
-- There is only little evidence in support of the hypothesis
 
 ---
 
@@ -996,7 +1005,7 @@ There is only **very little evidence** in support of the hypothesis because:
 
 # Finding a better model: terrestrial birds
 
-Exclude all aquatic birds (using `!`) and fit a linear model
+Exclude all aquatic birds (using `!`) and fit a linear model:
 
 ```{r}
 lm3 <- lm(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
@@ -1053,9 +1062,9 @@ Let's put everything together!
 
 <br>
 
-1. Formulate a similar **hypothesis** about maximum abundance and average mass of an indidvidual for **passerine birds**
-2. Fit a **model** to assess this hypothesis, using log-transformed variables (i.e. `logMaxAbund` and `logMass`). Save the model as `lm4`
-3. **Verify assumptions** of the linear model using residual plots
+1. Formulate a similar **hypothesis** about maximum abundance and average mass of an indidvidual for **passerine birds**.
+2. Fit a **model** to assess this hypothesis, using log-transformed variables (i.e. `logMaxAbund` and `logMass`). Save the model as `lm4`.
+3. **Verify assumptions** of the linear model using residual plots.
 4. Interpret the results: Does the model provide **evidence for the hypothesis?**
 
 .comment[HINT: `Passerine` is also coded 0 and 1 (look at `str(bird)`)]
@@ -1102,25 +1111,73 @@ summary(lm4)
 ???
 - The model results shoud not be interpreted because the assumptions of the linear model are clearly violated!
 
+---
+
+# Linear regression in R
+
+.center[.small[
+**Step 1**   
+Fit a linear model based on a hypothesis
+
+**Step 2**  
+Verify assumptions of the linear model
+]]
+
+<br>
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.pull-left[.center[*Assumptions are met?*]
+
+.small[.center[**Step 3**  ]
+- Analyze regression parameters
+- Plot your model
+- Test for significance of parameter estimates (if necessary) 
+]]
+
+.pull-right[.center[*Assumptions are not met?*]
+
+.center[Consider using a *Generalized Linear Model* (GLM) or transforming the data]
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.small[
+.pull-left[
+Use a GLM that is better suited for the data
+]
+
+.pull-right[
+Go back to Step 1 with transformed variables
+]]]
 
 ---
 
 # Variable names
 
-Different terms are used for *response* and *predictor* variables, depending on context and scientific field.
+Different terms are used for *response* and *predictor* variables, depending on context and scientific field (they are not always synonyms).
 
 <br>
 
-.center[.large[
-|response       | predictor        |
-|:--------------|:-----------------|
-|outcome        |                  |
-|output var.    | input var.       |
-|dependent var. | independent var. |
-|               | explanatory var. |
-|               | covariate        |
-]]
- 
+.center[
+|response          | predictor        |
+|:-----------------|:-----------------|
+|                  |explanatory var.  |
+|                  |covariate         |
+|outcome           |                  |
+|output var.       |input var.        |
+|dependent var.    |independent var.  |
+]
+
+<br>
+
+.center[
+|résponse          | prédicteur       |
+|:-----------------|:-----------------|
+|var. expliqué     |var. explicatif   |
+|                  |covariable        |
+|var. endogène     |var. exogène      |
+|var. dépendante   |var. indépendante |
+]
 
 ---
 
@@ -1906,32 +1963,14 @@ class: inverse, center, middle
 
 Only difference to simple linear regression: **several predictor variables** are included in the model. 
 
-$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
 
+#### Variables
 
-$y$: Response variable (**continuous**)
+- $y$: Response variable (**continuous**)
 
-$x$: Several predictor variables (**continuous** or **categorical**)
+- $x_1, x_2, ... ,x_k$: Several predictor variables (**continuous** or **categorical**)
 
-
-##### Assumptions
-In addition to the usual assumptions of linear models:
-- **Linear relationship** between **each** predictor variable and the response variable.
-- Predictor variables are independent of each other (i.e., there is **no collinearity**).
-
----
-
-# Multiple linear regression
-
-Only difference to simple linear regression: **several predictor variables** are included in the model. 
-
-
-## Variables
-$y$: Response variable (**continuous**)
-
-$x_1, x_2, ... ,x_k$: Several predictor variables (**continuous** or **categorical**)
-
-## Assumed relatuionsip
+#### Assumed relationsip
 
 $$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
 
@@ -1940,10 +1979,33 @@ $$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i
 - The residual $\epsilon_i$ captures **unexplained** variation
 - The **fitted** (or predicted) value of $y_i$ is defined as: $\hat{y}_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i}$
 
+---
+
+# Multiple linear regression
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+##### Assumptions
+
+In addition to the usual assumptions of linear models:
+- **Linear relationship** between **each** predictor variable and the response variable.
+- Predictor variables are independent of each other (i.e., there is **no collinearity**).
+
+---
+
+# Multiple linear regression
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
 #### If variables are collinear:
-1. Reduce the amount of collinear variables;
-2. Migrate to multidimensional analyses (see [Workshop 9]());
-3. Try a pseudo-orthogonal analysis.
+
+- Reduce the amount of collinear variables.
+- Migrate to multidimensional analyses (see [Workshop 9]()).
+- Try a pseudo-orthogonal analysis.
 
 ---
 
@@ -2026,7 +2088,9 @@ plot(lm.mult)
 
 # Find the best-fit model
 
+.small[
 Recall the principle of parsimony: we want to explain the most of the variance using the least number of terms as possible.
+]
 
 ```{r}
 summary(lm.mult)$coefficients
@@ -2036,7 +2100,7 @@ summary(lm.mult)$coefficients
 <br>
 Parameters for all 3 predictor variables are significantly different from 0.
 
-Model explains ~11% of variance in dickcissel abundance ( $R²_{adj} = 0.11$ ).
+Model explains ~11% of variance in dickcissel abundance ( $R²_{adj} = 0.11$ ).
 
 --
 
