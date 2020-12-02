@@ -54,6 +54,16 @@ Presenter notes: This flow chats represents all the variants of a linear modal t
 ---
 # Learning objectives
 
+.large[-Learn the structure of a linear models and its different variants]
+<br>
+<br>
+.large[-Learn how to perform a linear model with R with `lm()` and `anova()`]
+<br>
+<br>
+.large[-Learn how to identify when assumptions are not met and ways to fix it]
+
+---
+
 # What is a linear model?
 
 #### A **linear model** ...
@@ -478,11 +488,6 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 - `MaxAbund ~ Mass` : Model formula
 - `bird` : object holding the variables
 
-Let's look at the parameter estimates:
-```{r, eval=TRUE}
-lm1
-```
-
 
 ---
 
@@ -610,7 +615,7 @@ plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 
 <span style="color:green">**What we hope to see:**</span> Random scatter, no pattern 
 
-**Why:** Violations of assumptions are sometimes easier to detect than in the first plot, especially when the predictor unequally distributed over its range.
+**Why:** Violations of assumptions are sometimes easier to detect than in the first plot, especially when the predictor is not uniformly distributed.
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(1234564)
@@ -1080,7 +1085,7 @@ Let's put everything together!
 
 #### Hypothesis
 
-> For <span style="color:green">**terrestrial**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> For <span style="color:green">**passerine**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availablity, etc.).
 
 ---
 
@@ -1177,7 +1182,7 @@ Different terms are used for *response* and *predictor* variables, depending on 
 <br>
 
 .center[
-|résponse          | prédicteur       |
+|réponse           | prédicteur       |
 |:-----------------|:-----------------|
 |var. expliqué     |var. explicatif   |
 |                  |covariable        |
