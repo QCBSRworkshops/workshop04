@@ -86,7 +86,7 @@ Presenter notes: This flow chats represents all the variants of a linear modal t
 
 #### Hypothesis
 
-> For bird species, the average mass of an individual has an effect on the maximum abundance of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> For bird species, the average mass of an individual has an effect on the maximum abundance of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
 #### Prediction
 > Species with larger individuals have a lower maximum abundance.
@@ -410,7 +410,7 @@ plot(bird$Mass, bird$MaxAbund)
 
 #### Model formulation
 
-> *Hypothesis*: For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> *Hypothesis*: For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
 --
 
@@ -699,6 +699,11 @@ plot(lm, which = 2)
 
 # Examples: Leverage and influence
 
+.center[.small[
+These plots show the response vs. the predictor.  
+*They are* **not** *the diagnostic plots*. 
+]]
+
 ```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
 par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
 set.seed(1234564)
@@ -902,7 +907,12 @@ lm2
 
 **Step 2.** Verify assumptions of model `lm2`
 
-```{r, fig.height=5.5, fig.width=7.5}
+```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2))
+plot(lm2)
+```
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
@@ -971,7 +981,7 @@ summary(lm2)$adj.r.squared # Adjusted R squared
 
 #### Hypothesis
 
-> For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
 ---
 
@@ -1009,7 +1019,7 @@ There is only **very little evidence** in support of the hypothesis because:
 
 #### Hypothesis
 
-> For <span style="color:green">**terrestrial**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> For <span style="color:green">**terrestrial**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
 
 ---
@@ -1085,7 +1095,7 @@ Let's put everything together!
 
 #### Hypothesis
 
-> For <span style="color:green">**passerine**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availablity, etc.).
+> For <span style="color:green">**passerine**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
 ---
 
@@ -1695,7 +1705,7 @@ One-Way ANOVA:
 
 Two-Way ANOVA:
 
- `aov <- lm(Y ~ X * Z * ..., data)`
+ `aov <- lm(Y ~ X * Z, data)`
 
 ]
 where,
