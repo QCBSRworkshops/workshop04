@@ -30,10 +30,43 @@ options(repos=structure(c(CRAN="http://cran.r-project.org")))
 
 class: inverse, center, middle
 
-```{R install_pkgs, echo = FALSE, results = "asis"}
-cat(
-  qcbsRworkshops::first_slides(4, c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect'))
-)
+```{r install_pkgs, message=FALSE, warning=FALSE, include=FALSE, results=0}
+# Standard procedure to check and install packages and their dependencies, if needed.
+
+list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect')
+
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+
+if(length(new.packages) > 0) {
+  install.packages(new.packages, dependencies = TRUE) 
+  print(paste0("The following package was installed:", new.packages)) 
+} else if(length(new.packages) == 0) {
+    print("All packages were already installed previously")
+  }
+```
+
+# About this workshop
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=wiki&message=04&logo=wikipedia)](https://wiki.qcbs.ca/r_workshop4)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Slides&message=04&color=red&logo=html5)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.html)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Slides&message=04&color=red&logo=adobe-acrobat-reader)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.pdf)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.R)
+
+---
+
+# Required packages
+
+* [dplyr](https://cran.r-project.org/package=dplyr)
+* [vegan](https://cran.r-project.org/package=vegan)
+* [e1071](https://cran.r-project.org/package=e1071)
+* [MASS](https://cran.r-project.org/package=MASS)
+* [car](https://cran.r-project.org/package=car)
+* [effect](https://cran.r-project.org/package=effect)
+
+<br>
+
+```R
+install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect'))
 ```
 
 ---
