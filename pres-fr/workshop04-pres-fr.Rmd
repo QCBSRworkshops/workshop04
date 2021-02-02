@@ -11,6 +11,7 @@ output:
     css: ["default", "qcbsR.css", "qcbsR-fonts.css"]
     nature:
       beforeInit: "qcbsR-macros.js"
+      highlightLines: true
 
 ---
 
@@ -33,7 +34,7 @@ class: inverse, center, middle
 ```{r install_pkgs, message=FALSE, warning=FALSE, include=FALSE, results=0}
 # Standard procedure to check and install packages and their dependencies, if needed.
 
-list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car','effect', 'car')
+list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect')
 
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 
