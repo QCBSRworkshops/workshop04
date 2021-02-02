@@ -1,0 +1,2716 @@
+---
+title: "Atelier 4: Modèles linéaires"
+subtitle: "Série d'ateliers R du CSBQ"
+author: "Centre de la Science de la Biodiversité du Québec"
+output:
+  xaringan::moon_reader:
+    includes:
+      in_header: qcbsR-header.html
+    lib_dir: assets
+    seal: true
+    css: ["default", "qcbsR.css", "qcbsR-fonts.css"]
+    nature:
+      beforeInit: "qcbsR-macros.js"
+      highlightLines: true
+
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(
+  comment = "#",
+  collapse = TRUE,
+  #cache = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width=6, fig.height=6,
+  fig.retina = 3,
+  fig.align = 'center'
+)
+options(repos=structure(c(CRAN="http://cran.r-project.org")))
+```
+
+class: inverse, center, middle
+
+```{r install_pkgs, message=FALSE, warning=FALSE, include=FALSE, results=0}
+# Standard procedure to check and install packages and their dependencies, if needed.
+
+list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect')
+
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+
+if(length(new.packages) > 0) {
+  install.packages(new.packages, dependencies = TRUE) 
+  print(paste0("The following package was installed:", new.packages)) 
+} else if(length(new.packages) == 0) {
+    print("All packages were already installed previously")
+  }
+```
+
+# � propos de cet atelier
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=wiki&message=04&logo=wikipedia)](https://wiki.qcbs.ca/r_atelier4)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=html5)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.html)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=adobe-acrobat-reader)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.pdf)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.R)
+
+---
+
+# Packages requis
+
+* [dplyr](https://cran.r-project.org/package=dplyr)
+* [vegan](https://cran.r-project.org/package=vegan)
+* [e1071](https://cran.r-project.org/package=e1071)
+* [MASS](https://cran.r-project.org/package=MASS)
+* [car](https://cran.r-project.org/package=car)
+* [effect](https://cran.r-project.org/package=effect)
+
+<br>
+
+```R
+install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect'))
+```
+
+---
+
+# Objectifs d'apprentissage
+
+.large[-Apprendre la structure d'un modèle linéaire et ses *différentes variantes*.]
+<br>
+<br>
+<br>
+--
+
+.center[
+![:scale 80%](images/schema.png)
+]
+
+???
+
+Note au présentateur: Ce shéma représente les différentes variantes d'un modèle linéaire qui sera présentées durant l'atelier. 
+
+
+---
+# Objectifs d'apprentissage
+
+.large[-Apprendre la structure d'un modèle linéaire et ses différentes variantes.]
+<br>
+<br>
+.large[-Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`]
+<br>
+<br>
+.large[-Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème.] 
+
+---
+
+# Qu'est-ce qu'un modèle linéaire ?
+
+#### Un **modèle linéaire** ...
+
+... décrit la relation entre une variable (la **réponse**) et une ou plusieurs autres variables (les **prédicteurs**).
+
+... est utilisé pour analyser une **hypothèse bien formulée**, souvent associée à une question de recherche plus générale.
+
+... est utilisé pour faire des inférences sur la **direction** et la **force** d'une relation, et notre **confiance** dans les estimations de l'effet.
+
+
+???
+
+- Point important : Il y a beaucoup de travail scientifique à faire avant de formuler un modèle linéaire.
+- Il est recommandé de formuler clairement les attentes concernant la direction et la force d'une relation en tant que prédictions avant d'effectuer un modèle linéaire.
+
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+#### Hypothèse
+
+> Pour différentes espèces d'oiseaux, la masse moyenne d'un individu a un effet sur l'abondance maximale de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+#### Prédiction
+> Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.
+
+--
+
+.center[
+
+**Discussion en groupe**
+
+*Quelle variable est la réponse ? Quelle est le prédicteur ?*
+  
+*Quelles sont nos attentes concernant la direction et la force de la relation ?*
+]
+
+???
+
+- Court : Oiseaux plus grands -> moins de nourriture et d'espace
+- Réponse : Abondance maximale
+- Prédicteur : Poids moyen (d'un individu)
+- Direction : Inverse ou "négative" (une masse plus élevé entraîne une abondance plus faible)
+- La force : Aucune attente !
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+#### Regardons les données ...
+
+Importer le jeu de données "birdsdiet" :
+
+```{r, eval=TRUE, echo=FALSE}
+bird <- read.csv("data/birdsdiet.csv", stringsAsFactors = TRUE)
+```
+
+```{r, eval = FALSE}
+bird <- read.csv("birdsdiet.csv", stringsAsFactors = TRUE)
+```
+
+Visualiser le tableau de la structure des données en utilisant la fonction `str()` :
+
+```{r}
+str(bird)
+```
+
+???
+
+- Il suffit pour l'instant d'expliquer les variables d'intérêt (vous trouverez plus d'informations sur l'ensemble des données dans le wiki : <https://wiki.qcbs.ca/r_atelier4#effectuer_un_modele_lineaire>)
+- "MaxAbund" : La plus grande abondance observée sur un site en Amérique du Nord (continu / numérique)
+- "Masse" : La taille du corps moyenne en grammes (continue / numérique)
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+#### Regardons les données ...
+
+
+
+.pull-left[
+Mesures communes de **localisation** (tendance centrale) :
+
+<br>
+
+- Moyenne **arithmétique** $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$
+```{r}
+mean(bird$MaxAbund)
+```
+<br>
+- **Médiane** (valeur séparant la moitié supérieure de la moitié inférieure d'un échantillon)
+```{r}
+median(bird$MaxAbund)
+```
+]
+
+.pull-right[
+
+Mesure communes de **variation** (dispersion) :
+
+<br>
+
+- **Variance** $\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$
+```{r}
+var(bird$MaxAbund)
+```
+<br>
+- **Écart type** $\sigma$ 
+```{r}
+sd(bird$MaxAbund)
+```
+]
+
+???
+
+- Cette diapositive n'a pour but que de rappeler des concepts de base. 
+- Les participant.e.s qui ont des difficultés avec ces mesures peuvent avoir des difficultés de comprendre les autres concepts présentés dans l'atelier.
+- Oui, il existe d'autres types de moyens dont nous n'avons généralement pas besoin pour les modèles linéaires : moyenne géométrique, harmonique, ...
+- La définition de la médiane est omise car elle peut être source de confusion pour certains participant.e.s : $\mathrm {median} (x)={\frac {1}{2}}(x_{\lfloor (n+1)/2\rfloor }+x_{\lceil (n+1)/2\rceil })$
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+Tracer la réponse en fonction du prédicteur:
+
+```{r}
+plot(bird$Mass, bird$MaxAbund)
+```
+
+???
+- Assurer que les participants comprennent comment le graphique est lié à l'hypothèse !
+
+---
+
+# Exemple : Abondance et masse des espèces d'oiseaux
+
+Comment trouver la "meilleure" estimation de la relation ?
+
+```{r, eval=FALSE}
+plot(bird$Mass, bird$MaxAbund)
+```
+
+```{r, echo=FALSE}
+plot(bird$Mass, bird$MaxAbund)
+abline(coef = c(70, -.03),  lwd = 1.5, lty = 2, col = palette()[2])
+abline(coef = c(20, -.005), lwd = 1.5, lty = 2, col = palette()[4])
+abline(coef = c(200, -.1),  lwd = 1.5, lty = 2, col = palette()[6])
+```
+
+
+???
+- La question est destinée à rester sans réponse pour l'instant.
+- La "meilleure" estimation est la ligne qui minimise la somme des carrés, ce qui devrait devenir clair à travers les prochaines diapositives
+- La "meilleure" estimation peut également dire : Il n'y a pas de relation (similaire à la ligne bleue dans le graphique).
+
+---
+
+# Formulation d'un modèle linéaire
+
+#### Variables
+
+- $y_i$ est une observation de la **réponse** $y$  
+  (par exemple, l'abondance maximale des espèces $i$)
+
+- $x_i$ est une observation correspondante du **prédicteur** $x$  
+  (par exemple, le poids moyen d'un individu d'une espèce $i$)
+
+#### Relation supposée
+
+$$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+
+- Le paramètre $\beta_0$ est **l'ordonnée à l'origine** (ou constante)
+- Le paramètre $\beta_1$ quantifie **l'effet** de $x$ sur $y$.
+- Le résidu $\epsilon_i$ représent la variation **non expliquée**
+- La **valeur prédite** de $y_i$ se définit comme : $\hat{y}_i = \beta_0 + \beta_1 \times x_i$
+
+
+???
+
+- Prener du temps avec cette diapositive, toutes les définitions sont importantes.
+- Comprendre les paramètres : important pour savoir ce qui sera estimé et interprété ultérieurement
+- Comprendre les résidus et les valeurs ajustées : Important pour la vérification des modèles par la suite
+- En théorie, les participants devraient savoir tout cela grâce à leurs cours de statistiques ; en pratique, la connaissance des définitions est parfois faible
+
+
+---
+
+# Conditions d'application du modèle linéaire
+
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+#### Distribution normale
+
+Les **résidus** $\epsilon$ suivent une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+```{r, echo=FALSE, fig.height=4, fig.width=6}
+x <- seq(-5, 5, length=100)
+p <- dnorm(x, 0, 1)
+plot(x, p, type = "l", lty = 2, lwd = 1.5,  xlab = "Residuals", ylab = "Probability", xaxt = "n")
+```
+
+---
+
+# Conditions d'application du modèle linéaire
+
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+#### Distribution normale
+
+Les **résidus** $\epsilon$ suivent une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+**Cela veut dire :** Chaque obsevation $y_i$ suit une distribution normale,  
+avec moyenne $\hat{y} = \beta_0 + \beta_1 \times x_i$ et variance $\sigma^2$: 
+
+$$y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)$$
+
+.alert[**Cela ne veut pas dire**] que l'ensemble des valeurs observées $y$ ~~doit suivre une distribution normale~~.
+
+???
+
+- L'idée fausse selon laquelle $y$ plutôt que $\epsilon$ doit suivre une distribution normale est très courante.
+
+
+---
+
+# Conditions d'application du modèle linéaire
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+
+#### Homoscédasticité
+- Tous les résidus $\epsilon$ suivent la même distribution, la **variance** $\sigma^2$ **reste constante**.
+
+<br>
+<br>
+
+#### Indépendance des résidus
+- Chaque résidu $\epsilon_i$ est **indépendant** de tout autre résidu. 
+
+
+---
+
+# Conditions d'application du modèle linéaire
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+#### Résumé des conditions d'application
+- Relation linéaire entre la réponse et le prédicteur
+- Les résidus suivent une distribution normale avec une moyenne de $0$
+- Les résidus sont distribués de manière identique (*homoscédasticité*)
+- Les résidus sont indépendants les uns des autres
+
+
+???
+
+- La définition complète d'un modèle linéaire se compose toujours des deux équations présentées
+
+
+---
+
+# Notation des modèles linéaires
+
+#### Notation mathématique (pour des manuscrits)
+
+- Observations individuelles :  
+  $y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$
+
+<br>
+
+- Toutes les observations (notation matricielle, interception incluse dans $\mathbf{X}$ et $\boldsymbol{\beta}$) :   
+  $\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$  
+
+<br>
+
+#### Notation en R
+
+.pull-left[
+- Formule du modèle :  
+  ```{r, eval=FALSE}
+  y ~ 1 + x
+  ```  
+]
+
+.pull-right[
+- Ou encore plus simple : 
+  ```{r, eval=FALSE}
+  y ~ x
+  ```  
+  (inclut aussi la constante)
+]
+  
+.alert[Il ne faut jamais mélanger les différentes types de notation !]
+
+
+???
+
+- Cette diapositive est destinée àaider les participant.e.s à comprendre les différents types de description qu'on peut rencontrer
+- Il n'est pas du tout nécessaire d'entrer dans le détail de la notation matricielle.
+- La notation R n'est pas adéquate pour préparer une publication.
+
+---
+
+# Effectuer une modèle linéaire
+
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+#### Estimation du modèle
+
+- Trouver les "meilleures" estimations des paramètres $\beta_0,\, \beta_1$.
+- Les "meilleurs" paramètres sont ceux qui minimisent la somme des résidus au carré $\sum{\epsilon_i^2}$
+- Cette méthode est appelée la méthode de **moindres carrés ordinaire** (MCO)
+
+
+---
+
+# Modèles linéaires
+
+.center[
+![:scale 100%](images/schema.png)
+]
+
+
+---
+
+class: inverse, center, middle
+
+# Régression linéaire avec R
+
+---
+
+# Régression linéaire avec R
+
+Revenons sur les oiseaux ...
+
+```{r}
+plot(bird$Mass, bird$MaxAbund)
+```
+
+---
+
+# Régression linéaire avec R
+
+#### Formulation du modèle
+
+> *Hypothèse*: Pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+
+--
+
+**Équation du modèle**
+
+$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$
+
+<br>
+
+--
+
+**Formule du modèle en R**
+
+```{r, eval=FALSE}
+MaxAbund ~ Mass
+```
+
+???
+- La formulation du modèle peut être posée comme question aux participant.e.s
+
+
+---
+
+# Régression linéaire avec R
+
+.center[.small[
+**Étape 1**   
+Formuler et exécuter un modèle linéaire basé sur un hypothèse
+
+**Étape 2**  
+Vérifier les conditions d'application du modèle linéaire
+]]
+
+<br>
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.pull-left[.center[*Conditions sont satisfaits ?*]
+
+.small[.center[**Étape 3**  ]
+- Analyser les paramètres de régression
+- Tracer le modèle
+- Effectuer des tests de signification sur les estimations des paramètres (si nécessaire)
+]]
+
+.pull-right[.center[*Conditions non satisfaites ?*]
+
+.center[Envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données]
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.small[
+.pull-left[
+Utiliser un GLM mieux adapté aux données
+]
+
+.pull-right[
+Retourner à l'Étape 1 avec des variables transformées
+]]]
+
+---
+
+# Régression linéaire avec R
+
+#### **Étape 1.** Formuler et exécuter un modèle linéaire
+
+La fonction `lm()` est utilisée pour ajuster un modèle linéaire, en fournissant la formule du modèle comme premier argument ::
+
+
+```{r eval=TRUE}
+lm1 <- lm(MaxAbund ~ Mass, data = bird)
+```
+
+- `lm1` : Nouvel objet contenant le modèle linéaire
+- `MaxAbund ~ Mass` : Formule du modèle 
+- `bird` : objet contenant les variables
+
+
+---
+
+# Régression linéaire avec R
+
+#### **Étape 1.** Formuler et exécuter un modèle linéaire
+
+Examinons les estimations des paramètres :
+
+```{r, eval=TRUE}
+lm1
+```
+
+.center[
+*Comment les paramètres se comparent-ils à nos prédictions ?*
+]
+
+--
+
+.center[
+**Peut-on se fier aux estimations du modèle ?**
+]
+
+
+???
+- Les questions peuvent être utilisées pour une discussion en groupe
+- La prédiction était : *Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.*
+- Le paramètre pour la "masse" *ne correspond pas à notre prédiction* car il est positif !
+- Nous ne savons pas si nous pouvons nous fier aux estimations - pour cela, nous avons besoin de l'étape 2
+
+---
+
+# Régression linéaire avec R
+
+#### **Étape 2.** Vérifier les conditions d'application avec les graphiques diagnostics
+
+Nous pouvons produire **quatre graphiques diagnostics** d'un objet `lm` :
+
+```{r, eval=FALSE, fig.height=6, fig.width=8}
+par(mfrow=c(2,2))
+plot(lm1)
+```
+
+- `par()` : Fonction pour définir les paramètres du graphique
+- `mfrow=c(2,2)`:  Paramètre graphique permettant d'afficher une grille de 2 x 2 graphiques à la fois
+- `plot()`: Fonction pour produire les graphiques
+
+???
+
+- Comment faire pour ne montrer qu'une seule parcelle à la fois : `par(mfrow=1)`.
+
+---
+
+# Régression linéaire avec R
+
+#### **Étape 2.** Vérifier les conditions d'application avec les graphiques diagnostics
+
+```{r, eval=FALSE}
+par(mfrow=c(2,2)
+plot(lm1)
+```
+
+```{r, echo=FALSE, fig.height=4.75, fig.width=5.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
+```
+
+.center[**Comment interpréter ces graphiques ?**]
+
+---
+
+# Graph. #1 - Résidus vs valeurs prédites
+
+**Ce qu'on voit :**  
+* Axe des **Y** : Residus $\epsilon_i$
+* Axe des **X** : Valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
+
+<span style="color:green">**Ce qu'on espère voir :**</span> Dispersion de points sans patron
+
+
+**Motivation :** Indication si les résidus sont *indépendants* et *uniformément distribués*.
+
+```{r, echo = FALSE, fig.height=5, fig.width=6.5}
+  set.seed(1234564)
+  x <- rnorm(100,10,10)
+  y <- 2*x+0 + rnorm(100)
+  lm <- lm(y~x)
+  plot(lm, which = 1)
+```
+
+???
+
+- La dispersion sans patron est parfois décrite comme "des étoiles dans le firmament".
+
+---
+# Graphique # 1 - Résidus vs valeurs prédites
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
+par(mfrow=c(1,2))
+set.seed(1234564)
+x = rnorm(100,10,10)
+y = (x)^2 + rnorm(length(x),0,30)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Non-linéaire", col.main="red")
+
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
+```
+
+**Quoi faire ?**
+
+- Utiliser plutôt un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions : Poisson, binomial, binomial négatif, etc.)
+- Essayer de **transformer** la réponse et/ou prédicteurs
+
+???
+
+- Expliquez que "hétéroscédastique" est l'opposé de "homoscédastique", ce qui signifie que la condition de normalité est non-respectée.
+
+---
+
+# Graphique # 2 - Échelle localisé
+**Ce qu'on voit :**  
+* Axe des **Y** : Racine carrée des résidus standardisés $\sqrt{\frac{\epsilon_i}{\sigma}}$
+* Axe des **X** : Valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
+
+<span style="color:green">**Ce qu'on espère voir :**</span> Dispersion de points sans patron
+
+**Motivation :** Parfois plus facile de détecter si les conditions d'application ne sont pas respectées, surtout quand le prédicteur est distribué de manière inégale.
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm,which = 3)
+```
+
+---
+
+# Graphique # 2 - Échelle localisé
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 3)
+```
+
+.center[*Forte tendance dans les résidus*]
+
+???
+
+- Quoi fair ? Voire graphique #1
+
+---
+
+# Graphique # 3 - Normal QQ
+
+**Ce qu'on voit :**  
+* **Y**-axis: Residus standardisés $\frac{\epsilon_i}{\sigma}$
+* **X**-axis: Distribution normale standard $\mathcal{N}(0, \sigma^2)$
+
+<span style="color:green">**Ce qu'on espère voir :**</span> Points sur la ligne 1:1
+
+**Motivation :** Comparer la distribution (quantiles) des résidus à une distribution normale standard
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm, which = 2)
+
+```
+
+---
+
+# Graphique # 3 - Normal QQ
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm, which = 2)
+```
+
+.center[*Les résidus ne suivent pas une distribution normale*]
+
+
+---
+
+# Graphique # 4 - Résidus vs effet de levier
+
+**Motivation :**
+
+- Le modèle ne devrait **pas dépendre fortement d'observations isolées**.
+- Les **points de levier** sont des observations extrêmes du prédicteur. 
+- Le **modèle passe près des points de levier**, car ils manquent d'observations voisines.
+- Les points de levier **<span style="color:red">peuvent</span> (ou <span style="color:green">pas</span>) avoir une grande influence sur la régression**
+- L'influence peut être quantifiée par **la distance Cook : plus de 0,5 est problématique**.
+
+---
+
+# Examples: Effet levier et influence
+
+```{r, echo=FALSE, fig.height=8, fig.width=7.7, warning=FALSE}
+par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
+set.seed(1234564)
+x <- 1:20
+y <- rnorm(x, x, 2)
+lm0 <- lm(y ~ x)
+# plot 1
+plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 11); yy <- c(y, -3)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-20, 10, srt=0, adj = 0, labels = "* Pas d'effet de levier \n* Faible influence
+", xpd = TRUE, cex = 1.5)
+# plot 2
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 30)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-33, 15, srt=0, adj = 0, labels = "* Effet de levier \n* Pas d'influence", xpd = TRUE, cex = 1.5)
+
+# plot 3
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 15)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-33, 15, srt=0, adj = 0, labels = '* Effet de levier \n* Influence élevée', xpd = TRUE, cex = 1.5)
+```
+
+
+???
+
+- Tous les graphiques ont la réponse sur l'axe des y et le prédicteur sur l'axe des x
+- Pour éviter la confusion : Il ne s'agit pas de graphiques diagnostics sue cette diapositive !
+
+---
+
+# Graphique # 4 - Résidus vs effet de levier
+
+**Ce qu'on voit :**  
+* Axe des **Y** : Residus standardisés $\frac{\epsilon_i}{\sigma}$
+* Axe des **X** : Effet de levier
+* Ligne rouge en tirets : distance Cook de 0.5
+
+<span style="color:green">**Ce qu'on espère voir :**</span> Pas de points de levier avec influence elevée
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=9, warning=FALSE}
+par(mfrow=c(1,2))
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm, which = 5, main = "Aucune observation influente", col.main=palette()[3])
+
+set.seed(1234564)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm, which = 5, main = "Effet de levier et faible influence",  col.main=palette()[3])
+```
+
+---
+
+# Graphique # 4 - Résidus vs effet de levier
+
+.alert[Ce qui devrait nous rendre méfiants :]
+
+<br />
+
+```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
+set.seed(1234564)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+y[29] <- 100
+lm=lm(y~scale(x))
+plot(lm, which = 5, main = "Effet de levier et influence élevée")
+```
+
+<br>
+
+.alert[Il ne faut jamais supprimer les valeurs aberrantes sans avoir des bonnes raisons de le faire]
+
+???
+
+- Point 29 a un effet de levier élevé et une distance Cook > 0,5
+- Raison potentielle pour supprimer les valeurs aberrantes : Erreur de mesure évidente
+
+---
+
+# **Étape 2**. Vérifier les conditions d'application pour `lm1`
+
+```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2))
+plot(lm1)
+```
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
+```
+
+**Discussion :** Le modèle `lm1` respecte-t-il les conditions du modèle linéaire ?
+
+???
+
+- Graphiques 1 et 2 : présence de fortes tendances
+- Graphique 3 : les résidus ne suivent pas une distribution normale
+- Graphique 4 : point 32 a un effet de levier important et une influence (très élevé)
+
+
+---
+
+# Conditions non-respectées - Quelle est la cause ?
+
+Traçons le modèle avec les observations ...
+
+```{r, fig.height=4, fig.width=11}
+par(mfrow = c(1,2))
+coef(lm1) # constante et pente
+plot(MaxAbund ~ Mass, data=bird) # graphique à gauche
+abline(lm1) # ligne définie par les paramètres du modèle
+hist(residuals(lm1)) # graphique à droite : distribution des résidus
+```
+
+---
+
+# Conditions non-respectées - Quelle est la cause ?
+
+On peut verifier si les résidus suivent une distribution normale à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
+
+```{r}
+shapiro.test(residuals(lm1))
+
+library(e1071)
+skewness(residuals(lm1))
+```
+.comment[La distribution est significativement différente d'une distribution normale, décalée vers la gauche (valeur positive d'asymétrie)]
+
+
+---
+
+# Conditions non-respectées - Comment proéeder ?
+
+
+*Il y a deux options quand les conditions d'application du modèle linéaire ne sont pas respectées :*
+
+<br>
+
+1. Utiliser un **autre type de modèle** mieux adapté à l'hypothèse et aux données (ateliers 6 - 8 du CSBQ R).
+<br>
+<br>
+2. Essayer de **transformer** la réponse et / ou le prédicteurs
+  - Il existe **plusieurs types de transformations** et leur utilité dépend de la distribution de la variable et du type de modèle.
+  - La transformation peut **régler certains** problèmes mais peut en **créer d'autres**.
+  - Les **résultats des tests de signification** sur les données transformées ne sont **pas automatiquement valables** pour les données non transformées.
+
+???
+
+- La transformation des variables peut être utile, mais elle est souvent délicate en pratique
+
+---
+
+# Défi 1: Un modèle sur variables transformées ![:cube]
+
+*Essayons de résoudre nos problèmes avec une transformation logarithmique.*
+
+Ajoutons des variables transformées à notre jeu de données :
+
+```{r}
+bird$logMaxAbund <- log10(bird$MaxAbund)
+bird$logMass <- log10(bird$Mass)
+```
+
+--
+
+#### Défi
+
+**Étape 1.** Exécuter une régression linéaire sur les variables transformées `logMaxAbund` et `logMass`.
+Sauvegarder l'objet du modèle sous `lm2`
+
+**Étape 2**: Vérifier les conditions pour `lm2` en utilisant les graphique diagnostics.
+
+```{r}
+lm2 <- lm(logMaxAbund ~ logMass, data = bird)
+```
+
+???
+
+- Se répartir en petits groupes. Puis disctuter des résultats avec l'ensemble des participant.e.s
+
+---
+
+# Défi 1: Un modèle sur variables transformées ![:cube]
+
+**Étape 1.** Exécuter une régression linéaire sur les variables transformées 
+
+```{r}
+lm2 <- lm(logMaxAbund ~ logMass, data = bird)
+
+lm2
+```
+
+.center[
+*Comment les paramètres se comparent-ils à nos prédictions ?*
+]
+
+.center[
+**Peut-on se fier aux estimations du modèle ?**
+]
+
+???
+
+- Cette fois, les paramètres s'alignent avec nos prédictions.
+- MAIS : Bien sûr, nous devons encore vérifier les hypothèses 
+
+---
+
+# Défi 1: Un modèle sur variables transformées ![:cube]
+
+**Étape 2**: Vérifier les conditions pour `lm2` 
+
+```{r, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
+plot(lm2)
+```
+
+--
+
+.comment[.center[Beaucoup mieux, mais il reste des problèmes]]
+
+???
+
+- Il y a encore des tendances visibles dans les graphiques
+
+---
+
+# **Étape 2.** Vérifier les conditions d'application pour `lm2`
+
+```{r, fig.height=4, fig.width=11,}
+par(mfrow = c(1,2))
+coef(lm2) # constante et pente
+plot(logMaxAbund ~ logMass, data=bird) # graphique à gauche
+abline(lm2) # ligne définie par les paramètres du modèle
+hist(residuals(lm2)) # graphique à droite : distribution des résidus
+```
+
+---
+
+# **Étape 3.** Analyser les paramètres
+
+La fonction `summary()` est utiliée pour obtenir plus d'informations sure le modèle ajusté. 
+
+.small[
+```{r, comment=""}
+summary(lm2)
+```
+]
+
+???
+
+- Prendre le temps d'expliquer la sortie de `summary()` :
+  1. Estimations des paramètres et leur écarts type
+  2. Résultats d'un test de t visant à déterminer si les paramètres sont différents de 0
+  3. Adjusted R squared (R au carré ajusté) : Dans quelle mesure le modèle explique-t-il les données ?
+  4. F-statistic (statistique F) (ANOVA) : Le modèle est-il significativement différent d'un modèle sans prédicteur (modèle nul) ?
+- Mentionner que les tests t et l'ANOVA seront abordés plus tard
+- Dans ce cas : notre modèle est à peine meilleur que le modèle nul
+
+
+---
+
+# **Étape 3.** Analyser les paramètres
+
+Nous pouvons aussi extraire les paramètres du modèle et des autres résultats :
+
+```{r}
+# Vecteurs de résidus et valeures prédites
+e <- residuals(lm2)
+y <- fitted(lm2)
+
+coefficients(lm2) # coefficients
+summary(lm2)$coefficients # coefficients avec test de t
+
+summary(lm2)$adj.r.squared # R au carré ajusté
+```
+
+---
+
+# Interprétation du modèle
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+#### Hypothèse
+
+> Pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+
+---
+
+# Interprétation du modèle
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+```{r, comment=""}
+summary(lm2)
+```
+
+---
+
+# Interprétation du modèle
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+Il n'y a que très **peu de preuves à l'appui** de notre hypothèse parce que :
+- Le modèle n'explique pas bien la réponse (*faible R au carré ajusté*)
+- Le modèle n'est que légèrement meilleur qu'un modèle sans variables prédictives (*F-test à peine significatif*)
+- L'estimation du paramètre "logMass" est à peine différente de 0 (*valeur de t à peine significatif*)
+
+???
+
+- In this case, the F-test and t-test are equivalent because there is only one predictor variable)
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+*Peut-être devrions-nous formuler une hypothèse plus précise ?*
+
+--
+
+#### Hypothèse
+
+> Pour différentes espèces d'oiseaux <span style="color:green">**terrestres**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+Exclure tous les oiseaux aquatiques (en utilisant `!`) et ajuster un modèle linéaire :
+
+```{r}
+lm3 <- lm(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
+# exclut les oiseaux aquatiques (!birdsAquatic == TRUE)
+# ou de façon équivalente :
+# lm3 <- lm(logMaxAbund~logMass, data=bird, subset=bird$Aquatic == 0)
+
+lm3
+```
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2))
+plot(lm3)
+```
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm3)
+```
+
+.comment[.center[Conditions d'application respectées]]
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+```{r, comment=""}
+summary(lm3)
+```
+
+---
+
+# Trouver un meilleur modèle : oiseaux terrestres
+
+.center[*Dans quelle mesure le modèle soutient-il notre hypothèse ?*]
+
+Le modèle fournit des **preuves à l'appui** de notre hypothèse, parce que :
+
+- Le modèle est raisonnablement bien ajusté aux données (*R au carré ajusté*)
+- Le modèle est clairement meilleur qu'un modèle sans variables prédictives (*F-test*)
+- L'estimation du paramètre "logMass" est clairement différente de 0 (*t-test*)
+
+
+---
+
+# Défi 2 ![:cube]()
+
+Rassemblons tout les étapes :
+
+<br>
+1. Formuler une autre hypothèse similaire sur l'abondance maximale et la masse moyenne d'un individu, cette fois pour les **passereaux** ("passerine birds").
+2. Ajuster un **modèle** pour évaluer cette hypothèse, en utilisant les variables transformées (c'est-à-dire `logMaxAbund` et `logMass`). Sauvegarder le modèle sous le nom de `lm4`.
+3. **Vérifier les conditions d'application** du modèle linéaire à l'aide des graphiques diagnostics.
+4. Interpréter les résultats : Le modèle fournit-il des **preuves à l'appui de l'hypothèse ?**
+
+
+.comment[Indice : Comme les espèces aquatiques, les passereaux (variable `Passerine` sont codées 0/1 (vérifier avec `str(bird)`)]
+
+---
+
+# Défi 2 - Solution ![:cube]()
+
+#### Hypothèse
+
+> Pour différentes espèces de <span style="color:green">**passereaux**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+---
+
+# Défi 2 - Solution ![:cube]()
+
+ajuster le modèle :
+
+```{r}
+lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
+lm4
+```
+
+---
+
+# Défi 2 - Solution ![:cube]()
+
+Vérifier les conditions d'application :
+
+```{r, eval=FALSE}
+par(mfrow=c(2,2))
+plot(lm4)
+```
+
+```{r,fig.height=6, fig.width=8, echo=FALSE}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm4)
+```
+
+---
+
+# Défi 2 - Solution ![:cube]()
+
+Vaut-il la peine d'interpréter les résultats ?
+
+```{r, comment=""}
+summary(lm4)
+```
+
+???
+
+- Les résultats du modèle ne doivent pas être interprétés car les conditions d'application du modèle linéaire ne sont pas respectées!
+
+---
+
+# Régression linéaire avec R
+
+.center[.small[
+**Étape 1**   
+Formuler et exécuter un modèle linéaire basé sur un hypothèse
+
+**Étape 2**  
+Vérifier les conditions d'application du modèle linéaire
+]]
+
+<br>
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.pull-left[.center[*Conditions sont satisfaits ?*]
+
+.small[.center[**Étape 3**  ]
+- Analyser les paramètres de régression
+- Tracer le modèle
+- Effectuer des tests de signification sur les estimations des paramètres (si nécessaire)
+]]
+
+.pull-right[.center[*Conditions non satisfaites ?*]
+
+.center[Envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données]
+
+.pull-left[.center[![:faic](arrow-down)]] .pull-right[.center[![:faic](arrow-down)]]
+
+.small[
+.pull-left[
+Utiliser un GLM mieux adapté aux données
+]
+
+.pull-right[
+Retourner à l'Étape 1 avec des variables transformées
+]]]
+
+---
+
+# Noms de variables
+
+Des termes différents sont utilisés pour la *réponse* et le *prédicteur*, , en fonction du contexte et du domaine scientifique (les termes ne sont pas toujours synonymes).
+
+<br>
+
+.center[
+|résponse          | prédicteur       |
+|:-----------------|:-----------------|
+|var. expliqué     |var. explicatif   |
+|                  |covariable        |
+|var. endogène     |var. exogène      |
+|var. dépendante   |var. indépendante |
+]
+
+<br>
+
+.center[
+|response          | predictor        |
+|:-----------------|:-----------------|
+|                  |explanatory var.  |
+|                  |covariate         |
+|outcome           |                  |
+|output var.       |input var.        |
+|dependent var.    |independent var.  |
+]
+
+
+---
+
+# Modèles linéaires
+
+.center[
+![:scale 100%](images/schema_ttest.png)
+]
+
+---
+
+class: inverse, center, middle
+
+# ANOVA
+
+## Test-t
+## ANOVA à un critère de classification
+## ANOVA à deux critères de classification
+
+---
+# ANOVA
+
+Variable réponse continue
+
+**Variables explicatives catégoriques**
+
+- Deux niveaux ou plus (groupes)
+
+.large[.center[Compare la variation intra-groupe et inter-groupe afin de déterminer si les moyennes des groupes différent]]
+
+---
+# ANOVA
+
+.center[Compare la variation intra-groupe et inter-groupe afin de déterminer si les moyennes des groupes diffèrent]
+
+```{r, echo = FALSE, fig.height=3, fig.width=6.5}
+source('script/figAnova.R')
+```
+
+Somme des carrés : variance intra-traitement *vs* variance inter-traitement
+
+Si variance inter traitements $>$ variance intra traitements:
+  - la variable explicative a un effet plus important que l'erreur aléatoire
+  - variable explicative est donc susceptible d'influencer significativement la variable réponse
+
+---
+# Types d'ANOVA
+
+1. ANOVA à un critère de classification
+  - Une variable explicative catégorique avec au moins 2 niveaux
+  - S'il y a 2 niveaux, un **test de t** peut être utilisé alternativement
+
+2. ANOVA à deux critères de classification
+  - Deux variables explicatives catégoriques ou plus
+  - Chaque facteur peut avoir plusieurs niveaux
+  - Les interactions entre chaque facteur doivent être testées
+
+--
+
+Mesures répétées ?
+  - L'ANOVA peut être utilisée pour des mesures répétées, mais ce sujet n'est pas abordé dans cet atelier
+  - Modèle linéaire mixte peut également être utilisé pour ce type de données (voir l'atelier 6)
+
+---
+class: inverse, center, middle
+
+# Test de t
+
+---
+# Test de t
+
+- **Variable réponse** ![:faic](arrow-right) quantitative
+- **Variable explicative** ![:faic](arrow-right) qualitative avec **2 niveaux**
+
+**conditions d'application**
+- Les résidus suivent une distribution normale
+- Les variances des groupes sont homogènes
+
+.comment[Le test est plus robuste lorsque la taille de l'échantillon est plus élevée et lorsque les groupes ont des tailles égales]
+
+---
+# Exécuter un test de t dans R
+
+Vous pouvez utiliser la fonction `t.test()`
+
+```r
+t.test(Y ~ X2, data= data, alternative = "two.sided")
+```
+
+  - `Y`: variable réponse
+  - `X2`: facteur (2 niveaux)
+  - `data`: nom du jeu de données
+  - hypothèse `alternative` : `"two.sided"` (par défaut), `"less"`, ou `"greater"`
+
+Le test de t est un modèle linéaire et un cas spécifique de l'ANOVA avec un facteur à 2 niveaux
+
+Vous pouvez donc aussi utiliser la fonction `lm()`
+
+```r
+lm.t < -lm(Y ~ X2, data = data)
+anova(lm.t)
+```
+
+---
+# Exécuter un test de t dans R
+
+.large[Les oiseaux aquatiques sont-ils plus lourds que les oiseaux terrestres ?]
+
+- Variable réponse : `Bird mass` ![:faic](arrow-right) num: continue
+- Variable explicative : `Aquatic` ![:faic](arrow-right) 2 niveaux : 1 ou 0 (oui ou non)
+
+---
+# Exécuter un test de t dans R
+
+Premièrement, visualiser les données à l'aide de la fonction `boxplot()`
+
+```{r eval=TRUE,fig.height=5.2, fig.width=6.5}
+boxplot(logMass ~ Aquatic,
+        data = bird, names = c("Non aquatique", "Aquatique"))
+```
+
+---
+# Exécuter un test de t dans R
+
+Testons l'homogénéité des variances avec la fonction `var.test()`
+
+```{r}
+var.test(logMass ~ Aquatic, data = bird)
+```
+
+.comment[Le rapport des variances n'est pas statistiquement différent de 1, celles-ci peuvent donc être considérées comme égales]
+
+.comment[Nous pouvons maintenant procéder au test de t !]
+
+---
+# Exécuter un test de t dans R
+
+```{r}
+ttest1 <- t.test(logMass ~ Aquatic, var.equal = TRUE, data = bird)
+
+# Or use lm()
+ttest.lm1 <- lm(logMass ~ Aquatic, data=bird)
+```
+
+.comment[Spécifie que l'homogénéité des variances est respectée]
+
+Vérifiez que `t.test()` et `lm()` donnent le même modèle :
+
+```{r}
+ttest1$statistic^2
+anova(ttest.lm1)$`F value`
+# réponse : F=60.3845 dans les deux cas
+```
+
+.comment[Lorsque la condition d'égalité de variance est confirmée, t^2 = F]
+
+---
+# Exécuter un test de t dans R
+
+Si $p<0,01$ (ou $0,05$ ), l'hypothèse de l'absence de différence entre les moyenne des 2 groupes (*H0*) peut être rejetée, avec un risque de $0,01$ (ou $0,05$ ) de se tromper
+
+.small[
+```{r}
+ttest1
+```
+]
+
+.small[.comment[Il existe une différence entre la masse des oiseaux aquatiques et terrestres - `p-value`]]
+
+.small[.comment[Regardez les moyennes des 2 groupes]]
+
+---
+# Non respect des conditions d'application
+
+- **Correction de Welch** : lorsque les écarts entre les groupes ne sont pas égaux (par défaut dans R !)
+- **Test de Mann-Whitney** : l'équivalent **non paramétrique** du test de t lorsque les conditions d'application ne sont pas respectées
+- **Test de t apparié** : lorsque les deux groupes ne sont **pas indépendants** (par exemple, des mesures sur la même personne récoltées lors de 2 années différentes)
+
+---
+exclude:True
+# Discussion de groupe
+
+.large[Les oiseaux aquatiques sont-ils plus lourds que les oiseaux terrestres ?]
+
+```{r}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "less")
+```
+
+.comment[Qu'avez-vous conclu ?]
+
+---
+exclude:True
+# Discussion de groupe
+
+```{r}
+uni.ttest1
+```
+
+Oui, les oiseaux aquatiques sont plus lourds que les oiseaux terrestres :p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
+---
+# Sondage
+
+.large[Avec un test de t, il est possible d'être plus précis et de donner une direction à notre hypothèse avec `alternative`.] 
+<br>
+<br>
+<br>
+Nous voulons tester si **les oiseaux aquatiques sont plus lourds que les oiseaux terrestres **. 
+
+Lequel devrait être utilisé? `alternative = "???"`
+
+1.`"two.sided"`
+
+2.`"less"`
+
+3.`"greater"`
+
+```{r,eval=F,echo=T}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "???")
+```
+
+---
+# Réponse
+
+.xsmall[
+```{r}
+# Unilateral t-test
+uni.ttest1 <- t.test(logMass ~ Aquatic,
+                     var.equal = TRUE,
+                     data = bird,
+                     alternative = "less")
+uni.ttest1
+
+```
+]
+
+Pourquoi `"greater"` n'aurait pas marché?
+
+.comment[Indice: retournez à vos données. Quelle est la nature de la variable Aquatic?]
+
+???
+
+Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, R will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
+
+---
+class: inverse, center, middle
+
+# ANOVA
+
+---
+# Analyse de Variance (ANOVA)
+
+Généralisation du test de t à $>2$ groupes, et/ou ≥ $2$ facteurs explicatifs
+
+Décomposition de la variance observée de la variable réponse en effets additifs d'un ou de plusieurs facteurs et de leurs interactions
+
+<br>
+$$Y = \underbrace{\mu}_{\Large{\text{moyenne globale de la variable réponse}\atop\text{sur tous les individus}}} + \overbrace{\tau_{i}}^{\Large{\text{Le résultat moyen sur}\atop\text{tous les individus du groupe i}}} + \underbrace{\epsilon}_{\text{Résidus}}$$
+
+---
+# Rappel : ANOVA
+
+conditions d'application
+- Normalité des résidus
+- L'égalité de la variance inter-groupes
+
+Test complémentaire
+- Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s)
+- Un test couramment utilisé *a posteriori* pour répondre à cette question est le **Test de Tukey**
+
+---
+# Exécuter une ANOVA dans R
+
+##### Est-ce que l'abondance maximale dépend du régime alimentaire ?
+- Variable réponse : **MaxAbund**  ![:faic](arrow-right) num: quantitative
+- Variable explicative : **Diet** ![:faic](arrow-right) facteur avec 5 niveaux
+
+```{r}
+str(bird)
+```
+
+---
+# Visualiser les données
+
+Visualisons tout d'abord les données avec la fonction `boxplot()`
+
+```{r, fig.height=5, fig.width=7,echo=-1}
+par(mar = c(4, 4, 0.5, 1))
+boxplot(logMaxAbund ~ Diet, data = bird,
+  ylab = expression("log"[10]*"(Abondance maximale)"), xlab = 'Régime alimentaire')
+```
+
+---
+# Visualiser les données
+
+Nous pouvons changer l'ordre des niveaux afin qu'il suivent l'ordre croissant de leurs médianes respectives en utilisant les fonctions `tapply()` et `sort()`
+
+```{r, fig.height = 4.5, fig.width = 7, echo = -1}
+par(mar = c(4, 4, .1, 1))
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+boxplot(logMaxAbund ~ factor(Diet, levels = names(med)), data = bird,
+        ylab = expression("log"[10]*"(Abondance maximale)"), xlab = 'Régime alimentaire')
+```
+
+---
+# Visualiser les données
+
+
+Une autre façon de visualiser graphiquement les tailles d’effet est d’utiliser la fonction `plot.design()`
+
+.small[
+```{r, fig.height=3.8, fig.width=6, echo=-1}
+par(mar = c(4,4,.4,1))
+plot.design(logMaxAbund ~ Diet, data = bird,
+  ylab = expression("log"[10]*"(Abondance maximale)"))
+```
+]
+
+.comment[Les niveaux d'un facteur le long d'une ligne verticale, et la valeur globale de la réponse dans une ligne horizontale]
+
+---
+# ANOVA à un critère de classification dans R
+
+Il est de nouveau possible d'utiliser la fonction `lm()`
+
+```{r}
+anov1 <- lm(logMaxAbund ~ Diet,
+            data = bird)
+```
+
+Il y a aussi une fontion spécifique pour l'analyse de la variance dans R `aov()`
+
+```{r}
+aov1 <- aov(logMaxAbund ~ Diet,
+            data = bird)
+```
+
+.comment[Essayez-les et comparez les sorties !]
+
+---
+# Exécuter une ANOVA
+
+#### À un critère de classification dans R
+
+Comparer les sorties
+
+```{r}
+anova(anov1)
+```
+```{r}
+summary(aov1)
+```
+
+---
+# Vérifier les conditions d'application
+
+**Test de Bartlett**: égalité de la variance entre les groupes
+
+.small[
+```{r}
+bartlett.test(logMaxAbund ~ Diet, data = bird)
+```
+]
+---
+# Vérifier les conditions d'application
+
+
+**Test de Levene** pour l'homogénéité de la variance:
+
+.small[
+```{r}
+library(car)
+leveneTest(logMaxAbund ~ Diet, data = bird)
+```
+]
+
+.comment[Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.]
+
+---
+#Vérifier les conditions d'application
+
+**Test de Shapiro-Wilk**:  normalité des résidus
+
+.small[
+```{r}
+shapiro.test(resid(anov1))
+```
+]
+
+.comment[Les deux tests sont non-significatifs; les résidus du modèle peuvent être considérés normaux et les variances homogènes]
+
+---
+# Et si les conditions d'application ne sont pas respectées...
+
+**Transformer vos données** : pourrait égaliser les variances et normaliser les résidus, et peut convertir un effet multiplicatif en un effet additif
+
+```{r eval=FALSE}
+data$logY <- log10(data$Y)
+```
+* Voir le wiki de l'atelier 1 pour les règles de transformation de données
+* ré-exécuter votre modèle avec la variable transformée et vérifier à nouveau les hypothèses
+
+**Test de Kruskal-Wallis**: équivalent non paramétrique de l'ANOVA si vous ne pouvez pas
+(*ou ne voulez pas*) transformer les données
+
+```{r eval=FALSE}
+kruskal.test(Y~X, data)
+```
+
+---
+# Sorties de notre modèle ANOVA
+
+Triage en ordre alphabétique des niveaux et comparaison au niveau de référence (`Insect`)
+
+.xsmall[
+```{r}
+summary(anov1)
+```
+]
+
+---
+# Sorties de notre modèle ANOVA
+
+D'autre part, si nous utilisons `lm()`
+
+.pull-left2[
+.small[
+```{r}
+summary.lm(aov1)
+```
+]]
+
+.pull-right2[
+<br><br>
+.comment[Différence significative entre les groupes, mais nous ne savons pas lesquels !]]
+
+---
+# Test *a posteriori*
+
+Lorsque l'ANOVA détecte un effet significatif de la variable explicative, un test post-hoc avec la fonction `TukeyHSD()`, doit être effectué pour déterminer quel(s) tratement(s) diffère(nt)
+
+.pull-left2[
+.small[
+```{r}
+TukeyHSD(aov(anov1), ordered = TRUE)
+```
+]]
+
+.pull-right2[
+<br><br>
+.comment[Seuls `Vertebrate` et `PlantInsect` diffèrent]
+]
+
+---
+# Représentation graphique
+
+Représentation graphique de l'ANOVA à l'aide de la fonction `barplot()`
+
+.xsmall[
+```{r, fig.height=3, fig.width=7,echo=-1}
+par(mar=c(3,3,0.5,0.5))
+sd <- tapply(bird$logMaxAbund, bird$Diet, sd)
+means <- tapply(bird$logMaxAbund, bird$Diet, mean)
+n <- length(bird$logMaxAbund)
+se <- 1.96*sd/sqrt(n)
+bp <- barplot(means, ylim = c(0, max(bird$logMaxAbund) - 0.5))
+epsilon = 0.1
+segments(bp, means - se, bp, means + se, lwd=2) # barres verticales
+segments(bp - epsilon, means - se, bp + epsilon, means - se, lwd = 2) # barres horizontales
+segments(bp - epsilon, means + se, bp + epsilon, means + se, lwd = 2) # barres horizontales
+```
+]
+
+---
+class: inverse, center, middle
+
+# ANOVA à deux critères de classification
+
+---
+# ANOVA à deux critères de classification
+
+Plus d'un facteur
+
+- ANOVA avec un facteur:
+
+ `aov <- lm(Y ~ X, data)`
+
+- ANOVA avec deux ou plus facteurs:
+
+ `aov <- lm(Y ~ X * Z * ..., data)`
+
+.comment[Lorsque vous utilisez le symbole "*" avec `lm()`, le modèle inclut les effets de chaque facteur séparément, ainsi que leur interaction]
+<br>
+<br>
+.comment[Lorsque vous utilisez le symbole "+" avec `lm()`, le modèle inclut les effets de
+chaque facteur séparément (pas d'interaction)]
+
+`aov <- lm(Y ~ X + Z + ..., data)`
+
+---
+# ANOVA à deux critères de classification
+
+.small[
+
+Exemple d'interaction non significative
+
+```r
+aov <- lm(Y ~ X * Z, data)
+summary(aov)
+# Analysis of Variance Table
+#
+# Response: Y
+# Df Sum Sq Mean Sq F value Pr(>F)
+# X 4 5.1059 1.27647 3.0378 0.02669 *
+# Z 1 0.3183 0.31834 0.7576 0.38870
+# X:Z 3 2.8250 0.94167 2.2410 0.10689
+# Residuals 45 18.9087 0.42019
+# ---
+# Signif. codes: 0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+Selon le principe de **parcimonie**, vous voulez que votre modèle explique le plus possible de la variance observée dans les données, avec le moins de termes possible
+- Enlever le terme d'interaction s'il n'est pas significatif, et ré-exécuter le modèle
+
+```r
+aov <- lm(Y ~ X + Z, data)
+```
+]
+
+---
+exclude:true
+# Défi 3 ![:cube]()
+
+Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`).
+
+.comment[INDICE: Examinez les facteurs Diet, Aquatic et leur interaction avec une ANOVA à deux critères de classification e.g. `lm(Y ~ A*B)`]
+
+.comment[où A est le premier facteur, B le deuxième et "\*" décrit l'interaction]
+
+---
+# Défi 3 ![:cube]()
+
+Testez si l'abondance maximale `log(MaxAbund)` varie à la fois en fonction du régime alimentaire (`Diet`) et de l'habitat (`Aquatic`).
+<br>
+<br>
+.comment[INDICE: Assurez-vous d'ajouter une interaction avec `*`]
+<br>
+<br>
+<br>
+<br>
+.large[
+.center[
+.alert[Salle de réunion!]
+]]
+
+---
+# ![:cube]()
+
+.xsmall[
+```{r}
+anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data = bird)
+summary(anov2)
+```
+]
+
+---
+# Défi 3 - Solution ![:cube]()
+
+.xsmall[
+```{r}
+anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data = bird)
+anova(anov2)
+```
+]
+
+.comment[Le seul terme significatif du modèle est le facteur régime alimentaire]
+
+.comment[Selon le principe de parcimonie, nous devrions supprimer le terme d'interaction:]
+
+```r
+anov2 <- lm(logMaxAbund ~ Diet, data = bird)
+```
+
+---
+# Modèles linéaires
+
+.center[
+![:scale 100%](images/schema_ancova.png)
+]
+
+---
+class: inverse, center, middle
+
+# ANCOVA
+
+---
+# Analyse de covariance (ANCOVA)
+
+- Combinaison de l'ANOVA et de la régression linéaire
+- Les variables explicatives sont un mélange de variables quantitatives (covariable) et qualitatives (facteurs)
+
+$$Y = \mu + \text{Effets principaux des facteurs} + \\
+            \text{Interactions entre facteurs} + \\
+            \text{Effets principaux des covariables} + \\
+            \text{Interactions entre covariables et facteurs} + \epsilon$$
+
+---
+# Rappel : ANCOVA
+
+En plus des conditions d'application des modèles linéaires, les modèles **ANCOVA** doivent respecter :
+
+- Les covariables ont toutes la **même étendue de valeurs**
+- Les variables sont **fixes**
+- Les variables catégoriques et continues sont **indépendantes**
+
+<br>
+
+.small[
+.comment[Un variable **fixe** est une variable d'intérêt pour une étude (e.g. la masse des oiseaux). En comparaison, une variable aléatoire représente surtout une source de bruit qu'on veut contrôler (i.e. le site où les oiseaux ont été échantillonnés)]]
+
+.small[.comment[*Voir l'atelier 6 sur les modèles linéaires mixtes*]]
+
+---
+# Types d'ANCOVA
+
+Vous pouvez avoir n'importe quel nombre de facteurs et / ou variables, mais lorsque leur nombre augmente, l'interprétation des résultats devient de plus en plus complexe
+
+<br>
+
+ANCOVA fréquemment utilisées
+
+1. **Une covariable et un facteur**
+2. Une covariable et deux facteurs
+3. Deux covariables et un facteur
+
+.small[.comment[Nous ne considérerons que le premier cas aujourd'hui, mais les deux autres sont similaires]]
+
+---
+# ANCOVA avec 1 covariable et 1 facteur
+
+Objectifs de l'analyse :
+
+1. Déterminer l'effet du facteur et de la covariable sur ​​la variable réponse
+2. Déterminer l'effet du facteur sur la variable réponse après avoir enlevé l'effet de la covariable
+3. Déterminer l'effet de la covariable sur la variable réponse en contrôlant l'effet du facteur
+
+<br>
+
+.center[.alert[Si vous avez une interaction significative entre votre facteur et votre covariable, vous ne pouvez pas atteindre ces objectifs !]]
+
+---
+# ANCOVA avec 1 covariable et 1 facteur
+
+<br>
+
+```{r,echo=FALSE,fig.height=3, fig.width=10}
+## functions
+f1 <- function(x, a, b) {
+  return(x*a+b)
+}
+# conf for plot
+col = rgb(118, 143, 175, maxColorValue = 255)
+x <- 1:20
+par(mfrow = c(1, 3), mar = c(1, 1, 6.5, 4))
+
+# plot 1
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=0.6,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('Un niveau du facteur\n a une pente différente', side = 3, line = 2, cex = 1.5)
+# plot 2
+plot(x, f1(x, a=.5,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=0.01,b=40), lwd = 2.5, col = col)
+mtext('Des nombreaux niveaux ont\n des pentes différentes', side = 3, line = 2, cex = 1.5)
+# plot 3
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext("Pas d'interaction", side = 3, line = 2, cex = 1.5)
+```
+
+.pull-left2[.center[.pull-left[![:faic](arrow-up)] .pull-right[![:faic](arrow-up)]]] .pull-right2[.center[![:faic](arrow-up)]]
+
+.center[.pull-left2[.small[Si l'interaction est significative, vous aurez un scénario qui ressemble à ceci]]]
+
+.pull-right2[.small[Si votre covariable et votre facteur sont significatifs, vous avez un cas comme celui-ci]]
+
+---
+# Comparez ANCOVA - moyennes ajustées
+
+Si vous voulez comparer les moyennes des différents facteurs, vous pouvez utiliser les
+**moyennes ajustées**
+
+La fonction `effect()` utilise les équations données par l'ANCOVA pour estimer les moyennes de chaque niveau, corrigées pour l'effet de la covariable
+
+.small[
+```{r eval=FALSE, warning=FALSE}
+ancova.exemple <- lm(Y ~ X*Z, data=data) # X = quantitative; Z = qualitative
+library(effects)
+adj.means.ex <- effect('Z', ancova.exemple)
+plot(adj.means.ex)
+```
+]
+
+```{r,echo=FALSE, fig.height=3, fig.width=5}
+# plot to simulate effects::effect() plot
+a = 40; b =20; sd = 8
+par(mar=c(4,4,.5,1))
+plot(c(a, b), ylim = c(10, 50), xlim = c(0.9, 2.1), xlab = 'factor Z', ylab = 'Y', xaxt = 'n')
+lines(c(a, b), col = 4, pch = 1.5)
+segments(c(1, 2), c(a-sd, b-sd), c(1,2), c(a+sd, b+sd), lwd = 1.5, col = 'orange')
+segments(c(1, 2) - .04, c(a, b) + sd, c(1, 2) + .04, c(a, b) + sd, lwd = 1.5, col = 'orange')
+segments(c(1, 2) - .04, c(a, b) - sd, c(1, 2) + .04, c(a, b) - sd, lwd = 1.5, col = 'orange')
+points(c(1, 2), c(a, b), pch = 16, col = 4)
+axis(1, at = c(1, 2), labels = FALSE) # add ticks
+mtext(c('Level 1', 'Level 2'), 1, at = 1:2, line = 0.5) # add labels to ticks
+```
+
+---
+# ANCOVA avec 1 covariable et 1 facteur
+
+- Si seulement votre facteur est significatif, éliminer la covariable -> vous avez une **ANOVA**
+- Si seulement votre covariable est significative, éliminer le facteur -> vous avez une **régression linéaire simple**
+- Si votre interaction covariable * facteur est significative, vous voudrez peut-être tester quel(s) niveau(x) du facteur a(ont) des pentes différentes
+
+.alert[Vérifier vos conditions d'application ! ]
+
+- Très similaire à ce que vous avez fait précédemment
+
+---
+# Exécuter une ANCOVA dans R
+
+##### L'abondance maximale varie-t-elle en fonction du régime alimentaire et la masse des oiseaux ?
+
+Variable réponse : **MaxAbund** ![:faic](arrow-right) num : quantitative continue
+
+Variable explicatives :
+  - **Diet** ![:faic](arrow-right) facteur à 5 niveaux
+  - **Mass** ![:faic](arrow-right) numérique continue
+
+.small[
+```{r}
+str(bird)
+```
+]
+
+---
+exclude: true
+# Défi 4 ![:cube]()
+
+1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
+
+```{r eval=FALSE}
+ancova.exemple <- lm(Y~X*Z, data=data)
+summary(ancova.exemple)
+```
+
+2- Vérifiez si votre interaction est significative
+
+```{r eval=FALSE}
+ancova.exemple2 <- lm(Y~X+Z, data=data)
+summary(ancova.exemple2)
+```
+---
+
+# Défi 4 ![:cube]()
+
+1- Exécutez un modèle pour tester les effets du régime alimentaire (`Diet`), de la masse (`logMass`) ainsi que leur interaction sur l'abondance maximale des oiseaux (`logMaxAbund`)
+
+<br>
+
+2- Vérifiez si votre interaction est significative
+<br>
+<br>
+<br>
+<br>
+
+.large[
+.center[
+.alert[Salle de réunion!]
+]]
+---
+# Défi 4 - Solution ![:cube]()
+
+<br>
+
+```{r}
+ancov1 <- lm(logMaxAbund ~ logMass*Diet,
+             data = bird)
+anova(ancov1)
+```
+
+Interaction entre `logMass` et `Diet` n'est pas significative
+
+---
+# Défi 4 - Solution ![:cube]()
+
+Éliminer le terme d'interaction, puis ré-évaluer le modèle contenant les effets simples de `logMass` et `Diet`
+
+```{r}
+ancov2 <- lm(logMaxAbund ~ logMass + Diet,
+             data = bird)
+anova(ancov2)
+```
+
+---
+
+# Modèles linéaires
+
+.center[
+![:scale 100%](images/schema_multReg.png)
+]
+
+---
+
+class: inverse, center, middle
+
+# Régression linéaire multiple
+
+---
+
+# Régression linéaire multiple
+- **Variables explicatives** ![:faic](arrow-right) 2 ou plusieurs variables continues
+- **Variable réponse** ![:faic](arrow-right) 1 variable continue
+
+.xsmall[Seule différence avec la régression linéaire simple : **plusieurs variables explicatives** sont incluses dans le modèle.] 
+
+#### Variables
+
+- $y$ : Variable réponse (**continue**)
+- $x$ : Plusieurs variables explicatives (**continues** ou **catégoriques**)
+
+#### Relation supposée
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+- Le paramètre $\beta_0$ est **l'ordonnée à l'origine** (ou constante)
+- Les paramètre $\beta_1$ quantifie **l'effet** de $x$ sur $y$.
+- Le résidu $\epsilon_i$ représent la variation **non expliquée**
+- La **valeur prédite** de $y_i$ se définit comme : $\hat{y}_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i}$.
+
+---
+
+# Régression linéaire multiple
+
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+
+#### Conditions d'application
+
+En plus des conditions d'application habituelles des modèles linéaires :
+- **Relation linéaire** entre **chaque** variable explicative et la variable réponse.
+- Les variables explicatives sont indépendantes les unes des autres (il n'y a pas de **colinéarité**).
+
+---
+
+# Régression linéaire multiple
+
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+
+
+#### En cas de colinéarité
+
+- Garder seulement une des variables colinéaires
+- Essayer une analyse multidimensionnelle (voir l'atelier 9)
+- Essayer une analyse pseudo-orthogonale
+
+---
+
+
+#  Régression linéaire multiple dans R
+
+En utilisant le jeu de données `Dickcissel` comparez l'importance relative du climat (`clTma`), de la productivité (`NDVI`) et de la couverture du sol (`grass`) comme prédicteurs de l'abondance de dickcissels (`abund`)
+
+.small[
+```{r, eval=TRUE}
+Dickcissel = read.csv("data/dickcissel.csv")
+str(Dickcissel)
+```
+]
+
+---
+# Vérifier les conditions d'application
+
+La colinéarité :
+- Vérifier la colinéarité de toutes les variables explicatives et d'intérêt
+
+.small[
+.pull-left[
+```{r, fig.height=6, fig.width=7}
+# select variables
+var <- c('clTma', 'NDVI', 'grass', 'abund')
+plot(Dickcissel[, var])
+```
+]]
+
+.pull-right[
+<br>
+.small[.comment[
+Si vous observez un patron entre vos deux variables explicatives, elles peuvent être colinéaires!
+
+Vous devez éviter ceci, sinon leurs effets sur la variable réponse seront confondus
+]]]
+
+---
+# Régression linéaire multiple dans R
+
+Exécuter la régression multiple de l'abondance (`abund`) en fonction des variables `clTma + NDVI + grass`
+
+```{r,eval=FALSE}
+lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
+summary(lm.mult)
+```
+
+Vérifiez les autres conditions d'application, comme pour la régression linéaire simple
+
+```{r,eval=FALSE,echo=-2}
+par(mfrow = c(2, 2))
+par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
+plot(lm.mult)
+```
+
+---
+# Régression linéaire multiple dans R
+
+Exécuter la régression multiple de l'abondance (`abund`) en fonction des variables `clTma + NDVI + grass`
+
+.small[
+```{r}
+lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
+summary(lm.mult)
+```
+]
+
+---
+# Régression linéaire multiple dans R
+
+Vérifiez les autres conditions d'application, comme pour la régression linéaire simple
+
+```{r, fig.height=5.5, fig.width=8,echo=-2}
+par(mfrow = c(2, 2))
+par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
+plot(lm.mult)
+```
+
+---
+
+# Quel est le meilleur modèle ?
+
+.small[
+Souvenez-vous du principe de parcimonie: expliquer le plus de variation avec le plus petit nombre de termes dans votre modèle ![:faic](arrow-right) enlevez la variable qui est la moins significative
+]
+
+
+```{r}
+summary(lm.mult)$coefficients
+```
+
+<br>
+
+Les 3 variables sont importantes. On garde tout !
+
+Le modèle explique 11.28% de la variabilité de l'abondance de dickcissels $R²_{adj} = 0.11$.
+
+--
+
+.alert[Toutefois, ces informations ne sont pas valables car les conditions d'application du modèle linéaire ne sont pas respectées.]
+
+
+---
+# Quel est le meilleur modèle ?
+
+Il est important de noter que la variable réponse ne varie pas de façon linéaire avec les variables explicatives
+
+```{r, fig.height=3.5, fig.width=11,echo=-1}
+par(mfrow=c(1,3), mar=c(4, 4, 0.5, 0.5), cex = 1)
+plot(abund ~ clTma, data = Dickcissel)
+plot(abund ~ NDVI,  data = Dickcissel)
+plot(abund ~ grass, data = Dickcissel)
+```
+
+.comment[Voir la **section avancée** sur la **régression polynomiale** pour la solution !]
+
+---
+class: inverse, center, middle
+
+# Optionnel
+
+## *si le temps le permet*
+
+---
+# Optionnel
+
+1. Interprétation des contrastes
+2. ANOVA non équilibrée
+3. Régression polynomiale
+4. Partitionnement de la variation
+
+---
+exclude:true
+
+class: inverse, center, middle
+
+# Régression pas à pas
+
+---
+exclude:true
+
+# Régression pas à pas
+
+Exécuter un modèle avec tout dedans sauf les variables de "Présent/absence"
+
+La fonction `step()` soustrait un terme au modèle de façon itérative et sélectionne le meilleur modèle
+  - c-à.d. le modèle avec le Critère d'Information Akaike (AIC) le plus bas
+
+.small[
+```{r,eval=FALSE}
+lm.full <- lm(abund ~ . - Present,
+              data = Dickcissel)
+lm.step <- step(lm.full)
+```
+]
+```{r,include=FALSE}
+lm.full <- lm(abund ~ . - Present,
+              data = Dickcissel)
+lm.step <- step(lm.full)
+```
+
+---
+exclude:true
+
+# Régression pas à pas
+
+.pull-left[
+.tiny[
+```{r eval=TRUE}
+summary(lm.full)
+```
+]]
+
+.pull-right[
+
+Variables sélectionées par `step()`
+.tiny[
+```{r}
+summary(lm.step)
+```
+]]
+
+.small[.comment[Le modèle explique maintenant 31,44% de la variabilité de l'abondance de Dickcissel]]
+
+---
+class: inverse, center, middle
+
+# Interprétation des contrastes
+
+---
+# Interprétation des contrastes
+
+.small[
+Les constrastes servent à comparer chaque niveau du facteur à un niveau de référence, et de détecter des différences significatives entre chaque niveau.
+
+L'estimation de l'ordonnée à l'origine est le niveau de référence et correspond à la moyenne du premier niveau (en ordre alphabétique) du facteur `Diet`
+
+Calculez l'ordonnée à l'origine de référence + l'ordonnée à l'origine de chaque niveau de Diet .comment[*Que remarquez-vous ?*]
+
+```{r}
+tapply(bird$logMaxAbund, bird$Diet, mean)
+coef(anov1)
+coef(anov1)[1] + coef(anov1)[2] # InsectVert
+coef(anov1)[1] + coef(anov1)[3] # Plant
+```
+]
+
+---
+# Interprétation des contrastes
+
+Il se peut que vous vouliez définir un niveau de référence différent
+
+1. Comparez le niveau `Plant` à tous les autres niveaux du facteur `Diet`
+
+```{r,eval=FALSE}
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
+anov2 <- lm(logMaxAbund ~ Diet2, data = bird)
+summary(anov2)
+anova(anov2)
+```
+
+2. Ordonner les niveaux selon leur médiane
+
+```{r,eval=FALSE}
+bird$Diet2 <- factor(bird$Diet, levels=names(med))
+anov2 <- lm(logMaxAbund ~ Diet2,
+            data = bird)
+summary(anov2)
+anova(anov2)
+```
+
+.comment[Observez-vous un changement quant aux niveaux du facteur `Diet` qui sont significatifs ?]
+
+---
+# Interprétation des contrastes
+
+.comment[Un point important à remarquer à propos du contraste par défaut dans R (`contr.treatment`) est qu'il n'est PAS orthogonal]
+
+Pour être orthogonal :
+  - Pour être orthogonal, les propriétés suivantes doivent être respectées:
+  - La somme du produit de deux colonnes égale 0
+
+```{r}
+sum(contrasts(bird$Diet)[,1])
+sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
+```
+
+???
+
+Note aux présentateurs:Deux contrastes sont orthogonaux si la somme des produits de leurs coefficients est nulle. 
+
+---
+# Interprétation des contrastes
+
+Changez les contrastes pour mettre les niveaux orthogonaux
+
+.small[
+```{r}
+options(contrasts=c("contr.helmert", "contr.poly"))
+sum(contrasts(bird$Diet)[,1])
+sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2])
+```
+]
+.pull-left[
+.tiny[
+```{r}
+anov3 <- lm(logMaxAbund ~ Diet, data = bird)
+summary(anov3)
+```
+]]
+.pull-right[
+.small[Les contrastes Helmert vont contraster le deuxième niveau avec le premier, le troisième avec la moyenne des deux premiers niveaux, etc.]
+]
+
+---
+class: inverse, center, middle
+
+# ANOVA non équilibrée
+
+---
+# ANOVA non équilibrée
+
+Un jeu de données est considéré non équilibré lorsque le nombre d'échantillons entre deux niveaux n'est pas égal.
+
+Le jeu de données `Birdsdiet` est en réalité non équilibré (le nombre d'espèces aquatiques n'égale pas le nombre d'espèces non-aquatiques)
+
+```{r}
+table(bird$Aquatic)
+```
+
+Dans une telle situation, l'ordre des covariable affecte la calculation de la somme des carrés, et donc la valeur de `p`. 
+
+Testons-le avec le jeu de données `Birdsdet`.
+
+```{r}
+unb.anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data = bird)
+unb.anov2 <- lm(logMaxAbund ~ Diet + Aquatic, data = bird)
+```
+
+---
+# ANOVA non équilibrée
+
+```{r}
+anova(unb.anov1)
+```
+
+```{r}
+anova(unb.anov2)
+```
+
+---
+# ANOVA non équilibrée
+
+Afin de règler ce problème est de prendre une nouvelle approche pour tester les effets de chaque variable.
+
+**Type I** : Teste les effets en séquentiel, en débutant avec la première variable.
+
+**Type II**: Teste les effets de chaque facteur, mais après avoir tester l'autre facteur.
+
+**Type III**: Teste les effets de chaque facteur, mais après avoir tester l'autre facteur et l'intéraction.
+
+.comment[Le type I est celui par défault dans R et qui crée le problème avec des données non équilibré]
+
+.alert[Si vous considérez utiliser le Type II ou III avec vos propres données, vous devriez en lire plus sur le sujet avant de choisir. Vous pouvez commencer avec ce] [**lien**](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
+
+---
+
+# ANOVA non équilibrée
+
+Maintenant essayez une `Anova()` de type III
+
+.pull-left[
+.small[
+```{r}
+car::Anova(unb.anov1, type = "III")
+```
+]]
+.pull-right[
+.small[
+```{r}
+car::Anova(unb.anov2, type = "III")
+```
+]]
+
+.comment[Que remarquez-vous en utilisant `Anova()` ?]
+
+---
+class: inverse, center, middle
+
+# Régression polynomiale
+
+---
+# Régression polynomiale
+
+Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `MaxAbund`
+
+Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées
+
+- Un modèle polynômial ressemble à ceci :
+
+.center[$$\underbrace{2x^4}+\underbrace{3x}-\underbrace{2}$$]
+
+.comment[Ce polynôme a trois termes]
+
+---
+# Régression polynomiale
+
+Pour un polynôme avec une variable (comme $x$ ), le *degré* est l'exposant le plus élevé de cette variable
+
+<br>
+.center[*Nous avons ici un polynôme de degré 4*]
+$$2x^\overbrace{4} + 3x - 2$$
+
+---
+# Régression polynomiale
+
+Lorsque vous connaissez le degré, vous pouvez lui donner un nom :
+
+```{r echo=FALSE, warning=FALSE}
+
+poly.reg=data.frame(degre = 0:5,
+                    Nom = c("Constante","Linéaire","Quadratique",
+                             "Cubique","Quartique","Quintique"),
+                    Example = c("\\(3\\)",
+                                "\\(x+9\\)",
+                                "\\(x^2-x+4\\)",
+                                "\\(x^3-x^2+5\\)",
+                                "\\(6x^4-x^3+x-2\\)",
+                                "\\(x^5-3x^3+x^2+8\\)"))
+knitr::kable(poly.reg, format = "html", escape=FALSE)
+```
+
+---
+# Régression polynomiale
+
+En utilisant le jeu de données `Dickcissel`, testez la relation non-linéaire entre l'abondance et la température en comparant trois modèles polynômiaux groupés (de degrés 0, 1, and 3) :
+
+```{r,echo=-c(4:6)}
+lm.linear <- lm(abund ~ clDD, data = Dickcissel)
+lm.quad   <- lm(abund ~ clDD + I(clDD^2), data = Dickcissel)
+lm.cubic  <- lm(abund ~ clDD + I(clDD^2) + I(clDD^3), data = Dickcissel)
+summ_lm.linear <- capture.output(summary(lm.linear))[c(9:12, 17, 18)]
+summ_lm.quad <- capture.output(summary(lm.quad))[c(9:13, 18, 19)]
+summ_lm.cubic <- capture.output(summary(lm.cubic))[c(9:14, 17, 18)]
+```
+
+---
+# Régression polynomiale
+
+- Comparez les modèles polynomiaux et déterminez quel modèle niché nous devrions sélectionner
+- Exécutez un résumé de ce modèle, reportez l'équation de la régression, les valeurs de p, et le R carré ajusté
+
+---
+# Régression polynomiale
+
+Comparez les modèles polynômiaux; .comment[quel modèle niché nous devrions sélectionner ?]
+
+Exécutez un résumé de ce modèle
+
+.tiny[
+```{r}
+print(summ_lm.linear)
+```
+```{r}
+print(summ_lm.quad)
+```
+```{r}
+print(summ_lm.cubic)
+```
+]
+
+---
+class: inverse, center, middle
+
+# Partitionnement de la variation
+
+---
+# Partitionnement de la variation
+
+Certaines variables explicatives de la **régression linéaire multiple** étaient fortement corrélées (c.-à-d.
+multicolinéarité)
+
+La colinéarité entre variables explicatives peut être détectée à l'aide de critères d'inflation de la variance (fonction `vif()` du packet `car`)
+  - Les valeurs supérieures à 5 sont considérées colinéaires
+
+```{r warning=FALSE,message=FALSE}
+mod <- lm(clDD ~ clFD + clTmi + clTma + clP + grass, data = Dickcissel)
+car::vif(mod)
+```
+
+---
+# Partitionnement de la variation
+.small[
+Utilisez `varpart()` afin de partitionner la variation de la variable `abund` avec toutes les variables de la couverture du paysage groupées ensemble et toutes les variables du climat groupées ensemble (laissez NDVI à part)]
+
+.pull-left2[
+.tiny[
+```{r warning=FALSE,message=FALSE}
+library(vegan)
+part.lm = varpart(Dickcissel$abund, Dickcissel[ ,c("clDD","clFD","clTmi","clTma","clP")],
+                  Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+part.lm
+```
+]]
+.pull-right2[
+<br><br>
+.small[.comment[**Note** : les variables colinéaires n'ont pas besoin d'être enlevées avant l'analyse]]
+]
+
+---
+# Partitionnement de la variation
+
+.pull-left[
+.small[
+```{r,fig.height=3.2,echo=-1}
+par(mar=rep(0.5,4))
+showvarparts(2)
+```
+
+```{r,eval=FALSE}
+?showvarparts
+# With two explanatory tables, the fractions
+# explained uniquely by each of the two tables
+# are ‘[a]’ and ‘[c]’, and their joint effect
+# is ‘[b]’ following Borcard et al. (1992).
+```
+]]
+
+.pull-right[
+.small[
+```{r,fig.height=4,echo=-1}
+par(mar=rep(0.5,4))
+plot(part.lm,
+     digits = 2,
+     bg = rgb(48,225,210,80,
+              maxColorValue=225),
+     col = "turquoise4")
+```
+]]
+
+.small[.comment[La proportion de la variation de la variable abund expliquée par le climat seulement est 28.5% (obtenu par X1|X2), par la couverture du paysage seulement est ~0% (X2|X1), et par les deux combinés est 2.4%]]
+
+---
+# Partitionnement de la variation
+
+Tester si chaque fraction est significative
+
+- Climat seul
+```{r,eval=FALSE}
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+```
+
+- Couverture du paysage seul
+```{r,eval=FALSE}
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
+```
+
+```{r,include=FALSE}
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+```
+
+---
+# Partitionnement de la variation
+
+.pull-left[
+.small[
+```{r}
+# Climat seul
+anova(out.1, step = 1000, perm.max = 1000)
+```
+]]
+
+.pull-right[
+.small[
+```{r}
+# Couverture du paysage seul
+anova(out.2, step = 1000, perm.max = 1000)
+```
+]]
+
+.comment[Conclusion: la fraction expliquée par la couverture du paysage n'est pas significative une fois que nous avons pris en compte l'effet du climat]
+
+---
+class: inverse, center, bottom
+
+# Merci d'avoir participé !
+
+![:scale 50%](images/qcbs_logo.png)
