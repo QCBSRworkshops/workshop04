@@ -1,4 +1,4 @@
-# (PART\*) Introduction to `R` {-}
+# (PART\*) Linear models in `R` {-}
 
 # Learning objectives
 

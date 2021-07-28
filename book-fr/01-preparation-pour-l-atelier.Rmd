@@ -1,4 +1,4 @@
-# (PART\*) Analyses multivariées en `R` {-}
+# (PART\*) Modèles linéaires en `R` {-}
 
 # Objectifs d'apprentissage
 
