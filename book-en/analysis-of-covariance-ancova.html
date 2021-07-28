@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Workshop 4: Linear models</title>
+  <title>Chapter 6 Analysis of covariance (ANCOVA) | Workshop 4: Linear models</title>
   <meta name="description" content="Linear models" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Workshop 4: Linear models" />
+  <meta property="og:title" content="Chapter 6 Analysis of covariance (ANCOVA) | Workshop 4: Linear models" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/qcbsRworkshops/" />
   <meta property="og:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="qcbsRworkshops/workshop04" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Workshop 4: Linear models" />
+  <meta name="twitter:title" content="Chapter 6 Analysis of covariance (ANCOVA) | Workshop 4: Linear models" />
   
   <meta name="twitter:description" content="Linear models" />
   <meta name="twitter:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="learning-objectives.html"/>
+<link rel="prev" href="t-test-and-anova.html"/>
+<link rel="next" href="multiple-regression.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -235,73 +235,154 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div class="hero-image-container"> 
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
-<div id="header">
-<h1 class="title">Workshop 4: Linear models</h1>
-<h2 class="subtitle"><em>QCBS R Workshop Series</em></h2>
-<p class="author"><em>Developed and maintained by the contributors of the QCBS R Workshop Series<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-07-28 21:12:19</em></p>
-</div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>The <strong>QCBS R Workshop Series</strong> is a series of 10 workshops that walks participants through the steps required to use R for a wide array of statistical analyses relevant to research in biology and ecology. These open-access workshops were created by members of the QCBS both for members of the QCBS and the larger community.</p>
-<p>The content of this workshop has been peer-reviewed by several QCBS members. If you would like to suggest modifications, please contact the current series coordinators, listed on the main Github page.</p>
-<div id="code-of-conduct" class="section level2">
-<h2><span class="header-section-number">0.1</span> Code of conduct</h2>
-<p>The QCBS R Workshop Series and the QCBS R Symposium are venues dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity.</p>
-<p>Participants, presenters and organizers of the workshop series and other related activities accept this Code of Conduct when being present at any workshop-related activities.</p>
-<p>We do not tolerate behaviour that is disrespectful or that excludes, intimidates, or causes discomfort to others.</p>
-<p>We do not tolerate discrimination or harassment based on characteristics that include, but are not limited to, gender identity and expression, sexual orientation, disability, physical appearance, body size, citizenship, nationality, ethnic or social origin, pregnancy, familial status, genetic information, religion or belief (or lack thereof), membership of a national minority, property, age, education, socio-economic status, technical choices, and experience level.</p>
-<p>It applies to all spaces managed by or affiliated with the workshop, including, but not limited to, workshops, email lists, and online forums such as GitHub, Slack and Twitter.</p>
-<div id="expected-behaviour" class="section level3">
-<h3><span class="header-section-number">0.1.1</span> Expected behaviour</h3>
-<p>All participants are expected to show respect and courtesy to others. All interactions should be professional regardless of platform: either online or in-person. In order to foster a positive and professional learning environment we encourage the following kinds of behaviours in all workshop events and platforms:</p>
-<ul>
-<li>Use welcoming and inclusive language</li>
-<li>Be respectful of different viewpoints and experiences</li>
-<li>Gracefully accept constructive criticism</li>
-<li>Focus on what is best for the community</li>
-<li>Show courtesy and respect towards other community members</li>
-</ul>
-</div>
-<div id="unacceptable-behaviour" class="section level3">
-<h3><span class="header-section-number">0.1.2</span> Unacceptable behaviour</h3>
-<p>Examples of unacceptable behaviour by participants at any workshop event/platform include:</p>
-<ul>
-<li>written or verbal comments which have the effect of excluding people on the - basis of membership of any specific group;</li>
-<li>causing someone to fear for their safety, such as through stalking or intimidation;</li>
-<li>violent threats or language directed against another person;</li>
-<li>the display of sexual or violent images;</li>
-<li>unwelcome sexual attention;</li>
-<li>nonconsensual or unwelcome physical contact;</li>
-<li>insults or put-downs;</li>
-<li>sexist, racist, homophobic, transphobic, ableist, or exclusionary jokes;</li>
-<li>incitement to violence, suicide, or self-harm;</li>
-<li>continuing to initiate interaction (including photography or recording) with - someone after being asked to stop;</li>
-<li>publication of private communication without consent.</li>
-</ul>
-</div>
-</div>
-<div id="contributors" class="section level2">
-<h2><span class="header-section-number">0.2</span> Contributors</h2>
-<p>Originally developed by: Catherine Baltazar, Bérenger Bourgeois, Zofia Taranu.</p>
-<p>Contributed with changes to the presentation:</p>
-<p>Contributed with changes to the written material:</p>
-<p>Contributed by reporting issues and suggesting modifications:</p>
-</div>
-<div id="contributing" class="section level2">
-<h2><span class="header-section-number">0.3</span> Contributing</h2>
-<p>Under construction.</p>
-
-</div>
-</div>
-
-
-
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>The QCBS R Workshop Series is part of the <a href="https://www.qcbs.ca">Québec Centre for Biodiversity Science</a>, and is maintained by the series coordinators and graduent student, postdoctoral, and research professional members. <strong>The contributors for this workshop can be accessed <a href="link">here</a></strong>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<div id="analysis-of-covariance-ancova" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Analysis of covariance (ANCOVA)</h1>
+<p>Analysis of covariance (ANCOVA) is a linear model that tests the
+influence of one categorical explanatory variable (or more) and one
+continuous explanatory variable (or more) on a continuous response
+variable. Each level of the categorical variable is described by its own
+slope and intercept. In addition to testing if the response variable
+differs for at least one level of the categorical variable, ANCOVA also
+tests whether the response variable might be influenced by its
+relationship with the continuous variable (called the covariate in
+ANCOVA), and by any differences between group levels in the way that the
+continuous variable influences the response (i.e. the interaction). The
+ANCOVA hypotheses are thus: that there is no difference in the mean
+among levels of the categorical variable; there is no correlation
+between the response variable and the continuous explanatory variable;
+there is no interaction between the categorical and continuous
+explanatory variables.</p>
+<div id="assumptions-1" class="section level3">
+<h3><span class="header-section-number">6.0.1</span> 6.1 Assumptions</h3>
+<p>As with models seen above, to be valid ANCOVA models must meet the
+statistical assumptions of linear models that can be verified using
+diagnostic plots. In addition, ANCOVA models must have:</p>
+<ol style="list-style-type: decimal">
+<li>The same value range for all covariates</li>
+<li>Variables that are <em>fixed</em></li>
+<li>No interaction between categorical and continuous variables</li>
 </ol>
+<p><strong><span class="ul">Note:</span></strong> A <em>fixed</em> variable is one that you are specifically
+interested in (i.e. bird mass). In contrast, a random variable is noise
+that you want to control for (i.e. site a bird was sampled in). If you
+have random variables, see the workshop on <a href="http://qcbs.ca/wiki/r_workshop6">Linear Mixed-effect
+Models</a>!</p>
+</div>
+<div id="types-of-ancova" class="section level3">
+<h3><span class="header-section-number">6.0.2</span> 6.2 Types of ANCOVA</h3>
+<p>You can have any number of factors and/or covariates, but as their
+number increases, the interpretation of results gets more complex.</p>
+<p>The most frequently used ANCOVAs are those with:</p>
+<ol style="list-style-type: decimal">
+<li>one covariate and one factor</li>
+<li>one covariate and two factors</li>
+<li>two covariates and one factor</li>
+</ol>
+<p>The different possible goals of the ANCOVA are to determine the effects
+of:</p>
+<ol style="list-style-type: decimal">
+<li>the categorical and continuous variables on the response variable</li>
+<li>the categorical variable(s) on the response variable(s) after
+removing the effect of the continuous variable</li>
+<li>the categorical variable(s) on the relationship between the
+continuous variables(s) and the response variable</li>
+</ol>
+<p>Importantly, these goals are only met if there is no significant
+interaction between the categorical and continuous variables! Examples
+of significant interactions between the categorical and continuous
+variables (for an ANCOVA with one factor and one covariate) are
+illustrated by the second and third panels below:</p>
+<p><img src="images/ancova_schematic.png" width="550" /></p>
+<p>The same logic follows for ANCOVAs with multiple categorical and/or
+continuous variables.</p>
+</div>
+<div id="running-an-ancova" class="section level3">
+<h3><span class="header-section-number">6.0.3</span> 6.3 Running an ANCOVA</h3>
+<p>Running an ANCOVA in R is comparable to running a two-way ANOVA, using
+the function <code>lm</code>. However, instead of using two categorical variables
+(Diet and Aquatic), we now use one categorical and one continuous
+variable.</p>
+<p>For example, using a build in dataset called CO2, where the response
+variable is <em>uptake</em>, the continuous variable is <em>conc</em> and the factor
+is <em>Treatment</em>, the ANCOVA is:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analysis-of-covariance-ancova.html#cb49-1"></a>ancova.example &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>conc <span class="op">*</span><span class="st"> </span>Treatment, <span class="dt">data =</span> CO2)</span>
+<span id="cb49-2"><a href="analysis-of-covariance-ancova.html#cb49-2"></a><span class="kw">anova</span>(ancova.example)</span></code></pre></div>
+<p>If only your categorical variable is significant, drop your continuous
+variable from the model: you will then have an <strong>ANOVA</strong>.<br />
+If only your continuous variable is significant, drop your categorical
+variable from the model, you will then have a <strong>simple linear
+regression</strong>.<br />
+If your interaction is significant, you might want to test which levels
+of your categorical variables ha(s)ve different slopes and to question
+whether ANCOVA is the most appropriate model.<br />
+In the CO2 example above, both the continuous and categorical variable
+are significant, but the interaction is non-significant. If your replace
+<em>Treatment</em> with <em>Type</em>, however, you will see an example of a
+significant interaction.</p>
+<p>If you want to compare means across factors, you can use adjusted means,
+which uses the equations given by the ANCOVA to estimate the means of
+each level of the categorical variable, corrected for the effect of the
+categorical variable:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="analysis-of-covariance-ancova.html#cb50-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
+<span id="cb50-2"><a href="analysis-of-covariance-ancova.html#cb50-2"></a><span class="kw">library</span>(effects)</span>
+<span id="cb50-3"><a href="analysis-of-covariance-ancova.html#cb50-3"></a>adj.means &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;Treatment&quot;</span>, ancova.example)</span>
+<span id="cb50-4"><a href="analysis-of-covariance-ancova.html#cb50-4"></a><span class="kw">plot</span>(adj.means)</span>
+<span id="cb50-5"><a href="analysis-of-covariance-ancova.html#cb50-5"></a></span>
+<span id="cb50-6"><a href="analysis-of-covariance-ancova.html#cb50-6"></a>adj.means &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;conc*Treatment&quot;</span>, ancova.example)</span>
+<span id="cb50-7"><a href="analysis-of-covariance-ancova.html#cb50-7"></a><span class="kw">plot</span>(adj.means)</span></code></pre></div>
+<hr />
+<p>CHALLENGE 4</p>
+<p>Run an ANCOVA to test the effect of <em>Diet</em>, <em>Mass</em>, and their
+interaction on <em>MaxAbund</em>.<br />
+++++ Challenge 4: Solution |</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="analysis-of-covariance-ancova.html#cb51-1"></a><span class="co"># If you did the section on Contrasts above, you will need</span></span>
+<span id="cb51-2"><a href="analysis-of-covariance-ancova.html#cb51-2"></a><span class="co"># to reset the contrast to Treatment for ease of comparison</span></span>
+<span id="cb51-3"><a href="analysis-of-covariance-ancova.html#cb51-3"></a><span class="co"># using the &#39;&#39;options()&#39;&#39; function Otherwise, skip the</span></span>
+<span id="cb51-4"><a href="analysis-of-covariance-ancova.html#cb51-4"></a><span class="co"># first line of code below</span></span>
+<span id="cb51-5"><a href="analysis-of-covariance-ancova.html#cb51-5"></a><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb51-6"><a href="analysis-of-covariance-ancova.html#cb51-6"></a>ancov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb51-7"><a href="analysis-of-covariance-ancova.html#cb51-7"></a><span class="kw">summary</span>(ancov1)</span>
+<span id="cb51-8"><a href="analysis-of-covariance-ancova.html#cb51-8"></a><span class="kw">anova</span>(ancov1)</span></code></pre></div>
+<p>The R output of this model is given by</p>
+<pre><code>Analysis of Variance Table
+Response: logMaxAbund
+              Df      Sum Sq      Mean Sq     F value     Pr(&gt;F)
+logMass       1   1.9736      1.97357     4.6054      0.03743 *
+Diet          4   3.3477      0.83691     1.9530      0.11850
+logMass:Diet  4   2.9811      0.74527     1.7391      0.15849
+Residuals     44  18.8556     0.42854</code></pre>
+<p>In this case, the interaction term is not significant, meaning that the
+effect of <em>logMass</em> on <em>logMaxAbund</em> does not differ between Diet
+groups. The interaction term can thus be dropped, and the ANCOVA model
+becomes:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="analysis-of-covariance-ancova.html#cb53-1"></a>ancov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>Because the R output shows that diet is also non-significant, this term
+is dropped, and the final model corresponds to:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="analysis-of-covariance-ancova.html#cb54-1"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>The model results can also be graphically represented using a plot of
+the response variable as a function of the continuous explanatory
+variable with different point and line colours for the different levels
+of the categorical variable.</p>
+<p>Plot the ANCOVA intercept and slopes (model ancov1 above) using the
+<code>abline()</code> and <code>coef()</code> functions.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="analysis-of-covariance-ancova.html#cb55-1"></a><span class="kw">coef</span>(ancov1)</span>
+<span id="cb55-2"><a href="analysis-of-covariance-ancova.html#cb55-2"></a></span>
+<span id="cb55-3"><a href="analysis-of-covariance-ancova.html#cb55-3"></a></span>
+<span id="cb55-4"><a href="analysis-of-covariance-ancova.html#cb55-4"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">col =</span> Diet, <span class="dt">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb55-5"><a href="analysis-of-covariance-ancova.html#cb55-5"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
+<span id="cb55-6"><a href="analysis-of-covariance-ancova.html#cb55-6"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
+<span id="cb55-7"><a href="analysis-of-covariance-ancova.html#cb55-7"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">1</span>], <span class="dt">b =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">&quot;deepskyblue1&quot;</span>)</span>
+<span id="cb55-8"><a href="analysis-of-covariance-ancova.html#cb55-8"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">3</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-9"><a href="analysis-of-covariance-ancova.html#cb55-9"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">7</span>]), <span class="dt">col =</span> <span class="st">&quot;green2&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-10"><a href="analysis-of-covariance-ancova.html#cb55-10"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">4</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-11"><a href="analysis-of-covariance-ancova.html#cb55-11"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">8</span>]), <span class="dt">col =</span> <span class="st">&quot;orange1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-12"><a href="analysis-of-covariance-ancova.html#cb55-12"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">5</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-13"><a href="analysis-of-covariance-ancova.html#cb55-13"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">9</span>]), <span class="dt">col =</span> <span class="st">&quot;lightsteelblue1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-14"><a href="analysis-of-covariance-ancova.html#cb55-14"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">6</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-15"><a href="analysis-of-covariance-ancova.html#cb55-15"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">10</span>]), <span class="dt">col =</span> <span class="st">&quot;darkcyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="images/ancova_plot.png" width="350" /></p>
+
+</div>
 </div>
 <hr>
 <center> 
@@ -314,8 +395,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="learning-objectives.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="t-test-and-anova.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multiple-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
