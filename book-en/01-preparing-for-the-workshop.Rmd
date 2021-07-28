@@ -1,0 +1,30 @@
+# (PART\*) Introduction to `R` {-}
+
+# Learning objectives
+
+In this workshop, you will learn how to implement in R basic linear models commonly used in ecology such as simple regression, analysis of variance (ANOVA), analysis of covariance (ANCOVA), and multiple regression. After verifying visually and statistically the assumptions of these models and transforming your data when necessary, the interpretation of model outputs and the plotting of your final model will no longer keep secrets from you! 
+
+By the end of this workshop, we will have accomplished these objectives:
+
+1.  Simple linear regression
+2.  T-test
+3.  ANOVA
+4.  Two-way ANOVA
+5.  Unbalanced ANOVA
+    *(advanced section/ optional)*
+6.  ANCOVA
+7.  Multiple linear regression
+
+# Preparing for the workshop
+
+All workshop materials are found at [github.com/QCBSRworkshops/workshop04](https://github.com/QCBSRworkshops/workshop04). This includes an [R script](https://qcbsrworkshops.github.io/workshop04/book-en/workshop04-script-en.R) which contains all code chunks shown in this book.
+
+For this workshop, we will be working with the following datasets:
+
+* list here
+
+> To download this data, do right click + save on the page that opens.
+
+You should also make sure you have downloaded, installed, and loaded these packages:
+
+* list here

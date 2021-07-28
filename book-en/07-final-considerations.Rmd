@@ -1,0 +1,31 @@
+# (PART\*) Final considerations {-}
+
+You are now ready to perform your own regression, ANOVA and
+ANCOVA! But never forget to correctly specify your model and verify its
+statistical assumptions before interpreting its results according to the
+ecological background of your data.
+
+# Summary
+
+Linear models are...
+
+In the next workshop, ...
+
+
+# Additional resources
+
+#### Cheat Sheets
+
+
+------------------------------------------------------------------------
+
+#### A few books
+
+-   Myers RH - Classical and Modern Regression with Application
+-   Gotelli NJ - A Primer of Ecological Statistics
+
+------------------------------------------------------------------------
+
+#### A few useful links
+
+-   list here
