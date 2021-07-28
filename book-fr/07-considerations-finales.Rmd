@@ -1,0 +1,31 @@
+# (PART\*) Considérations finales {-}
+
+Vous êtes maintenant prêts à effectuer des régressions, des
+ANOVA et des ANCOVA sur vos propres données. Cependant, rappelez-vous de
+toujours spécifier vos modèles correctement et de vérifier leurs
+conditions de base avant d'interpréter les résultats en fonction des
+caractéristiques écologiques de vos données.
+
+# Résumé
+
+Un modèle linéaire est..
+
+
+Lors du prochaine atelier, vous verrez comment...
+
+# Resources additionnels
+
+#### Aides mémoire (*cheat sheets*)
+
+
+------------------------------------------------------------------------
+
+#### Quelques livres
+
+-   Myers RH - Classical and Modern Regression with Application
+-   Gotelli NJ - A Primer of Ecological Statistics
+
+------------------------------------------------------------------------
+
+#### Quelques sites internet
+

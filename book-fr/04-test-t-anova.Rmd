@@ -1,0 +1,904 @@
+# Test de t et ANOVA
+
+## ANOVA
+
+L'analyse de la variance (ANOVA) est un type de modèle linéaire pour
+**une variable réponse continue**, et **une ou plusieurs variables
+explicatives catégoriques**. Les variables explicatives catégoriques
+peuvent comprendre plusieurs niveaux (ou groupes). Par exemple, une
+variable \"couleur\" peut avoir 3 niveaux: vert, bleu, et jaune.
+L'ANOVA teste si la moyenne de la variable réponse diffère entre ces
+niveaux ou groupes. Par exemple, si la masse des bleuets diffère selon
+leur couleur.
+
+Le calcul de l'ANOVA se base sur la partition de la somme des carrés,
+et compare la **variance entre les traitements** à celle à l'intérieur
+des traitements (i.e. la **variance intra-traitement**). Si la variance
+entre les traitements est supérieure à la variance intra-traitement, la
+variable explicative a un effet plus important que l'erreur aléatoire
+(due à la variance intra-traitement). La variable explicative est donc
+susceptible d'influencer significativement la variable réponse.
+
+Dans un ANOVA, la comparaison de la variance entre les traitements à
+celle intra-traitement se fait en calculant la **statistique F**. Cette
+statistique correspond au ratio entre la moyenne des carrés des
+traitements (MS~Trt~) et la moyenne des carrés des erreurs (MS~E~). Ces
+deux termes sont obtenus en divisant leurs sommes des carrés respectives
+par leurs degrés de liberté, comme on le voit présenté typiquement dans
+un tableau d'ANOVA (cliquez pour voir un tel tableau ci-dessous). Un
+**p-value** peut ensuite être calculée à partir de la statistique de F,
+qui suit une distribution de khi carré (χ^2^)
+
+Cliquez pour plus de détails mathématiques. 
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Source de\   Degrés de\          Somme des carrés\                                              Moyenne des carrés   Statistique de F                               
+  variation    liberté (df)        des écarts à la moyenne                                                                                                            
+  ------------ ------------------- -------------------------------------------------------------- -------------------- ---------------------------------------------- -----------------------------------
+  Total        $ra-1$    ${SS_Tot}=sum{i,j}{}({y_ij}-overline{y})                   2$                                                            
+
+  Facteur A    $a-1$     ${SS_FacteurA}= r sum{i}{}({overline{y}\_i}-overline{y})   2$             ${MS_FacteurA}={SS_FacteurA}/{a-1}$  $F={MS_FacteurA}/{MS_E}\</m\>
+
+  Résidus      $a(r-1)$  ${SS_E}= sum{i,j}{}({y_ij}-{overline{y}\_i})               2$             ${MS_E}={SS_E}/{a(r-1)}$             
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+a: nombre de niveaux de la variable explicative A; r: nombre de
+répétitions par traitement; $overline{y}\</m\>: moyenne globale de
+la variable réponse; $overline{y}\</m\>~i~ : moyenne de la variable
+réponse du traitement i. 
+
+### 3.1 Types d'ANOVA
+
+1.  **ANOVA à un critère de classification**\
+    Une variable explicative catégorique avec au moins 2 niveaux. S'il
+    n'y a que 2 niveaux, un test de t peut être utilisé.
+2.  **ANOVA à deux critères de classification** *[(voir la section
+    ci-dessous)](http://qcbs.ca/wiki/r_atelier4#anova_a_deux_criteres_de_classification)*\
+    - Deux variables explicatives catégoriques ou plus,\
+    - Chaque facteur peut avoir plusieurs niveaux,\
+    - Les interactions entre chaque variable explicative catégorique
+    doivent être testées.
+3.  **Mesures répétées**\
+    L'ANOVA peut être utilisée pour des mesures répétées, mais ce sujet
+    n'est pas abordé dans cet atelier. Un **modèle linéaire mixte**
+    peut également être utilisé pour ce type de données *[(voir
+    l'atelier 6)](http://qcbs.ca/wiki/r_atelier6)*.
+
+### 3.2 Test de t
+
+Si on a une variable explicative ayant seulement **2 niveaux**, on peut
+utiliser un test de t de Student pour déterminer s'il y a une
+différence entre la moyenne des 2 niveaux. Selon les données, on peut
+choisir de tester une **hypothèse unilatérale**: c'est-à-dire qu'on
+peut déterminer si la moyenne d'un groupe est plus grande que celle de
+l'autre groupe, plutôt que de seulement détecter une différence entre
+les moyennes du groupe.
+
+Cliquez ci-dessous pour plus de détails mathématiques.  Pour
+le test de t, la statistique t qui est utilisée pour déterminer la
+valeur de p est calculée de la manière suivante :\
+$ t= (overline{y}\_1-overline{y}\_2)/sqrt{{s_1}\^2/n_1 +
+{s_2}\^2/n_2} \</m\>
+
+où
+
+$overline{y}\</m\>~1~ et $overline{y}\</m\>~2~ sont les moyennes
+de la variable réponse y pour les groupes 1 et 2 respectivement,\
+s~1~^2^ et s~2~^2^ sont les variances de la variable réponse y pour les
+groupes 1 et 2 respectivement,\
+n~1~ et n~2~ sont les tailles d'échantillons des groupes 1 et 2
+respectivement. 
+
+Notez que le test de t est mathématiquement équivalent à une ANOVA à un
+critère de classification ayant deux niveaux.\
+
+#### Conditions de base
+
+Si les conditions de base du test de t ne sont pas respectées, les
+résultats du test peuvent être erronés. Voici quelques notes à propos de
+la validation de ces conditions de base:
+
+1.  **Normalité des données**\
+    Comme pour la régression linéaire simple, la variable réponse doit
+    être distribuée normalement. Si cette condition n'est pas
+    respectée, mais que la distribution est relativement symétrique, que
+    la moyenne est près du centre de la distribution, et que la
+    distribution est unimodale, le test de t donnera un résultat valable
+    en autant que la taille de l'échantillon soit suffisante (règle
+    empirique : \~30 observations). Si les données sont fortement
+    asymétriques, il est nécessaire d'avoir un très large échantillon
+    pour que le test fonctionne. Dans ce cas-là, il est préférable
+    d'utiliser un test non-paramétrique.
+2.  **Homoscédasticité**\
+    Une autre supposition importante du test de t est que les variances
+    des deux groupes sont égales. Ceci permet de calculer une variance
+    combinée qui est utilisée pour calculer l'erreur type de la
+    différence des moyennes. Si les variances des deux groupes sont
+    inégales, la probabilité de commettre une erreur de type I (i.e.
+    rejeter l'hypothèse nulle alors qu'elle est vraie) est supérieure
+    au seuil α.\
+    La robustesse du test de t augmente avec la taille de l'échantillon
+    et est supérieure lorsque les groupes sont de même taille.\
+    Il est possible d'évaluer la différence de variance entre deux
+    échantillons en se demandant quelle est la probabilité de tirer deux
+    échantillons d'une population avec des variances identiques alors
+    que les échantillons ont des variances de s~1~^2^ et s~2~^2^.\
+    Pour ce faire, il faut effectuer un test de ratio des variances
+    (i.e. un test de F).
+
+#### Non-respect des conditions de base
+
+Si les variances entre les groupes ne sont pas égales, il est possible
+de corriger la situation avec la [correction de
+Welch](http://fr.wikipedia.org/wiki/Test_t_de_Welch). Si les conditions
+de base ne sont toujours pas respectées, il faut utiliser la version non
+paramétrique du test de t : [le test de
+Mann-Whitney](http://en.wikipedia.org/wiki/Mann–Whitney_U_test).
+Finalement, si les deux groupes ne sont pas indépendants (e.g. mesures
+prises sur un même individu à deux périodes différentes), il faut
+utiliser un [test de t
+apparié](http://en.wikipedia.org/wiki/Student's_t-test#Paired_samples).
+
+#### Effectuer un test de t
+
+Dans R, le test de t est exécutés avec la fonction `t.test`. Par
+exemple, pour évaluer la différence de masse entre des oiseaux
+aquatiques et non aquatiques, on peut utiliser le script suivant :\
+
+```{r, echo = TRUE, eval = FALSE}
+# Test de t
+boxplot(logMass ~ Aquatic, data=bird, ylab=expression("log"[10]*"(Bird Mass)"),
+        names=c("Non-Aquatic","Aquatic"),
+        col=c("yellowgreen","skyblue"))
+
+# Tout d'abord, vérifions si les variances de chaque groupe sont égales
+# Note : il n'est pas nécessaire de vérifier la normalité des données,
+# car on utilise déjà une transformation logarithmique
+tapply(bird$logMass,bird$Aquatic,var)
+var.test(logMass~Aquatic,data=bird)
+
+# Nous sommes prêts pour le test de t
+ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird)
+
+# Cette commande est équivalente :
+ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
+ttest1
+```
+
+![](images/lm_fig_10.png){width="400"}
+
+      Two Sample t-test
+     data:  logMass by Aquatic
+     t = -7.7707, df = 52, p-value = 2.936e-10
+     alternative hypothesis: true difference in means is not equal to 0
+     95 percent confidence interval:
+     -1.6669697 -0.9827343
+     sample estimates:
+     mean of x  mean of y
+     1.583437   2.908289
+
+Ici, on voit que le test de ratio des variances n'est pas
+statistiquement différent de 1, ce qui signifie que les variances entre
+les groupes sont égales. Étant donné que notre valeur de p est
+inférieure à 0.05, l'hypothèse nulle (i.e. l'absence de différence de
+masse entre les deux groupes) est rejetée.
+
+#### Test de t unilatéral
+
+L'argument *\"alternative\"* de la fonction `t.test()` permet
+d'effectuer un test de t unilatéral. Par exemple, si on veut tester
+l'hypothèse que les oiseaux terrestres sont plus légers que les oiseaux
+aquatiques, on peut écrire la commande de la façon suivante :
+
+```{r, echo = TRUE, eval = FALSE}
+# Test de t en spécifiant l'argument "alternative"
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="less")
+uni.ttest1
+```
+
+Dans la sortie R obtenue par `uni.ttest1`, les résultats du test sont
+indiqués à la troisième ligne :
+
+      Two Sample t-test
+      data:  logMass by Aquatic
+      t = -7.7707, df = 52, p-value = 1.468e-10
+      alternative hypothesis: true difference in means is less than 0
+      95 percent confidence interval:
+        -Inf -1.039331
+      sample estimates:
+      mean in group 0   mean in group 1
+         1.583437          2.908289
+
+Dans ce cas-ci, la statistique du test de t est t = -7.7707 avec df = 52
+degrés de liberté, ce qui donne une valeur de p = 1.468e-10. On rejette
+donc l'hypothèse nulle. On peut conclure que les oiseaux aquatiques
+sont significativement plus lourds que les oiseaux terrestres.
+
+#### Effectuer un test de t avec lm()
+
+Un test de t est un modèle linéaire et un cas spécifique d'ANOVA avec
+une variable explicative ayant dexu niveaux. On peut alors effectuer un
+test de t avec la fonction `lm()` dans R.
+
+```{r, echo = TRUE, eval = FALSE}
+ttest.lm1 <- lm(logMass ~ Aquatic, data=bird)
+anova(ttest.lm1)
+```
+
+      Analysis of Variance Table
+      Response: logMass
+                Df  Sum Sq  Mean Sq   F value    Pr(>F)
+      Aquatic    1  19.015  19.0150   60.385     2.936e-10 ***
+      Residuals 52  16.375  0.3149
+      ---
+      Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Quand les variances sont équivalents, on peut montrer que t^2^ = F:
+
+```{r, echo = TRUE, eval = FALSE}
+ttest1$statistic^2
+anova(ttest.lm1)$F
+```
+
+### 3.3 Effectuer une ANOVA
+
+Le test de t s'applique seulement quand on a une seule variable
+explicative catégorique, qui comprend 2 niveaux. Pour tous les autres
+modèles linéaires avec des variables explicatives catégoriques, on
+utilise une ANOVA.
+
+Commençons tout d'abord par visualiser les données avec la fonction
+`boxplot()`. Rappelez-vous que, dans R, les groupes sont ordonnés par
+ordre alphabétique par défaut. Il est possible de réorganiser les
+groupes autrement. Par exemple, on peut les ordonner par ordre croissant
+de la médiane de chaque diète.\
+Une autre façon de visualiser les effets des facteurs est d'utiliser la
+fonction `plot.design()`. Cette fonction permet de représenter les
+valeurs moyennes des niveaux d'un facteur (par une ligne verticale) et
+la moyenne globale de la variable réponse (par une ligne horizontale).
+
+```{r, echo = TRUE, eval = FALSE}
+# Ordre alphabétique par défaut
+boxplot(logMaxAbund ~ Diet, data=bird)
+
+# Réorganiser l'ordre des facteurs
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
+           "skyblue1","skyblue3","skyblue4"))
+
+plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
+```
+
+![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
+
+Nous sommes maintenant prêts à effectuer une ANOVA. Dans R, la fonction
+`aov()` permet d'effectuer une ANOVA directement. Il est également
+possible d'effectuer une ANOVA avec la fonction `anova()` qui exécute
+l'ANOVA comme un modèle linéaire :
+
+```{r, echo = TRUE, eval = FALSE}
+# En utilisant aov()
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+summary(aov1)
+
+# En utilisant lm()
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+anova(anov1)
+```
+
+### 3.4 Vérification des conditions de base
+
+Comme la régression linéaire simple et le test de t, l'ANOVA doit
+respecter 4 conditions statistiques pour que les résultats soient
+valides. Voici quelques conseils pour tester ces conditions pour une
+ANOVA:
+
+1.  **Distribution normale**\
+    Les résidus d'un modèle d'ANOVA peuvent être visualisés à l'aide
+    d'un diagramme quantile-quantile (Q-Q). Les résidus sont considérés
+    comme normalement distribués s'ils se répartissent le long de la
+    droite 1:1. Si ce n'est pas le cas, les résultats de l'ANOVA ne
+    peuvent pas être interprétés.
+2.  **Homoscédasticité**\
+    L'ANOVA est valide seulement lorsque la variance des résidus est
+    homogène entre les groupes. Cette homoscédasticité peut être
+    vérifiée par un graphique des résidus en fonction des valeurs
+    prédites ou par un diagramme diagnostic \"scale-location\". Si ces
+    graphiques montrent une dispersion équivalente des résidus pour
+    chaque valeur prédite, la variance des résidus peut être considérée
+    homogène.\
+    Il est également possible d'effectuer un test de Bartlett à l'aide
+    de la fonction `bartlett.test()`. Si la valeur de p de ce test est
+    supérieure à 0.05, l'hypothèse nulle H~0~: s~1~^2^ = s~2~^2^ =\...
+    = s~j~^2^ =\... = s~n~^2^ est acceptée (i.e. l'homoscédasticité est
+    respectée).\
+    Une transformation de la variable réponse peut être utilisée si
+    cette supposition n'est pas respectée.
+3.  **Additivité**\
+    Les effets de deux facteurs sont additifs si l'effet d'un facteur
+    demeure constant pour tous les niveaux d'un autre facteur. Chaque
+    facteur doit influencer la variable réponse de manière indépendante
+    des autres facteurs.
+
+Si les conditions ne sont pas respectées, vous pouvez essayer de
+transformer la variable réponse. Ceci peut aider à normaliser les
+résidus, à égaliser les variances, et à transformer un effet
+multiplicatif en effet additif. Si vous ne voulez pas (ou ne pouvez pas)
+transformer vos données, vous pouvez utiliser l'équivalent
+non-paramétrique de l'ANOVA : le [test de
+Kruskal-Wallis](http://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance).
+
+```{r, echo = TRUE, eval = FALSE}
+# Diagrammes de diagnostic
+opar <- par(mfrow=c(2,2))
+plot(anov1)
+par(opar)
+
+# Test de la supposition de la normalité des résidus
+shapiro.test(resid(anov1))
+
+# Test de la supposition de l'homogénéité de la variance
+bartlett.test(logMaxAbund ~ Diet, data=bird)
+```
+
+Idéalement, le premier graphique devrait montrer une dispersion
+similaire pour chaque niveau de diète. Toutefois, les tests de Shapiro
+et de Bartlett ne sont pas significatifs. On peut supposer que les
+résidus sont distribués normalement et que les variances sont égales.
+
+### 3.5 Sortie du modèle
+
+Lorsque le modèle d'ANOVA a été validé, on peut interpréter les
+résultats correctement. La sortie du modèle fournie par R dépend de la
+fonction qui a été utilisée pour effectuer l'ANOVA. Si la fonction
+`aov()` a été utilisée :
+
+```{r, echo = TRUE, eval = FALSE}
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+```
+
+Les résultats de l'ANOVA peuvent être visualisés avec la fonction
+`summary()` :
+
+```{r, echo = TRUE, eval = FALSE}
+summary(aov1)
+```
+
+Si la fonction `lm()` a été utilisée :
+
+```{r, echo = TRUE, eval = FALSE}
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+```
+
+les résultats de l'ANOVA peuvent être visualisés avec la fonction
+`anova()` :
+
+```{r, echo = TRUE, eval = FALSE}
+anova(anov1)
+```
+
+Dans les deux cas, la sortie dans R sera la même :
+
+              Df  Sum Sq      Mean Sq     F value     Pr(>F)
+    Diet          4   5.106       1.276       2.836       0.0341 *
+    Residuals     49  22.052      0.450
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Cette sortie de R représente le tableau de l'ANOVA. On y retrouve les
+degrés de liberté, la somme des carrés, la moyenne de la somme des
+carrés, la statistique de F ainsi qu'une valeur de p. Dans l'exemple
+de la diète des oiseaux, la diète influence significativement
+l'abondance des oiseaux car la valeur de p est inférieure à 0.05.
+L'hypothèse nulle est rejetée, ce qui signifie qu'au moins une des
+diètes influence l'abondance différemment des autres diètes.
+
+### 3.6 Test complémentaire
+
+Il est impossible d'identifier quel traitement diffère des autres avec
+une ANOVA. Elle ne permet que de déterminer s'il existe une différence
+entre niveaux. Pour identifier les niveaux qui diffèrent des autres, les
+tests post-hoc comparent les combinaisons de variables explicatives
+(i.e. les traitements) deux par deux. Il existe plusieurs tests post hoc
+(e.g. Fischer's least significant difference, Duncan's new multiple
+range test, Newman-Keuls method, Dunnett's test, etc.), mais le test de
+Tukey est le plus couramment utilisé. Dans R, on utilise la fonction
+`TukeyHSD()` pour effectuer ce test :
+
+```{r, echo = TRUE, eval = FALSE}
+# À quel niveau se situe la différence de diète ?
+TukeyHSD(aov(anov1),ordered=T)
+
+# Cette commande est équivalente à la précédente :
+TukeyHSD(aov1,ordered=T)
+```
+
+La sortie de R inclut un tableau qui liste toutes les combinaisons des
+niveaux de la variable explicative et qui identifie quel(s)
+traitement(s) diffère(ent) des autres :\
+
+    Tukey multiple comparisons of means 95% family-wise confidence level
+       factor levels have been ordered
+    Fit: aov(formula = anov1)
+    $Diet
+                                  diff             lwr        upr         p adj
+    Vertebrate-InsectVert     0.3364295   -1.11457613     1.787435    0.9645742
+    Insect-InsectVert         0.6434334   -0.76550517     2.052372    0.6965047
+    Plant-InsectVert          0.8844338   -1.01537856     2.784246    0.6812494
+    PlantInsect-InsectVert    1.0657336   -0.35030287     2.481770    0.2235587
+    Insect-Vertebrate         0.3070039   -0.38670951     1.000717    0.7204249
+    Plant-Vertebrate          0.5480043   -0.90300137     1.999010    0.8211024
+    PlantInsect-Vertebrate    0.7293041    0.02128588     1.437322    0.0405485
+    Plant-Insect              0.2410004   -1.16793813     1.649939    0.9884504
+    PlantInsect-Insect        0.4223003   -0.19493574     1.039536    0.3117612
+    PlantInsect-Plant         0.1812999   -1.23473664     1.597336    0.9961844
+
+Dans ce cas-ci, la seule différence significative d'abondance se
+retrouve entre les diètes \"PlantInsect\" et \"Vertebrate\".
+
+### 3.7 Visualisation des résultats
+
+Après avoir vérifié les conditions de base, interprété les résultats, et
+identifié les niveaux significatifs à l'aide de tests post-hoc ou de
+contrastes, les résultats d'une ANOVA peuvent être représentés
+graphiquement à l'aide de la fonction `barplot()`. R produit donc un
+graphique de la variable réponse en fonction des niveaux de traitement,
+ou les erreurs types et le nom des niveaux du traitement (représentant
+le résultat d'un test post hoc) peuvent y être apposées.
+
+```{r, echo = TRUE, eval = FALSE}
+# Visualisation d'un modèle d'ANOVA à l'aide de la fonction barplot()
+
+sd <- tapply(bird$logMaxAbund,list(bird$Diet),sd)
+means <- tapply(bird$logMaxAbund,list(bird$Diet),mean)
+n <- length(bird$logMaxAbund)
+se <- 1.96*sd/sqrt(n)
+
+bp <- barplot(means, col=c("white","lightblue1","skyblue1","skyblue3","skyblue4"),
+       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,1.8))
+
+
+# Ajout des lignes verticales représentant les erreurs types
+segments(bp, means - se, bp, means + se, lwd=2)
+# et des lignes horizontales
+segments(bp - 0.1, means - se, bp + 0.1, means - se, lwd=2)
+segments(bp - 0.1, means + se, bp + 0.1, means + se, lwd=2)
+```
+
+![](images/lm_fig_12.png){width="650"}
+
+### Allons plus loin: Contrastes
+
+
+
+-   Les contrastes sont des comparaisons de moyennes basées sur des
+    hypothèses *a priori*,
+-   Ces groupes peuvent être composés d'un ou plusieurs niveaux d'un
+    facteur,
+-   On peut tester une hypothèse simple (e.g. μ~1~ = μ~2~) ou des
+    hypothèses plus complexes (e.g. (μ~1~ + μ~2~)/3 == μ~3~).
+
+Le nombre de comparaisons doit être plus petit ou égal au nombre de
+degrés de liberté de l'ANOVA. Ces comparaisons doivent être
+indépendantes l'une de l'autre.
+
+Il est possible d'afficher des résultats supplémentaires de l'ANOVA
+dans R, qu'on appelle contrastes. Ceci permet de visualiser les
+estimations de paramètres pour chaque niveau de la variable catégorique
+en comparaison avec un niveau de référence. On peut afficher ces
+résultats avec la fonction `summmary.lm()` lorsque l'ANOVA a été
+effectuée avec la fonction `aov()` et avec la fonction `summary()`
+lorsque l'ANOVA a été effectuée avec la fonction `lm()`. Cette sortie
+montre les résultats de la régression linéaire pour chaque niveau de la
+variable catégorique :
+
+    Call:     lm(formula = logMaxAbund ~ Diet, data = bird)
+    Residuals:
+          Min         1Q          Median          3Q          Max
+         -1.85286     -0.32972    -0.08808    0.47375     1.56075
+    Coefficients:
+                      Estimate    Std. Error  t value     Pr(>|t|)
+    (Intercept)       1.1539      0.1500      7.692   5.66e-10 ***
+    DietInsectVert   -0.6434      0.4975     -1.293   0.2020
+    DietPlant         0.2410      0.4975      0.484   0.6303
+    DietPlantInsect   0.4223      0.2180      1.938       0.0585 .
+    DietVertebrate   -0.3070      0.2450     -1.253       0.2161
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    Residual standard error: 0.6709 on 49 degrees of freedom
+    Multiple R-squared:  0.188,     Adjusted R-squared:  0.1217
+    F-statistic: 2.836 on 4 and 49 DF,  p-value: 0.0341
+
+La dernière ligne de cette sortie est identique à la sortie précédente
+de l'ANOVA. La statistique de F de l'ANOVA et sa valeur de p associée
+(2.836 et 0.0341 respectivement) sont les mêmes que celles présentées
+dans la table d'ANOVA, ce qui indique que la variabilité de
+l'abondance est mieux expliquée par la diète que par un modèle nul; la
+diète a donc un effet significatif sur l'abondance. L'ajustement du
+modèle (i.e. le R^2^ ajusté) apparaît sur l'avant-dernière ligne de la
+sortie. Dans ce cas-ci, la diète explique 12.17% de la variabilité de
+l'abondance.\
+Les contrastes sont utilisés pour ajuster une variable réponse en
+fonction des différents niveaux d'une variable catégorique. Dans le cas
+de l'abondance en fonction de la diète, cinq régressions linéaires
+(correspondant aux cinq coefficients dans la sortie de R) sont calculées
+par la fonction `lm()`, car la variable \"diète\" contient cinq niveaux.
+Par défaut, le niveau de référence correspond au premier niveau (en
+ordre alphabétique) de la variable catégorique. Ce niveau est indiqué
+par la ligne `intercept` dans la sortie de R, soit `Insect` dans ce
+cas-ci.
+
+Ici, le coefficient estimé du niveau de référence est comparé à 0 par un
+test de t, alors que les autres coefficients sont comparés à celui du
+niveau de référence. Dans ce cas-ci, seule la diète `PlantInsect` est
+différente de la diète `Insect` (valeur de p = 0.0585).\
+En d'autres mots, cette sortie de R permet de calculer la moyenne de la
+variable réponse pour chaque niveau de diète. Par exemple :
+
+LogMaxAbund = 1.1539 pour la diète `Insect`,\
+LogMaxAbund = 1.1539 -- 0.6434 pour la diète `InsectVert`,\
+LogMaxAbund = 1.1539 + 0.2410 pour la diète `Plant`,\
+etc.
+
+Ce type de contrastes compare chaque niveau de la variable explicative à
+un niveau de référence. Dans R, ceci correspond à la fonction
+`contr.treatment()` et représentent la méthode par défaut de la fonction
+`lm()`. Le niveau de référence peut être changé en utilisant la fonction
+`relevel()`. Par exemple,
+
+```{r, echo = TRUE, eval = FALSE}
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
+anov2 <- lm(logMaxAbund ~ Diet2, data=bird)
+summary(anov2)
+anova(anov2)
+```
+
+compare chaque diète à la diète `Plant` maintenant définie comme le
+niveau de référence.
+
+La matrice de coefficients de contrastes peut être affichée par la
+commande suivante :
+
+```{r, echo = TRUE, eval = FALSE}
+contrasts(bird$Diet2)
+```
+
+                  Insect      InsectVert  PlantInsect     Vertebrate
+    Plant             0           0           0                   0
+    Insect            1           0           0                   0
+    InsectVert              0             1           0                   0
+    PlantInsect             0             0           1                   0
+    Vertebrate            0           0           0               1
+
+où chaque colonne représente une comparaison avec le niveau de référence
+`Plant` et chaque ligne représente un type de diète. Par exemple, la
+première comparaison est effectuée entre les diètes `Plant` et `Insect`.
+La seconde comparaison est effectuée entre `Plant` et `InsectVert` etc.
+
+Il est possible de créer une matrice de coefficients de contrastes afin
+d'effectuer certaines comparaisons bien précises à l'aide de la
+fonction `contrasts()`. Par exemple,
+
+```{r, echo = TRUE, eval = FALSE}
+contrasts(bird$Diet2) <- cbind(c(4,-1,-1,-1,-1), c(0,1,1,-1,-1), c(0,0,0,1,-1), c(0,1,-1,0,0))
+```
+
+crée la matrice de coefficients de contrastes suivante :
+
+                  [,1]    [,2]    [,3]    [,4]
+    Plant          4       0       0       0
+    Insect        -1       1       0       1
+    InsectVert    -1       1       0      -1
+    PlantInsect   -1      -1       1       0
+    Vertebrate    -1      -1      -1       0
+
+qui compare :\
+
+-   la diète `Plant` à toutes les autres diètes dans la première
+    comparaison (colonne),\
+    \* les diètes `InsectVert` et `Insect` aux diètes `PlantInsect` et
+    `Vertebrate` dans la deuxième comparaison,\
+    \* la diète `PlantInsect` à la diète `Vertebrate` dans la troisième
+    comparaison,\
+    \* et la diète `Insect` à la diète `InsectVert` dans la quatrième
+    comparaison.
+
+Pour chaque colonne, les diètes avec le même coefficient appartiennent
+au même groupe (e.g. pour la colonne 1, les quatre diètes avec un
+coefficient de -1 appartiennent au même groupe et sont comparés à la
+diète avec un coefficient différent; ici la diète \"Plant\" avec un
+coefficient de 4). Il est donc possible d'effectuer n'importe quelle
+comparaison possible à l'aide d'une matrice de coefficients de
+contrastes. Deux conditions doivent être respectées afin d'utiliser
+correctement ces matrices :
+
+      - Pour chaque colonne, la somme des coefficients doit être égale à zéro et
+      - la somme des produits de chaque paire de colonnes doit être égale à zéro.
+
+Ceci peut être vérifié à l'aide de la commande suivante :
+
+```{r, echo = TRUE, eval = FALSE}
+sum(contrasts(bird$Diet)[,1]) # première condition pour la colonne 1
+sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2]) # deuxième condition pour les colonnes 1 et 2
+```
+
+Les contrastes utilisés fréquemment sont déjà programmés dans R :
+contrastes de Helmert, contrastes polynomiaux, etc. (cf.
+`help(contrasts)`). 
+
+------------------------------------------------------------------------
+
+## 4. ANOVA à deux critères de classification
+
+Jusqu'ici, les modèles ANOVA que nous avons explorés n'ont eu qu'une
+seule variable catégorique, mais on peut aussi créer des modèles ANOVA
+avec plusieurs variables explicatives catégoriques. Quand il y a 2
+variables explicatives catégoriques, le modèle est un **ANOVA à deux
+critères de classification**. Un ANOVA à deux critères de classification
+teste plusieurs **hypothèses**: que la moyenne diffère entre les niveaux
+de la variable A, que la moyenne ne diffère pas entre les niveaux de la
+variable B; et qu'il n'y a pas d'interaction entre les variables A et
+B. Une **interaction significative** implique que la valeur moyenne de
+la variable réponse pour chaque niveau de la variable A change selon le
+niveau de la variable B. Par exemple, la relation entre la couleur d'un
+fruit et sa masse dépend de l'espèce de la plante: si oui, on peut dire
+qu'il y a une interaction entre la couleur et l'espèce.
+
+Cliquez ci-dessous pour plus des détails mathématiques.  Le
+tableau de calcul de l'ANOVA vu à la section précédente doit être
+modifié afin d'inclure le deuxième facteur et l'interaction entre ces
+deux facteurs :
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Source de\       Degrés de\              Sommes des carrés\                                                                             Moyenne des carrés   Statistique de F                               
+  variation        liberté (df)            des écarts à la moyenne                                                                                                                                            
+  ---------------- ----------------------- ---------------------------------------------------------------------------------------------- -------------------- ---------------------------------------------- ----------------------------------------------
+  Total            $abr-1$       ${SS_Tot}=sum{i,j,k}{}({y_ijk}-overline{y})                                                2$                                                            
+
+  Intra-\          $ab(r-1)$     ${SS_E}= sum{i,j,k}{}({y}\_ijk-{overline{y}\_ij})                                          2$             ${MS_E}={SS_E}/{ab(r-1)}$            
+  cases (erreur)                                                                                                                                                                                              
+
+  Cases            $ab-1$        ${SS_Cells}= sum{i,j}{}({overline{y}\_ij}-overline{y})                                     2$                                                            
+
+  Facteur A        $a-1$         ${SS_FacteurA}= rb sum{i}{}({overline{y}\_i.}-overline{y})                                 2$             ${MS_FacteurA}={SS_FacteurA}/{a-1}$  ${F_FacteurA}={MS_FacteurA}/{MS_E}\</m\>
+
+  Facteur B        $b-1$         ${SS_FacteurB}= ra sum{j}{}({overline{y}\_.j}-overline{y})                                 2$             ${MS_FacteurB}={SS_FacteurB}/{b-1}$  ${F_FacteurB}={MS_FacteurB}/{MS_E}\</m\>
+
+  Interaction\     $(a-1)(b-1)$  ${SS_AB}= r sum{i,j,k}{}({overline{y}\_{..k}}-{overline{y}\_{.jk}}-{overline{y}\_{i.k}})   2$             ${MS_AB}={SS_AB}/{(a-1)(b-1)}$       ${F_AB}={MS_AB}/{MS_E}\</m\>
+  entre A et B                                                                                                                                                                                                
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+a: nombre de niveaux de la variable explicative A; b: nombre de niveaux
+de la variable explicative B; r: nombre de répétitions par traitement
+
+
+### 4.1 Effectuer une ANOVA à deux critères de classification
+
+Dans R, une ANOVA à deux critères de classification est effectuée de la
+même manière qu'une ANOVA à un critère de classification avec la
+fonction `lm()`.
+
+------------------------------------------------------------------------
+
+**DÉFI 2**
+
+Examinez les effets des facteurs \"Diet\", \"Aquatic\" et de leur
+interaction sur l'abondance maximale d'oiseaux.
+
+Rappelez-vous que vous devez vérifier les suppositions statistiques de
+base avant d'interpréter les résultats d'une ANOVA, soit :\
+- Distribution normale des rsidus du modèle
+
+1.  Homoscédasticité des résidus de la variance
+
+Cette vérification peut être faite en utilisant les quatre graphiques de
+diagnostic expliqués dans la section précédente.\
+++++ Défi 2: Solution \|
+
+```{r, echo = TRUE, eval = FALSE}
+anov4 <- lm(logMaxAbund ~ Diet*Aquatic, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(anova4)
+par(opar)
+summary(anov4)
+anova(anov4)
+```
+
+La fonction `anova()` permet de visualiser le tableau d'ANOVA du modèle
+:\
+
+    Analysis of Variance Table
+    Response: logMaxAbund
+                  Df  Sum Sq Mean Sq  F value Pr(>F)
+    Diet              4  5.1059  1.27647  3.0378  0.02669 *
+    Aquatic           1  0.3183  0.31834  0.7576  0.38870
+    Diet:Aquatic      3  2.8250  0.94167  2.2410  0.09644 .
+    Residuals     45 18.9087 0.42019
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Dans ce cas-ci, le seul facteur significatif est la diète. La valeur de
+p de l'interaction n'est pas significative, ce qui signifie que
+l'effet de la diète est le même peu importe si l'oiseau est aquatique
+ou non. Le seuil de signification peut aussi être testé en comparant
+deux modèles nichés, i.e. en incluant un premier modèle avec une
+interaction et un deuxième modèle avec sans l'interaction. La fonction
+`anova()` est utilisée :
+
+```{r, echo = TRUE, eval = FALSE}
+anov5 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
+anova(anov5, anov4)
+```
+
+Voici la sortie dans R :
+
+     Analysis of Variance Table
+     Model 1: logMaxAbund ~ Diet + Aquatic
+     Model 2: logMaxAbund ~ Diet * Aquatic
+       Res.Df     RSS     Df  Sum of Sq       F   Pr(>F)
+     1     48         21.734
+     2     45 1       8.909   3       2.825       2.241   0.09644 .
+     ---
+     Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Étant donné que la seule différence entre ces deux modèles est la
+présence de l'interaction, cette sortie de R présente le seuil de
+signification de cette interaction. Dans ce cas-ci, l'interaction
+n'est pas significative et peut donc être retirée du modèle.\
+Lorsque l'interaction est significative, rappelez-vous que chaque
+facteur ne peut pas être interprété séparément. Seule l'interaction
+peut l'être.
+
+[**Note :**]{.ul} Le tableau d'ANOVA indique que le nombre de degrés de
+liberté pour l'interaction entre la diète et le type d'oiseau
+(aquatique ou non) est de 3. Selon la notation mathématique du tableau
+de l'ANOVA à deux critères de classification (pour les plans
+équilibrés), a = 5 et b = 2 et le nombre de degrés de liberté est de
+(a-1)(b-1) = 4\*1 = 4. La sortie de R indique cependant que le nombre de
+degrés de liberté est de 3. Cette interaction est extrêmement non
+équilibrée () : les oiseaux aquatiques ne se nourrissent pas de plante,
+donc ce niveau n'est pas considéré (prenez note du NA dans la sortie de
+summary(anov4)). Consultez la section sur les [ANOVA non
+équilibrées](http://qcbs.ca/wiki/r_atelier4#anova_non_equilibree_section_avancee_et_optionnelle)
+plus bas pour plus de détails. ++++
+
+------------------------------------------------------------------------
+
+### 4.2 Diagramme d'interaction
+
+Les interactions peuvent être visualisées à l'aide de la fonction
+`interaction.plot()` :
+
+```{r, echo = TRUE, eval = FALSE}
+interaction.plot(bird$Diet, bird$Aquatic, bird$logMaxAbund, col="black",
+                 ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet")
+```
+
+![](images/interaction_plot.png){width="650"}
+
+Que signifie le trou sur la ligne des oiseaux aquatiques?
+
+```{r, echo = TRUE, eval = FALSE}
+table(bird$Diet, bird$Aquatic)
+```
+
+                 0  1
+    Insect      14  6
+    InsectVert   1  1
+    Plant        2  0
+    PlantInsect 17  1
+    Vertebrate   5  7
+
+Le plan est **non-équilibré**: il y a un nombre inégal d'observations
+entre les diètes pour les oiseaux aquatiques (représentés par le 1) et
+les oiseaux terrestres (représentés par le 0). Consultez la section
+avancée ci-dessous pour plus de détails sur les ANOVA à plan
+non-équilibré.
+
+------------------------------------------------------------------------
+
+**DÉFI 3**
+
+Tester le seuil de signification du facteur \"Aquatic\" en comparant
+deux modèles nichés (i.e. avec et sans ce facteur).
+
+++++ Défi 3: Solution \|
+
+```{r, echo = TRUE, eval = FALSE}
+anova(anov3,anov5) # Rappel que anov3 est le modèle avec le facteur "Diet" seulement.
+```
+
+++++
+
+------------------------------------------------------------------------
+
+## 5. ANOVA non-équilibrée (section avancée/facultative)
+
+ Les ANOVA à un et à deux critères de classification nous
+permettent de déterminer les effets de variables catégoriques sur une
+variable réponse continue lorsque nous avons un plan expérimental
+**équilibré** (i.e. lorsque le nombre de répétitions est égal pour
+chaque niveau de facteur). Cependant, le plan peut devenir
+**non-équilibré** en raison d'une perte d'unités expérimentales au
+cours d'une expérience ou de restrictions techniques dues au plan
+expérimental. Dans de telles situations, les résultats d'ANOVA peuvent
+être mal interprétés en raison de calculs erronés de la somme des
+carrés. Pour des plans expérimentaux non-équilibrés, l'ANOVA doit être
+modifiée pour prendre en compte les données manquantes de la variable
+réponse.
+
+Le modèle mathématique, les hypothèses statistiques, et les conditions
+de base d'une ANOVA à plan non-équilibré demeurent les mêmes que deux
+de l'ANOVA à plan équilibré. Le calcul de la somme des carrés, par
+contre, est différent.
+
+Pour un plan expérimental non-équilibré, les hypothèses statistiques
+sont les suivantes :
+
+H~0~: µ~1~ = µ~2~ =\... = µ~i~ =\... = µ~n~\
+H~1~: il y a au moins une moyenne µi qui diffère des autres.
+
+On utilise ce modèle mathématique :
+
+${y\_{ijk}} = µ + {A_i} + {B_j} + {A_i}{B_j} + {ε\_{ijk}}\</m\>
+
+Rappelez-vous du calcul de la somme des carrés dans le cas d'une ANOVA
+à plan équilibré :
+
+$ {SS_FactorA} = rb sum{i}{}{({overline{y}\_{i.}}-overline{y})}\^2 =
+SS(A) \</m\>\
+$ {SS_FactorB} = ra sum{j}{}{({overline{y}\_{.j}}-overline{y})}\^2 =
+SS(B\|A) = SS(A,B)-SS(B) \</m\>\
+$ {SS_AB} = r
+sum{i,j,k}{}({overline{y}\_{..k}}-{overline{y}\_{.jk}}-{overline{y}\_{i.k}})\^2
+= SS(A,B,AB)-SS(A,B) \</m\>
+
+Ceci correspond à une somme des carrés séquentielle (aussi appelée de
+type I), car l'effet d'un facteur B est calculé après avoir retiré
+l'effet d'un facteur A. L'interaction est calculée après avoir retiré
+les effets principaux de ces deux facteurs. Ces calculs dépendent de la
+taille de l'échantillon, car l'effet de chaque facteur est calculé
+après avoir retiré l'effet du facteur précédent.
+
+Dans le cas d'un plan expérimental non-équilibré, les résultats
+d'ANOVA dépendent de l'ordre dans lequel chaque variable apparaît dans
+le modèle. Voyez comment les résultats diffèrent en comparant les deux
+modèles suivants :
+
+```{r, echo = TRUE, eval = FALSE}
+unb_anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data=bird)
+unb_anov2 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
+anova(unb_anov1)
+anova(unb_anov2)
+```
+
+Bien que les variables explicatives soient les mêmes pour chaque modèle,
+les tableaux d'ANOVA montrent des résultats différents à cause d'un
+plan non-équilibré (i.e. un nombre différent d'observations pour les
+oiseaux aquatiques et terrestres).
+
+Pour les plans non-équilibrés, une somme des carrés marginale (aussi
+appelée de type III) permet de calculer un effet principal après avoir
+retiré les effets des autres facteurs. Ceci rend le calcul indépendant
+de la taille des échantillons :
+
+${SS_FactorA}={SS(A\|B,AB)}=SS(A,B,AB)-SS(B,AB)\</m\>\
+${SS_FactorB}={SS(B\|A,AB)}=SS(A,B,AB)-SS(A,AB)\</m\>\
+${SS_AB}={SS(AB\|B,A)}=SS(A,B,AB)-SS(B,AB) \</m\>\
+\
+Dans R, une ANOVA avec somme des carrés de type III peut être effectuée
+avec la fonction `Anova()` du paquet \"car\" et en spécifiant
+l'argument `type="III"` :
+
+```{r, echo = TRUE, eval = FALSE}
+Anova(unb_anov1,type="III")
+```
+
+En comparant les tableaux d'ANOVA de modèles avec un ordre différent
+dans les variables explicatives, on peut voir que les résultats sont les
+mêmes. L'utilisation de la somme des carrés de type III produit une
+ANOVA qui est indépendante de la tailles des échantillons.
+
+Après avoir vérifié les suppositions du modèle, les résultats peuvent
+finalement être interprétés correctement.
+

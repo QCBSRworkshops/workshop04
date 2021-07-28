@@ -1,0 +1,513 @@
+## 2. Régression linéaire simple
+
+La régression linéaire simple est un type de modèle linéaire qui
+contient **seulement une variable explicative continue**. La régression
+détermine si les deux variables (1 explicative, et 1 réponse) sont
+significativement corrélés.
+
+Une régression linéaire simple concerne deux paramètres qui doivent être
+estimés: l'**ordonnée à l'origine** (β~0~) et un **coefficient de
+corrélation** (β~1~).
+
+La méthode des moindres carrés est la méthode la plus couramment
+utilisée, et est employée par défaut dans la fonction `lm()` dans R. La
+méthode des moindres carrés fait passer une droite de manière à
+minimiser la somme des distances verticales au carré entre la droite et
+les données observées : autrement dit, la méthode vise à minimiser les
+résidus.
+
+Cliquez ci-dessous pour plus de détails mathématiques.
+
+ À l'aide de la méthode des moindres carrés, le coefficient
+de corrélation (β~1~) et l'ordonnée à l'origine (β~0~) peuvent être
+calculés de la façon suivante :
+
+$β\_{1}={sum{i}{}{(x\_{i}y\_{i})}-overline{x}overline{y}}/sum{i}{}{(x\_{i}-overline{x})}\^2
+= {Cov(x,y)}/{Var(x)}$
+
+$β\_{0}=overline{y}-β\_{1}overline{x}$
+
+
+### Flux de travail
+
+Dans cet atelier, nous explorerons plusieurs types de modèles linéaires.
+La création et l'interprétation de chaque modèle diffère dans les
+détails, mais les principes généraux et le flux de travail s'appliquent
+à tous les types. Pour chaque modèle, on suivra donc les étapes de
+travail suivantes:
+
+1.  Visualiser les données (ceci peut aussi se faire plus tard)
+2.  Créer un modèle
+3.  Tester les 4 conditions de base du modèle
+4.  Ajuster le modèle si les conditions de base ne sont pas respectées
+5.  Interpréter les résultats du modèle
+
+### 2.1 Effectuer un modèle linéaire
+
+En utilisant le jeu de données `bird`, nous allons exécuter une première
+régression linéaire sur l'abondance maximale en fonction de la masse.
+
+Dans R, une régression linéaire est implémentée à l'aide de la fonction
+`lm()` de la librairie `stats` :
+
+`lm (y ~ x)`
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  [**Note**]{.ul} : Avant d'utiliser une nouvelle fonction dans R, vous devriez vous référer à sa page d'aide (`?nomdelafonction`) afin de comprendre comment utiliser la fonction ainsi que les paramètres par défaut.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+```{r, echo = TRUE, eval = FALSE}
+# Chargez les paquets et le jeu de données bird
+library(e1071)
+library(MASS)
+setwd("~/Desktop/...") # N'oubliez pas de spécifier votre répertoire de travail (note: le vôtre sera différent de celui-ci)
+bird<-read.csv("birdsdiet.csv")
+
+# Visualisez le tableau de données :
+names(bird)
+str(bird)
+head(bird)
+summary(bird)
+plot(bird)
+```
+
+Le jeu de données bird contient sept variables:
+
+  ---------------------------------------------------------------------------------------------------------------------------------------
+  Nom de la variable   Description                                                       Type
+  -------------------- ----------------------------------------------------------------- ------------------------------------------------
+  Family               Nom de la famille                                                 Chaînes de caractères
+
+  MaxAbund             Abondance la plus élevée observée\                                Continue/numérique
+                       en Amérique du Nord                                               
+
+  AvgAbund             Abondance moyenne sur tous les sites\                             Continue/numérique
+                       en Amérique du Nord                                               
+
+  Mass                 Taille corporelle en grammes                                      Continue/numérique
+
+  Diet                 Type de nourriture consommée                                      Catégorique -- 5 niveaux (Plant; PlantInsect;\
+                                                                                         Insect; InsectVert; Vertebrate)
+
+  Passerine            Est-ce un passereau?                                              Binaire (0/1)
+
+  Aquatic              Est-ce un oiseau qui vit principalement dans ou près de l'eau?   Binaire (0/1)
+  ---------------------------------------------------------------------------------------------------------------------------------------
+
+Notez que Family, Diet, Passerine, et Aquatic sont tous des variables
+catégoriques, malgré le fait qu'ils soient encodés de façons
+différentes (chaîne de caractères, catégorique, binaire).
+
+Nous sommes maintenant prêts à exécuter le modèle linéaire :
+
+```{r, echo = TRUE, eval = FALSE}
+lm1 <- lm(bird$MaxAbund ~ bird$Mass) # où Y ~ X signifie Y "en fonction de" X>
+```
+
+### 2.2 Validation des conditions de base
+
+```{r, echo = TRUE, eval = FALSE}
+opar <- par(mfrow=c(2,2)) # Permet de créer les graphiques dans un panneau 2 x 2
+plot(lm1)
+par(opar) # Remet la fenêtre graphique à un seul panneau
+```
+
+#### Vérifier l'indépendance
+
+Les modèles linéaires s'appliquent seulement aux données indépendantes.
+En d'autres mots, le *y~i~* correspondant à une certaine valeur *x~i~*
+ne doit pas être influencée par d'autres valeurs *x~i~*. Si vos données
+contiennent une certaine forme de structure de dépendance, comme une
+corrélation spatiale ou temporelle, l'hypothèse de l'indépendance est
+invalide.
+
+Malheureusement, il n'existe pas un graphique de diagnostique simple
+pour vérifier l'indépendance. Au contraire, il faut considérer son jeu
+de données avec soin et prudence. Est-ce qu'il y a un structure
+présente dans vos données qui crée une dépendance entre observations? Si
+les données s'agissent d'une série temporelle (donc, les observations
+proviennent des mêmes sites à plusieurs reprises), ou que plusieurs
+observations proviennent d'un même organisme, l'hypothèse
+d'indépendance est invalide. Il faut donc choisir un autre type de
+modèle.
+
+\
+
+#### Vérifier l'homoscédasticité et la moyenne résiduelle de 0
+
+***Graphique des résidus vs. valeurs prédites*** - Le premier graphique
+de diagnostic est créé avec la fonction `plot(lm1)`. Ce graphique
+illustre la dispersion des résidus en fonction des valeurs prédites par
+le modèle de régression linéaire. Chaque point représente la distance
+entre la variable réponse et la réponse prédite par le modèle.
+
+-   Si les résidus sont dispersés de façon **aléatoire autour de la
+    ligne de 0**, la relation est linéaire et la moyenne des résidus
+    est 0.
+-   Si les résidus forment une **bande horizontale** approximative
+    autour de la ligne de 0, la variance des résidus est homogène (donc,
+    ils sont homoscédastiques).
+-   Si les résidus sont organisés **en forme d'entonnoir**, les résidus
+    ne sont pas homoscédastiques.
+
+![](images/workshop_3_lm1_residuals_vs_fitted.png){width="300"}
+
+\
+***Graphique \"Scale-location\"*** - Le troisième graphique de
+diagnostique permet de vérifier si la dispersion des résidus augmente
+pour une valeur prédite donnée (i.e. si la dispersion des résidus est
+causée par la variable explicative). Si la dispersion augmente, la
+condition de base d'homoscédasticité n'est pas respectée.
+
+![](images/workshop_3_lm1_scale-location.png){width="300"}
+
+\
+
+#### Vérifier la normalité des résidus
+
+***Diagramme quantile-quantile (Q-Q)*** - La normalité des résidus peut
+être évaluée à l'aide d'un diagramme quantile-quantile. Ce graphique
+compare la distribution de probabilité des résidus du modèle à une
+distribution de probabilité de données normales. Si les résidus
+standardisés se trouvent près d'une ligne 1:1, les résidus peuvent être
+considérés comme normalement distribués.
+
+![](images/workshop_3_lm1_qq.png){width="300"}
+
+Dans ce cas-ci, les points ne sont pas bien alignés sur la droite, ce
+qui suggère que les résidus ne sont pas distribués normalement.
+
+\
+
+#### Influence des observations aberrantes
+
+***Diagramme de résidus vs. influence*** - En plus de valider les
+hypothèses de bases ci-dessus, on s'intéresse aussi à déterminer si
+certaines observations ont une forte influence. Bien qu'on ne teste pas
+un test de condition de base, ceci peut influencer notre interprétation
+des données. Si une ou certaines observations sont aberrantes (dont, si
+elles ont des valeurs très différentes des autres), le modèle peut être
+mal ajusté en raison de leur influence exagérée sur la calculation du
+modèle. Si (et seulement si!) ces observations correspondent à des
+erreurs de mesure ou à des exceptions, elles peuvent être retirées du
+jeu de données.\
+![](images/workshop_3_lm1_leverage.png){width="300"}
+
+### 2.3 Normalisation des données
+
+Dans l'exemple précédent, les résidus du modèle ne suivaient pas une
+distribution normale, alors la condition de base de normalité est
+invalide. On peut quand même utiliser un modèle linéaire si on réussit à
+normaliser les données, afin de respecter la condition de normalité.
+L'étape suivante est donc de normaliser les données à l'aide de
+transformations mathématiques. Souvent, si on normalise les variables
+explicatives et/ou réponses, les résidus suivent une distribution
+normale. En plus des diagramme QQ, on peut évaluer la normalité d'une
+variable en traçant un histogramme avec la fonction `hist()`, et en
+vérifiant visuellement que la variable suit une distribution normale.
+Par exemple :
+
+```{r, echo = TRUE, eval = FALSE}
+# Graphique Y ~ X et la ligne de régression
+plot(bird$MaxAbund ~ bird$Mass, pch=19, col="coral", ylab="Maximum Abundance",
+     xlab="Mass")
+abline(lm1, lwd=2)
+?plot # Pour obtenir plus de détails sur les arguments de la fonction plot().
+# Allez voir colours() pour une liste de couleurs.
+
+# Les données sont-elles distribuées normalement ?
+hist(bird$MaxAbund,col="coral", main="Untransformed data",
+     xlab="Maximum Abundance")
+hist(bird$Mass, col="coral", main="Untransformed data", xlab="Mass")
+```
+
+![](images/lm1_yvsx.png){width="300"} ![](images/maxabund_hist.png){width="300"}
+![](images/mass_hist.png){width="300"}
+
+Une troisième façon d'évaluer la normalité des données est d'utiliser
+le test de Shapiro-Wilk (fonction `shapiro.test()`), qui compare la
+distribution des données observées à une distribution normale.
+
+Les hypothèses nulle et contraire sont:
+
+H~0~: les données observées sont distribuées normalement\
+H~1~: les données observées ne sont pas distribuées normalement
+
+Les données observées peuvent être considérées comme normalement
+distribuées lorsque la valeur de p calculée par le test de Shapiro-Wilk
+est supérieure au seuil α (généralement 0.05).
+
+```{r, echo = TRUE, eval = FALSE}
+# Teste l'hypothèse nulle que l'échantillon provient d'une population distribuée normalement
+shapiro.test(bird$MaxAbund)
+shapiro.test(bird$Mass)
+# Si p < 0.05, la distribution n'est pas normale
+# Si p > 0.05, la distribution est normale
+```
+
+On peut également évaluer l'asymétrie d'une distribution avec la
+fonction `skewness()` :
+
+```{r, echo = TRUE, eval = FALSE}
+skewness(bird$MaxAbund)
+skewness(bird$Mass)
+# Une valeur positive indique une asymétrie vers la gauche (i.e. left-skewed distribution)
+# tandis qu'une valeur négative indique une asymétrie vers la droite (i.e. right skewed distribution).
+```
+
+Les histogrammes, le test de Shapiro-Wilk, et le coefficient
+d'asymétrie (\"skewness\") indiquent tous que les variables doivent
+être transformées afin de respecter la condition de normalité (e.g. une
+transformation log~10~).
+
+### 2.4 Transformation des données
+
+Lorsque la condition de normalité n'est pas respectée, les variables
+peuvent être transformées afin d'améliorer la normalité de leur
+distribution en respectant ces règles :
+
+  -------------------------------------------------------------------------------------------------------
+  Type de distribution            Transformation             Fonction R
+  ------------------------------- -------------------------- --------------------------------------------
+  Asymétrie positive modérée      $sqrt{x}$        sqrt(x)
+
+  Asymétrie positive importante   $log_10{(x)}$    log10(x)
+
+  Asymétrie positive importante   $log_10{(x+C)}$  log10(x + C) où C est une constante\
+                                                             ajoutée à chaque valeur de x afin que\
+                                                             la plus petite valeur soit 1
+
+  Asymétrie négative modérée      $sqrt{(K-x)}$    sqrt(K - x) où K est une constante\
+                                                             soustraite de chaque valeur de x afin que\
+                                                             la plus petite valeur soit 1
+
+  Asymétrie négative importante   $log_10{(K-x)}$  log10(K - x)
+  -------------------------------------------------------------------------------------------------------
+
+Dans notre cas, une transformation logarithmique (log~10~) devrait être
+utilisée et enregistrée dans le tableau de données `bird`. Le modèle
+peut ainsi être exécuté, vérifié, et interprété.
+
+```{r, echo = TRUE, eval = FALSE}
+# Ajoutez les variables transformées au tableau
+bird$logMaxAbund <- log10(bird$MaxAbund)
+bird$logMass <- log10(bird$Mass)
+names(bird) # pour visualiser le tableau avec les nouvelles variables
+
+hist(bird$logMaxAbund,col="yellowgreen", main="Log transformed",
+     xlab=expression("log"[10]*"(Maximum Abundance)"))
+hist(bird$logMass,col="yellowgreen", main="Log transformed",
+     xlab=expression("log"[10]*"(Mass)"))
+shapiro.test(bird$logMaxAbund); skewness(bird$logMaxAbund)
+shapiro.test(bird$logMass); skewness(bird$logMass)
+
+# Refaire l'analyse avec les transformations appropriées
+lm2 <- lm(bird$logMaxAbund ~ bird$logMass)
+
+# Reste-il des problèmes avec ce modèle (hétéroscédasticité, non-indépendance, forte influence)?
+opar <- par(mfrow=c(2,2))
+plot(lm2, pch=19, col="gray")
+par(opar)
+```
+
+![](images/hist_logmaxabund.png){width="300"}
+![](images/hist_logmass.png){width="300"} ![](images/plot_lm2_.png){width="550"}
+
+### 2.5 Sortie du modèle
+
+Une fois que les hypothèses (ou conditions) de base ont été validées,
+les résultats du modèle peuvent être interprétés. On obtient nos
+résultats avec la fonction `summary()`.
+
+```{r, echo = TRUE, eval = FALSE}
+# Examinons les coefficients du modèle ainsi que les valeurs de p
+summary(lm2)
+
+# Vous pouvez faire apparaître seulement les coefficients
+lm2$coef
+
+# Quoi d'autre ?
+str(summary(lm2))
+summary(lm2)$coefficients # où Std. Error est l'erreur type de chaque coefficient
+summary(lm2)$r.squared # Coefficient de détermination
+summary(lm2)$adj.r.squared # Coefficient de détermination ajusté
+summary(lm2)$sigma # Erreur type résiduelle (racine du carré moyen de l'erreur)
+# etc.
+
+# Vous pouvez également vérifier l'équation du coefficient de détermination (R<sup>2</sup>)par vous-mêmes :
+SSE <- sum(resid(lm2)^2)
+SST <- sum((bird$logMaxAbund - mean(bird$logMaxAbund))^2)
+R2 <- 1 - ((SSE)/SST)
+R2
+```
+
+La sortie de cette fonction présente tous les résultats du modèle :
+
+    lm(formula = logMaxAbund ~ logMass, data = bird)
+    Residuals:
+              Min         1Q          Median          3Q          Max
+                   -1.93562   -0.39982    0.05487     0.40625     1.61469
+                  Estimate    Std. Error  t value     Pr(>|t|)
+    (Intercept)     1.6724        0.2472      6.767       1.17e-08 ***
+    logMass          -0.2361          0.1170      -2.019      0.0487 *
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    Residual standard error: 0.6959 on 52 degrees of freedom
+    Multiple R-squared:  0.07267,   Adjusted R-squared:  0.05484
+    F-statistic: 4.075 on 1 and 52 DF,  p-value: 0.04869
+
+Les **coefficients de régression** du modèle et leur **erreur type** se
+trouvent dans les deuxième et troisième colonnes du tableau de la
+régression, respectivement. Donc,\
+β~0~ = 1.6724 ± 0.2472 est l'ordonnée à l'origine (± e.t.) du modèle
+de régression,\
+β~1~ = -0.2361 ± 0.1170 est la pente (± e.t.) du modèle de régression.
+
+et finalement : $ $*logMaxAbund* = 1.6724 (± 0.2472) - 0.2361
+(± 0.1170) x *logMass* représente le modèle paramétré.
+
+Les valeurs de **t** et leurs **p-values** (dans les 4^ème^ et 5^ème^
+colonnes du tableau, respectivement) testent si les coefficients de
+régression diffèrent significativement de zéro. Dans notre cas, on voit
+que la variable *logMass* a une influence significative sur la variable
+*logMaxAbund* parce que le p-value associée à au coefficient de
+variation (i.e. la pente) du modèle de régression est inférieure à 0.05.
+De plus, la relation entre ces deux variables est négative, car le
+coefficient de variation du modèle a une valeur négative.\
+**Rappel:** Une corrélation entre deux variables n'implique pas
+nécessairement une relation de causalité. Inversement, l'absence de
+corrélation entre deux variables n'implique pas nécessairement une
+absence de relation entre ces deux variables; c'est le cas, par
+exemple, lorsque la relation n'est pas linéaire.
+
+L'ajustement d'un modèle de régression linéaire est donné par le
+**R^2^ ajusté** (ici 0.05484). Cette valeur mesure la proportion de
+variation qui est expliquée par le modèle.
+
+Pour plus de détails à propos de son calcul, cliquez ci-dessous:
+ $ overline{R}\^2=1-(1-R\^2){n-1}/{n-p-1} \</m\>
+
+où\
+p est le nombre total de paramètres de régression et n est la taille
+d'échantillon,\
+$ R\^2={SS_reg}/{SS_tot} \</m\>\
+$ {SS_tot}=sum{i}{}{({y_i}-overline{y})}\^2 $est la dispersion
+totale,\
+$ {SS_reg}=sum{i}{}{(hat{y_i}-overline{y})}\^2 $est la
+dispersion de la régression - aussi appelée la variance expliquée par le
+modèle. \
+Le R^2^ ajusté varie entre 0 et 1. Plus ce coefficient est élevé (donc,
+plus qu'il s'approche de 1), plus le modèle est bien ajusté aux
+données. Dans ce cas-ci, la relation entre les variables *logMaxAbund*
+et *logMass* est très faible.\
+La dernière ligne de la sortie du modèle représente la **statistique F**
+du modèle et le **p-value** qui y est associée. Si la valeur de p est
+inférieure à 0.05, le modèle de régression décrit mieux la relation
+entre les variables qu'un modèle nul.\
+
+2.6 Visualisation graphique
+
+Les résultats d'une régression linéaire sont généralement illustrés par
+un graphique de la variable réponse en fonction des variables
+explicatives. Une droite de régression y est tracée (et, si nécessaire,
+les intervalles de confiance) avec le code R suivant :
+
+```{r, echo = TRUE, eval = FALSE}
+plot(logMaxAbund ~ logMass, data=bird, pch=19, col="yellowgreen",
+                   ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = expression("log"[10]*"(Mass)"))
+abline(lm2, lwd=2)
+
+# On peut faire ressortir les points avec une forte influence
+points(bird$logMass[32], bird$logMaxAbund[32], pch=19, col="violet")
+points(bird$logMass[21], bird$logMaxAbund[21], pch=19, col="violet")
+points(bird$logMass[50], bird$logMaxAbund[50], pch=19, col="violet")
+
+# On peut également tracer les intervalles de confiance
+confit<-predict(lm2,interval="confidence")
+points(bird$logMass,confit[,2])
+points(bird$logMass,confit[,3])
+```
+
+![](images/yvxx_lm2.png){width="400"}
+
+### 2.7 Sous-ensembles d'observations
+
+Il est aussi possible d'analyser seulement une partie des observations.
+Par exemple, on peut refaire l'analyse de régression sur seulement les
+oiseaux terrestres.
+
+```{r, echo = TRUE, eval = FALSE}
+# Souvenez-vous qu'on peut exclure des valeurs avec le symbole "!"
+# On peut analyser un sous-ensemble des données de "bird" en utilisant l'argument 'subset' de la fonction lm().
+lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset =! bird$Aquatic) # enlever les oiseaux aquatiques du modèle
+
+# Cette commande permet également d'exclure les oiseaux aquatiques
+lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Aquatic == 0)
+
+# Examinons le modèle
+opar <- par(mfrow=c(2,2))
+plot(lm3)
+summary(lm3)
+par(opar)
+
+# Comparons les deux analyses
+opar <- par(mfrow=c(1,2))
+plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"),
+     xlab = expression("log"[10]*"(Mass)"))
+abline(lm2,lwd=2)
+
+plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",
+     ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = expression("log"[10]*"(Mass)"),
+     pch=19)
+abline(lm3,lwd=2)
+opar(par)
+```
+
+
+## DÉFI 1
+
+Examinez la relation entre *log~10~(MaxAbund)* et *log~10~(Mass)* pour
+les passereaux (i.e. passerine birds).\
+`Conseil :` La variable 'Passerine' est codée comme 0 et 1, comme la
+variable 'Aquatic'. Vous pouvez vérifier ceci avec la commande
+`str(bird)`.
+
+++++ Défi 1 : Solution \|
+
+```{r, echo = TRUE, eval = FALSE}
+lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
+
+# Examinez les graphiques de diagnostic
+opar <- par(mfrow=c(2,2))
+plot(lm4)
+summary(lm4)
+par(opar)
+
+# Comparez la variance expliquée par lm2, lm3 et lm4
+str(summary(lm4)) # Rappelez-vous qu'on veut le R^2 ajusté
+summary(lm4)$adj.r.squared # R2-adj = -0.02
+summary(lm2)$adj.r.squared # R2-adj = 0.05
+summary(lm3)$adj.r.squared # R2-adj = 0.25
+
+# Comparez visuellement les trois modèles
+opar <- par(mfrow=c(1,3))
+plot(logMaxAbund ~ logMass, data=bird, main="All birds",
+     ylab = expression("log"[10]*"(Maximum Abundance)"),
+     xlab = expression("log"[10]*"(Mass)"), pch=19, col="yellowgreen")
+abline(lm2,lwd=2)
+
+plot(logMaxAbund ~ logMass, subset=Passerine == 1, data=bird, main="Passerine birds",
+     ylab = expression("log"[10]*"(Maximum Abundance)"),
+     xlab = expression("log"[10]*"(Mass)"), pch=19, col="violet")
+abline(lm4,lwd=2)
+
+plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",
+     ylab = expression("log"[10]*"(Maximum Abundance)"),
+     xlab = expression("log"[10]*"(Mass)"), pch=19, col="skyblue")
+abline(lm3,lwd=2)
+par(opar)
+```
+
+**Conclusion :** Le meilleur modèle parmi les trois est lm3 (celui
+effectué sur seulement les oiseaux terrestres )
+![](images/lm2_lm3_lm4.png){width="850"} ++++
