@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 3 Test de t et ANOVA | Atelier 4: Modèles linéaires</title>
+  <meta name="description" content="Modèles linéaires" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 3 Test de t et ANOVA | Atelier 4: Modèles linéaires" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://github.com/qcbsRworkshops/" />
+  <meta property="og:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
+  <meta property="og:description" content="Modèles linéaires" />
+  <meta name="github-repo" content="qcbsRworkshops/workshop04" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 3 Test de t et ANOVA | Atelier 4: Modèles linéaires" />
+  
+  <meta name="twitter:description" content="Modèles linéaires" />
+  <meta name="twitter:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
+
+<meta name="author" content="Développé et entretenu par les contributeurs et les contributrices de la Série d’ateliers R du CSBQ." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="préparez-vous-pour-cet-atelier.html"/>
+<link rel="next" href="régression-multiple.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/qcbs-style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="assets/images/csbq_logo_gray_accueil.png"></a></li>
+<link rel="icon" type="image/png" href="assets/images/favicon.ico"/>
+
+<li class="divider"></li>
+<li class="part"><span><b>Série d’ateliers R du CSBQ</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Préface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#code-de-conduite"><i class="fa fa-check"></i><b>0.1</b> Code de conduite</a><ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#comportement-attendu"><i class="fa fa-check"></i><b>0.1.1</b> Comportement attendu</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#comportements-inacceptables"><i class="fa fa-check"></i><b>0.1.2</b> Comportements inacceptables</a></li>
+</ul></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributeurs-et-contributrices"><i class="fa fa-check"></i><b>0.2</b> Contributeurs et contributrices</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contribuez-à-la-série"><i class="fa fa-check"></i><b>0.3</b> Contribuez à la série!</a></li>
+</ul></li>
+<li class="part"><span><b>Analyses multivariées en <code>R</code></b></span></li>
+<li class="chapter" data-level="1" data-path="objectifs-dapprentissage.html"><a href="objectifs-dapprentissage.html"><i class="fa fa-check"></i><b>1</b> Objectifs d’apprentissage</a></li>
+<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier</a><ul>
+<li class="chapter" data-level="2.1" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#aperçu"><i class="fa fa-check"></i><b>2.1</b> 1. Aperçu</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#définir-la-moyenne-et-la-variation"><i class="fa fa-check"></i><b>2.1.1</b> 1.1 Définir la moyenne et la variation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#les-modèles-linéaires"><i class="fa fa-check"></i><b>2.1.2</b> 1.2 Les modèles linéaires</a></li>
+<li class="chapter" data-level="2.1.3" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#conditions-de-base-du-modèle-linéaire"><i class="fa fa-check"></i><b>2.1.3</b> 1.3 Conditions de base du modèle linéaire</a></li>
+<li class="chapter" data-level="2.1.4" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#statistiques-de-tests-et-p-values"><i class="fa fa-check"></i><b>2.1.4</b> 1.4 Statistiques de tests et p-values</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>2.2</b> 2. Régression linéaire simple</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#flux-de-travail"><i class="fa fa-check"></i><b>2.2.1</b> Flux de travail</a></li>
+<li class="chapter" data-level="2.2.2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>2.2.2</b> 2.1 Effectuer un modèle linéaire</a></li>
+<li class="chapter" data-level="2.2.3" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#validation-des-conditions-de-base"><i class="fa fa-check"></i><b>2.2.3</b> 2.2 Validation des conditions de base</a></li>
+<li class="chapter" data-level="2.2.4" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#normalisation-des-données"><i class="fa fa-check"></i><b>2.2.4</b> 2.3 Normalisation des données</a></li>
+<li class="chapter" data-level="2.2.5" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#transformation-des-données"><i class="fa fa-check"></i><b>2.2.5</b> 2.4 Transformation des données</a></li>
+<li class="chapter" data-level="2.2.6" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#sortie-du-modèle"><i class="fa fa-check"></i><b>2.2.6</b> 2.5 Sortie du modèle</a></li>
+<li class="chapter" data-level="2.2.7" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#sous-ensembles-dobservations"><i class="fa fa-check"></i><b>2.2.7</b> 2.7 Sous-ensembles d’observations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#défi-1"><i class="fa fa-check"></i><b>2.3</b> DÉFI 1</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>3</b> Test de t et ANOVA</a><ul>
+<li class="chapter" data-level="3.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>3.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>3.1.1</b> 3.1 Types d’ANOVA</a></li>
+<li class="chapter" data-level="3.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>3.1.2</b> 3.2 Test de t</a></li>
+<li class="chapter" data-level="3.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>3.1.3</b> 3.3 Effectuer une ANOVA</a></li>
+<li class="chapter" data-level="3.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-de-base"><i class="fa fa-check"></i><b>3.1.4</b> 3.4 Vérification des conditions de base</a></li>
+<li class="chapter" data-level="3.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle-1"><i class="fa fa-check"></i><b>3.1.5</b> 3.5 Sortie du modèle</a></li>
+<li class="chapter" data-level="3.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-complémentaire"><i class="fa fa-check"></i><b>3.1.6</b> 3.6 Test complémentaire</a></li>
+<li class="chapter" data-level="3.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>3.1.7</b> 3.7 Visualisation des résultats</a></li>
+<li class="chapter" data-level="3.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>3.1.8</b> Allons plus loin: Contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>3.2</b> 4. ANOVA à deux critères de classification</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>3.2.1</b> 4.1 Effectuer une ANOVA à deux critères de classification</a></li>
+<li class="chapter" data-level="3.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>3.2.2</b> 4.2 Diagramme d’interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>3.3</b> 5. ANOVA non-équilibrée (section avancée/facultative)</a></li>
+<li class="chapter" data-level="3.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>3.4</b> 6. ANCOVA</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>3.4.1</b> 6.1 Conditions de base</a></li>
+<li class="chapter" data-level="3.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>3.4.2</b> 6.2 Types d’ANCOVA</a></li>
+<li class="chapter" data-level="3.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>3.4.3</b> 6.3 Effectuer une ANCOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>4</b> Régression multiple</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-de-base-2"><i class="fa fa-check"></i><b>4.0.1</b> 7.1 Conditions de base</a></li>
+<li class="chapter" data-level="4.0.2" data-path="régression-multiple.html"><a href="régression-multiple.html#jeu-de-données-dickcissel"><i class="fa fa-check"></i><b>4.0.2</b> 7.2 Jeu de données Dickcissel</a></li>
+<li class="chapter" data-level="4.0.3" data-path="régression-multiple.html"><a href="régression-multiple.html#allons-plus-loin-régression-polynomiale"><i class="fa fa-check"></i><b>4.0.3</b> Allons plus loin: Régression polynomiale</a></li>
+<li class="chapter" data-level="4.0.4" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-pas-à-pas"><i class="fa fa-check"></i><b>4.0.4</b> 7.4 Régression pas à pas</a></li>
+<li class="chapter" data-level="4.1" data-path="régression-multiple.html"><a href="régression-multiple.html#allons-plus-loin-partition-de-la-variation"><i class="fa fa-check"></i><b>4.1</b> Allons plus loin: Partition de la variation</a></li>
+</ul></li>
+<li class="part"><span><b>Considérations finales</b></span></li>
+<li class="chapter" data-level="5" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>5</b> Résumé</a></li>
+<li class="chapter" data-level="6" data-path="resources-additionnels.html"><a href="resources-additionnels.html"><i class="fa fa-check"></i><b>6</b> Resources additionnels</a></li>
+<li class="chapter" data-level="7" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>7</b> Réferences</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/qcbsRworkshops" target="blank">QCBS R Workshop Series</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Atelier 4: Modèles linéaires</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!------------------------ Hero Image Container --------------------------> 
+
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=10.0,initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/6a26f47516.js"></script>
+  <script src="assets/qcbs-hideOutput.js"></script>
+  <link href="assets/qcbs-style.css" rel="stylesheet">
+</head>
+
+
+
+<div class="hero-image-container"> 
+  <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
+</div>
+<div id="test-de-t-et-anova" class="section level1">
+<h1><span class="header-section-number">Chapitre 3</span> Test de t et ANOVA</h1>
+<div id="anova" class="section level2">
+<h2><span class="header-section-number">3.1</span> ANOVA</h2>
+<p>L’analyse de la variance (ANOVA) est un type de modèle linéaire pour
+<strong>une variable réponse continue</strong>, et <strong>une ou plusieurs variables
+explicatives catégoriques</strong>. Les variables explicatives catégoriques
+peuvent comprendre plusieurs niveaux (ou groupes). Par exemple, une
+variable "couleur" peut avoir 3 niveaux: vert, bleu, et jaune.
+L’ANOVA teste si la moyenne de la variable réponse diffère entre ces
+niveaux ou groupes. Par exemple, si la masse des bleuets diffère selon
+leur couleur.</p>
+<p>Le calcul de l’ANOVA se base sur la partition de la somme des carrés,
+et compare la <strong>variance entre les traitements</strong> à celle à l’intérieur
+des traitements (i.e. la <strong>variance intra-traitement</strong>). Si la variance
+entre les traitements est supérieure à la variance intra-traitement, la
+variable explicative a un effet plus important que l’erreur aléatoire
+(due à la variance intra-traitement). La variable explicative est donc
+susceptible d’influencer significativement la variable réponse.</p>
+<p>Dans un ANOVA, la comparaison de la variance entre les traitements à
+celle intra-traitement se fait en calculant la <strong>statistique F</strong>. Cette
+statistique correspond au ratio entre la moyenne des carrés des
+traitements (MS<sub>Trt</sub>) et la moyenne des carrés des erreurs (MS<sub>E</sub>). Ces
+deux termes sont obtenus en divisant leurs sommes des carrés respectives
+par leurs degrés de liberté, comme on le voit présenté typiquement dans
+un tableau d’ANOVA (cliquez pour voir un tel tableau ci-dessous). Un
+<strong>p-value</strong> peut ensuite être calculée à partir de la statistique de F,
+qui suit une distribution de khi carré (χ<sup>2</sup>)</p>
+<p>Cliquez pour plus de détails mathématiques.</p>
+<table style="width:99%;">
+<colgroup>
+<col width="6%" />
+<col width="9%" />
+<col width="31%" />
+<col width="10%" />
+<col width="23%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Source de<br />
+variation</th>
+<th align="left">Degrés de<br />
+liberté (df)</th>
+<th align="left">Somme des carrés<br />
+des écarts à la moyenne</th>
+<th align="left">Moyenne des carrés</th>
+<th align="left">Statistique de F</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="left"><span class="math inline">\(ra-1\)</span> ${SS_Tot}=</td>
+<td align="left">sum{i,j}{}({y_ij}-overline{y}) 2$</td>
+<td align="left"></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="left">Facteur A</td>
+<td align="left"><span class="math inline">\(a-1\)</span> ${SS_Facte</td>
+<td align="left">urA}= r sum{i}{}({overline{y}_i}-overline{y}) 2$</td>
+<td align="left">${MS_FacteurA}={SS_F</td>
+<td align="left">acteurA}/{a-1}$ $F={MS_FacteurA}/{MS_E}&lt;/m&gt;</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td align="left">Résidus</td>
+<td align="left"><span class="math inline">\(a(r-1)\)</span> ${SS_E}= s</td>
+<td align="left">um{i,j}{}({y_ij}-{overline{y}_i}) 2$</td>
+<td align="left">${MS_E}={SS_E}/{a(r-</td>
+<td align="left">1)}$</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>a: nombre de niveaux de la variable explicative A; r: nombre de
+répétitions par traitement; $overline{y}&lt;/m&gt;: moyenne globale de
+la variable réponse; $overline{y}&lt;/m&gt;<sub>i</sub> : moyenne de la variable
+réponse du traitement i.</p>
+<div id="types-danova" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> 3.1 Types d’ANOVA</h3>
+<ol style="list-style-type: decimal">
+<li><strong>ANOVA à un critère de classification</strong><br />
+Une variable explicative catégorique avec au moins 2 niveaux. S’il
+n’y a que 2 niveaux, un test de t peut être utilisé.</li>
+<li><strong>ANOVA à deux critères de classification</strong> <em><a href="http://qcbs.ca/wiki/r_atelier4#anova_a_deux_criteres_de_classification">(voir la section
+ci-dessous)</a></em><br />
+
+<ul>
+<li>Deux variables explicatives catégoriques ou plus,<br />
+</li>
+<li>Chaque facteur peut avoir plusieurs niveaux,<br />
+</li>
+<li>Les interactions entre chaque variable explicative catégorique
+doivent être testées.</li>
+</ul></li>
+<li><strong>Mesures répétées</strong><br />
+L’ANOVA peut être utilisée pour des mesures répétées, mais ce sujet
+n’est pas abordé dans cet atelier. Un <strong>modèle linéaire mixte</strong>
+peut également être utilisé pour ce type de données <em><a href="http://qcbs.ca/wiki/r_atelier6">(voir
+l’atelier 6)</a></em>.</li>
+</ol>
+</div>
+<div id="test-de-t" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> 3.2 Test de t</h3>
+<p>Si on a une variable explicative ayant seulement <strong>2 niveaux</strong>, on peut
+utiliser un test de t de Student pour déterminer s’il y a une
+différence entre la moyenne des 2 niveaux. Selon les données, on peut
+choisir de tester une <strong>hypothèse unilatérale</strong>: c’est-à-dire qu’on
+peut déterminer si la moyenne d’un groupe est plus grande que celle de
+l’autre groupe, plutôt que de seulement détecter une différence entre
+les moyennes du groupe.</p>
+<p>Cliquez ci-dessous pour plus de détails mathématiques. Pour
+le test de t, la statistique t qui est utilisée pour déterminer la
+valeur de p est calculée de la manière suivante :<br />
+$ t= (overline{y}_1-overline{y}_2)/sqrt{{s_1}^2/n_1 +
+{s_2}^2/n_2} &lt;/m&gt;</p>
+<p>où</p>
+<p>$overline{y}&lt;/m&gt;<sub>1</sub> et $overline{y}&lt;/m&gt;<sub>2</sub> sont les moyennes
+de la variable réponse y pour les groupes 1 et 2 respectivement,<br />
+s<sub>1</sub><sup>2</sup> et s<sub>2</sub><sup>2</sup> sont les variances de la variable réponse y pour les
+groupes 1 et 2 respectivement,<br />
+n<sub>1</sub> et n<sub>2</sub> sont les tailles d’échantillons des groupes 1 et 2
+respectivement.</p>
+<p>Notez que le test de t est mathématiquement équivalent à une ANOVA à un
+critère de classification ayant deux niveaux.<br />
+</p>
+<div id="conditions-de-base" class="section level4">
+<h4><span class="header-section-number">3.1.2.1</span> Conditions de base</h4>
+<p>Si les conditions de base du test de t ne sont pas respectées, les
+résultats du test peuvent être erronés. Voici quelques notes à propos de
+la validation de ces conditions de base:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Normalité des données</strong><br />
+Comme pour la régression linéaire simple, la variable réponse doit
+être distribuée normalement. Si cette condition n’est pas
+respectée, mais que la distribution est relativement symétrique, que
+la moyenne est près du centre de la distribution, et que la
+distribution est unimodale, le test de t donnera un résultat valable
+en autant que la taille de l’échantillon soit suffisante (règle
+empirique : ~30 observations). Si les données sont fortement
+asymétriques, il est nécessaire d’avoir un très large échantillon
+pour que le test fonctionne. Dans ce cas-là, il est préférable
+d’utiliser un test non-paramétrique.</li>
+<li><strong>Homoscédasticité</strong><br />
+Une autre supposition importante du test de t est que les variances
+des deux groupes sont égales. Ceci permet de calculer une variance
+combinée qui est utilisée pour calculer l’erreur type de la
+différence des moyennes. Si les variances des deux groupes sont
+inégales, la probabilité de commettre une erreur de type I (i.e.
+rejeter l’hypothèse nulle alors qu’elle est vraie) est supérieure
+au seuil α.<br />
+La robustesse du test de t augmente avec la taille de l’échantillon
+et est supérieure lorsque les groupes sont de même taille.<br />
+Il est possible d’évaluer la différence de variance entre deux
+échantillons en se demandant quelle est la probabilité de tirer deux
+échantillons d’une population avec des variances identiques alors
+que les échantillons ont des variances de s<sub>1</sub><sup>2</sup> et s<sub>2</sub><sup>2</sup>.<br />
+Pour ce faire, il faut effectuer un test de ratio des variances
+(i.e. un test de F).</li>
+</ol>
+</div>
+<div id="non-respect-des-conditions-de-base" class="section level4">
+<h4><span class="header-section-number">3.1.2.2</span> Non-respect des conditions de base</h4>
+<p>Si les variances entre les groupes ne sont pas égales, il est possible
+de corriger la situation avec la <a href="http://fr.wikipedia.org/wiki/Test_t_de_Welch">correction de
+Welch</a>. Si les conditions
+de base ne sont toujours pas respectées, il faut utiliser la version non
+paramétrique du test de t : <a href="http://en.wikipedia.org/wiki/Mann–Whitney_U_test">le test de
+Mann-Whitney</a>.
+Finalement, si les deux groupes ne sont pas indépendants (e.g. mesures
+prises sur un même individu à deux périodes différentes), il faut
+utiliser un <a href="http://en.wikipedia.org/wiki/Student&#39;s_t-test#Paired_samples">test de t
+apparié</a>.</p>
+</div>
+<div id="effectuer-un-test-de-t" class="section level4">
+<h4><span class="header-section-number">3.1.2.3</span> Effectuer un test de t</h4>
+<p>Dans R, le test de t est exécutés avec la fonction <code>t.test</code>. Par
+exemple, pour évaluer la différence de masse entre des oiseaux
+aquatiques et non aquatiques, on peut utiliser le script suivant :<br />
+</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="test-de-t-et-anova.html#cb13-1"></a><span class="co"># Test de t</span></span>
+<span id="cb13-2"><a href="test-de-t-et-anova.html#cb13-2"></a><span class="kw">boxplot</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
+<span id="cb13-3"><a href="test-de-t-et-anova.html#cb13-3"></a><span class="st">    &quot;(Bird Mass)&quot;</span>), <span class="dt">names =</span> <span class="kw">c</span>(<span class="st">&quot;Non-Aquatic&quot;</span>, <span class="st">&quot;Aquatic&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;yellowgreen&quot;</span>,</span>
+<span id="cb13-4"><a href="test-de-t-et-anova.html#cb13-4"></a>    <span class="st">&quot;skyblue&quot;</span>))</span>
+<span id="cb13-5"><a href="test-de-t-et-anova.html#cb13-5"></a></span>
+<span id="cb13-6"><a href="test-de-t-et-anova.html#cb13-6"></a><span class="co"># Tout d&#39;abord, vérifions si les variances de chaque groupe</span></span>
+<span id="cb13-7"><a href="test-de-t-et-anova.html#cb13-7"></a><span class="co"># sont égales Note : il n&#39;est pas nécessaire de vérifier la</span></span>
+<span id="cb13-8"><a href="test-de-t-et-anova.html#cb13-8"></a><span class="co"># normalité des données, car on utilise déjà une</span></span>
+<span id="cb13-9"><a href="test-de-t-et-anova.html#cb13-9"></a><span class="co"># transformation logarithmique</span></span>
+<span id="cb13-10"><a href="test-de-t-et-anova.html#cb13-10"></a><span class="kw">tapply</span>(bird<span class="op">$</span>logMass, bird<span class="op">$</span>Aquatic, var)</span>
+<span id="cb13-11"><a href="test-de-t-et-anova.html#cb13-11"></a><span class="kw">var.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
+<span id="cb13-12"><a href="test-de-t-et-anova.html#cb13-12"></a></span>
+<span id="cb13-13"><a href="test-de-t-et-anova.html#cb13-13"></a><span class="co"># Nous sommes prêts pour le test de t</span></span>
+<span id="cb13-14"><a href="test-de-t-et-anova.html#cb13-14"></a>ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> bird)</span>
+<span id="cb13-15"><a href="test-de-t-et-anova.html#cb13-15"></a></span>
+<span id="cb13-16"><a href="test-de-t-et-anova.html#cb13-16"></a><span class="co"># Cette commande est équivalente :</span></span>
+<span id="cb13-17"><a href="test-de-t-et-anova.html#cb13-17"></a>ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(<span class="dt">x =</span> bird<span class="op">$</span>logMass[bird<span class="op">$</span>Aquatic <span class="op">==</span><span class="st"> </span><span class="dv">0</span>], <span class="dt">y =</span> bird<span class="op">$</span>logMass[bird<span class="op">$</span>Aquatic <span class="op">==</span></span>
+<span id="cb13-18"><a href="test-de-t-et-anova.html#cb13-18"></a><span class="st">    </span><span class="dv">1</span>], <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb13-19"><a href="test-de-t-et-anova.html#cb13-19"></a>ttest1</span></code></pre></div>
+<p><img src="images/lm_fig_10.png" width="400" /></p>
+<pre><code>  Two Sample t-test
+ data:  logMass by Aquatic
+ t = -7.7707, df = 52, p-value = 2.936e-10
+ alternative hypothesis: true difference in means is not equal to 0
+ 95 percent confidence interval:
+ -1.6669697 -0.9827343
+ sample estimates:
+ mean of x  mean of y
+ 1.583437   2.908289</code></pre>
+<p>Ici, on voit que le test de ratio des variances n’est pas
+statistiquement différent de 1, ce qui signifie que les variances entre
+les groupes sont égales. Étant donné que notre valeur de p est
+inférieure à 0.05, l’hypothèse nulle (i.e. l’absence de différence de
+masse entre les deux groupes) est rejetée.</p>
+</div>
+<div id="test-de-t-unilatéral" class="section level4">
+<h4><span class="header-section-number">3.1.2.4</span> Test de t unilatéral</h4>
+<p>L’argument <em>"alternative"</em> de la fonction <code>t.test()</code> permet
+d’effectuer un test de t unilatéral. Par exemple, si on veut tester
+l’hypothèse que les oiseaux terrestres sont plus légers que les oiseaux
+aquatiques, on peut écrire la commande de la façon suivante :</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="test-de-t-et-anova.html#cb15-1"></a><span class="co"># Test de t en spécifiant l&#39;argument &#39;alternative&#39;</span></span>
+<span id="cb15-2"><a href="test-de-t-et-anova.html#cb15-2"></a>uni.ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> bird,</span>
+<span id="cb15-3"><a href="test-de-t-et-anova.html#cb15-3"></a>    <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
+<span id="cb15-4"><a href="test-de-t-et-anova.html#cb15-4"></a>uni.ttest1</span></code></pre></div>
+<p>Dans la sortie R obtenue par <code>uni.ttest1</code>, les résultats du test sont
+indiqués à la troisième ligne :</p>
+<pre><code>  Two Sample t-test
+  data:  logMass by Aquatic
+  t = -7.7707, df = 52, p-value = 1.468e-10
+  alternative hypothesis: true difference in means is less than 0
+  95 percent confidence interval:
+    -Inf -1.039331
+  sample estimates:
+  mean in group 0   mean in group 1
+     1.583437          2.908289</code></pre>
+<p>Dans ce cas-ci, la statistique du test de t est t = -7.7707 avec df = 52
+degrés de liberté, ce qui donne une valeur de p = 1.468e-10. On rejette
+donc l’hypothèse nulle. On peut conclure que les oiseaux aquatiques
+sont significativement plus lourds que les oiseaux terrestres.</p>
+</div>
+<div id="effectuer-un-test-de-t-avec-lm" class="section level4">
+<h4><span class="header-section-number">3.1.2.5</span> Effectuer un test de t avec lm()</h4>
+<p>Un test de t est un modèle linéaire et un cas spécifique d’ANOVA avec
+une variable explicative ayant dexu niveaux. On peut alors effectuer un
+test de t avec la fonction <code>lm()</code> dans R.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="test-de-t-et-anova.html#cb17-1"></a>ttest.lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
+<span id="cb17-2"><a href="test-de-t-et-anova.html#cb17-2"></a><span class="kw">anova</span>(ttest.lm1)</span></code></pre></div>
+<pre><code>  Analysis of Variance Table
+  Response: logMass
+            Df  Sum Sq  Mean Sq   F value    Pr(&gt;F)
+  Aquatic    1  19.015  19.0150   60.385     2.936e-10 ***
+  Residuals 52  16.375  0.3149
+  ---
+  Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<p>Quand les variances sont équivalents, on peut montrer que t<sup>2</sup> = F:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="test-de-t-et-anova.html#cb19-1"></a>ttest1<span class="op">$</span>statistic<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb19-2"><a href="test-de-t-et-anova.html#cb19-2"></a><span class="kw">anova</span>(ttest.lm1)<span class="op">$</span>F</span></code></pre></div>
+</div>
+</div>
+<div id="effectuer-une-anova" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> 3.3 Effectuer une ANOVA</h3>
+<p>Le test de t s’applique seulement quand on a une seule variable
+explicative catégorique, qui comprend 2 niveaux. Pour tous les autres
+modèles linéaires avec des variables explicatives catégoriques, on
+utilise une ANOVA.</p>
+<p>Commençons tout d’abord par visualiser les données avec la fonction
+<code>boxplot()</code>. Rappelez-vous que, dans R, les groupes sont ordonnés par
+ordre alphabétique par défaut. Il est possible de réorganiser les
+groupes autrement. Par exemple, on peut les ordonner par ordre croissant
+de la médiane de chaque diète.<br />
+Une autre façon de visualiser les effets des facteurs est d’utiliser la
+fonction <code>plot.design()</code>. Cette fonction permet de représenter les
+valeurs moyennes des niveaux d’un facteur (par une ligne verticale) et
+la moyenne globale de la variable réponse (par une ligne horizontale).</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="test-de-t-et-anova.html#cb20-1"></a><span class="co"># Ordre alphabétique par défaut</span></span>
+<span id="cb20-2"><a href="test-de-t-et-anova.html#cb20-2"></a><span class="kw">boxplot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb20-3"><a href="test-de-t-et-anova.html#cb20-3"></a></span>
+<span id="cb20-4"><a href="test-de-t-et-anova.html#cb20-4"></a><span class="co"># Réorganiser l&#39;ordre des facteurs</span></span>
+<span id="cb20-5"><a href="test-de-t-et-anova.html#cb20-5"></a>med &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, bird<span class="op">$</span>Diet, median))</span>
+<span id="cb20-6"><a href="test-de-t-et-anova.html#cb20-6"></a><span class="kw">boxplot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span><span class="kw">factor</span>(Diet, <span class="dt">levels =</span> <span class="kw">names</span>(med)), <span class="dt">data =</span> bird,</span>
+<span id="cb20-7"><a href="test-de-t-et-anova.html#cb20-7"></a>    <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>, <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>))</span>
+<span id="cb20-8"><a href="test-de-t-et-anova.html#cb20-8"></a></span>
+<span id="cb20-9"><a href="test-de-t-et-anova.html#cb20-9"></a><span class="kw">plot.design</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
+<span id="cb20-10"><a href="test-de-t-et-anova.html#cb20-10"></a><span class="st">    &quot;(Maximum Abundance)&quot;</span>))</span></code></pre></div>
+<p><img src="images/lm_fig_11.png" width="450" /> <img src="images/plot_design.png" width="350" /></p>
+<p>Nous sommes maintenant prêts à effectuer une ANOVA. Dans R, la fonction
+<code>aov()</code> permet d’effectuer une ANOVA directement. Il est également
+possible d’effectuer une ANOVA avec la fonction <code>anova()</code> qui exécute
+l’ANOVA comme un modèle linéaire :</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="test-de-t-et-anova.html#cb21-1"></a><span class="co"># En utilisant aov()</span></span>
+<span id="cb21-2"><a href="test-de-t-et-anova.html#cb21-2"></a>aov1 &lt;-<span class="st"> </span><span class="kw">aov</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb21-3"><a href="test-de-t-et-anova.html#cb21-3"></a><span class="kw">summary</span>(aov1)</span>
+<span id="cb21-4"><a href="test-de-t-et-anova.html#cb21-4"></a></span>
+<span id="cb21-5"><a href="test-de-t-et-anova.html#cb21-5"></a><span class="co"># En utilisant lm()</span></span>
+<span id="cb21-6"><a href="test-de-t-et-anova.html#cb21-6"></a>anov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb21-7"><a href="test-de-t-et-anova.html#cb21-7"></a><span class="kw">anova</span>(anov1)</span></code></pre></div>
+</div>
+<div id="vérification-des-conditions-de-base" class="section level3">
+<h3><span class="header-section-number">3.1.4</span> 3.4 Vérification des conditions de base</h3>
+<p>Comme la régression linéaire simple et le test de t, l’ANOVA doit
+respecter 4 conditions statistiques pour que les résultats soient
+valides. Voici quelques conseils pour tester ces conditions pour une
+ANOVA:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Distribution normale</strong><br />
+Les résidus d’un modèle d’ANOVA peuvent être visualisés à l’aide
+d’un diagramme quantile-quantile (Q-Q). Les résidus sont considérés
+comme normalement distribués s’ils se répartissent le long de la
+droite 1:1. Si ce n’est pas le cas, les résultats de l’ANOVA ne
+peuvent pas être interprétés.</li>
+<li><strong>Homoscédasticité</strong><br />
+L’ANOVA est valide seulement lorsque la variance des résidus est
+homogène entre les groupes. Cette homoscédasticité peut être
+vérifiée par un graphique des résidus en fonction des valeurs
+prédites ou par un diagramme diagnostic "scale-location". Si ces
+graphiques montrent une dispersion équivalente des résidus pour
+chaque valeur prédite, la variance des résidus peut être considérée
+homogène.<br />
+Il est également possible d’effectuer un test de Bartlett à l’aide
+de la fonction <code>bartlett.test()</code>. Si la valeur de p de ce test est
+supérieure à 0.05, l’hypothèse nulle H<sub>0</sub>: s<sub>1</sub><sup>2</sup> = s<sub>2</sub><sup>2</sup> =...
+= s<sub>j</sub><sup>2</sup> =... = s<sub>n</sub><sup>2</sup> est acceptée (i.e. l’homoscédasticité est
+respectée).<br />
+Une transformation de la variable réponse peut être utilisée si
+cette supposition n’est pas respectée.</li>
+<li><strong>Additivité</strong><br />
+Les effets de deux facteurs sont additifs si l’effet d’un facteur
+demeure constant pour tous les niveaux d’un autre facteur. Chaque
+facteur doit influencer la variable réponse de manière indépendante
+des autres facteurs.</li>
+</ol>
+<p>Si les conditions ne sont pas respectées, vous pouvez essayer de
+transformer la variable réponse. Ceci peut aider à normaliser les
+résidus, à égaliser les variances, et à transformer un effet
+multiplicatif en effet additif. Si vous ne voulez pas (ou ne pouvez pas)
+transformer vos données, vous pouvez utiliser l’équivalent
+non-paramétrique de l’ANOVA : le <a href="http://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance">test de
+Kruskal-Wallis</a>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="test-de-t-et-anova.html#cb22-1"></a><span class="co"># Diagrammes de diagnostic</span></span>
+<span id="cb22-2"><a href="test-de-t-et-anova.html#cb22-2"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb22-3"><a href="test-de-t-et-anova.html#cb22-3"></a><span class="kw">plot</span>(anov1)</span>
+<span id="cb22-4"><a href="test-de-t-et-anova.html#cb22-4"></a><span class="kw">par</span>(opar)</span>
+<span id="cb22-5"><a href="test-de-t-et-anova.html#cb22-5"></a></span>
+<span id="cb22-6"><a href="test-de-t-et-anova.html#cb22-6"></a><span class="co"># Test de la supposition de la normalité des résidus</span></span>
+<span id="cb22-7"><a href="test-de-t-et-anova.html#cb22-7"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(anov1))</span>
+<span id="cb22-8"><a href="test-de-t-et-anova.html#cb22-8"></a></span>
+<span id="cb22-9"><a href="test-de-t-et-anova.html#cb22-9"></a><span class="co"># Test de la supposition de l&#39;homogénéité de la variance</span></span>
+<span id="cb22-10"><a href="test-de-t-et-anova.html#cb22-10"></a><span class="kw">bartlett.test</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>Idéalement, le premier graphique devrait montrer une dispersion
+similaire pour chaque niveau de diète. Toutefois, les tests de Shapiro
+et de Bartlett ne sont pas significatifs. On peut supposer que les
+résidus sont distribués normalement et que les variances sont égales.</p>
+</div>
+<div id="sortie-du-modèle-1" class="section level3">
+<h3><span class="header-section-number">3.1.5</span> 3.5 Sortie du modèle</h3>
+<p>Lorsque le modèle d’ANOVA a été validé, on peut interpréter les
+résultats correctement. La sortie du modèle fournie par R dépend de la
+fonction qui a été utilisée pour effectuer l’ANOVA. Si la fonction
+<code>aov()</code> a été utilisée :</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="test-de-t-et-anova.html#cb23-1"></a>aov1 &lt;-<span class="st"> </span><span class="kw">aov</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>Les résultats de l’ANOVA peuvent être visualisés avec la fonction
+<code>summary()</code> :</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="test-de-t-et-anova.html#cb24-1"></a><span class="kw">summary</span>(aov1)</span></code></pre></div>
+<p>Si la fonction <code>lm()</code> a été utilisée :</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="test-de-t-et-anova.html#cb25-1"></a>anov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>les résultats de l’ANOVA peuvent être visualisés avec la fonction
+<code>anova()</code> :</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="test-de-t-et-anova.html#cb26-1"></a><span class="kw">anova</span>(anov1)</span></code></pre></div>
+<p>Dans les deux cas, la sortie dans R sera la même :</p>
+<pre><code>          Df  Sum Sq      Mean Sq     F value     Pr(&gt;F)
+Diet          4   5.106       1.276       2.836       0.0341 *
+Residuals     49  22.052      0.450
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<p>Cette sortie de R représente le tableau de l’ANOVA. On y retrouve les
+degrés de liberté, la somme des carrés, la moyenne de la somme des
+carrés, la statistique de F ainsi qu’une valeur de p. Dans l’exemple
+de la diète des oiseaux, la diète influence significativement
+l’abondance des oiseaux car la valeur de p est inférieure à 0.05.
+L’hypothèse nulle est rejetée, ce qui signifie qu’au moins une des
+diètes influence l’abondance différemment des autres diètes.</p>
+</div>
+<div id="test-complémentaire" class="section level3">
+<h3><span class="header-section-number">3.1.6</span> 3.6 Test complémentaire</h3>
+<p>Il est impossible d’identifier quel traitement diffère des autres avec
+une ANOVA. Elle ne permet que de déterminer s’il existe une différence
+entre niveaux. Pour identifier les niveaux qui diffèrent des autres, les
+tests post-hoc comparent les combinaisons de variables explicatives
+(i.e. les traitements) deux par deux. Il existe plusieurs tests post hoc
+(e.g. Fischer’s least significant difference, Duncan’s new multiple
+range test, Newman-Keuls method, Dunnett’s test, etc.), mais le test de
+Tukey est le plus couramment utilisé. Dans R, on utilise la fonction
+<code>TukeyHSD()</code> pour effectuer ce test :</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="test-de-t-et-anova.html#cb28-1"></a><span class="co"># À quel niveau se situe la différence de diète ?</span></span>
+<span id="cb28-2"><a href="test-de-t-et-anova.html#cb28-2"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(anov1), <span class="dt">ordered =</span> T)</span>
+<span id="cb28-3"><a href="test-de-t-et-anova.html#cb28-3"></a></span>
+<span id="cb28-4"><a href="test-de-t-et-anova.html#cb28-4"></a><span class="co"># Cette commande est équivalente à la précédente :</span></span>
+<span id="cb28-5"><a href="test-de-t-et-anova.html#cb28-5"></a><span class="kw">TukeyHSD</span>(aov1, <span class="dt">ordered =</span> T)</span></code></pre></div>
+<p>La sortie de R inclut un tableau qui liste toutes les combinaisons des
+niveaux de la variable explicative et qui identifie quel(s)
+traitement(s) diffère(ent) des autres :<br />
+</p>
+<pre><code>Tukey multiple comparisons of means 95% family-wise confidence level
+   factor levels have been ordered
+Fit: aov(formula = anov1)
+$Diet
+                              diff             lwr        upr         p adj
+Vertebrate-InsectVert     0.3364295   -1.11457613     1.787435    0.9645742
+Insect-InsectVert         0.6434334   -0.76550517     2.052372    0.6965047
+Plant-InsectVert          0.8844338   -1.01537856     2.784246    0.6812494
+PlantInsect-InsectVert    1.0657336   -0.35030287     2.481770    0.2235587
+Insect-Vertebrate         0.3070039   -0.38670951     1.000717    0.7204249
+Plant-Vertebrate          0.5480043   -0.90300137     1.999010    0.8211024
+PlantInsect-Vertebrate    0.7293041    0.02128588     1.437322    0.0405485
+Plant-Insect              0.2410004   -1.16793813     1.649939    0.9884504
+PlantInsect-Insect        0.4223003   -0.19493574     1.039536    0.3117612
+PlantInsect-Plant         0.1812999   -1.23473664     1.597336    0.9961844</code></pre>
+<p>Dans ce cas-ci, la seule différence significative d’abondance se
+retrouve entre les diètes "PlantInsect" et "Vertebrate".</p>
+</div>
+<div id="visualisation-des-résultats" class="section level3">
+<h3><span class="header-section-number">3.1.7</span> 3.7 Visualisation des résultats</h3>
+<p>Après avoir vérifié les conditions de base, interprété les résultats, et
+identifié les niveaux significatifs à l’aide de tests post-hoc ou de
+contrastes, les résultats d’une ANOVA peuvent être représentés
+graphiquement à l’aide de la fonction <code>barplot()</code>. R produit donc un
+graphique de la variable réponse en fonction des niveaux de traitement,
+ou les erreurs types et le nom des niveaux du traitement (représentant
+le résultat d’un test post hoc) peuvent y être apposées.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="test-de-t-et-anova.html#cb30-1"></a><span class="co"># Visualisation d&#39;un modèle d&#39;ANOVA à l&#39;aide de la fonction</span></span>
+<span id="cb30-2"><a href="test-de-t-et-anova.html#cb30-2"></a><span class="co"># barplot()</span></span>
+<span id="cb30-3"><a href="test-de-t-et-anova.html#cb30-3"></a></span>
+<span id="cb30-4"><a href="test-de-t-et-anova.html#cb30-4"></a>sd &lt;-<span class="st"> </span><span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, <span class="kw">list</span>(bird<span class="op">$</span>Diet), sd)</span>
+<span id="cb30-5"><a href="test-de-t-et-anova.html#cb30-5"></a>means &lt;-<span class="st"> </span><span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, <span class="kw">list</span>(bird<span class="op">$</span>Diet), mean)</span>
+<span id="cb30-6"><a href="test-de-t-et-anova.html#cb30-6"></a>n &lt;-<span class="st"> </span><span class="kw">length</span>(bird<span class="op">$</span>logMaxAbund)</span>
+<span id="cb30-7"><a href="test-de-t-et-anova.html#cb30-7"></a>se &lt;-<span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>sd<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb30-8"><a href="test-de-t-et-anova.html#cb30-8"></a></span>
+<span id="cb30-9"><a href="test-de-t-et-anova.html#cb30-9"></a>bp &lt;-<span class="st"> </span><span class="kw">barplot</span>(means, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>,</span>
+<span id="cb30-10"><a href="test-de-t-et-anova.html#cb30-10"></a>    <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>), <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>),</span>
+<span id="cb30-11"><a href="test-de-t-et-anova.html#cb30-11"></a>    <span class="dt">xlab =</span> <span class="st">&quot;Diet&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.8</span>))</span>
+<span id="cb30-12"><a href="test-de-t-et-anova.html#cb30-12"></a></span>
+<span id="cb30-13"><a href="test-de-t-et-anova.html#cb30-13"></a></span>
+<span id="cb30-14"><a href="test-de-t-et-anova.html#cb30-14"></a><span class="co"># Ajout des lignes verticales représentant les erreurs</span></span>
+<span id="cb30-15"><a href="test-de-t-et-anova.html#cb30-15"></a><span class="co"># types</span></span>
+<span id="cb30-16"><a href="test-de-t-et-anova.html#cb30-16"></a><span class="kw">segments</span>(bp, means <span class="op">-</span><span class="st"> </span>se, bp, means <span class="op">+</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb30-17"><a href="test-de-t-et-anova.html#cb30-17"></a><span class="co"># et des lignes horizontales</span></span>
+<span id="cb30-18"><a href="test-de-t-et-anova.html#cb30-18"></a><span class="kw">segments</span>(bp <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">-</span><span class="st"> </span>se, bp <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">-</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb30-19"><a href="test-de-t-et-anova.html#cb30-19"></a><span class="kw">segments</span>(bp <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">+</span><span class="st"> </span>se, bp <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">+</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="images/lm_fig_12.png" width="650" /></p>
+</div>
+<div id="allons-plus-loin-contrastes" class="section level3">
+<h3><span class="header-section-number">3.1.8</span> Allons plus loin: Contrastes</h3>
+<ul>
+<li>Les contrastes sont des comparaisons de moyennes basées sur des
+hypothèses <em>a priori</em>,</li>
+<li>Ces groupes peuvent être composés d’un ou plusieurs niveaux d’un
+facteur,</li>
+<li>On peut tester une hypothèse simple (e.g. μ<sub>1</sub> = μ<sub>2</sub>) ou des
+hypothèses plus complexes (e.g. (μ<sub>1</sub> + μ<sub>2</sub>)/3 == μ<sub>3</sub>).</li>
+</ul>
+<p>Le nombre de comparaisons doit être plus petit ou égal au nombre de
+degrés de liberté de l’ANOVA. Ces comparaisons doivent être
+indépendantes l’une de l’autre.</p>
+<p>Il est possible d’afficher des résultats supplémentaires de l’ANOVA
+dans R, qu’on appelle contrastes. Ceci permet de visualiser les
+estimations de paramètres pour chaque niveau de la variable catégorique
+en comparaison avec un niveau de référence. On peut afficher ces
+résultats avec la fonction <code>summmary.lm()</code> lorsque l’ANOVA a été
+effectuée avec la fonction <code>aov()</code> et avec la fonction <code>summary()</code>
+lorsque l’ANOVA a été effectuée avec la fonction <code>lm()</code>. Cette sortie
+montre les résultats de la régression linéaire pour chaque niveau de la
+variable catégorique :</p>
+<pre><code>Call:     lm(formula = logMaxAbund ~ Diet, data = bird)
+Residuals:
+      Min         1Q          Median          3Q          Max
+     -1.85286     -0.32972    -0.08808    0.47375     1.56075
+Coefficients:
+                  Estimate    Std. Error  t value     Pr(&gt;|t|)
+(Intercept)       1.1539      0.1500      7.692   5.66e-10 ***
+DietInsectVert   -0.6434      0.4975     -1.293   0.2020
+DietPlant         0.2410      0.4975      0.484   0.6303
+DietPlantInsect   0.4223      0.2180      1.938       0.0585 .
+DietVertebrate   -0.3070      0.2450     -1.253       0.2161
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error: 0.6709 on 49 degrees of freedom
+Multiple R-squared:  0.188,     Adjusted R-squared:  0.1217
+F-statistic: 2.836 on 4 and 49 DF,  p-value: 0.0341</code></pre>
+<p>La dernière ligne de cette sortie est identique à la sortie précédente
+de l’ANOVA. La statistique de F de l’ANOVA et sa valeur de p associée
+(2.836 et 0.0341 respectivement) sont les mêmes que celles présentées
+dans la table d’ANOVA, ce qui indique que la variabilité de
+l’abondance est mieux expliquée par la diète que par un modèle nul; la
+diète a donc un effet significatif sur l’abondance. L’ajustement du
+modèle (i.e. le R<sup>2</sup> ajusté) apparaît sur l’avant-dernière ligne de la
+sortie. Dans ce cas-ci, la diète explique 12.17% de la variabilité de
+l’abondance.<br />
+Les contrastes sont utilisés pour ajuster une variable réponse en
+fonction des différents niveaux d’une variable catégorique. Dans le cas
+de l’abondance en fonction de la diète, cinq régressions linéaires
+(correspondant aux cinq coefficients dans la sortie de R) sont calculées
+par la fonction <code>lm()</code>, car la variable "diète" contient cinq niveaux.
+Par défaut, le niveau de référence correspond au premier niveau (en
+ordre alphabétique) de la variable catégorique. Ce niveau est indiqué
+par la ligne <code>intercept</code> dans la sortie de R, soit <code>Insect</code> dans ce
+cas-ci.</p>
+<p>Ici, le coefficient estimé du niveau de référence est comparé à 0 par un
+test de t, alors que les autres coefficients sont comparés à celui du
+niveau de référence. Dans ce cas-ci, seule la diète <code>PlantInsect</code> est
+différente de la diète <code>Insect</code> (valeur de p = 0.0585).<br />
+En d’autres mots, cette sortie de R permet de calculer la moyenne de la
+variable réponse pour chaque niveau de diète. Par exemple :</p>
+<p>LogMaxAbund = 1.1539 pour la diète <code>Insect</code>,<br />
+LogMaxAbund = 1.1539 – 0.6434 pour la diète <code>InsectVert</code>,<br />
+LogMaxAbund = 1.1539 + 0.2410 pour la diète <code>Plant</code>,<br />
+etc.</p>
+<p>Ce type de contrastes compare chaque niveau de la variable explicative à
+un niveau de référence. Dans R, ceci correspond à la fonction
+<code>contr.treatment()</code> et représentent la méthode par défaut de la fonction
+<code>lm()</code>. Le niveau de référence peut être changé en utilisant la fonction
+<code>relevel()</code>. Par exemple,</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="test-de-t-et-anova.html#cb32-1"></a>bird<span class="op">$</span>Diet2 &lt;-<span class="st"> </span><span class="kw">relevel</span>(bird<span class="op">$</span>Diet, <span class="dt">ref =</span> <span class="st">&quot;Plant&quot;</span>)</span>
+<span id="cb32-2"><a href="test-de-t-et-anova.html#cb32-2"></a>anov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet2, <span class="dt">data =</span> bird)</span>
+<span id="cb32-3"><a href="test-de-t-et-anova.html#cb32-3"></a><span class="kw">summary</span>(anov2)</span>
+<span id="cb32-4"><a href="test-de-t-et-anova.html#cb32-4"></a><span class="kw">anova</span>(anov2)</span></code></pre></div>
+<p>compare chaque diète à la diète <code>Plant</code> maintenant définie comme le
+niveau de référence.</p>
+<p>La matrice de coefficients de contrastes peut être affichée par la
+commande suivante :</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="test-de-t-et-anova.html#cb33-1"></a><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)</span></code></pre></div>
+<pre><code>              Insect      InsectVert  PlantInsect     Vertebrate
+Plant             0           0           0                   0
+Insect            1           0           0                   0
+InsectVert              0             1           0                   0
+PlantInsect             0             0           1                   0
+Vertebrate            0           0           0               1</code></pre>
+<p>où chaque colonne représente une comparaison avec le niveau de référence
+<code>Plant</code> et chaque ligne représente un type de diète. Par exemple, la
+première comparaison est effectuée entre les diètes <code>Plant</code> et <code>Insect</code>.
+La seconde comparaison est effectuée entre <code>Plant</code> et <code>InsectVert</code> etc.</p>
+<p>Il est possible de créer une matrice de coefficients de contrastes afin
+d’effectuer certaines comparaisons bien précises à l’aide de la
+fonction <code>contrasts()</code>. Par exemple,</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="test-de-t-et-anova.html#cb35-1"></a><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2) &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb35-2"><a href="test-de-t-et-anova.html#cb35-2"></a>    <span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">-1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
+<p>crée la matrice de coefficients de contrastes suivante :</p>
+<pre><code>              [,1]    [,2]    [,3]    [,4]
+Plant          4       0       0       0
+Insect        -1       1       0       1
+InsectVert    -1       1       0      -1
+PlantInsect   -1      -1       1       0
+Vertebrate    -1      -1      -1       0</code></pre>
+<p>qui compare :<br />
+</p>
+<ul>
+<li>la diète <code>Plant</code> à toutes les autres diètes dans la première
+comparaison (colonne),<br />
+* les diètes <code>InsectVert</code> et <code>Insect</code> aux diètes <code>PlantInsect</code> et
+<code>Vertebrate</code> dans la deuxième comparaison,<br />
+* la diète <code>PlantInsect</code> à la diète <code>Vertebrate</code> dans la troisième
+comparaison,<br />
+* et la diète <code>Insect</code> à la diète <code>InsectVert</code> dans la quatrième
+comparaison.</li>
+</ul>
+<p>Pour chaque colonne, les diètes avec le même coefficient appartiennent
+au même groupe (e.g. pour la colonne 1, les quatre diètes avec un
+coefficient de -1 appartiennent au même groupe et sont comparés à la
+diète avec un coefficient différent; ici la diète "Plant" avec un
+coefficient de 4). Il est donc possible d’effectuer n’importe quelle
+comparaison possible à l’aide d’une matrice de coefficients de
+contrastes. Deux conditions doivent être respectées afin d’utiliser
+correctement ces matrices :</p>
+<pre><code>  - Pour chaque colonne, la somme des coefficients doit être égale à zéro et
+  - la somme des produits de chaque paire de colonnes doit être égale à zéro.</code></pre>
+<p>Ceci peut être vérifié à l’aide de la commande suivante :</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="test-de-t-et-anova.html#cb38-1"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet)[, <span class="dv">1</span>])  <span class="co"># première condition pour la colonne 1</span></span>
+<span id="cb38-2"><a href="test-de-t-et-anova.html#cb38-2"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet)[, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet)[, <span class="dv">2</span>])  <span class="co"># deuxième condition pour les colonnes 1 et 2</span></span></code></pre></div>
+<p>Les contrastes utilisés fréquemment sont déjà programmés dans R :
+contrastes de Helmert, contrastes polynomiaux, etc. (cf.
+<code>help(contrasts)</code>).</p>
+<hr />
+</div>
+</div>
+<div id="anova-à-deux-critères-de-classification" class="section level2">
+<h2><span class="header-section-number">3.2</span> 4. ANOVA à deux critères de classification</h2>
+<p>Jusqu’ici, les modèles ANOVA que nous avons explorés n’ont eu qu’une
+seule variable catégorique, mais on peut aussi créer des modèles ANOVA
+avec plusieurs variables explicatives catégoriques. Quand il y a 2
+variables explicatives catégoriques, le modèle est un <strong>ANOVA à deux
+critères de classification</strong>. Un ANOVA à deux critères de classification
+teste plusieurs <strong>hypothèses</strong>: que la moyenne diffère entre les niveaux
+de la variable A, que la moyenne ne diffère pas entre les niveaux de la
+variable B; et qu’il n’y a pas d’interaction entre les variables A et
+B. Une <strong>interaction significative</strong> implique que la valeur moyenne de
+la variable réponse pour chaque niveau de la variable A change selon le
+niveau de la variable B. Par exemple, la relation entre la couleur d’un
+fruit et sa masse dépend de l’espèce de la plante: si oui, on peut dire
+qu’il y a une interaction entre la couleur et l’espèce.</p>
+<p>Cliquez ci-dessous pour plus des détails mathématiques. Le
+tableau de calcul de l’ANOVA vu à la section précédente doit être
+modifié afin d’inclure le deuxième facteur et l’interaction entre ces
+deux facteurs :</p>
+<table style="width:99%;">
+<colgroup>
+<col width="6%" />
+<col width="9%" />
+<col width="37%" />
+<col width="8%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Source de<br />
+variation</th>
+<th align="left">Degrés de<br />
+liberté (df)</th>
+<th align="left">Sommes des carrés<br />
+des écarts à la moyenne</th>
+<th align="left">Moyenne des carrés</th>
+<th align="left">Statistique de F</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="left"><span class="math inline">\(abr-1\)</span> ${SS_Tot}=</td>
+<td align="left">sum{i,j,k}{}({y_ijk}-overline{y}) 2$</td>
+<td align="left"></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="left">Intra-<br />
+cases (erreur)</td>
+<td align="left"><span class="math inline">\(ab(r-1)\)</span> ${SS_E}= s</td>
+<td align="left">um{i,j,k}{}({y}_ijk-{overline{y}_ij}) 2$</td>
+<td align="left">${MS_E}={SS_E}/{ab(r</td>
+<td align="left">-1)}$</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td align="left">Cases</td>
+<td align="left"><span class="math inline">\(ab-1\)</span> ${SS_Cells</td>
+<td align="left">}= sum{i,j}{}({overline{y}_ij}-overline{y}) 2$</td>
+<td align="left"></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="left">Facteur A</td>
+<td align="left"><span class="math inline">\(a-1\)</span> ${SS_Facte</td>
+<td align="left">urA}= rb sum{i}{}({overline{y}_i.}-overline{y}) 2$</td>
+<td align="left">${MS_FacteurA}={SS_F</td>
+<td align="left">acteurA}/{a-1}$ ${F_FacteurA}={MS_FacteurA}/{M</td>
+<td>S_E}&lt;/m&gt;</td>
+</tr>
+<tr class="odd">
+<td align="left">Facteur B</td>
+<td align="left"><span class="math inline">\(b-1\)</span> ${SS_Facte</td>
+<td align="left">urB}= ra sum{j}{}({overline{y}_.j}-overline{y}) 2$</td>
+<td align="left">${MS_FacteurB}={SS_F</td>
+<td align="left">acteurB}/{b-1}$ ${F_FacteurB}={MS_FacteurB}/{M</td>
+<td>S_E}&lt;/m&gt;</td>
+</tr>
+<tr class="even">
+<td align="left">Interaction<br />
+entre A et B</td>
+<td align="left"><span class="math inline">\((a-1)(b-1)\)</span> ${SS_AB}=</td>
+<td align="left">r sum{i,j,k}{}({overline{y}_{..k}}-{overline{y}_{.jk}}-{overline{y}_{i.k}}) 2$</td>
+<td align="left">${MS_AB}={SS_AB}/{(a</td>
+<td align="left">-1)(b-1)}$ ${F_AB}={MS_AB}/{MS_E}&lt;/m&gt;</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>a: nombre de niveaux de la variable explicative A; b: nombre de niveaux
+de la variable explicative B; r: nombre de répétitions par traitement</p>
+<div id="effectuer-une-anova-à-deux-critères-de-classification" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> 4.1 Effectuer une ANOVA à deux critères de classification</h3>
+<p>Dans R, une ANOVA à deux critères de classification est effectuée de la
+même manière qu’une ANOVA à un critère de classification avec la
+fonction <code>lm()</code>.</p>
+<hr />
+<p><strong>DÉFI 2</strong></p>
+<p>Examinez les effets des facteurs "Diet", "Aquatic" et de leur
+interaction sur l’abondance maximale d’oiseaux.</p>
+<p>Rappelez-vous que vous devez vérifier les suppositions statistiques de
+base avant d’interpréter les résultats d’une ANOVA, soit :<br />
+- Distribution normale des rsidus du modèle</p>
+<ol style="list-style-type: decimal">
+<li>Homoscédasticité des résidus de la variance</li>
+</ol>
+<p>Cette vérification peut être faite en utilisant les quatre graphiques de
+diagnostic expliqués dans la section précédente.<br />
+++++ Défi 2: Solution |</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="test-de-t-et-anova.html#cb39-1"></a>anov4 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet <span class="op">*</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
+<span id="cb39-2"><a href="test-de-t-et-anova.html#cb39-2"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb39-3"><a href="test-de-t-et-anova.html#cb39-3"></a><span class="kw">plot</span>(anova4)</span>
+<span id="cb39-4"><a href="test-de-t-et-anova.html#cb39-4"></a><span class="kw">par</span>(opar)</span>
+<span id="cb39-5"><a href="test-de-t-et-anova.html#cb39-5"></a><span class="kw">summary</span>(anov4)</span>
+<span id="cb39-6"><a href="test-de-t-et-anova.html#cb39-6"></a><span class="kw">anova</span>(anov4)</span></code></pre></div>
+<p>La fonction <code>anova()</code> permet de visualiser le tableau d’ANOVA du modèle
+:<br />
+</p>
+<pre><code>Analysis of Variance Table
+Response: logMaxAbund
+              Df  Sum Sq Mean Sq  F value Pr(&gt;F)
+Diet              4  5.1059  1.27647  3.0378  0.02669 *
+Aquatic           1  0.3183  0.31834  0.7576  0.38870
+Diet:Aquatic      3  2.8250  0.94167  2.2410  0.09644 .
+Residuals     45 18.9087 0.42019
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<p>Dans ce cas-ci, le seul facteur significatif est la diète. La valeur de
+p de l’interaction n’est pas significative, ce qui signifie que
+l’effet de la diète est le même peu importe si l’oiseau est aquatique
+ou non. Le seuil de signification peut aussi être testé en comparant
+deux modèles nichés, i.e. en incluant un premier modèle avec une
+interaction et un deuxième modèle avec sans l’interaction. La fonction
+<code>anova()</code> est utilisée :</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="test-de-t-et-anova.html#cb41-1"></a>anov5 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
+<span id="cb41-2"><a href="test-de-t-et-anova.html#cb41-2"></a><span class="kw">anova</span>(anov5, anov4)</span></code></pre></div>
+<p>Voici la sortie dans R :</p>
+<pre><code> Analysis of Variance Table
+ Model 1: logMaxAbund ~ Diet + Aquatic
+ Model 2: logMaxAbund ~ Diet * Aquatic
+   Res.Df     RSS     Df  Sum of Sq       F   Pr(&gt;F)
+ 1     48         21.734
+ 2     45 1       8.909   3       2.825       2.241   0.09644 .
+ ---
+ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<p>Étant donné que la seule différence entre ces deux modèles est la
+présence de l’interaction, cette sortie de R présente le seuil de
+signification de cette interaction. Dans ce cas-ci, l’interaction
+n’est pas significative et peut donc être retirée du modèle.<br />
+Lorsque l’interaction est significative, rappelez-vous que chaque
+facteur ne peut pas être interprété séparément. Seule l’interaction
+peut l’être.</p>
+<p><span class="ul"><strong>Note :</strong></span> Le tableau d’ANOVA indique que le nombre de degrés de
+liberté pour l’interaction entre la diète et le type d’oiseau
+(aquatique ou non) est de 3. Selon la notation mathématique du tableau
+de l’ANOVA à deux critères de classification (pour les plans
+équilibrés), a = 5 et b = 2 et le nombre de degrés de liberté est de
+(a-1)(b-1) = 4*1 = 4. La sortie de R indique cependant que le nombre de
+degrés de liberté est de 3. Cette interaction est extrêmement non
+équilibrée () : les oiseaux aquatiques ne se nourrissent pas de plante,
+donc ce niveau n’est pas considéré (prenez note du NA dans la sortie de
+summary(anov4)). Consultez la section sur les <a href="http://qcbs.ca/wiki/r_atelier4#anova_non_equilibree_section_avancee_et_optionnelle">ANOVA non
+équilibrées</a>
+plus bas pour plus de détails. ++++</p>
+<hr />
+</div>
+<div id="diagramme-dinteraction" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> 4.2 Diagramme d’interaction</h3>
+<p>Les interactions peuvent être visualisées à l’aide de la fonction
+<code>interaction.plot()</code> :</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="test-de-t-et-anova.html#cb43-1"></a><span class="kw">interaction.plot</span>(bird<span class="op">$</span>Diet, bird<span class="op">$</span>Aquatic, bird<span class="op">$</span>logMaxAbund, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb43-2"><a href="test-de-t-et-anova.html#cb43-2"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="st">&quot;Diet&quot;</span>)</span></code></pre></div>
+<p><img src="images/interaction_plot.png" width="650" /></p>
+<p>Que signifie le trou sur la ligne des oiseaux aquatiques?</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="test-de-t-et-anova.html#cb44-1"></a><span class="kw">table</span>(bird<span class="op">$</span>Diet, bird<span class="op">$</span>Aquatic)</span></code></pre></div>
+<pre><code>             0  1
+Insect      14  6
+InsectVert   1  1
+Plant        2  0
+PlantInsect 17  1
+Vertebrate   5  7</code></pre>
+<p>Le plan est <strong>non-équilibré</strong>: il y a un nombre inégal d’observations
+entre les diètes pour les oiseaux aquatiques (représentés par le 1) et
+les oiseaux terrestres (représentés par le 0). Consultez la section
+avancée ci-dessous pour plus de détails sur les ANOVA à plan
+non-équilibré.</p>
+<hr />
+<p><strong>DÉFI 3</strong></p>
+<p>Tester le seuil de signification du facteur "Aquatic" en comparant
+deux modèles nichés (i.e. avec et sans ce facteur).</p>
+<p>++++ Défi 3: Solution |</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="test-de-t-et-anova.html#cb46-1"></a><span class="kw">anova</span>(anov3, anov5)  <span class="co"># Rappel que anov3 est le modèle avec le facteur &#39;Diet&#39; seulement.</span></span></code></pre></div>
+<p>++++</p>
+<hr />
+</div>
+</div>
+<div id="anova-non-équilibrée-section-avancéefacultative" class="section level2">
+<h2><span class="header-section-number">3.3</span> 5. ANOVA non-équilibrée (section avancée/facultative)</h2>
+<p>Les ANOVA à un et à deux critères de classification nous
+permettent de déterminer les effets de variables catégoriques sur une
+variable réponse continue lorsque nous avons un plan expérimental
+<strong>équilibré</strong> (i.e. lorsque le nombre de répétitions est égal pour
+chaque niveau de facteur). Cependant, le plan peut devenir
+<strong>non-équilibré</strong> en raison d’une perte d’unités expérimentales au
+cours d’une expérience ou de restrictions techniques dues au plan
+expérimental. Dans de telles situations, les résultats d’ANOVA peuvent
+être mal interprétés en raison de calculs erronés de la somme des
+carrés. Pour des plans expérimentaux non-équilibrés, l’ANOVA doit être
+modifiée pour prendre en compte les données manquantes de la variable
+réponse.</p>
+<p>Le modèle mathématique, les hypothèses statistiques, et les conditions
+de base d’une ANOVA à plan non-équilibré demeurent les mêmes que deux
+de l’ANOVA à plan équilibré. Le calcul de la somme des carrés, par
+contre, est différent.</p>
+<p>Pour un plan expérimental non-équilibré, les hypothèses statistiques
+sont les suivantes :</p>
+<p>H<sub>0</sub>: µ<sub>1</sub> = µ<sub>2</sub> =... = µ<sub>i</sub> =... = µ<sub>n</sub><br />
+H<sub>1</sub>: il y a au moins une moyenne µi qui diffère des autres.</p>
+<p>On utilise ce modèle mathématique :</p>
+<p>${y_{ijk}} = µ + {A_i} + {B_j} + {A_i}{B_j} + {ε_{ijk}}&lt;/m&gt;</p>
+<p>Rappelez-vous du calcul de la somme des carrés dans le cas d’une ANOVA
+à plan équilibré :</p>
+<p>$ {SS_FactorA} = rb sum{i}{}{({overline{y}_{i.}}-overline{y})}^2 =
+SS(A) &lt;/m&gt;<br />
+$ {SS_FactorB} = ra sum{j}{}{({overline{y}_{.j}}-overline{y})}^2 =
+SS(B|A) = SS(A,B)-SS(B) &lt;/m&gt;<br />
+$ {SS_AB} = r
+sum{i,j,k}{}({overline{y}_{..k}}-{overline{y}_{.jk}}-{overline{y}_{i.k}})^2
+= SS(A,B,AB)-SS(A,B) &lt;/m&gt;</p>
+<p>Ceci correspond à une somme des carrés séquentielle (aussi appelée de
+type I), car l’effet d’un facteur B est calculé après avoir retiré
+l’effet d’un facteur A. L’interaction est calculée après avoir retiré
+les effets principaux de ces deux facteurs. Ces calculs dépendent de la
+taille de l’échantillon, car l’effet de chaque facteur est calculé
+après avoir retiré l’effet du facteur précédent.</p>
+<p>Dans le cas d’un plan expérimental non-équilibré, les résultats
+d’ANOVA dépendent de l’ordre dans lequel chaque variable apparaît dans
+le modèle. Voyez comment les résultats diffèrent en comparant les deux
+modèles suivants :</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="test-de-t-et-anova.html#cb47-1"></a>unb_anov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Aquatic <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb47-2"><a href="test-de-t-et-anova.html#cb47-2"></a>unb_anov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
+<span id="cb47-3"><a href="test-de-t-et-anova.html#cb47-3"></a><span class="kw">anova</span>(unb_anov1)</span>
+<span id="cb47-4"><a href="test-de-t-et-anova.html#cb47-4"></a><span class="kw">anova</span>(unb_anov2)</span></code></pre></div>
+<p>Bien que les variables explicatives soient les mêmes pour chaque modèle,
+les tableaux d’ANOVA montrent des résultats différents à cause d’un
+plan non-équilibré (i.e. un nombre différent d’observations pour les
+oiseaux aquatiques et terrestres).</p>
+<p>Pour les plans non-équilibrés, une somme des carrés marginale (aussi
+appelée de type III) permet de calculer un effet principal après avoir
+retiré les effets des autres facteurs. Ceci rend le calcul indépendant
+de la taille des échantillons :</p>
+<p><span class="math inline">\({SS_FactorA}={SS(A\|B,AB)}=SS(A,B,AB)-SS(B,AB)\&lt;/m\&gt;\
+\)</span>{SS_FactorB}={SS(B|A,AB)}=SS(A,B,AB)-SS(A,AB)&lt;/m&gt;<br />
+${SS_AB}={SS(AB|B,A)}=SS(A,B,AB)-SS(B,AB) &lt;/m&gt;<br />
+<br />
+Dans R, une ANOVA avec somme des carrés de type III peut être effectuée
+avec la fonction <code>Anova()</code> du paquet "car" et en spécifiant
+l’argument <code>type="III"</code> :</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="test-de-t-et-anova.html#cb48-1"></a><span class="kw">Anova</span>(unb_anov1, <span class="dt">type =</span> <span class="st">&quot;III&quot;</span>)</span></code></pre></div>
+<p>En comparant les tableaux d’ANOVA de modèles avec un ordre différent
+dans les variables explicatives, on peut voir que les résultats sont les
+mêmes. L’utilisation de la somme des carrés de type III produit une
+ANOVA qui est indépendante de la tailles des échantillons.</p>
+<p>Après avoir vérifié les suppositions du modèle, les résultats peuvent
+finalement être interprétés correctement.</p>
+
+</div>
+<div id="ancova" class="section level2">
+<h2><span class="header-section-number">3.4</span> 6. ANCOVA</h2>
+<p>L’analyse de covariance (ANCOVA) est un modèle linéaire qui teste
+l’influence d’une (ou plusieurs) variable explicative catégorique sur
+une variable réponse continue. Chaque niveau de la variable catégorique
+est décrit par une pente (ou coefficient de variation) et une ordonnée à
+l’origine. En plus de tester si la variable réponse diffère pour au
+moins un niveau de la variable catégorique, l’ANCOVA teste aussi si la
+variable réponse est influencée par sa relation avec la variable
+continue (nommée la <strong>covariable</strong> dans une ANCOVA), et par une
+différence dans l’influence de la variable continue sur la réponse
+(i.e. l’interaction) entre les niveaux de groupe. Les hypothèses d’un
+ANCOVA sont alors: qu’il n’y a pas de différence de moyenne entre les
+niveaux de la variable catégorique; qu’il n’y a pas de correlation
+entre la variable réponse et la variable explicative catégorique; et
+qu’il n’y a pas d’interaction entre les variables catégoriques et
+continues.</p>
+<div id="conditions-de-base-1" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> 6.1 Conditions de base</h3>
+<p>Tout comme le test de t et l’ANOVA, l’ANCOVA doit respecter certaines
+conditions statistiques qu’on peut vérifier à l’aide de diagrammes de
+diagnostic:</p>
+<ol style="list-style-type: decimal">
+<li>Les covariables ont toutes la <strong>même étendue de valeurs</strong></li>
+<li>Les variables sont <strong><em>fixes</em></strong></li>
+<li>Les variables catégoriques et continues sont <strong>indépendantes</strong></li>
+</ol>
+<p><strong><span class="ul">Note :</span></strong> Un variable <em>fixe</em> est une variable d’intérêt pour
+une étude (e.g. la masse des oiseaux). En comparaison, une variable
+aléatoire représente surtout une source de bruit qu’on veut contrôler
+(i.e. le site où les oiseaux ont été échantillonnés). Si votre modèle
+comporte des effets aléatoires, consultez l’atelier sur les <a href="http://qcbs.ca/wiki/r_atelier6">modèles
+linéaires mixtes</a>!</p>
+</div>
+<div id="types-dancova" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> 6.2 Types d’ANCOVA</h3>
+<p>Il est possible d’avoir plusieurs facteurs (i.e. variables explicatives
+catégoriques) et covariables (i.e. variables explicatives continues) au
+sein d’une même ANCOVA. Par contre, l’interprétation des résultats
+devient de plus en plus complexe à mesure que le nombre de covariables
+et de facteurs augmente.</p>
+<p>Les ANCOVA les plus courantes comportent :</p>
+<ol style="list-style-type: decimal">
+<li>une covariable et un facteur</li>
+<li>une covariable et deux facteurs</li>
+<li>deux covariables et un facteur</li>
+</ol>
+<p>Les buts possibles de l’ANCOVA sont de déterminer les effets :</p>
+<ol style="list-style-type: decimal">
+<li>des facteurs et des covariables sur la variable réponse</li>
+<li>des facteurs sur la variable réponse après avoir retiré l’effet des
+covariables</li>
+<li>des facteurs sur la relation existant entre les covariables et la
+variable réponse</li>
+</ol>
+<p>Ces buts ne sont atteints que s’il n’y a pas d’interaction
+significative entre le(s) facteur(s) et la(les) covariable(s)! Des
+exemples d’interaction significative entre un facteur et une covariable
+(pour une ANCOVA avec un facteur et une covariable) sont illustrés
+ci-dessous dans les deux derniers graphiques:</p>
+<p><img src="images/ancova_schematic.png" width="550" /></p>
+<p>La même logique s’applique aux ANCOVAs à plusieurs facteurs et/ou
+covariables.<br />
+</p>
+</div>
+<div id="effectuer-une-ancova" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> 6.3 Effectuer une ANCOVA</h3>
+<p>Effectuer une ANCOVA dans R ressemble à une ANOVA à deux critères de
+classification : on utilise la fonction <code>lm()</code>. Toutefois, au lieu
+d’avoir deux variables catégoriques (e.g. "Diet" et "Aquatic"), on
+utilise maintenant une variable catégorique et une variable continue.</p>
+<p>Par exemple, en utilisant le jeu de données CO2 (déjà inclus dans R) où
+la variable réponse est <em>uptake</em>, on peut effectuer une ANCOVA avec la
+variable continue <em>conc</em> et le facteur <em>Treatment</em> :</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="test-de-t-et-anova.html#cb49-1"></a>ancova.example &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>conc <span class="op">*</span><span class="st"> </span>Treatment, <span class="dt">data =</span> CO2)</span>
+<span id="cb49-2"><a href="test-de-t-et-anova.html#cb49-2"></a><span class="kw">anova</span>(ancova.example)</span></code></pre></div>
+<p>Si l’analyse indique que seule la covariable est significative, on
+retire le facteur du modèle; on revient à une <strong>ANOVA</strong> à un critère de
+classification.<br />
+Si l’analyse indique que seul le facteur est significatif, on retire la
+covariable du modèle; on revient à une <strong>régression linéaire simple</strong>.<br />
+Si l’analyse indique que l’interaction est significative, il faut
+trouver quels niveaux ont une pente différente.<br />
+Dans l’exemple du jeu de données CO2, la covariable et le facteur sont
+significatifs, mais l’interaction n’est pas significative. Si on
+remplace le facteur <em>Treatment</em> par le facteur <em>Type</em>, l’interaction
+devient significative.</p>
+<p>Si vous voulez comparer les moyennes de la variable réponse entre les
+facteurs, vous pouvez utiliser les moyennes ajustées qui sont calculées
+comme dans l’équation de l’ANCOVA et en tenant compte de l’effet de
+la covariable :</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="test-de-t-et-anova.html#cb50-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
+<span id="cb50-2"><a href="test-de-t-et-anova.html#cb50-2"></a><span class="kw">library</span>(effects)</span>
+<span id="cb50-3"><a href="test-de-t-et-anova.html#cb50-3"></a>adj.means &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;Treatment&quot;</span>, ancova.example)</span>
+<span id="cb50-4"><a href="test-de-t-et-anova.html#cb50-4"></a><span class="kw">plot</span>(adj.means)</span>
+<span id="cb50-5"><a href="test-de-t-et-anova.html#cb50-5"></a></span>
+<span id="cb50-6"><a href="test-de-t-et-anova.html#cb50-6"></a>adj.means &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;conc*Treatment&quot;</span>, ancova.example)</span>
+<span id="cb50-7"><a href="test-de-t-et-anova.html#cb50-7"></a><span class="kw">plot</span>(adj.means)</span></code></pre></div>
+<hr />
+<p><strong>DÉFI 4</strong></p>
+<p>Effectuez une ANCOVA qui teste l’effet du facteur <em>Diet</em>, de la
+covariable <em>Mass</em>, et de leur interaction sur la variable réponse
+<em>MaxAbund</em>.<br />
+++++ Défi 4: Solution |</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="test-de-t-et-anova.html#cb51-1"></a><span class="co"># Si vous avez complété la section avancée sur les</span></span>
+<span id="cb51-2"><a href="test-de-t-et-anova.html#cb51-2"></a><span class="co"># contrastes, vous devrez réinitialiser les contrastes à</span></span>
+<span id="cb51-3"><a href="test-de-t-et-anova.html#cb51-3"></a><span class="co"># l&#39;aide de la fonction &#39;&#39;options()&#39;&#39; Si vous n&#39;avez pas</span></span>
+<span id="cb51-4"><a href="test-de-t-et-anova.html#cb51-4"></a><span class="co"># complété la section avancée sur les contrastes, ignorez</span></span>
+<span id="cb51-5"><a href="test-de-t-et-anova.html#cb51-5"></a><span class="co"># la première ligne du script.</span></span>
+<span id="cb51-6"><a href="test-de-t-et-anova.html#cb51-6"></a><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb51-7"><a href="test-de-t-et-anova.html#cb51-7"></a>ancov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb51-8"><a href="test-de-t-et-anova.html#cb51-8"></a><span class="kw">summary</span>(ancov1)</span>
+<span id="cb51-9"><a href="test-de-t-et-anova.html#cb51-9"></a><span class="kw">anova</span>(ancov1)</span></code></pre></div>
+<p>R fournit la sortie suivante pour cette ANCOVA :</p>
+<pre><code>Analysis of Variance Table
+Response: logMaxAbund
+              Df      Sum Sq      Mean Sq     F value     Pr(&gt;F)
+logMass       1   1.9736      1.97357     4.6054      0.03743 *
+Diet          4   3.3477      0.83691     1.9530      0.11850
+logMass:Diet  4   2.9811      0.74527     1.7391      0.15849
+Residuals     44  18.8556     0.42854</code></pre>
+<p>Dans ce cas-ci, l’interaction n’est pas significative, ce qui signifie
+que l’effet de la masse sur l’abondance maximale est le même peu
+importe la diète. L’interaction est retirée du modèle et l’ANCOVA
+devient :</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="test-de-t-et-anova.html#cb53-1"></a>ancov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>R nous indique que la diète n’est pas significative non plus, donc ce
+terme est retiré du modèle. Notre modèle final devient donc une
+régression linéaire simple :</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="test-de-t-et-anova.html#cb54-1"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>Les résultats de l’analyse peuvent être représentés graphiquement. On
+trace la variable réponse en fonction de la variable explicative
+continue avec des points et des lignes de différentes couleurs pour les
+différents niveaux de la variable catégorique.</p>
+<p>Nous pouvons aussi tracez un diagramme représentant les pentes et
+ordonnées à l’origine d’une ANCOVA (le modèle ancov1 plus haut) à
+l’aide des fonctions <code>abline()</code> et <code>coef()</code>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="test-de-t-et-anova.html#cb55-1"></a><span class="kw">coef</span>(ancov1)</span>
+<span id="cb55-2"><a href="test-de-t-et-anova.html#cb55-2"></a></span>
+<span id="cb55-3"><a href="test-de-t-et-anova.html#cb55-3"></a></span>
+<span id="cb55-4"><a href="test-de-t-et-anova.html#cb55-4"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">col =</span> Diet, <span class="dt">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb55-5"><a href="test-de-t-et-anova.html#cb55-5"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
+<span id="cb55-6"><a href="test-de-t-et-anova.html#cb55-6"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
+<span id="cb55-7"><a href="test-de-t-et-anova.html#cb55-7"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">1</span>], <span class="dt">b =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">&quot;deepskyblue1&quot;</span>)</span>
+<span id="cb55-8"><a href="test-de-t-et-anova.html#cb55-8"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">3</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-9"><a href="test-de-t-et-anova.html#cb55-9"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">7</span>]), <span class="dt">col =</span> <span class="st">&quot;green2&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-10"><a href="test-de-t-et-anova.html#cb55-10"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">4</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-11"><a href="test-de-t-et-anova.html#cb55-11"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">8</span>]), <span class="dt">col =</span> <span class="st">&quot;orange1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-12"><a href="test-de-t-et-anova.html#cb55-12"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">5</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-13"><a href="test-de-t-et-anova.html#cb55-13"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">9</span>]), <span class="dt">col =</span> <span class="st">&quot;lightsteelblue1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb55-14"><a href="test-de-t-et-anova.html#cb55-14"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">6</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb55-15"><a href="test-de-t-et-anova.html#cb55-15"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">10</span>]), <span class="dt">col =</span> <span class="st">&quot;darkcyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="images/ancova_plot.png" width="350" /> ++++</p>
+
+</div>
+</div>
+</div>
+<hr>
+<center> 
+  <div class="footer">
+      All the content of the workshop series is under a <a href="https://creativecommons.org/licenses/by-nc/2.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+  </div>
+</center>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="préparez-vous-pour-cet-atelier.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="régression-multiple.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
