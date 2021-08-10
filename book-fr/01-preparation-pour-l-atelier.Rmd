@@ -16,7 +16,8 @@ plus de secrets pour vous!
 3.  Analyse de la variance (ANOVA)
 4.  ANOVA à deux critères de classification
 5.  ANOVA non équilibrée\
-    *(section avancée et optionnelle)*
+
+*(section avancée et optionnelle)*
 6.  Analyse de la covariance (ANCOVA)
 7.  Régression linéaire multiple
 
@@ -26,10 +27,18 @@ Tout le matériel de l'atelier se trouve sur [github.com/QCBSRworkshops/workshop
 
 Pour cet atelier, nous travaillerons avec les jeux de données suivants :
 
-* list here
+* [birdsdiet](http://qcbs.ca/wiki/_media/birdsdiet.csv)
+* [dickcissel](http://qcbs.ca/wiki/_media/dickcissel.csv)
 
 > Pour télécharger ces données, faites un clic droit + enregistrer sur la page qui s'ouvre.
 
 Vous devriez également vous assurer que vous avez téléchargé, installé et chargé les librairies R suivantes:
 
-* list here
+* [dplyr](https://cran.r-project.org/package=dplyr)
+* [vegan](https://cran.r-project.org/package=vegan)
+* [e1071](https://cran.r-project.org/package=e1071)
+* [MASS](https://cran.r-project.org/package=MASS)
+* [car](https://cran.r-project.org/package=car)
+* [effect](https://cran.r-project.org/package=effect)
+
+> Pour installer les packages, utilisez la commande `install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect'))`
