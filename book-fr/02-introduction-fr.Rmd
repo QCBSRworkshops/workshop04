@@ -2,12 +2,6 @@
 
 Les ateliers précédents ont explorés l'utilisation de `R` pour manipuler et représenter des données. Cependant, on s'intéresse souvent en science à déterminer les relations entre des variables. Cet atelier bâti sur les connaissances acquises préalablement et s'intéresse à la régression linéaire comme premier pas dans l'univers de l'analyse statistique. 
 
-La régression linéaire se découle en multiple variantes telles que le Test de t et l'analyse de variance. Ces méthodes rendent possible la quatification de relations entre variables.
-
-.center[
-![:scale 80%](images/schema.png)
-]
-
 ### Objectifs d'apprentissage
 
 ------------------------------------------------------------------------
@@ -245,10 +239,23 @@ Nous avons vu qu'il est possible de définir un modèle linéaire avec cette éq
 
 $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
-Effectuer une modèle linéaire revient à trouver les "meilleures" estimations des paramètres $\beta_0,\, \beta_1$. C'est ce que nous appelons faire l'estimation du modèle.
+------------------------------------------------------------------------
+
+### Estimation du modèle
+
+Effectuer une modèle linéaire revient à trouver les "meilleures" estimations des paramètres $\beta_0,\, \beta_1$. C'est ce que nous appelons faire **l'estimation du modèle**.
 
 Les "meilleurs" paramètres sont ceux qui minimisent la variation dans la variable réponse. La méthode la plus répendue pour minimiser la variation d'un modèle est de faire la somme des résidus au carré $\sum{\epsilon_i^2}$. Cette méthode est appelée la méthode de **moindres carrés ordinaire** (MCO).
 
+------------------------------------------------------------------------
+
+## Modèles linéaires 
+
+La régression linéaire se découle en multiple variantes telles que le Test de t et l'analyse de variance. Ces méthodes rendent possible la quatification de relations entre variables.
+
+.center[
+![:scale 80%](images/schema.png)
+]
 
 
 
