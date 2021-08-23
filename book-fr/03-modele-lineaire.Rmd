@@ -133,11 +133,150 @@ plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
 
 Ces exemples présentent une relation non-linéaire et un exemple d'hétéroscédasticité qui est l'opposé de homoscédastique, ce qui signifie que la condition de normalité est non-respectée. 
 
+Dans cette situation, il faut plutôt utiliser un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions (Poisson, binomial, binomial négatif, etc.) ou essayer de **transformer** la variable réponse et/ou les prédicteurs.
+
 ------------------------------------------------------------------------
 
 #### Graphique #2 - Échelle localisée
 
+Le deuxième graphique diagnostique permet de vérifier si la *dispersion des résidus* augmente pour une valeur prédite donnée (i.e. si la dispersion des résidus est causée par la variable explicative). Si la dispersion augmente, la condition de base d'homoscédasticité n'est pas respectée.
 
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm,which = 3)
+```
+
+Sur l'axe des **y** nous retrouvons la racine carrée des résidus standardisés $\sqrt{\frac{\epsilon_i}{\sigma}}$ et sur l'axe des **x** les valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$.
+
+Nous recherchons ici aussi une dispersion des points sans patron, donc un prédicteur distributé de manière égale.
+
+------------------------------------------------------------------------
+
+**Alerte !** Il faut être méfiant si la distribution des points présente une tendance marquée :
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 3)
+```
+
+Dans une situation comme celle-ci, nous ne pouvons nous fier aux résultats de modèle et devons plutôt essayer d'utiliser un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions (Poisson, binomial, binomial négatif, etc.) ou de **transformer** la variable réponse et/ou les prédicteurs.
+
+------------------------------------------------------------------------
+
+#### Graphique #3 - Normal QQ
+
+Le troisième graphique présente la distribution des résidus. Avec ce graphique quantile-quantile, nous pouvons évaluer la normalité des résidus. Ce graphique compare la distribution de probabilité des résidus du modèle à une distribution de probabilité de données normales. 
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm, which = 2)
+```
+
+Sur l'axe des **y** nous retrouvons les résidus standardisés $\frac{\epsilon_i}{\sigma}$ et sur l'axe des **x** les quantiles d'une distribution normale standard $\mathcal{N}(0, \sigma^2)$.
+
+Nous voulons voir les résidus standardisés près de la ligne 1:1. Ainsi, les résidus peuvent être considérés comme normalement distribués.
+
+------------------------------------------------------------------------
+
+**Alerte !** Il faut être méfiant si la distribution des points ne suit pas la ligne 1:1 :
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm, which = 2)
+```
+
+Dans ce cas-ci, les points ne sont pas bien alignés sur la droite, ce qui suggère que les résidus ne sont pas distribués normalement. Il faut plutôt essayer d'utiliser un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions (Poisson, binomial, binomial négatif, etc.) ou de **transformer** la variable réponse et/ou les prédicteurs.
+
+------------------------------------------------------------------------
+
+#### Graphique #4 - Résidus vs effet de levier
+
+Ce dernier graphique diagnostique présente les résidus et leur influence. Il permet de déterminer si certaines observations ont une forte influence. Bien que nous ne testons pas un test de condition de base, la présence de points avec une forte influence peut influencer notre interprétation des données. Si une ou certaines observations sont aberrantes (dont, si elles ont des valeurs très différentes des autres), le modèle peut être mal ajusté en raison de leur influence exagérée sur l'estimation du modèle. 
+
+Le graphique des résidus vs effet de levier pésente les *points de levier* qui sont des observations extêmes du prédicteur et leur influence sur la régression. L'influence est quantifiée par la *ditance Cook*. **Une distance suppérieure à 0,5 est problématique**.
+
+**Exemple d'effet de levier et d'influence**
+
+Il ne s'agit pas ici de graphiques diagnostiques, mais de figures qui illustrent les concepts de point  de levier et d'influence.
+
+```{r, echo=FALSE, fig.height=8, fig.width=7.7, warning=FALSE}
+par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
+set.seed(1234564)
+x <- 1:20
+y <- rnorm(x, x, 2)
+lm0 <- lm(y ~ x)
+# plot 1
+plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 11); yy <- c(y, -3)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-20, 10, srt=0, adj = 0, labels = "* Pas d'effet de levier \n* Faible influence
+", xpd = TRUE, cex = 1.5)
+# plot 2
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 30)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-33, 15, srt=0, adj = 0, labels = "* Effet de levier \n* Pas d'influence", xpd = TRUE, cex = 1.5)
+# plot 3
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 15)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-33, 15, srt=0, adj = 0, labels = '* Effet de levier \n* Influence élevée', xpd = TRUE, cex = 1.5)
+```
+
+Sur l'axe des **y** nous retrouvons la réponse et le prédicteur sur l'axe des **x**.
+
+Le modèle ne devrait pas **pas dépendre fortement d'observations isolées**. Une influence élevée de points de levier cause le modèle à passer près des points de levier, car ils manquent d'observations voisines.
+
+**Graphique #4**
+
+Le graphique diagnostique présente Ssr l'axe des **y** les résidus standardisés $\frac{\epsilon_i}{\sigma}$ et l'effet de levier sur l'axe des **x**. La ligne pointillée rouge marque la distance de Cook de 0,5.
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=9, warning=FALSE}
+par(mfrow=c(1,2))
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm, which = 5, main = "Aucune observation influente", col.main=palette()[3])
+set.seed(1234564)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm, which = 5, main = "Effet de levier et faible influence",  col.main=palette()[3])
+```
+
+Nous voulons observer des résidus se situant à l'intérieur des lignes pointillées marquant la distance de Cook de 0,5.
+
+------------------------------------------------------------------------
+
+**Alerte !** Il faut être méfiant si un ou des points se trouvent à l'extérieur de la ligne pointillée :
+
+```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
+set.seed(1234564)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+y[29] <- 100
+lm=lm(y~scale(x))
+plot(lm, which = 5, main = "Effet de levier et influence élevée")
+```
+
+Le 29 a un effet de levier et une distance de Cook de plus de 0,5. Il correspond à une donnée abérante. Il ne faut cependant jamais supprimer les valeurs aberrantes sans avoir des bonnes raisons de le faire ! Si (et seulement si!) ces observations correspondent à des
+erreurs de mesure ou à des exceptions, elles peuvent être retirées du jeu de données.
 
 ------------------------------------------------------------------------
 
