@@ -19,6 +19,10 @@ variable explicative a un effet plus important que l'erreur aléatoire
 (due à la variance intra-groupe). La variable explicative est donc
 susceptible d'influencer significativement la variable réponse.
 
+```{r, echo = FALSE, fig.height=3, fig.width=6.5}
+source('images/figAnova.R')
+```
+
 Dans un ANOVA, la comparaison de la variance entre les groupes à
 celle intra-groupe se fait en calculant la **statistique F**. Cette
 statistique correspond au ratio entre la moyenne des carrés des
@@ -29,23 +33,24 @@ un tableau d'ANOVA (cliquez pour voir un tel tableau ci-dessous). Un
 **p-value** peut ensuite être calculée à partir de la statistique de F,
 qui suit une distribution de khi carré (χ^2^)
 
-Cliquez pour plus de détails mathématiques. 
-
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Source de\   Degrés de\          Somme des carrés\                                              Moyenne des carrés   Statistique de F                               
+  Source de\   Degrés de\          Somme des carrés\                                              Moyenne des carrés                                     Statistique de F                               
   variation    liberté (df)        des écarts à la moyenne                                                                                                            
-  ------------ ------------------- -------------------------------------------------------------- -------------------- ---------------------------------------------- -----------------------------------
-  Total        $ra-1$    ${SS_Tot}=sum{i,j}{}({y_ij}-overline{y})                   2$                                                            
+  ------------ ------------------- -------------------------------------------------------------- ------------------------------------------------------ -------------------------------------- -----------------------------------
+  Total        $ra-1$               $SS_{t}=\sum(y_{i}-\overline{y})^{2}$
 
-  Facteur A    $a-1$     ${SS_FacteurA}= r sum{i}{}({overline{y}\_i}-overline{y})   2$             ${MS_FacteurA}={SS_FacteurA}/{a-1}$  $F={MS_FacteurA}/{MS_E}\</m\>
+  Facteur A     $a-1$               $SS_{f}=\sum(\hat{y_{i}}-\overline{y})^{2}$                   $MS_{f}=\frac{SS_{f}}{(a-1)}$                            $F=\frac{MS_{f}} {MS_{E}}$
 
-  Résidus      $a(r-1)$  ${SS_E}= sum{i,j}{}({y_ij}-{overline{y}\_i})               2$             ${MS_E}={SS_E}/{a(r-1)}$             
+  Résidus        $a(r-1)$               $SS_{\epsilon}=\sum(y_{i}-\hat{y_{i}})^{2}$                ${MS_E}=\frac{SS_{\epsilon}}{a(r-1)}$
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-a: nombre de niveaux de la variable explicative A; r: nombre de
-répétitions par groupe; $overline{y}\</m\>: moyenne globale de
-la variable réponse; $overline{y}\</m\>~i~ : moyenne de la variable
-réponse du groupe i. 
+$a$: nombre de niveaux de la variable explicative A
+
+$r$: nombre de répétitions par groupe
+
+$\overline{y}$: moyenne globale de la variable réponse
+
+$\hat{y_{i}}$ : moyenne de la variable réponse du groupe i. 
 
 ### 3.1 Types d'ANOVA
 

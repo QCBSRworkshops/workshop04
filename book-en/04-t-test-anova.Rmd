@@ -19,33 +19,39 @@ explanatory variable more than the random error (corresponding to the
 within-level variance), and that the explanatory variable is likely
 to be significantly influenced by the levels.
 
+```{r, echo = FALSE, fig.height=3, fig.width=6.5}
+source('images/figAnova.R')
+```
+
 In the ANOVA, the comparison of the between-level variance to the
 within-level variance is made through the calculation of the
 F-statistic that correspond to the ratio of the mean sum of squares of
-the level (MS~Trt~) on the mean sum of squares of the error (MS~E~).
+the level (MS~Lev~) on the mean sum of squares of the error (MS~E~).
 These two last terms are obtained by dividing their two respective sums
 of squares by their corresponding degrees of freedom, as is typically
 presented in a ANOVA table (click to see below). Finally, the p-value of
 the ANOVA is calculated from the F-statistic that follows a Chi-square
 (χ^2^) distribution.
 
-Click to see the math in more detail below.
-
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Source of\   Degrees of\         Sums of squares                                               Mean squares   F-statistic
+  Source of\   Degrees of\         Sums of squares                                                  Mean squares                                                 F-statistic
   variation    freedom (df)
-  ------------ ------------------- ------------------------------------------------------------- -------------- -------------------------------------------- ----------------------------------
-  Total        $ra-1$    ${SS_Tot}=sum{i,j}{}({y_ij}-overline{y})                  2$
+                                                           
+  ------------ ------------------- -------------------------------------------------------------- ------------------------------------------------------ -------------------------------------- -----------------------------------
+  Total        $ra-1$               $SS_{t}=\sum(y_{i}-\overline{y})^{2}$
 
-  Factor A     $a-1$     ${SS_FactorA}= r sum{i}{}({overline{y}\_i}-overline{y})   2$       ${MS_FactorA}={SS_FactorA}/{a-1}$  $F={MS_FactorA}/{MS_E}\</m\>
+  Facteur A     $a-1$               $SS_{f}=\sum(\hat{y_{i}}-\overline{y})^{2}$                   $MS_{f}=\frac{SS_{f}}{(a-1)}$                            $F=\frac{MS_{f}} {MS_{E}}$
 
-  Error        $a(r-1)$  ${SS_E}= sum{i,j}{}({y_ij}-{overline{y}\_i})              2$       ${MS_E}={SS_E}/{a(r-1)}$
+  Error        $a(r-1)$               $SS_{\epsilon}=\sum(y_{i}-\hat{y_{i}})^{2}$                           ${MS_E}=\frac{SS_{\epsilon}}{a(r-1)}$
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-a: number of levels of the explanatory variable A; r: number of
-replicates per level; $overline{y}\</m\>: general mean of the
-explanatory variable; $overline{y}\</m\>~i~ : mean of the
-explanatory variable for all the replicates of the level i.
+$a$: number of levels of the explanatory variable A
+
+$r$: number of replicates per level
+
+$\overline{y}$: general mean of the explanatory variable
+
+$\hat{y_{i}}$ : mean of the explanatory variable for all the replicates of the level i.
 
 
 ### 3.1 Types of ANOVA
