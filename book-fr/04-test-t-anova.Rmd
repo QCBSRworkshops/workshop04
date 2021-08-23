@@ -8,21 +8,21 @@ explicatives catégoriques**. Les variables explicatives catégoriques
 peuvent comprendre plusieurs niveaux (ou groupes). Par exemple, une
 variable \"couleur\" peut avoir 3 niveaux: vert, bleu, et jaune.
 L'ANOVA teste si la moyenne de la variable réponse diffère entre ces
-niveaux ou groupes. Par exemple, si la masse des bleuets diffère selon
-leur couleur.
+niveaux ou groupes en comparant la variation intra-groupe et inter-groupe. 
+Par exemple, si la masse des bleuets diffère selon leur couleur.
 
 Le calcul de l'ANOVA se base sur la partition de la somme des carrés,
-et compare la **variance entre les traitements** à celle à l'intérieur
-des traitements (i.e. la **variance intra-traitement**). Si la variance
-entre les traitements est supérieure à la variance intra-traitement, la
+et compare la **variance entre les groupes** à celle à l'intérieur
+des groupes (i.e. la **variance intra-groupe**). Si la variance
+entre les groupes est supérieure à la variance intra-groupe, la
 variable explicative a un effet plus important que l'erreur aléatoire
-(due à la variance intra-traitement). La variable explicative est donc
+(due à la variance intra-groupe). La variable explicative est donc
 susceptible d'influencer significativement la variable réponse.
 
-Dans un ANOVA, la comparaison de la variance entre les traitements à
-celle intra-traitement se fait en calculant la **statistique F**. Cette
+Dans un ANOVA, la comparaison de la variance entre les groupes à
+celle intra-groupe se fait en calculant la **statistique F**. Cette
 statistique correspond au ratio entre la moyenne des carrés des
-traitements (MS~Trt~) et la moyenne des carrés des erreurs (MS~E~). Ces
+groups (MS~Trt~) et la moyenne des carrés des erreurs (MS~E~). Ces
 deux termes sont obtenus en divisant leurs sommes des carrés respectives
 par leurs degrés de liberté, comme on le voit présenté typiquement dans
 un tableau d'ANOVA (cliquez pour voir un tel tableau ci-dessous). Un
@@ -43,9 +43,9 @@ Cliquez pour plus de détails mathématiques.
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 a: nombre de niveaux de la variable explicative A; r: nombre de
-répétitions par traitement; $overline{y}\</m\>: moyenne globale de
+répétitions par groupe; $overline{y}\</m\>: moyenne globale de
 la variable réponse; $overline{y}\</m\>~i~ : moyenne de la variable
-réponse du traitement i. 
+réponse du groupe i. 
 
 ### 3.1 Types d'ANOVA
 
@@ -395,11 +395,11 @@ diètes influence l'abondance différemment des autres diètes.
 
 ### 3.6 Test complémentaire
 
-Il est impossible d'identifier quel traitement diffère des autres avec
+Il est impossible d'identifier quel groupe diffère des autres avec
 une ANOVA. Elle ne permet que de déterminer s'il existe une différence
 entre niveaux. Pour identifier les niveaux qui diffèrent des autres, les
 tests post-hoc comparent les combinaisons de variables explicatives
-(i.e. les traitements) deux par deux. Il existe plusieurs tests post hoc
+(i.e. les groupes) deux par deux. Il existe plusieurs tests post hoc
 (e.g. Fischer's least significant difference, Duncan's new multiple
 range test, Newman-Keuls method, Dunnett's test, etc.), mais le test de
 Tukey est le plus couramment utilisé. Dans R, on utilise la fonction
@@ -415,7 +415,7 @@ TukeyHSD(aov1,ordered=T)
 
 La sortie de R inclut un tableau qui liste toutes les combinaisons des
 niveaux de la variable explicative et qui identifie quel(s)
-traitement(s) diffère(ent) des autres :\
+groupe(s) diffère(ent) des autres :\
 
     Tukey multiple comparisons of means 95% family-wise confidence level
        factor levels have been ordered
@@ -442,8 +442,8 @@ Après avoir vérifié les conditions de base, interprété les résultats, et
 identifié les niveaux significatifs à l'aide de tests post-hoc ou de
 contrastes, les résultats d'une ANOVA peuvent être représentés
 graphiquement à l'aide de la fonction `barplot()`. R produit donc un
-graphique de la variable réponse en fonction des niveaux de traitement,
-ou les erreurs types et le nom des niveaux du traitement (représentant
+graphique de la variable réponse en fonction des niveaux de groupe,
+ou les erreurs types et le nom des niveaux du groupe (représentant
 le résultat d'un test post hoc) peuvent y être apposées.
 
 ```{r, echo = TRUE, eval = FALSE}
@@ -669,7 +669,7 @@ deux facteurs :
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 a: nombre de niveaux de la variable explicative A; b: nombre de niveaux
-de la variable explicative B; r: nombre de répétitions par traitement
+de la variable explicative B; r: nombre de répétitions par groupe
 
 
 ### 4.1 Effectuer une ANOVA à deux critères de classification

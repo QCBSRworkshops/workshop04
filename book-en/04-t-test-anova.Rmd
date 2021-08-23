@@ -7,21 +7,22 @@ response variable and one or more categorical explanatory variables. The
 categorical explanatory variables can have any number of levels
 (groups). For example, the variable \"colour\" might have three levels:
 green, blue, and yellow. ANOVA tests whether the means of the response
-variable differ between the levels. For example, if blueberries differ
+variable differ between the levels by comparing the variation within a 
+group with the variation amon groups. For example, if blueberries differ
 in their mass depending on their colour.
 
 ANOVA calculations are based on the sum of squares partitioning and
-compares the within-treatment variance to the between-treatment
-variance. If the between-treatment variance is greater than the
-within-treatment variance, this means that the treatments affect the
+compares the within-level variance to the between-level
+variance. If the between-level variance is greater than the
+within-level variance, this means that the levels affect the
 explanatory variable more than the random error (corresponding to the
-within-treatment variance), and that the explanatory variable is likely
-to be significantly influenced by the treatments.
+within-level variance), and that the explanatory variable is likely
+to be significantly influenced by the levels.
 
-In the ANOVA, the comparison of the between-treatment variance to the
-within-treatment variance is made through the calculation of the
+In the ANOVA, the comparison of the between-level variance to the
+within-level variance is made through the calculation of the
 F-statistic that correspond to the ratio of the mean sum of squares of
-the treatment (MS~Trt~) on the mean sum of squares of the error (MS~E~).
+the level (MS~Trt~) on the mean sum of squares of the error (MS~E~).
 These two last terms are obtained by dividing their two respective sums
 of squares by their corresponding degrees of freedom, as is typically
 presented in a ANOVA table (click to see below). Finally, the p-value of
@@ -42,9 +43,9 @@ Click to see the math in more detail below.
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 a: number of levels of the explanatory variable A; r: number of
-replicates per treatment; $overline{y}\</m\>: general mean of the
+replicates per level; $overline{y}\</m\>: general mean of the
 explanatory variable; $overline{y}\</m\>~i~ : mean of the
-explanatory variable for all the replicates of the treatment i.
+explanatory variable for all the replicates of the level i.
 
 
 ### 3.1 Types of ANOVA
