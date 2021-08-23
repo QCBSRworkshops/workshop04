@@ -1,9 +1,173 @@
-## 2. Régression linéaire simple
+# Régression linéaire avec R
 
-La régression linéaire simple est un type de modèle linéaire qui
-contient **seulement une variable explicative continue**. La régression
-détermine si les deux variables (1 explicative, et 1 réponse) sont
-significativement corrélés.
+Dans l'exemple suivant, nous reprendrons les données d'abondance et de masse des oiseaux pour effectuer une régression linéaire en R. Basé sur l'hypothèse, nous formulons une formule qui nous permet d'exécuter le modèle et puis nous vérifions les conditions d'application de celui-ci. Nous verrons également comment interpréter la sortie du modèle et comment le représenter graphiquement.
+
+
+## Formulation du modèle
+
+------------------------------------------------------------------------
+
+Les données sont composées de la masse moyenne des individus d'une espèce et l'abondance de ces espèces. Nous somme intéressé à quantifier la relation entre la masse d'un individu et l'abondance de l'espèce (ou l'effet de la masse sur l'abondance).
+
+Nous avons formulé l'hypothèse que pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
+
+------------------------------------------------------------------------
+
+### Équation du modèle
+
+En notation mathématique, un modèle linéaire prend la forme de l'équation d'une droite pour laquelle la variable prédite est l'abondance maximale "MaxAbund" et la variable prédicteur est la masse des individus "Mass".
+
+$$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$$
+
+> Notez que le modèle linéaire a trois variables: $\beta_0$ , $\beta_1$ et $\sigma^1$. $\sigma^1$ défini la variance des données autour du modèle et est une variable de la distribution normale qui décrit la distribution des données autour du modèle (de part et d'autre de notre droite).
+
+**Formule en R**
+
+Dans le langage de programmation R, l'équation est traduite par :
+
+```
+MaxAbund ~ Mass
+```
+où la variable prédite est placée à gauche du tilde et la variable prédicteur est à droite.
+
+
+## Régression linéaire avec R
+
+------------------------------------------------------------------------
+
+Effectuer une régression linéaire avec R se découpe en trois étapes:
+
+1. Formuler et exécuter un modèle linéaire basé sur un hypothèse
+2. Vérifier les conditions d'application du modèle linéaire
+3. Examiner la sortie du modèle et si les conditions sont respectées
+    * Analyser les paramètres de régression
+    * Tracer le modèle
+    * Effectuer des tests de signification sur les estimations des paramètres (si nécessaire)
+
+Nous allons explorer chaque étape dans les sections suivantes.
+
+Aussi, dans le cas ou les conditions ne sont pas respectées, nous verrons qu'il est possible d'envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données.
+
+------------------------------------------------------------------------
+
+### **Étape 1.** Formuler et exécuter un modèle linéaire
+
+La fonction `lm()` est utilisée pour ajuster un modèle linéaire, en fournissant la formule du modèle comme premier argument :
+
+```{r eval=TRUE}
+# Régression linéaire de l'abondance maximale en fonction de la masse
+lm1 <- lm(MaxAbund ~ Mass, data = bird)
+```
+
+Avec cette ligne de code, nous définissons un nouvel objet `lm1` qui contient le modèle linéaire. Nous spécifions également deux arguments dans la fonction. Le premier `MaxAbund ~ Mass` est la formule du modèle et le second `bird` défini l'objet qui contient les variables.
+
+> Avant d'utiliser une nouvelle fonction dans R, vous devriez vous référer à sa page d'aide (`?nomdelafonction`) afin de comprendre comment utiliser la fonction ainsi que les paramètres par défaut.
+
+Regardons les estimations des paramètres :
+
+```{r, eval=TRUE}
+# Examen de la sortie de la régression
+lm1
+```
+
+Comment les paramètres se comparent-ils à nos prédictions ? Vous remarquerez que le paramètre pour la masse est positif alors que nous avons prédit une relation négative (*Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible*).
+
+Cependant, pouvons-nous nous fier aux estimations? Pour en être certain, il faut vérifier les conditions d'application !
+
+------------------------------------------------------------------------
+
+### **Étape 2.** Vérifier les conditions d'application avec les graphiques diagnostics
+
+Une méthode efficace pour vérifier le respect des conditions d'application du modèle est de procéder à un examen visuel. Quatres graphiques diagnostiques peuvent être produits d'un objet `lm`. Pour ce faire, nous utilisons ces commandes :
+
+```{r, eval=FALSE, fig.height=6, fig.width=8}
+par(mfrow=c(2,2))
+plot(lm1)
+```
+
+```{r, echo=FALSE, fig.height=4.75, fig.width=5.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
+```
+
+`par()` est une fonction qui permet de définir les paramètres du graphique. Ici, nous spécifions `mfrow=c(2,2)`  qui permet d'afficher une grille de 2 x 2 graphiques à la fois. Finalement, `plot()`produit les graphiques.
+
+> Pour afficher une seule figure (parcelle) à la fois, nous pouvons spécifier `par(mfrow=1)`. 
+
+#### Graphique #1 - Résidus vs valeurs prédites
+
+Le premier graphique nous informe de la distribution des résidus en fonction des valeurs prédites par le modèle de régression linéaire. Chaque point représente la distance entre la variable réponse et la réponse prédite par le modèle. Il nous informe sur l'*indépendance* des résidus et sur leur *distribution*. Il faut se rappeler qu'avec la régression linéaire, nous avons besoin d'une distribution uniforme des résidus (condition d'*homoscédasticité*).
+
+```{r, echo = FALSE, fig.height=5, fig.width=6.5}
+  set.seed(1234564)
+  x <- rnorm(100,10,10)
+  y <- 2*x+0 + rnorm(100)
+  lm <- lm(y~x)
+  plot(lm, which = 1)
+```
+
+Sur l'axe des **y** nous retrouvons les résidus $\epsilon_i$ et sur l'axe des **x** les valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$.
+
+Dans une situation idéale, la dispersion des points ne présente pas de patron. 
+
+* Si les résidus sont dispersés de façon **aléatoire autour de la ligne de 0**, la relation est linéaire et la moyenne des résidus est 0.
+* Si les résidus forment une **bande horizontale** approximative autour de la ligne de 0, la variance des résidus est homogène (donc, ils sont homoscédastiques).
+* Si les résidus sont organisés **en forme d'entonnoir**, les résidus ne sont pas homoscédastiques.
+
+------------------------------------------------------------------------
+
+**Alerte !** Il faut être alerté si la distribution des points est non-linéaire comme dans ces deux exemples :
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
+par(mfrow=c(1,2))
+set.seed(1234564)
+x = rnorm(100,10,10)
+y = (x)^2 + rnorm(length(x),0,30)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Non-linéaire", col.main="red")
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
+```
+
+Ces exemples présentent une relation non-linéaire et un exemple d'hétéroscédasticité qui est l'opposé de homoscédastique, ce qui signifie que la condition de normalité est non-respectée. 
+
+------------------------------------------------------------------------
+
+#### Graphique #2 - Échelle localisée
+
+
+
+------------------------------------------------------------------------
+
+### **Étape 3.** Analyser les paramètres
+
+
+## Interprétation du modèle
+
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+Le modèle linéaire décrit la relation entre une variable **réponse** et une ou plusieurs autres variables **prédictrices**. Elle est utilisée pour analyser une **hypothèse bien formulée**, souvent associée à une question de recherche plus générale. La régression détermine si les variables sont correllées en inférent la **direction** et la **force** d'une relation, et notre **confiance** dans les estimations de l'effet.
+
+
+Un travail scientifique important est nécessaire pour formuler un modèle linéaire. Puisque le modèle analyse une hypothèse, il est recommandé de formuler clairement les attentes concernant la direction et la force d'une relation en tant que prédictions avant d'effectuer un modèle linéaire.   
+
+
+Par exemple, nous pouvons hypothétiser que pour différentes espèces d'oiseaux, la masse moyenne d'un individu a un effet sur l'abondance maximale de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.). La prédiction pourrait alors être que les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.
+
+
+
 
 Une régression linéaire simple concerne deux paramètres qui doivent être
 estimés: l'**ordonnée à l'origine** (β~0~) et un **coefficient de
@@ -42,7 +206,7 @@ travail suivantes:
 4.  Ajuster le modèle si les conditions de base ne sont pas respectées
 5.  Interpréter les résultats du modèle
 
-### 2.1 Effectuer un modèle linéaire
+### 2.1 Régression linéaire avec `R`
 
 En utilisant le jeu de données `bird`, nous allons exécuter une première
 régression linéaire sur l'abondance maximale en fonction de la masse.
