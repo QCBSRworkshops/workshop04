@@ -1,16 +1,14 @@
-## Aperçu
+# Le modèle linéaire
 
 Les ateliers précédents ont explorés l'utilisation de `R` pour manipuler et représenter des données. Cependant, on s'intéresse souvent en science à déterminer les relations entre des variables. Cet atelier bâti sur les connaissances acquises préalablement et s'intéresse à la régression linéaire comme premier pas dans l'univers de l'analyse statistique. 
 
-### Objectifs d'apprentissage
-
-------------------------------------------------------------------------
+**Objectifs d'apprentissage**
 
 * Apprendre la structure d'un modèle linéaire et ses différentes variantes.
 * Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`
 * Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème.
 
-### Qu'est-ce qu'un modèle linéaire ?
+## Qu'est-ce qu'un modèle linéaire ?
 
 ------------------------------------------------------------------------
 
@@ -20,7 +18,7 @@ Un travail scientifique important est nécessaire pour formuler un modèle liné
 
 ------------------------------------------------------------------------
 
-#### Exemple : Abondance et masse des espèces d'oiseaux
+### Exemple : Abondance et masse des espèces d'oiseaux
 
 **Hypothèse**
 
@@ -139,7 +137,7 @@ $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
 ------------------------------------------------------------------------
 
-### Évaluation du modèle linéaire
+## Évaluation du modèle linéaire
 
 Le modèle linéaire évalue s'il y a une correlation significative entre la variable réponse et la ou les variables explicatives. Ceci est fait en évaluant si la valeur moyenne de la variable réponse diffère signifitivement entre les différentes valeurs des variables explicatives, comme pour la variation de l'abondance maximale des oiseaux en fonction de leur masse.
 
@@ -149,9 +147,9 @@ Dans presque tous les cas, les variables explicatives n'expliquent pas toute la 
 
 ------------------------------------------------------------------------
 
-### Coditions d'application du modèle linéraire
+## Conditions d'application du modèle linéraire
 
-Le modèle linéaire est défini celon l'équation que nous avons exploré précédemment:
+Le modèle linéaire est défini celon l'équation que nous avons exploré précédemment :
 
 $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
@@ -168,7 +166,7 @@ Notez que ces 4 conditions concernent les résidus, et non les variables répons
 
 ------------------------------------------------------------------------
 
-##### Normalité des résidus
+### Normalité des résidus
 
 Pour que les résultats d'un modèle linéaire soient valides, les **résidus** $\epsilon$ doivent suivre une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$, de façon à ce que la majorité des résidus aient une valeur proche de 0 (i.e. l'erreur est très petite) et que leur distribution soit symmétrique (i.e. la variable réponse est sous-estimée autant qu'elle est surestimée) :
 
@@ -180,15 +178,15 @@ $$y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)$$
 
 ------------------------------------------------------------------------
 
-##### Homoscédasticité
+### Homoscédasticité
 
 De la même façon, les residus doivent être homoscédastiques. C'est-à-dire que l'erreur ne change pas beaucoup pour les différentes valeurs des variables explicatives. Tous les résidus $\epsilon$ suivent la même distribution, la **variance** $\sigma^2$ **reste constante**.
 
 ------------------------------------------------------------------------
 
-##### Indépendance des résidus
+### Indépendance des résidus
 
-Il est également essentiel qye les résidus soient indépendants, c'est-à-dire qu'il n'y a pas de structure manquante dans le modèle (comme une autocorrélation spatiale ou temporelle). Autrement dit, chaque résidu $\epsilon_i$ est **indépendant** de tout autre résidu.
+Il est également essentiel que les résidus soient indépendants, c'est-à-dire qu'il n'y a pas de structure manquante dans le modèle (comme une autocorrélation spatiale ou temporelle). Autrement dit, chaque résidu $\epsilon_i$ est **indépendant** de tout autre résidu.
 
 ------------------------------------------------------------------------
 
@@ -207,6 +205,7 @@ $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \eps
 Pour noter l'ensemble des observations, nous suivons la notation matricielle et incluons l'intercept dans$\mathbf{X}$ et $\boldsymbol{\beta}$) :   
 
 $$\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$$ 
+
 ------------------------------------------------------------------------
 
 ### Notation en R
@@ -226,15 +225,16 @@ y ~ x
 ```  
 
 qui inclut aussi la constante.
+
+La variable prédite est toujours placée à gauche du tilde `~`alors que les variables prédictricteurs sont placées à droite.
   
 :::noway
 Il ne faut jamais mélanger les différents types de notation !
 :::
 
-------------------------------------------------------------------------
 
 ## Effectuer une modèle linéaire
- 
+
 Nous avons vu qu'il est possible de définir un modèle linéaire avec cette équation :
 
 $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
@@ -247,15 +247,15 @@ Effectuer une modèle linéaire revient à trouver les "meilleures" estimations 
 
 Les "meilleurs" paramètres sont ceux qui minimisent la variation dans la variable réponse. La méthode la plus répendue pour minimiser la variation d'un modèle est de faire la somme des résidus au carré $\sum{\epsilon_i^2}$. Cette méthode est appelée la méthode de **moindres carrés ordinaire** (MCO).
 
-------------------------------------------------------------------------
 
 ## Modèles linéaires 
 
-La régression linéaire se découle en multiple variantes telles que le Test de t et l'analyse de variance. Ces méthodes rendent possible la quatification de relations entre variables.
+------------------------------------------------------------------------
 
-.center[
+La régression linéaire se découle en multiple variantes telles que le Test de T et l'analyse de variance. Ces méthodes rendent possible la quatification de relations entre variables.
+
+
 ![:scale 80%](images/schema.png)
-]
 
 
 
