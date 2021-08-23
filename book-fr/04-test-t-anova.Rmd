@@ -1,4 +1,14 @@
 # Test de t et ANOVA
+```{r, echo = F, eval = T}
+# data and all requirements
+install.packages("car")
+library(car)
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+bird$logMaxAbund <- log(bird$MaxAbund)
+bird$Diet <- as.factor(bird$Diet)
+```
 
 ## ANOVA
 
@@ -152,7 +162,7 @@ où:\
 -```Y``` est la variable réponse\
 -```X2``` est la variable quantitative à deux niveaux\
 -```data``` est le nom du jeux de données\
--```alternative``` réfère à l'hypothèse alternative. ```'two.sided'``` est le paramètre par défault. Vous pouvez aussi choisir ```'less'``` ou ```'greater'```. Pour plus de détails, voir la [section](#unilateral-t-test) suivante.\
+-```alternative``` réfère à l'hypothèse alternative. ```'two.sided'``` est le paramètre par défault. Vous pouvez aussi choisir ```'less'``` ou ```'greater'```. Pour plus de détails, voir la [section](#test-de-t-unilatéral) suivante.\
 -```var.eqal```, if true, this increases the robustness of the test. But we need to test for it prior to testing.\
 
 Regardons un exemple avec des données de régime alimentaire sur des oiseaux
@@ -160,10 +170,6 @@ Par exemple, nous pouvons tester la différence de masse entre les oiseaux aquat
 Commençons par visualizer les données:\
 ```{r, echo = F, eval = T}
 # test de t
-bird <- read.csv('data/birdsdiet.csv')
-
-bird$logMass <- log(bird$Mass)
-
 boxplot(logMass ~ Aquatic, data=bird, ylab=expression("log"[10]*"(Bird Mass)"),
         names=c("Non-Aquatic","Aquatic"),
         col=c("yellowgreen","skyblue"))
@@ -244,17 +250,17 @@ uni.ttest1
 ```
 
 
-### 3.3 Effectuer une ANOVA
+### Effectuer une ANOVA
 
 Le test de t s'applique seulement quand on a une seule variable
 explicative catégorique, qui comprend 2 niveaux. Pour tous les autres
 modèles linéaires avec des variables explicatives catégoriques avec > 2 niveaux, on
 utilise une ANOVA.
 
-Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s). Un test couramment utilisé *a posteriori* pour répondre à cette question est le **Test de Tukey**. You may also compare between groups using planned comparisons. This is more elegant, because it expects that you have an *a priori* expectation for the differences between groups.
+Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s). Un test couramment utilisé *a posteriori* pour répondre à cette question est le [test de Tukey](#tests-complémentaires). Vous voudrez peut-être comparer vos groupes avec des comparaison planifiées ou [contrastes](#allons-plus-loin-contrastes). Ceci est souvent plus robust et élégant puisque les différences attendues sont établies *a priori*.
 
 
-### 3.4 Vérification des conditions de base
+### Vérification des conditions d'application
 
 Comme la régression linéaire simple et le test de t, l'ANOVA doit
 respecter 4 conditions statistiques pour que les résultats soient
@@ -296,25 +302,7 @@ transformer vos données, vous pouvez utiliser l'équivalent
 non-paramétrique de l'ANOVA : le [test de
 Kruskal-Wallis](http://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance).
 
-```{r, echo = TRUE, eval = FALSE}
-# Diagrammes de diagnostic
-opar <- par(mfrow=c(2,2))
-plot(anov1)
-par(opar)
-
-# Test de la supposition de la normalité des résidus
-shapiro.test(resid(anov1))
-
-# Test de la supposition de l'homogénéité de la variance
-bartlett.test(logMaxAbund ~ Diet, data=bird)
-```
-
-Idéalement, le premier graphique devrait montrer une dispersion
-similaire pour chaque niveau de diète. Toutefois, les tests de Shapiro
-et de Bartlett ne sont pas significatifs. On peut supposer que les
-résidus sont distribués normalement et que les variances sont égales.
-
-#Exemple
+### Exemple avec le jeu de données `bird`
 
 Commençons tout d'abord par visualiser les données avec la fonction
 `boxplot()`. Rappelez-vous que, dans R, les groupes sont ordonnés par
@@ -326,7 +314,7 @@ fonction `plot.design()`. Cette fonction permet de représenter les
 valeurs moyennes des niveaux d'un facteur (par une ligne verticale) et
 la moyenne globale de la variable réponse (par une ligne horizontale).
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = T}
 # Ordre alphabétique par défaut
 boxplot(logMaxAbund ~ Diet, data=bird)
 
@@ -334,11 +322,48 @@ boxplot(logMaxAbund ~ Diet, data=bird)
 med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
            "skyblue1","skyblue3","skyblue4"))
+```
 
+Une autre façon de visualiser graphiquement les tailles d’effet est d’utiliser la fonction plot.design().
+Les niveaux d'un facteur le long d'une ligne verticale, et la valeur globale de la réponse dans une ligne horizontale.
+```{r, echo = TRUE, eval = T}
 plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
 ```
 
-![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
+Par la suite, nous devons vérifier les conditions d'applications.
+**Note**: nous devons performer l'ANOVA poour pouvoir utiliser les résidus, cependant, tant que nous ne vérifions pas les conditions d'application, les résultats ne peuvent être interprétés.
+```{r, echo = TRUE, eval = FALSE}
+# Plot for diagnostics
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(aov1)
+par(opar)
+```
+```{r, echo = F, eval = T}
+# Plot for diagnostics
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(aov1)
+par(opar)
+```
+Idéalement, le premier graphique devrait montrer une dispersion
+similaire pour chaque niveau de diète. Nous pouvons utiliser tous ces graphiques pour évaluer les conditions d'application, mais nous pouvons aussi utiliser les test de Shapiro, de Bartlett ou de Levene en supplément. **Note**:Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.
+
+```{r, echo = TRUE, eval = TRUE}
+# Test de la supposition de la normalité des résidus
+shapiro.test(resid(aov1))
+
+# Test de la supposition de l'homogénéité de la variance
+# Bartlett
+bartlett.test(logMaxAbund ~ Diet, data=bird)
+
+#Levene
+library(car)
+leveneTest(logMaxAbund ~ Diet, data = bird)
+```
+
+Toutefois, les tests de Shapiro et de Bartlett ne sont pas significatifs. On peut supposer que les
+résidus sont distribués normalement et que les variances sont égales.
 
 Nous sommes maintenant prêts à effectuer une ANOVA. Dans R, la fonction
 `aov()` permet d'effectuer une ANOVA directement. Il est également
@@ -355,10 +380,11 @@ anov1 <- lm(logMaxAbund ~ Diet, data=bird)
 anova(anov1)
 ```
 
-### 3.5 Sortie du modèle
 
-Lorsque le modèle d'ANOVA a été validé, on peut interpréter les
-résultats correctement. La sortie du modèle fournie par R dépend de la
+
+### Sortie du modèle
+
+Lorsque le modèle d'ANOVA a été validé et les conditions d'applications rencontrées, on peut interpréter les résultats correctement. La sortie du modèle fournie par R dépend de la
 fonction qui a été utilisée pour effectuer l'ANOVA. Si la fonction
 `aov()` a été utilisée :
 
@@ -388,11 +414,12 @@ anova(anov1)
 
 Dans les deux cas, la sortie dans R sera la même :
 
-              Df  Sum Sq      Mean Sq     F value     Pr(>F)
-    Diet          4   5.106       1.276       2.836       0.0341 *
-    Residuals     49  22.052      0.450
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```{r, echo = FALSE, eval = TRUE}
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+summary(aov1)
+```
+
 
 Cette sortie de R représente le tableau de l'ANOVA. On y retrouve les
 degrés de liberté, la somme des carrés, la moyenne de la somme des
@@ -402,7 +429,7 @@ l'abondance des oiseaux car la valeur de p est inférieure à 0.05.
 L'hypothèse nulle est rejetée, ce qui signifie qu'au moins une des
 diètes influence l'abondance différemment des autres diètes.
 
-### 3.6 Test complémentaire
+### Tests complémentaires
 
 Il est impossible d'identifier quel groupe diffère des autres avec
 une ANOVA. Elle ne permet que de déterminer s'il existe une différence
@@ -445,7 +472,7 @@ groupe(s) diffère(ent) des autres :\
 Dans ce cas-ci, la seule différence significative d'abondance se
 retrouve entre les diètes \"PlantInsect\" et \"Vertebrate\".
 
-### 3.7 Visualisation des résultats
+### Visualisation des résultats
 
 Après avoir vérifié les conditions de base, interprété les résultats, et
 identifié les niveaux significatifs à l'aide de tests post-hoc ou de
@@ -637,7 +664,7 @@ contrastes de Helmert, contrastes polynomiaux, etc. (cf.
 
 ------------------------------------------------------------------------
 
-## 4. ANOVA à deux critères de classification
+## ANOVA à deux critères de classification
 
 Jusqu'ici, les modèles ANOVA que nous avons explorés n'ont eu qu'une
 seule variable catégorique, mais on peut aussi créer des modèles ANOVA
@@ -681,7 +708,7 @@ a: nombre de niveaux de la variable explicative A; b: nombre de niveaux
 de la variable explicative B; r: nombre de répétitions par groupe
 
 
-### 4.1 Effectuer une ANOVA à deux critères de classification
+### Effectuer une ANOVA à deux critères de classification
 
 Dans R, une ANOVA à deux critères de classification est effectuée de la
 même manière qu'une ANOVA à un critère de classification avec la
@@ -773,7 +800,7 @@ plus bas pour plus de détails. ++++
 
 ------------------------------------------------------------------------
 
-### 4.2 Diagramme d'interaction
+### Diagramme d'interaction
 
 Les interactions peuvent être visualisées à l'aide de la fonction
 `interaction.plot()` :
@@ -821,7 +848,7 @@ anova(anov3,anov5) # Rappel que anov3 est le modèle avec le facteur "Diet" seul
 
 ------------------------------------------------------------------------
 
-## 5. ANOVA non-équilibrée (section avancée/facultative)
+## ANOVA non-équilibrée (section avancée/facultative)
 
  Les ANOVA à un et à deux critères de classification nous
 permettent de déterminer les effets de variables catégoriques sur une

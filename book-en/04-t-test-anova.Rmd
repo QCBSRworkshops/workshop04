@@ -1,5 +1,16 @@
 # t-test and ANOVA 
 
+```{r, echo = F, eval = T}
+# data and all requirements
+install.packages("car")
+library(car)
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+bird$logMaxAbund <- log(bird$MaxAbund)
+bird$Diet <- as.factor(bird$Diet)
+```
+
 ## Analysis of Variance (ANOVA)
 
 Analysis of Variance (ANOVA) is a type of linear model for a continuous
@@ -153,11 +164,6 @@ For example, let's test the mass difference between aquatic and non-aquatic bird
 First, we can start with visualizing the data:
 
 ```{r, echo = F, eval = T}
-# T-test
-bird <- read.csv('data/birdsdiet.csv')
-
-bird$logMass <- log(bird$Mass)
-
 boxplot(logMass ~ Aquatic, data=bird, ylab=expression("log"[10]*"(Bird Mass)"),
         names=c("Non-Aquatic","Aquatic"),
         col=c("yellowgreen","skyblue"))
@@ -240,17 +246,17 @@ uni.ttest1
 
 
 
-### 3.3 Running an ANOVA
+### Running an ANOVA
 
 The t-test is only for a single categorical explanatory variable with 2
 levels. For all other linear models with categorical explanatory
 variables we use ANOVA. 
 
 
-When the ANOVA detects a significant difference between groups, it does not tell you which group (or groups) differs from the others.A commonly used post-hoc test to answer this question is the Tukey's test. You may also compare between groups using planned comparisons. This is more elegant, because it expects that you have an *a priori* expectation for the differences between groups.
+When the ANOVA detects a significant difference between groups, it does not tell you which group (or groups) differs from the others.A commonly used *post-hoc* test to answer this question is the [Tukey's test](#complementary-test). You may also compare between groups using planned comparisons or [contrasts](##going-further-contrasts). This is more elegant, because it expects that you have an *a priori* expectation for the differences between groups.
 
 
-### 3.4 Verifying assumptions
+### Verifying assumptions
 
 As with the simple linear regression and t-test, ANOVA must meet the
 four assumptions of linear models. Below are some tips in how to test
@@ -290,26 +296,11 @@ can't (or don't want to) transform your data, the non-parametric
 equivalent of ANOVA is [Kruskal-Wallis
 test](http://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance).
 
-```{r, echo = TRUE, eval = FALSE}
-# Plot for diagnostics
-opar <- par(mfrow=c(2,2))
-plot(anov1)
-par(opar)
+#### Example with `bird` data
 
-# Test assumption of normality of residuals
-shapiro.test(resid(anov1))
+We are interested to test if maximal abundance of birds depend on the diet.
 
-# Test assumption of homogeneity of variance
-bartlett.test(logMaxAbund ~ Diet, data=bird)
-```
-
-Ideally the first diagnostic plot should show similar scatter for each
-Diet level. The Shapiro and Bartlett tests are both non-significant,
-therefore residuals are assumed to be normally distributed and variances
-are assumed to be equal.
-
-First, let's visualize the data using
-`boxplot()`. Recall that by default, R will order you groups in
+First, let's visualize the data using `boxplot()`. Recall that by default, R will order you groups in
 alphabetical order. We can reorder the groups according to the median of
 each Diet level.\
 Another way to graphically view the effect sizes is to use
@@ -317,7 +308,7 @@ Another way to graphically view the effect sizes is to use
 particular factor along a vertical line, and the overall value of the
 response is drawn as a horizontal line.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 # Default alphabetical order
 boxplot(logMaxAbund ~ Diet, data=bird)
 
@@ -325,11 +316,50 @@ boxplot(logMaxAbund ~ Diet, data=bird)
 med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
            "skyblue1","skyblue3","skyblue4"))
+```
 
+Another way to represent the effect sizes is to use plot.design().
+Levels of a particular factor are displayed along a vertical line, and the overall value of the response variable, in a horizontal line.
+```{r, echo = TRUE, eval = T}
 plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
 ```
 
-![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
+There seem to be some differences. We now need to check the assumption to our model.
+**Note**: We need to perform the ANOVA to look at the residuals, however, results are not to be interpreted until we have verified the assumptions.
+
+```{r, echo = TRUE, eval = FALSE}
+# Plot for diagnostics
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(aov1)
+par(opar)
+```
+```{r, echo = F, eval = T}
+# Plot for diagnostics
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(aov1)
+par(opar)
+```
+Ideally the first diagnostic plot should show similar scatter for each
+Diet level. We can use only these graph to verify our assumptions, however, we can also use the Shapiro's, Bartlett's tests or Levene's test. **Note**:Levene's test performs better, but has a slightly higher Type II error.
+
+```{r, echo = TRUE, eval = TRUE}
+# Test assumption of normality of residuals
+shapiro.test(resid(aov1))
+
+# Test assumption of homogeneity of variance
+#Bartlett's test
+bartlett.test(logMaxAbund ~ Diet, data=bird)
+
+#Levene's test
+library(car)
+leveneTest(logMaxAbund ~ Diet, data = bird)
+```
+
+The Shapiro and Bartlett tests are both non-significant,
+therefore residuals are assumed to be normally distributed and variances
+are assumed to be equal.
 
 Let's now run the ANOVA. In R, ANOVA can be called either directly with
 the `aov` function, or with the `anova` function performed on a linear
@@ -346,7 +376,7 @@ anova(anov1)
 ```
 
 
-### 3.5 Model output
+### Model output
 
 Once your ANOVA model has been validated, its results can be
 interpreted. The R output of ANOVA model depends of the function that
@@ -374,14 +404,14 @@ the ANOVA results must be called using the function
 ```{r, echo = TRUE, eval = FALSE}
 anova(anov1)
 ```
-
 In both cases, the R output is as follows:
 
-              Df  Sum Sq      Mean Sq     F value     Pr(>F)
-    Diet          4   5.106       1.276       2.836       0.0341 *
-    Residuals     49  22.052      0.450
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```{r, echo = FALSE, eval = TRUE}
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+summary(aov1)
+```
+
 
 This R output corresponds exactly to the ANOVA table of your model. This
 output also present the degrees of freedom, the sum of squares, the mean
@@ -391,7 +421,7 @@ is inferior to 0.05. The null hypothesis can then be rejected meaning
 that at least one of the diet treatments influenced the abundance
 differently than the other treatments.
 
-### 3.6 Complementary test
+### Complementary test
 
 Importantly, ANOVA cannot identify which treatment is different from the
 others in terms of response variable. It can only identify that a
@@ -434,7 +464,7 @@ treatment differ from the others:\
 In this case, the only significant difference in abundance occurs
 between the PlantInsect diet and the Vertebrate diet.
 
-### 3.7 Plotting
+### Plotting
 
 After having verified the assumptions of your ANOVA model, interpreted
 the ANOVA table and differentiated the effect of the treatments using
@@ -616,7 +646,7 @@ Conventional contrast coefficient matrices are already programmed in R,
 such as the contr.helmert or the contr.poly matric (cf.
 `help(contrasts)` ).
 
-## 4. Two-way ANOVA
+## Two-way ANOVA
 
 In the above section, the ANOVA models had a single categorical
 variable. We can create ANOVA models with multiple categorical
@@ -795,7 +825,7 @@ anova(anov1,anov3) # Recall: anov1 is model with only Diet as a factor
 
 ------------------------------------------------------------------------
 
-## 5. Unbalanced ANOVA (advanced section/ optional)
+## Unbalanced ANOVA (advanced section/ optional)
 
  One-way and two-way ANOVA enabled us to determine the effect
 of categorical explanatory variables on a continuous response variable
