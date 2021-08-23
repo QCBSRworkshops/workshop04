@@ -29,9 +29,8 @@ F-statistic that correspond to the ratio of the mean sum of squares of
 the level (MS~Lev~) on the mean sum of squares of the error (MS~E~).
 These two last terms are obtained by dividing their two respective sums
 of squares by their corresponding degrees of freedom, as is typically
-presented in a ANOVA table (click to see below). Finally, the p-value of
-the ANOVA is calculated from the F-statistic that follows a Chi-square
-(χ^2^) distribution.
+presented in a ANOVA table . Finally, the p-value of the ANOVA is calculated 
+from the F-statistic that follows a Chi-square (χ^2^) distribution.
 
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   Source of\   Degrees of\         Sums of squares                                                  Mean squares                                                 F-statistic
@@ -58,13 +57,13 @@ $\hat{y_{i}}$ : mean of the explanatory variable for all the replicates of the l
 
 1.  **One-way ANOVA**\
     One categorical explanatory variable with 2 or more levels. If there
-    are 2 levels a t-test can be used alternatively.
+    are 2 levels a **t-test** can be used alternatively.
 2.  **Two-way ANOVA** *[(see section
     below)](http://qcbs.ca/wiki/r_workshop4?&#two-way_anova)*\
     - 2 categorical explanatory variables or more,\
     - Each categorical explanatory variable can have multiple levels,\
     - The interactions between each categorical explanatory variable
-    must be tested.
+    can be tested.
 3.  **Repeated measures**\
     ANOVA can be used for repeated measures, but we won't cover this
     today. **Linear Mixed-effect Models** can also be used for this kind
@@ -72,25 +71,22 @@ $\hat{y_{i}}$ : mean of the explanatory variable for all the replicates of the l
 
 ### 3.2 T-test
 
-When you have a single explanatory variable with only two levels, you
-can run a student's T-test to test for a difference in the mean of the
+When you have a single explanatory variable which is qualitative and only have **two levels**, you
+can run a *student's T-test* to test for a difference in the mean of the
 two levels. If appropriate for your data, you can choose to test a
 unilateral hypothesis. This means that you can test the more specific
 assumption that one level has a higher mean than the other, rather than
-that they simply have different means.
+that they simply have different means.Note that robustness of this test increases with sample size and is higher when groups have equal sizes
 
-Click to see the math in more detail below.  For the t-test,
-the t statistic used to find the p-value calculation is calculated as:\
-$ t= (overline{y}\_1-overline{y}\_2)/sqrt{{s_1}\^2/n_1 +
-{s_2}\^2/n_2} \</m\>
+
+For the t-test, the t statistic used to find the p-value calculation is calculated as:
+$t = (\overline{y_{1}}-\overline{y_{2}})/\sqrt{\frac{s_{1}^2} n_{1} + \frac{s_{2}^2} n_{2}}$
 
 where
 
-$overline{y}\</m\>~1~ and $overline{y}\</m\>~2~ are the means of
-the response variable y for group 1 and 2, respectively,\
-s~1~^2^ and s~2~^2^ are the variances of the response variable y for
-group 1 and 2, respectively,\
-n~1~ and n~2~ are the sample sizes of groups 1 and 2, respectively.
+$\overline{y_{1}}$ and $\overline{y_{2}}$ are the means of the response variable y for group 1 and 2, respectively,\
+$s_{1}^2$ and $s_{2}^2$ are the variances of the response variable y for group 1 and 2, respectively,\
+$n_{1}$ and $n_{2}$ are the sample sizes of groups 1 and 2, respectively.
 
 
 Note that the t-test is mathematically equivalent to a one-way ANOVA
@@ -123,7 +119,7 @@ the assumptions of a t-test.
     We can test for difference in variances among two populations and
     ask what is the probability of taking two samples from two
     populations having identical variances and have the two sample
-    variances be as different as are s~1~^2^ and s~2~^2^.\
+    variances be as different as are $s_{1}^2$ and $s_{2}^2$.\
     To do so, we must do the variance ratio test (i.e. an F-test).
 
 #### Violation of assumptions
@@ -131,7 +127,7 @@ the assumptions of a t-test.
 If variances between groups are not equal, it is possible to use
 corrections, like the [Welch
 correction](http://en.wikipedia.org/wiki/Welch's_t_test). If assumptions
-cannot be respected, the non-parametric equivalent of t-test is the
+cannot be respected, you can transform your data (log or square root for example) or use the non-parametric equivalent of t-test, the
 [Mann-Whitney test](http://en.wikipedia.org/wiki/Mann–Whitney_U_test).
 Finally, if the two groups are not independent (e.g. measurements on the
 same individual at 2 different years), you should use a [Paired

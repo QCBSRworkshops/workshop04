@@ -29,9 +29,8 @@ statistique correspond au ratio entre la moyenne des carrés des
 groups (MS~Trt~) et la moyenne des carrés des erreurs (MS~E~). Ces
 deux termes sont obtenus en divisant leurs sommes des carrés respectives
 par leurs degrés de liberté, comme on le voit présenté typiquement dans
-un tableau d'ANOVA (cliquez pour voir un tel tableau ci-dessous). Un
-**p-value** peut ensuite être calculée à partir de la statistique de F,
-qui suit une distribution de khi carré (χ^2^)
+un tableau d'ANOVA. Une valeur de **p** peut ensuite être calculée à 
+partir de la statistique de F, qui suit une distribution de khi carré (χ^2^)
 
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   Source de\   Degrés de\          Somme des carrés\                                              Moyenne des carrés                                     Statistique de F                               
@@ -56,7 +55,7 @@ $\hat{y_{i}}$ : moyenne de la variable réponse du groupe i.
 
 1.  **ANOVA à un critère de classification**\
     Une variable explicative catégorique avec au moins 2 niveaux. S'il
-    n'y a que 2 niveaux, un test de t peut être utilisé.
+    n'y a que 2 niveaux, un **test de t** peut être utilisé.
 2.  **ANOVA à deux critères de classification** *[(voir la section
     ci-dessous)](http://qcbs.ca/wiki/r_atelier4#anova_a_deux_criteres_de_classification)*\
     - Deux variables explicatives catégoriques ou plus,\
@@ -71,27 +70,25 @@ $\hat{y_{i}}$ : moyenne de la variable réponse du groupe i.
 
 ### 3.2 Test de t
 
-Si on a une variable explicative ayant seulement **2 niveaux**, on peut
-utiliser un test de t de Student pour déterminer s'il y a une
+Si on a une variable explicative est qualitative et n'a que **2 niveaux**, on peut
+utiliser un test de *t de Student* pour déterminer s'il y a une
 différence entre la moyenne des 2 niveaux. Selon les données, on peut
 choisir de tester une **hypothèse unilatérale**: c'est-à-dire qu'on
 peut déterminer si la moyenne d'un groupe est plus grande que celle de
 l'autre groupe, plutôt que de seulement détecter une différence entre
-les moyennes du groupe.
+les moyennes du groupe.Noter que le test est plus robuste lorsque la taille de l'échantillon est plus élevée et lorsque les groupes ont des tailles égales.
 
-Cliquez ci-dessous pour plus de détails mathématiques.  Pour
-le test de t, la statistique t qui est utilisée pour déterminer la
+Pour le test de t, la statistique t qui est utilisée pour déterminer la
 valeur de p est calculée de la manière suivante :\
-$ t= (overline{y}\_1-overline{y}\_2)/sqrt{{s_1}\^2/n_1 +
-{s_2}\^2/n_2} \</m\>
+$t = (\overline{y_{1}}-\overline{y_{1}})/\sqrt{\frac{s_{1}^2} n_{1} + \frac{s_{2}^2} n_{2}}$
 
 où
 
-$overline{y}\</m\>~1~ et $overline{y}\</m\>~2~ sont les moyennes
+$\overline{y_{1}}$ and $\overline{y_{2}}$ sont les moyennes
 de la variable réponse y pour les groupes 1 et 2 respectivement,\
-s~1~^2^ et s~2~^2^ sont les variances de la variable réponse y pour les
+$s_{1}^2$ et $s_{2}^2$ sont les variances de la variable réponse y pour les
 groupes 1 et 2 respectivement,\
-n~1~ et n~2~ sont les tailles d'échantillons des groupes 1 et 2
+$n_{1}$ et $n_{2}$ sont les tailles d'échantillons des groupes 1 et 2
 respectivement. 
 
 Notez que le test de t est mathématiquement équivalent à une ANOVA à un
@@ -127,17 +124,16 @@ la validation de ces conditions de base:
     Il est possible d'évaluer la différence de variance entre deux
     échantillons en se demandant quelle est la probabilité de tirer deux
     échantillons d'une population avec des variances identiques alors
-    que les échantillons ont des variances de s~1~^2^ et s~2~^2^.\
+    que les échantillons ont des variances de $s_{1}^2$ et $s_{2}^2$.\
     Pour ce faire, il faut effectuer un test de ratio des variances
     (i.e. un test de F).
 
-#### Non-respect des conditions de base
+#### Non-respect des conditions d'application
 
 Si les variances entre les groupes ne sont pas égales, il est possible
 de corriger la situation avec la [correction de
 Welch](http://fr.wikipedia.org/wiki/Test_t_de_Welch). Si les conditions
-de base ne sont toujours pas respectées, il faut utiliser la version non
-paramétrique du test de t : [le test de
+de base ne sont toujours pas respectées, il est possible de transformer les données (avec un log ou une racine carré par exemple) ou utiliser l'équivalent non-paramétrique du test de t : [le test de
 Mann-Whitney](http://en.wikipedia.org/wiki/Mann–Whitney_U_test).
 Finalement, si les deux groupes ne sont pas indépendants (e.g. mesures
 prises sur un même individu à deux périodes différentes), il faut
