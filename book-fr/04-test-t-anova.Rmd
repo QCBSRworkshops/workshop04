@@ -142,54 +142,79 @@ apparié](http://en.wikipedia.org/wiki/Student's_t-test#Paired_samples).
 
 #### Effectuer un test de t
 
-Dans R, le test de t est exécutés avec la fonction `t.test`. Par
-exemple, pour évaluer la différence de masse entre des oiseaux
-aquatiques et non aquatiques, on peut utiliser le script suivant :\
+Dans R, le test de t est exécutés avec la fonction `t.test`. 
 
 ```{r, echo = TRUE, eval = FALSE}
-# Test de t
+t.test(Y ~ X2, data= data, alternative = "two.sided")
+```
+
+où:\
+-```Y``` est la variable réponse\
+-```X2``` est la variable quantitative à deux niveaux\
+-```data``` est le nom du jeux de données\
+-```alternative``` réfère à l'hypothèse alternative. ```'two.sided'``` est le paramètre par défault. Vous pouvez aussi choisir ```'less'``` ou ```'greater'```. Pour plus de détails, voir la [section](#unilateral-t-test) suivante.\
+-```var.eqal```, if true, this increases the robustness of the test. But we need to test for it prior to testing.\
+
+Regardons un exemple avec des données de régime alimentaire sur des oiseaux
+Par exemple, nous pouvons tester la différence de masse entre les oiseaux aquatiques et les oiseaux terrestres avec la variable ```Aquatic```.
+Commençons par visualizer les données:\
+```{r, echo = F, eval = T}
+# test de t
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+
 boxplot(logMass ~ Aquatic, data=bird, ylab=expression("log"[10]*"(Bird Mass)"),
         names=c("Non-Aquatic","Aquatic"),
         col=c("yellowgreen","skyblue"))
 
-# Tout d'abord, vérifions si les variances de chaque groupe sont égales
-# Note : il n'est pas nécessaire de vérifier la normalité des données,
-# car on utilise déjà une transformation logarithmique
-tapply(bird$logMass,bird$Aquatic,var)
-var.test(logMass~Aquatic,data=bird)
-
-# Nous sommes prêts pour le test de t
-ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird)
-
-# Cette commande est équivalente :
-ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
-ttest1
 ```
 
-![](images/lm_fig_10.png){width="400"}
+Il semble avoir une différence simplement en regardant le graphique.\
+Il faut maintenant tester les conditions d'application pour s'assurer que le test sera valide.
+**Note**: Nous n'avons pas besoin de tester la normalité puisque nous avons transfomé en log plus tôt.
 
-      Two Sample t-test
-     data:  logMass by Aquatic
-     t = -7.7707, df = 52, p-value = 2.936e-10
-     alternative hypothesis: true difference in means is not equal to 0
-     95 percent confidence interval:
-     -1.6669697 -0.9827343
-     sample estimates:
-     mean of x  mean of y
-     1.583437   2.908289
+```{r, echo = TRUE, eval = TRUE}
+# Homogénéité de la variance
+var.test(logMass~Aquatic,data=bird)
+```
 
-Ici, on voit que le test de ratio des variances n'est pas
-statistiquement différent de 1, ce qui signifie que les variances entre
-les groupes sont égales. Étant donné que notre valeur de p est
-inférieure à 0.05, l'hypothèse nulle (i.e. l'absence de différence de
-masse entre les deux groupes) est rejetée.
+Ici, on voit que le test de ratio des variances n'est pas statistiquement différent de 1, ce qui signifie que les variances entre les groupes sont égales.
+
+```{r, echo = TRUE, eval = TRUE}
+
+ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
+
+# ou l'équivalent
+ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird)
+ttest1
+
+```
+
+Étant donné que notre valeur de *p* est inférieure à 0.05, l'hypothèse nulle (i.e. l'absence de différence de masse entre les deux groupes) est rejetée.
+
+#### Effectuer un test de t avec lm()
+
+Le test de t est un modèle linéaire et un cas spécifique de l'ANOVA avec un facteur à 2 niveaux.
+Vous pouvez donc arriver aux mêmes résultats avec:
+```{r, echo = TRUE, eval = TRUE}
+lm.t <- lm(logMass~Aquatic, data = bird)
+anova(lm.t)
+
+```
+
+Quand les variances sont équivalents, on peut montrer que t^2^ = F:
+
+```{r, echo = TRUE, eval = T}
+ttest1$statistic^2
+anova(lm.t)$F
+```
+
 
 #### Test de t unilatéral
 
 L'argument *\"alternative\"* de la fonction `t.test()` permet
-d'effectuer un test de t unilatéral. Par exemple, si on veut tester
-l'hypothèse que les oiseaux terrestres sont plus légers que les oiseaux
-aquatiques, on peut écrire la commande de la façon suivante :
+d'effectuer un test de t unilatéral, c'est-à-dire dans une seule direction. Par défault, la fonction `t.test()` utilise `'two-sided'`, qui permet seulement de tester si les moyennes diffère l'une de l'autre. Si l'on cherche à déterminer si une moyenne est plus élevée que l'autre, nous pouvons utiliser `'less'` ($\overline{y_{1}}$ < $\overline{y_{2}}$) ou `'greater'` ($\overline{y_{1}}$ > $\overline{y_{2}}$). Par exemple, si on veut tester l'hypothèse que les oiseaux terrestres sont plus légers que les oiseaux aquatiques, on peut écrire la commande de la façon suivante :
 
 ```{r, echo = TRUE, eval = FALSE}
 # Test de t en spécifiant l'argument "alternative"
@@ -200,92 +225,34 @@ uni.ttest1
 Dans la sortie R obtenue par `uni.ttest1`, les résultats du test sont
 indiqués à la troisième ligne :
 
-      Two Sample t-test
-      data:  logMass by Aquatic
-      t = -7.7707, df = 52, p-value = 1.468e-10
-      alternative hypothesis: true difference in means is less than 0
-      95 percent confidence interval:
-        -Inf -1.039331
-      sample estimates:
-      mean in group 0   mean in group 1
-         1.583437          2.908289
+```{r, echo = FALSE, eval = TRUE}
+# Test de t en spécifiant l'argument "alternative"
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="less")
+uni.ttest1
+```
 
 Dans ce cas-ci, la statistique du test de t est t = -7.7707 avec df = 52
 degrés de liberté, ce qui donne une valeur de p = 1.468e-10. On rejette
 donc l'hypothèse nulle. On peut conclure que les oiseaux aquatiques
 sont significativement plus lourds que les oiseaux terrestres.
 
-#### Effectuer un test de t avec lm()
-
-Un test de t est un modèle linéaire et un cas spécifique d'ANOVA avec
-une variable explicative ayant dexu niveaux. On peut alors effectuer un
-test de t avec la fonction `lm()` dans R.
-
-```{r, echo = TRUE, eval = FALSE}
-ttest.lm1 <- lm(logMass ~ Aquatic, data=bird)
-anova(ttest.lm1)
+Nous aurions pu tester l'invers: si les oiseaux terrestres sont plus lourds que les oiseaux aquatique. Dece test, nous obtenons une même valeur de t (mais négative) et une valeur de *p* qui reflète ces résultats. Nous pouvons en conclure que les oiseaux terrestres ne sont pas significativement plus lourds que les oiseaux aquatiques. 
+```{r, echo = TRUE, eval = TRUE}
+# Test de t en spécifiant l'argument "alternative"
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="greater")
+uni.ttest1
 ```
 
-      Analysis of Variance Table
-      Response: logMass
-                Df  Sum Sq  Mean Sq   F value    Pr(>F)
-      Aquatic    1  19.015  19.0150   60.385     2.936e-10 ***
-      Residuals 52  16.375  0.3149
-      ---
-      Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Quand les variances sont équivalents, on peut montrer que t^2^ = F:
-
-```{r, echo = TRUE, eval = FALSE}
-ttest1$statistic^2
-anova(ttest.lm1)$F
-```
 
 ### 3.3 Effectuer une ANOVA
 
 Le test de t s'applique seulement quand on a une seule variable
 explicative catégorique, qui comprend 2 niveaux. Pour tous les autres
-modèles linéaires avec des variables explicatives catégoriques, on
+modèles linéaires avec des variables explicatives catégoriques avec > 2 niveaux, on
 utilise une ANOVA.
 
-Commençons tout d'abord par visualiser les données avec la fonction
-`boxplot()`. Rappelez-vous que, dans R, les groupes sont ordonnés par
-ordre alphabétique par défaut. Il est possible de réorganiser les
-groupes autrement. Par exemple, on peut les ordonner par ordre croissant
-de la médiane de chaque diète.\
-Une autre façon de visualiser les effets des facteurs est d'utiliser la
-fonction `plot.design()`. Cette fonction permet de représenter les
-valeurs moyennes des niveaux d'un facteur (par une ligne verticale) et
-la moyenne globale de la variable réponse (par une ligne horizontale).
+Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s). Un test couramment utilisé *a posteriori* pour répondre à cette question est le **Test de Tukey**. You may also compare between groups using planned comparisons. This is more elegant, because it expects that you have an *a priori* expectation for the differences between groups.
 
-```{r, echo = TRUE, eval = FALSE}
-# Ordre alphabétique par défaut
-boxplot(logMaxAbund ~ Diet, data=bird)
-
-# Réorganiser l'ordre des facteurs
-med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
-boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
-           "skyblue1","skyblue3","skyblue4"))
-
-plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
-```
-
-![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
-
-Nous sommes maintenant prêts à effectuer une ANOVA. Dans R, la fonction
-`aov()` permet d'effectuer une ANOVA directement. Il est également
-possible d'effectuer une ANOVA avec la fonction `anova()` qui exécute
-l'ANOVA comme un modèle linéaire :
-
-```{r, echo = TRUE, eval = FALSE}
-# En utilisant aov()
-aov1 <- aov(logMaxAbund ~ Diet, data=bird)
-summary(aov1)
-
-# En utilisant lm()
-anov1 <- lm(logMaxAbund ~ Diet, data=bird)
-anova(anov1)
-```
 
 ### 3.4 Vérification des conditions de base
 
@@ -346,6 +313,47 @@ Idéalement, le premier graphique devrait montrer une dispersion
 similaire pour chaque niveau de diète. Toutefois, les tests de Shapiro
 et de Bartlett ne sont pas significatifs. On peut supposer que les
 résidus sont distribués normalement et que les variances sont égales.
+
+#Exemple
+
+Commençons tout d'abord par visualiser les données avec la fonction
+`boxplot()`. Rappelez-vous que, dans R, les groupes sont ordonnés par
+ordre alphabétique par défaut. Il est possible de réorganiser les
+groupes autrement. Par exemple, on peut les ordonner par ordre croissant
+de la médiane de chaque diète.\
+Une autre façon de visualiser les effets des facteurs est d'utiliser la
+fonction `plot.design()`. Cette fonction permet de représenter les
+valeurs moyennes des niveaux d'un facteur (par une ligne verticale) et
+la moyenne globale de la variable réponse (par une ligne horizontale).
+
+```{r, echo = TRUE, eval = FALSE}
+# Ordre alphabétique par défaut
+boxplot(logMaxAbund ~ Diet, data=bird)
+
+# Réorganiser l'ordre des facteurs
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
+           "skyblue1","skyblue3","skyblue4"))
+
+plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
+```
+
+![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
+
+Nous sommes maintenant prêts à effectuer une ANOVA. Dans R, la fonction
+`aov()` permet d'effectuer une ANOVA directement. Il est également
+possible d'effectuer une ANOVA avec la fonction `anova()` qui exécute
+l'ANOVA comme un modèle linéaire :
+
+```{r, echo = TRUE, eval = FALSE}
+# En utilisant aov()
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+summary(aov1)
+
+# En utilisant lm()
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+anova(anov1)
+```
 
 ### 3.5 Sortie du modèle
 

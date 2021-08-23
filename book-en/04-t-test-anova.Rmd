@@ -135,144 +135,120 @@ t-test](http://en.wikipedia.org/wiki/Student's_t-test#Paired_samples).
 
 #### Running a t-test
 
-In R, t-tests are implemented using the function `t.test`. For example,
-to test for a mass difference between aquatic and non-aquatic birds, you
-should write:\
+In R, t-tests are implemented using the function `t.test`. 
 
 ```{r, echo = TRUE, eval = FALSE}
+t.test(Y ~ X2, data= data, alternative = "two.sided",var.equal=TRUE)
+```
+
+where:\
+-```Y``` is the response variable\
+-```X2``` is a qualitative variable with two levels\
+-```data``` is the name given to your data set\
+-```alternative``` refers to the alternative hypothesis. ```'two.sided'``` is the default setting. You can also choose ```'less'``` or ```'greater'```. For more details, look this [section](#unilateral-t-test).\
+-```var.eqal```, if true, this increases the robustness of the test. But we need to test for it prior to testing.
+
+Let's look at an exemple with bird diet data.
+For example, let's test the mass difference between aquatic and non-aquatic birds qith the column ```Aquatic```.
+First, we can start with visualizing the data:
+
+```{r, echo = F, eval = T}
 # T-test
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+
 boxplot(logMass ~ Aquatic, data=bird, ylab=expression("log"[10]*"(Bird Mass)"),
         names=c("Non-Aquatic","Aquatic"),
         col=c("yellowgreen","skyblue"))
 
-# First, let's test the assumption of equal variance
-# Note: we do not need to test the assumption of normally distributed data since
-# we already log transformed the data above
-tapply(bird$logMass,bird$Aquatic,var)
-var.test(logMass~Aquatic,data=bird)
-
-# We are now ready to run the t-test
-ttest1 <- t.test(Mass~Aquatic, var.equal=TRUE, data=bird)
-
-# or equivalently
-ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
-ttest1
 ```
 
-![](images/lm_fig_10.png){width="400"}
+There seem to be a difference just by looking at the boxplot. Let's make sure are assumptions are met before doing the test.\
+**Note**: we do not need to test the assumption of normally distributed data since we already log transformed the data above
 
-      Two Sample t-test
-     data:  logMass by Aquatic
-     t = -7.7707, df = 52, p-value = 2.936e-10
-     alternative hypothesis: true difference in means is not equal to 0
-     95 percent confidence interval:
-     -1.6669697 -0.9827343
-     sample estimates:
-     mean of x  mean of y
-     1.583437   2.908289
+```{r, echo = TRUE, eval = TRUE}
+# Assumption of equal variance
+var.test(logMass~Aquatic,data=bird)
+```
 
 Here, we show that the ratio of variances is not statistically different
 from 1, therefore variances are equal, and we proceeded with our t-test.
-Since p \< 0.05, the hypothesis of no difference between the two bird
+
+```{r, echo = TRUE, eval = TRUE}
+# We are now ready to run the t-test
+ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
+
+# or equivalently
+ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird)
+ttest1
+
+```
+
+Since *p* \< 0.05, the hypothesis of no difference between the two bird
 types (Aquatic vs. terrestrial) was rejected.
+
+#### Running a t-test with lm()
+Do not forget that a t test is simply a linear model or an ANOVA for a factor with two levels.
+You can reach the same results with :
+
+```{r, echo = TRUE, eval = TRUE}
+lm.t <- lm(logMass~Aquatic, data = bird)
+anova(lm.t)
+
+```
+
+When variances are equal (i.e., two-sample t-test), we can show that
+t^2^ = F:
+
+```{r, echo = TRUE, eval = T}
+ttest1$statistic^2
+anova(lm.t)$F
+```
 
 #### Unilateral t-test
 
 The *alternative* option of the `t.test` function allows for the use of
-unilateral t-test. For example, if users want to test if non-aquatic
-birds are less heavy than aquatic birds, the function can be written:
+unilateral t-test. By default, `t.test()` use `'two-sided'`, which tests whether the means are different from each other. If you want to test whether one mean is higher than the other one, you can use `'less'` ($\overline{y_{1}}$ < $\overline{y_{2}}$) or `'greater'` ($\overline{y_{1}}$ > $\overline{y_{2}}$). For example, if users want to test if non-aquatic birds are less heavy than aquatic birds, the function can be written:
 
 ```{r, echo = TRUE, eval = FALSE}
-# Alternative T-test
+# Unilateral T-test
 uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="less")
-uni.ttest1
 ```
 
 In the R output, called by `uni.ttest1`, the results of the t-test
 appear in the third line:
 
-      Two Sample t-test
-      data:  logMass by Aquatic
-      t = -7.7707, df = 52, p-value = 1.468e-10
-      alternative hypothesis: true difference in means is less than 0
-      95 percent confidence interval:
-        -Inf -1.039331
-      sample estimates:
-      mean in group 0   mean in group 1
-         1.583437          2.908289
+
+```{r, echo = FALSE, eval = TRUE}
+# Test de t en spécifiant l'argument "alternative"
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="less")
+uni.ttest1
+```
 
 In this case, the calculated t-statistic is t = -7.7707 with df = 52
 degrees of freedom that gives a p-value of p-value = 1.468e-10. As the
 calculated p-value is inferior to 0.05, the null hypothesis is rejected.
-Thus, aquatic birds are significantly heavier than non-aquatic birds.
+Thus, aquatic birds are significantly heavier than non-aquatic birds. 
 
-#### Running a t-test with lm()
-
-A t-test is a linear model and a specific case of ANOVA with one factor
-with 2 levels. As such, we can also run the t-test with the `lm()`
-function in R:
-
-```{r, echo = TRUE, eval = FALSE}
-ttest.lm1 <- lm(logMass ~ Aquatic, data=bird)
-anova(ttest.lm1)
+We could have tested whether non-aquatic birds were heavier than aquatic bird. By testing the opposite, we get the same t value (but negative) and a p-value reflected accordingly. We can therefore conclude that non-aquatic birds are not significantly heavier than aquatic birds. 
+```{r, echo = TRUE, eval = TRUE}
+# Test de t en spécifiant l'argument "alternative"
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="greater")
+uni.ttest1
 ```
 
-      Analysis of Variance Table
-      Response: logMass
-                Df  Sum Sq  Mean Sq   F value    Pr(>F)
-      Aquatic    1  19.015  19.0150   60.385     2.936e-10 ***
-      Residuals 52  16.375  0.3149
-      ---
-      Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-When variances are equal (i.e., two-sample t-test), we can show that
-t^2^ = F:
-
-```{r, echo = TRUE, eval = FALSE}
-ttest1$statistic^2
-anova(ttest.lm1)$F
-```
 
 ### 3.3 Running an ANOVA
 
 The t-test is only for a single categorical explanatory variable with 2
 levels. For all other linear models with categorical explanatory
-variables we use ANOVA. First, let's visualize the data using
-`boxplot()`. Recall that by default, R will order you groups in
-alphabetical order. We can reorder the groups according to the median of
-each Diet level.\
-Another way to graphically view the effect sizes is to use
-`plot.design()`. This function will illustrate the levels of a
-particular factor along a vertical line, and the overall value of the
-response is drawn as a horizontal line.
+variables we use ANOVA. 
 
-```{r, echo = TRUE, eval = FALSE}
-# Default alphabetical order
-boxplot(logMaxAbund ~ Diet, data=bird)
 
-# Relevel factors
-med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
-boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
-           "skyblue1","skyblue3","skyblue4"))
+When the ANOVA detects a significant difference between groups, it does not tell you which group (or groups) differs from the others.A commonly used post-hoc test to answer this question is the Tukey's test. You may also compare between groups using planned comparisons. This is more elegant, because it expects that you have an *a priori* expectation for the differences between groups.
 
-plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
-```
-
-![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
-
-Let's now run the ANOVA. In R, ANOVA can be called either directly with
-the `aov` function, or with the `anova` function performed on a linear
-model previously implemented with `lm`:
-
-```{r, echo = TRUE, eval = FALSE}
-# Using aov()
-aov1 <- aov(logMaxAbund ~ Diet, data=bird)
-summary(aov1)
-
-# Using lm()
-anov1 <- lm(logMaxAbund ~ Diet, data=bird)
-anova(anov1)
-```
 
 ### 3.4 Verifying assumptions
 
@@ -331,6 +307,44 @@ Ideally the first diagnostic plot should show similar scatter for each
 Diet level. The Shapiro and Bartlett tests are both non-significant,
 therefore residuals are assumed to be normally distributed and variances
 are assumed to be equal.
+
+First, let's visualize the data using
+`boxplot()`. Recall that by default, R will order you groups in
+alphabetical order. We can reorder the groups according to the median of
+each Diet level.\
+Another way to graphically view the effect sizes is to use
+`plot.design()`. This function will illustrate the levels of a
+particular factor along a vertical line, and the overall value of the
+response is drawn as a horizontal line.
+
+```{r, echo = TRUE, eval = FALSE}
+# Default alphabetical order
+boxplot(logMaxAbund ~ Diet, data=bird)
+
+# Relevel factors
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
+           "skyblue1","skyblue3","skyblue4"))
+
+plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
+```
+
+![](images/lm_fig_11.png){width="450"} ![](images/plot_design.png){width="350"}
+
+Let's now run the ANOVA. In R, ANOVA can be called either directly with
+the `aov` function, or with the `anova` function performed on a linear
+model previously implemented with `lm`:
+
+```{r, echo = TRUE, eval = FALSE}
+# Using aov()
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+summary(aov1)
+
+# Using lm()
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+anova(anov1)
+```
+
 
 ### 3.5 Model output
 
