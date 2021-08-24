@@ -1,7 +1,118 @@
 # Régression multiple
 
-Une régression multiple teste les effets de plusieurs variables
-explicatives continues sur une variable réponse continue.
+![](images/schema_multReg.png)
+
+Une régression multiple teste les effets de plusieurs variables explicatives continues sur une variable réponse continue. Elle se distingue de la régression linéaire simple en ayant *plusieurs variables explicatives*.
+
+### Formulation du modèle
+
+**Les variables**
+
+La régression linéaires multiple sont définies par les variables $y$ représentant la variable réponse (**continue**) et $x$ pour les variables explicatives (**continues** ou **catégoriques**).
+
+**La relation supposée**
+
+La relation entre la variable réponse et les prédicteurs se défini comme pour la régression simple. La différence est dans l'ajout de paramètres $\beta$ pour les variables supplémentaires :
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i$$
+
+* Le paramètre $\beta_0$ est **l'ordonnée à l'origine** (ou constante)
+* Les paramètre $\beta_1$ quantifie **l'effet** de $x$ sur $y$
+* Le résidu $\epsilon_i$ représent la variation **non expliquée**
+* La **valeur prédite** de $y_i$ se définit comme : $\hat{y}_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i}$.
+
+La variation non expliquée ou l'erreur demeure distribuée normalement, centrée sur zéro avec une variance de $\sigma^2$ :
+
+$$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+## Conditions d'application
+
+------------------------------------------------------------------------
+
+Dans le cas des régression linéaires multiples, deux conditions d'application s'ajoutent conditions habituelles des modèles linéaires. Premièrement, il doit y avoir une **relation linéaire** entre **chaque** variable explicative et la variable réponse. Deuxièmement, les variables explicatives sont indépendantes les unes des autres (il n'y a pas de **colinéarité**).
+
+### En cas de colinéarité
+
+En cas de colinéarité, il existe quelques solutions :
+
+* Garder seulement une des variables colinéaires
+* Essayer une analyse multidimensionnelle (voir l'atelier 9)
+* Essayer une analyse pseudo-orthogonale
+
+
+
+## Régression linéaire multiple dans R
+
+------------------------------------------------------------------------
+
+### Les données
+
+En utilisant le jeu de données `Dickcissel` nous comparerons l'importance relative du climat (`clTma`), de la productivité (`NDVI`) et de la couverture du sol (`grass`) comme prédicteurs de l'abondance de dickcissels (`abund`).
+
+```{r, eval=TRUE}
+Dickcissel = read.csv("data/dickcissel.csv")
+str(Dickcissel)
+```
+
+### Vérification des conditions d'application
+
+Il faut d'abord vérifier la présence de **colinéarité** entre toutes les variables explicatives et d'intérêt :
+
+```{r, fig.height=6, fig.width=7}
+# Sélectionner lesvariables
+var <- c('clTma', 'NDVI', 'grass', 'abund')
+
+# Graphiques des relations entre variables
+plot(Dickcissel[, var])
+```
+
+:::explanation
+Un patron observable entre deux variables explicatives peut indiquer qu'elles sont **colinéaires** ! Vous devez éviter ceci, sinon leurs effets sur la variable réponse seront confondus.
+:::
+
+### Régression linéaire
+
+Maintenant, exécutons la régression multiple de l'abondance (`abund`) en fonction des variables `clTma + NDVI + grass` :
+
+```{r}
+lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
+summary(lm.mult)
+```
+
+Puis, vérifions les autres conditions d'application, comme pour la régression linéaire simple :
+
+```{r, fig.height=5.5, fig.width=8,echo=-2}
+par(mfrow = c(2, 2))
+par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
+plot(lm.mult)
+```
+
+### Définir le meilleur modèle
+
+Il existe un principe de première importance dans la sélection de modèle. Il s'agit du **principe de parcimonie**. C'est-à-dire, expliquer le plus de variation avec le plus petit nombre de termes. Nous pourrions donc enlever la variable la moins significative.
+
+```{r}
+summary(lm.mult)$coefficients
+```
+
+Les 3 variables sont importantes. On garde tout !
+
+Le modèle explique 11.28% de la variabilité de l'abondance de dickcissels $R²_{adj} = 0.11$.
+
+:::noway
+Toutefois, ces informations ne sont pas valables car les conditions d'application du modèle linéaire ne sont pas respectées.
+:::
+
+Il est important de noter que la variable réponse ne varie pas de façon linéaire avec les variables explicatives :
+
+```{r, fig.height=3.5, fig.width=11,echo=-1}
+par(mfrow=c(1,3), mar=c(4, 4, 0.5, 0.5), cex = 1)
+plot(abund ~ clTma, data = Dickcissel)
+plot(abund ~ NDVI,  data = Dickcissel)
+plot(abund ~ grass, data = Dickcissel)
+```
+
+
 
 ### 7.1 Conditions de base
 

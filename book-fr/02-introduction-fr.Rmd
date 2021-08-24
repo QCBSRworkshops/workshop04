@@ -238,4 +238,4 @@ Les "meilleurs" paramètres sont ceux qui minimisent la variation dans la variab
 La régression linéaire se découle en multiple variantes telles que le Test de T et l'analyse de variance. Ces méthodes rendent possible la quatification de relations entre variables.
 
 
-![:scale 80%](images/schema.png)
+![](images/schema.png)
