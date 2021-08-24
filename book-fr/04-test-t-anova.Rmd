@@ -1,7 +1,6 @@
 # Test de t et ANOVA
-```{r, echo = F, eval = T}
+```{r, echo = F, eval = T, message=FALSE}
 # data and all requirements
-install.packages("car")
 library(car)
 bird <- read.csv('data/birdsdiet.csv')
 
@@ -61,13 +60,12 @@ $\overline{y}$: moyenne globale de la variable réponse
 
 $\hat{y_{i}}$ : moyenne de la variable réponse du groupe i. 
 
-### 3.1 Types d'ANOVA
+### Types d'ANOVA
 
 1.  **ANOVA à un critère de classification**\
     Une variable explicative catégorique avec au moins 2 niveaux. S'il
-    n'y a que 2 niveaux, un **test de t** peut être utilisé.
-2.  **ANOVA à deux critères de classification** *[(voir la section
-    ci-dessous)](http://qcbs.ca/wiki/r_atelier4#anova_a_deux_criteres_de_classification)*\
+    n'y a que 2 niveaux, un [test de t](#test-de-t) peut être utilisé.
+2.  **ANOVA à deux critères de classification** [section 4.1.3](#effectuer-une-anova)\
     - Deux variables explicatives catégoriques ou plus,\
     - Chaque facteur peut avoir plusieurs niveaux,\
     - Les interactions entre chaque variable explicative catégorique
@@ -75,10 +73,10 @@ $\hat{y_{i}}$ : moyenne de la variable réponse du groupe i.
 3.  **Mesures répétées**\
     L'ANOVA peut être utilisée pour des mesures répétées, mais ce sujet
     n'est pas abordé dans cet atelier. Un **modèle linéaire mixte**
-    peut également être utilisé pour ce type de données *[(voir
-    l'atelier 6)](http://qcbs.ca/wiki/r_atelier6)*.
+    peut également être utilisé pour ce type de données [(voir
+    l'atelier 6)](https://github.com/QCBSRworkshops/workshop06).
 
-### 3.2 Test de t
+### Test de t
 
 Si on a une variable explicative est qualitative et n'a que **2 niveaux**, on peut
 utiliser un test de *t de Student* pour déterminer s'il y a une
@@ -282,7 +280,7 @@ ANOVA:
     chaque valeur prédite, la variance des résidus peut être considérée
     homogène.\
     Il est également possible d'effectuer un test de Bartlett à l'aide
-    de la fonction `bartlett.test()`. Si la valeur de p de ce test est
+    de la fonction `bartlett.test()`. Si la valeur de *p* de ce test est
     supérieure à 0.05, l'hypothèse nulle H~0~: s~1~^2^ = s~2~^2^ =\...
     = s~j~^2^ =\... = s~n~^2^ est acceptée (i.e. l'homoscédasticité est
     respectée).\
@@ -309,10 +307,6 @@ Commençons tout d'abord par visualiser les données avec la fonction
 ordre alphabétique par défaut. Il est possible de réorganiser les
 groupes autrement. Par exemple, on peut les ordonner par ordre croissant
 de la médiane de chaque diète.\
-Une autre façon de visualiser les effets des facteurs est d'utiliser la
-fonction `plot.design()`. Cette fonction permet de représenter les
-valeurs moyennes des niveaux d'un facteur (par une ligne verticale) et
-la moyenne globale de la variable réponse (par une ligne horizontale).
 
 ```{r, echo = TRUE, eval = T}
 # Ordre alphabétique par défaut
@@ -324,8 +318,8 @@ boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white",
            "skyblue1","skyblue3","skyblue4"))
 ```
 
-Une autre façon de visualiser graphiquement les tailles d’effet est d’utiliser la fonction plot.design().
-Les niveaux d'un facteur le long d'une ligne verticale, et la valeur globale de la réponse dans une ligne horizontale.
+Une autre façon de visualiser les effets des facteurs est d'utiliser la fonction `plot.design()`. Cette fonction permet de représenter les valeurs moyennes des niveaux d'un facteur (par une ligne verticale) et
+la moyenne globale de la variable réponse (par une ligne horizontale).
 ```{r, echo = TRUE, eval = T}
 plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
 ```
@@ -333,7 +327,7 @@ plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum
 Par la suite, nous devons vérifier les conditions d'applications.
 **Note**: nous devons performer l'ANOVA poour pouvoir utiliser les résidus, cependant, tant que nous ne vérifions pas les conditions d'application, les résultats ne peuvent être interprétés.
 ```{r, echo = TRUE, eval = FALSE}
-# Plot for diagnostics
+# Graphiques pour conditions d'application
 aov1 <- aov(logMaxAbund ~ Diet, data=bird)
 opar <- par(mfrow=c(2,2))
 plot(aov1)
@@ -346,8 +340,7 @@ opar <- par(mfrow=c(2,2))
 plot(aov1)
 par(opar)
 ```
-Idéalement, le premier graphique devrait montrer une dispersion
-similaire pour chaque niveau de diète. Nous pouvons utiliser tous ces graphiques pour évaluer les conditions d'application, mais nous pouvons aussi utiliser les test de Shapiro, de Bartlett ou de Levene en supplément. **Note**:Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.
+Idéalement, le premier graphique devrait montrer une dispersion similaire pour chaque niveau de diète. Nous pouvons utiliser tous ces graphiques pour évaluer les conditions d'application, mais nous pouvons aussi utiliser les test de Shapiro, de Bartlett ou de Levene en supplément. **Note**:Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.
 
 ```{r, echo = TRUE, eval = TRUE}
 # Test de la supposition de la normalité des résidus
@@ -362,7 +355,7 @@ library(car)
 leveneTest(logMaxAbund ~ Diet, data = bird)
 ```
 
-Toutefois, les tests de Shapiro et de Bartlett ne sont pas significatifs. On peut supposer que les
+Toutefois, les tests ne sont pas significatifs. On peut supposer que les
 résidus sont distribués normalement et que les variances sont égales.
 
 Nous sommes maintenant prêts à effectuer une ANOVA. Dans R, la fonction
@@ -453,21 +446,10 @@ La sortie de R inclut un tableau qui liste toutes les combinaisons des
 niveaux de la variable explicative et qui identifie quel(s)
 groupe(s) diffère(ent) des autres :\
 
-    Tukey multiple comparisons of means 95% family-wise confidence level
-       factor levels have been ordered
-    Fit: aov(formula = anov1)
-    $Diet
-                                  diff             lwr        upr         p adj
-    Vertebrate-InsectVert     0.3364295   -1.11457613     1.787435    0.9645742
-    Insect-InsectVert         0.6434334   -0.76550517     2.052372    0.6965047
-    Plant-InsectVert          0.8844338   -1.01537856     2.784246    0.6812494
-    PlantInsect-InsectVert    1.0657336   -0.35030287     2.481770    0.2235587
-    Insect-Vertebrate         0.3070039   -0.38670951     1.000717    0.7204249
-    Plant-Vertebrate          0.5480043   -0.90300137     1.999010    0.8211024
-    PlantInsect-Vertebrate    0.7293041    0.02128588     1.437322    0.0405485
-    Plant-Insect              0.2410004   -1.16793813     1.649939    0.9884504
-    PlantInsect-Insect        0.4223003   -0.19493574     1.039536    0.3117612
-    PlantInsect-Plant         0.1812999   -1.23473664     1.597336    0.9961844
+```{r, echo = F, eval = T}
+# Cette commande est équivalente à la précédente :
+TukeyHSD(aov1,ordered=T)
+```
 
 Dans ce cas-ci, la seule différence significative d'abondance se
 retrouve entre les diètes \"PlantInsect\" et \"Vertebrate\".
@@ -482,7 +464,7 @@ graphique de la variable réponse en fonction des niveaux de groupe,
 ou les erreurs types et le nom des niveaux du groupe (représentant
 le résultat d'un test post hoc) peuvent y être apposées.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = T   }
 # Visualisation d'un modèle d'ANOVA à l'aide de la fonction barplot()
 
 sd <- tapply(bird$logMaxAbund,list(bird$Diet),sd)
@@ -491,7 +473,7 @@ n <- length(bird$logMaxAbund)
 se <- 1.96*sd/sqrt(n)
 
 bp <- barplot(means, col=c("white","lightblue1","skyblue1","skyblue3","skyblue4"),
-       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,1.8))
+       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,5))
 
 
 # Ajout des lignes verticales représentant les erreurs types
@@ -499,9 +481,11 @@ segments(bp, means - se, bp, means + se, lwd=2)
 # et des lignes horizontales
 segments(bp - 0.1, means - se, bp + 0.1, means - se, lwd=2)
 segments(bp - 0.1, means + se, bp + 0.1, means + se, lwd=2)
+#ajout d'une ligne à 0
+abline(h=0)
 ```
 
-![](images/lm_fig_12.png){width="650"}
+
 
 ### Allons plus loin: Contrastes
 
@@ -528,22 +512,10 @@ lorsque l'ANOVA a été effectuée avec la fonction `lm()`. Cette sortie
 montre les résultats de la régression linéaire pour chaque niveau de la
 variable catégorique :
 
-    Call:     lm(formula = logMaxAbund ~ Diet, data = bird)
-    Residuals:
-          Min         1Q          Median          3Q          Max
-         -1.85286     -0.32972    -0.08808    0.47375     1.56075
-    Coefficients:
-                      Estimate    Std. Error  t value     Pr(>|t|)
-    (Intercept)       1.1539      0.1500      7.692   5.66e-10 ***
-    DietInsectVert   -0.6434      0.4975     -1.293   0.2020
-    DietPlant         0.2410      0.4975      0.484   0.6303
-    DietPlantInsect   0.4223      0.2180      1.938       0.0585 .
-    DietVertebrate   -0.3070      0.2450     -1.253       0.2161
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-    Residual standard error: 0.6709 on 49 degrees of freedom
-    Multiple R-squared:  0.188,     Adjusted R-squared:  0.1217
-    F-statistic: 2.836 on 4 and 49 DF,  p-value: 0.0341
+
+```{r, echo = F, eval = T}
+summary(anov1)
+```
 
 La dernière ligne de cette sortie est identique à la sortie précédente
 de l'ANOVA. La statistique de F de l'ANOVA et sa valeur de p associée
@@ -580,7 +552,7 @@ Ce type de contrastes compare chaque niveau de la variable explicative à
 un niveau de référence. Dans R, ceci correspond à la fonction
 `contr.treatment()` et représentent la méthode par défaut de la fonction
 `lm()`. Le niveau de référence peut être changé en utilisant la fonction
-`relevel()`. Par exemple,
+`relevel()`. Par exemple,les lignes suivantes comparent chaque diète à la diète `Plant` maintenant définie comme le niveau de référence.
 
 ```{r, echo = TRUE, eval = FALSE}
 bird$Diet2 <- relevel(bird$Diet, ref="Plant")
@@ -589,22 +561,17 @@ summary(anov2)
 anova(anov2)
 ```
 
-compare chaque diète à la diète `Plant` maintenant définie comme le
-niveau de référence.
+```{r, echo = FALSE, eval = TRUE}
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
+```
+
 
 La matrice de coefficients de contrastes peut être affichée par la
 commande suivante :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = T}
 contrasts(bird$Diet2)
 ```
-
-                  Insect      InsectVert  PlantInsect     Vertebrate
-    Plant             0           0           0                   0
-    Insect            1           0           0                   0
-    InsectVert              0             1           0                   0
-    PlantInsect             0             0           1                   0
-    Vertebrate            0           0           0               1
 
 où chaque colonne représente une comparaison avec le niveau de référence
 `Plant` et chaque ligne représente un type de diète. Par exemple, la
@@ -613,30 +580,23 @@ La seconde comparaison est effectuée entre `Plant` et `InsectVert` etc.
 
 Il est possible de créer une matrice de coefficients de contrastes afin
 d'effectuer certaines comparaisons bien précises à l'aide de la
-fonction `contrasts()`. Par exemple,
+fonction `contrasts()`. Par exemple, les lignes suivantes créent la matrice de coefficients de contrastes suivante :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 contrasts(bird$Diet2) <- cbind(c(4,-1,-1,-1,-1), c(0,1,1,-1,-1), c(0,0,0,1,-1), c(0,1,-1,0,0))
+contrasts(bird$Diet2)
 ```
 
-crée la matrice de coefficients de contrastes suivante :
-
-                  [,1]    [,2]    [,3]    [,4]
-    Plant          4       0       0       0
-    Insect        -1       1       0       1
-    InsectVert    -1       1       0      -1
-    PlantInsect   -1      -1       1       0
-    Vertebrate    -1      -1      -1       0
 
 qui compare :\
 
--   la diète `Plant` à toutes les autres diètes dans la première
+- la diète `Plant` à toutes les autres diètes dans la première
     comparaison (colonne),\
-    \* les diètes `InsectVert` et `Insect` aux diètes `PlantInsect` et
+- les diètes `InsectVert` et `Insect` aux diètes `PlantInsect` et
     `Vertebrate` dans la deuxième comparaison,\
-    \* la diète `PlantInsect` à la diète `Vertebrate` dans la troisième
+- la diète `PlantInsect` à la diète `Vertebrate` dans la troisième
     comparaison,\
-    \* et la diète `Insect` à la diète `InsectVert` dans la quatrième
+- et la diète `Insect` à la diète `InsectVert` dans la quatrième
     comparaison.
 
 Pour chaque colonne, les diètes avec le même coefficient appartiennent
@@ -648,14 +608,14 @@ comparaison possible à l'aide d'une matrice de coefficients de
 contrastes. Deux conditions doivent être respectées afin d'utiliser
 correctement ces matrices :
 
-      - Pour chaque colonne, la somme des coefficients doit être égale à zéro et
-      - la somme des produits de chaque paire de colonnes doit être égale à zéro.
+**- Pour chaque colonne, la somme des coefficients doit être égale à zéro et**\
+**- la somme des produits de chaque paire de colonnes doit être égale à zéro.**
 
 Ceci peut être vérifié à l'aide de la commande suivante :
 
-```{r, echo = TRUE, eval = FALSE}
-sum(contrasts(bird$Diet)[,1]) # première condition pour la colonne 1
-sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2]) # deuxième condition pour les colonnes 1 et 2
+```{r, echo = TRUE, eval = TRUE}
+sum(contrasts(bird$Diet2)[,1]) # première condition pour la colonne 1
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # deuxième condition pour les colonnes 1 et 2
 ```
 
 Les contrastes utilisés fréquemment sont déjà programmés dans R :

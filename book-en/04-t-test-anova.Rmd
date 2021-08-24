@@ -1,8 +1,7 @@
 # t-test and ANOVA 
 
-```{r, echo = F, eval = T}
+```{r, echo = FALSE, eval = TRUE, message=FALSE}
 # data and all requirements
-install.packages("car")
 library(car)
 bird <- read.csv('data/birdsdiet.csv')
 
@@ -64,13 +63,13 @@ $\overline{y}$: general mean of the explanatory variable
 $\hat{y_{i}}$ : mean of the explanatory variable for all the replicates of the level i.
 
 
-### 3.1 Types of ANOVA
+### Types of ANOVA
 
 1.  **One-way ANOVA**\
     One categorical explanatory variable with 2 or more levels. If there
-    are 2 levels a **t-test** can be used alternatively.
-2.  **Two-way ANOVA** *[(see section
-    below)](http://qcbs.ca/wiki/r_workshop4?&#two-way_anova)*\
+    are 2 levels a [t-test](#t-test)can be used alternatively.
+2.  **Two-way ANOVA** [(see section
+   4.1.3)](#running-an-anova)\
     - 2 categorical explanatory variables or more,\
     - Each categorical explanatory variable can have multiple levels,\
     - The interactions between each categorical explanatory variable
@@ -78,9 +77,9 @@ $\hat{y_{i}}$ : mean of the explanatory variable for all the replicates of the l
 3.  **Repeated measures**\
     ANOVA can be used for repeated measures, but we won't cover this
     today. **Linear Mixed-effect Models** can also be used for this kind
-    of data *[(see Workshop 6)](http://qcbs.ca/wiki/r_workshop6)*.
+    of data *[(see Workshop 6)](https://github.com/QCBSRworkshops/workshop06)*.
 
-### 3.2 T-test
+### T-test
 
 When you have a single explanatory variable which is qualitative and only have **two levels**, you
 can run a *student's T-test* to test for a difference in the mean of the
@@ -303,10 +302,6 @@ We are interested to test if maximal abundance of birds depend on the diet.
 First, let's visualize the data using `boxplot()`. Recall that by default, R will order you groups in
 alphabetical order. We can reorder the groups according to the median of
 each Diet level.\
-Another way to graphically view the effect sizes is to use
-`plot.design()`. This function will illustrate the levels of a
-particular factor along a vertical line, and the overall value of the
-response is drawn as a horizontal line.
 
 ```{r, echo = TRUE, eval = TRUE}
 # Default alphabetical order
@@ -317,9 +312,7 @@ med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white","lightblue1",
            "skyblue1","skyblue3","skyblue4"))
 ```
-
-Another way to represent the effect sizes is to use plot.design().
-Levels of a particular factor are displayed along a vertical line, and the overall value of the response variable, in a horizontal line.
+Another way to graphically view the effect sizes is to use `plot.design()`. This function will illustrate the levels of a particular factor along a vertical line, and the overall value of the response is drawn as a horizontal line.
 ```{r, echo = TRUE, eval = T}
 plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
 ```
@@ -341,8 +334,7 @@ opar <- par(mfrow=c(2,2))
 plot(aov1)
 par(opar)
 ```
-Ideally the first diagnostic plot should show similar scatter for each
-Diet level. We can use only these graph to verify our assumptions, however, we can also use the Shapiro's, Bartlett's tests or Levene's test. **Note**:Levene's test performs better, but has a slightly higher Type II error.
+Ideally the first diagnostic plot should show similar scatter for each Diet level. We can use only these graph to verify our assumptions, however, we can also use the Shapiro's, Bartlett's tests or Levene's test. **Note**:Levene's test performs better, but has a slightly higher Type II error.
 
 ```{r, echo = TRUE, eval = TRUE}
 # Test assumption of normality of residuals
@@ -357,13 +349,10 @@ library(car)
 leveneTest(logMaxAbund ~ Diet, data = bird)
 ```
 
-The Shapiro and Bartlett tests are both non-significant,
-therefore residuals are assumed to be normally distributed and variances
+The tests are non-significant, therefore residuals are assumed to be normally distributed and variances
 are assumed to be equal.
 
-Let's now run the ANOVA. In R, ANOVA can be called either directly with
-the `aov` function, or with the `anova` function performed on a linear
-model previously implemented with `lm`:
+Let's now run the ANOVA. In R, ANOVA can be called either directly with the `aov` function, or with the `anova` function performed on a linear model previously implemented with `lm`:
 
 ```{r, echo = TRUE, eval = FALSE}
 # Using aov()
@@ -445,21 +434,10 @@ The R output for this test gives a table containing all the two by two
 comparisons of the explanatory variable levels and identify which
 treatment differ from the others:\
 
-    Tukey multiple comparisons of means 95% family-wise confidence level
-       factor levels have been ordered
-    Fit: aov(formula = anov1)
-    $Diet
-                                  diff             lwr        upr         p adj
-    Vertebrate-InsectVert     0.3364295   -1.11457613     1.787435    0.9645742
-    Insect-InsectVert         0.6434334   -0.76550517     2.052372    0.6965047
-    Plant-InsectVert          0.8844338   -1.01537856     2.784246    0.6812494
-    PlantInsect-InsectVert    1.0657336   -0.35030287     2.481770    0.2235587
-    Insect-Vertebrate         0.3070039   -0.38670951     1.000717    0.7204249
-    Plant-Vertebrate          0.5480043   -0.90300137     1.999010    0.8211024
-    PlantInsect-Vertebrate    0.7293041   0.02128588  1.437322    0.0405485
-    Plant-Insect              0.2410004   -1.16793813     1.649939    0.9884504
-    PlantInsect-Insect        0.4223003   -0.19493574     1.039536    0.3117612
-    PlantInsect-Plant         0.1812999   -1.23473664     1.597336    0.9961844
+```{r, echo = F, eval = T}
+# Cette commande est équivalente à la précédente :
+TukeyHSD(aov1,ordered=T)
+```
 
 In this case, the only significant difference in abundance occurs
 between the PlantInsect diet and the Vertebrate diet.
@@ -474,7 +452,7 @@ function of the explanatory variable levels, where standard errors can
 be superimposed on each bar as well as the different letters
 representing the treatment group (according to the post-hoc test).
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 # Graphical illustration of ANOVA model using barplot()
 
 sd <- tapply(bird$logMaxAbund,list(bird$Diet),sd)
@@ -483,21 +461,21 @@ n <- length(bird$logMaxAbund)
 se <- 1.96*sd/sqrt(n)
 
 bp <- barplot(means, col=c("white","lightblue1","skyblue1","skyblue3","skyblue4"),
-       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,1.8))
+       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,5))
 
 # Add vertical se bars
 segments(bp, means - se, bp, means + se, lwd=2)
 # and horizontal lines
 segments(bp - 0.1, means - se, bp + 0.1, means - se, lwd=2)
 segments(bp - 0.1, means + se, bp + 0.1, means + se, lwd=2)
+#add a line at 0
+abline(h=0)
 ```
 
-![](images/lm_fig_12.png){width="650"}
 
 ### Going further: Contrasts
 
--   Contrasts are group mean comparisons based on an a priori
-    hypothesis,
+-   Contrasts are group mean comparisons based on an *a priori* hypothesis,
 -   These groups can be compounded of one or many levels of a factor ,
 -   We can test basic hypothesis (ex: μ~1~ = μ~2~) or more complex
     hypothesis (ex: (μ~1~ + μ~2~)/3 == μ~3~).
@@ -515,22 +493,9 @@ with the `lm` function. This output performs a linear regression for
 each level of the explanatory variable and calculates their associated
 parameters:
 
-    Call:     lm(formula = logMaxAbund ~ Diet, data = bird)
-    Residuals:
-          Min         1Q          Median          3Q          Max
-         -1.85286     -0.32972    -0.08808    0.47375     1.56075
-    Coefficients:
-                      Estimate    Std. Error  t value     Pr(>|t|)
-    (Intercept)       1.1539      0.1500      7.692   5.66e-10 ***
-    DietInsectVert   -0.6434      0.4975     -1.293   0.2020
-    DietPlant         0.2410      0.4975      0.484   0.6303
-    DietPlantInsect   0.4223      0.2180      1.938       0.0585 .
-    DietVertebrate   -0.3070      0.2450     -1.253       0.2161
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-    Residual standard error: 0.6709 on 49 degrees of freedom
-    Multiple R-squared:  0.188,     Adjusted R-squared:  0.1217
-    F-statistic: 2.836 on 4 and 49 DF,  p-value: 0.0341
+```{r, echo = F, eval = T}
+summary(anov1)
+```
 
 Users can note that the last line of this R output corresponds exactly
 to the previous R output shown in the ANOVA table. The F-statistic of
@@ -567,7 +532,8 @@ As this type of contrasts compares each level of the explanatory
 variable to a baseline level, they are called contr.treatment and
 constitute the default method of the `lm` function in R. The baseline
 level can, however, be changed using the `relevel` function. For
-example,
+example, the following lines compare each diet treatment to the Plant diet, now defined as the
+baseline level.
 
 ```{r, echo = TRUE, eval = FALSE}
 bird$Diet2 <- relevel(bird$Diet, ref="Plant")
@@ -576,22 +542,17 @@ summary(anov_rl)
 anova(anov_rl)
 ```
 
-compares each diet treatment to the Plant diet, now defined as the
-baseline level.
+```{r, echo = FALSE, eval = TRUE}
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
+```
 
 The contrasts coefficient matrix of these contr.treatment comparisons
 can be called by
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 contrasts(bird$Diet2)
 ```
 
-                  Insect      InsectVert  PlantInsect     Vertebrate
-    Plant             0           0           0                   0
-    Insect            1           0           0                   0
-    InsectVert              0             1           0                   0
-    PlantInsect             0             0           1                   0
-    Vertebrate            0           0           0               1
 
 where each column corresponds to a comparison to the baseline Plant and
 each line to a diet level. For example, the first comparison compares
@@ -600,28 +561,18 @@ InsectVert diet to the Plant diet, etc.
 
 Users can create their own contrasts coefficient matrix in order to
 perform the comparison they desire using the contrasts function. For
-example,
+example, the following lines create this contrasts coefficient matrix:
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 contrasts(bird$Diet2) <- cbind(c(4,-1,-1,-1,-1), c(0,1,1,-1,-1), c(0,0,0,1,-1), c(0,1,-1,0,0))
+contrasts(bird$Diet2)
 ```
-
-creates this contrasts coefficient matrix:
-
-                  [,1]    [,2]    [,3]    [,4]
-    Plant          4       0       0       0
-    Insect        -1       1       0       1
-    InsectVert    -1       1       0      -1
-    PlantInsect   -1      -1       1       0
-    Vertebrate    -1      -1      -1       0
-
 that compares:\
 
--   the Plant diet to all the other diets in the first comparison,\
-    \* the InsectVert and the Insect diets to the PlantInsect and the
-    Vertebrate diets in the second one,\
-    \* the PlantInsect diet to the Vertebrate diet in the third one,\
-    \* and the Insect diet to the InsectVert diet in the fourth one.
+- the Plant diet to all the other diets in the first comparison,\
+- the InsectVert and the Insect diets to the PlantInsect and the Vertebrate diets in the second one,\
+- the PlantInsect diet to the Vertebrate diet in the third one,\
+- and the Insect diet to the InsectVert diet in the fourth one.
 
 Thus, for each column, the treatments with identical contrasts
 coefficient belong to the same two by two comparison group (e.g. in the
@@ -630,16 +581,16 @@ comparison group and are altogether compare to the second group
 corresponding to the treatment with a different coefficient, here the
 Plant diet with a coefficient 4). Thus, all comparison possible can be
 performed with personalized contrasts coefficient matrix. Only two
-conditions restrict the possible contrasts coefficient matrix:
+conditions restrict the possible contrasts coefficient matrix:\
 
-      - for each column, the sum of the coefficients must be equal to 0, and
-      - the sum of the product of each pair of column must be equal to 0.
+**- for each column, the sum of the coefficients must be equal to 0, and**\
+**- the sum of the product of each pair of column must be equal to 0.**
 
 This can be verified using the following R commands
 
-```{r, echo = TRUE, eval = FALSE}
-sum(contrasts(bird$Diet)[,1]) # first condition for column 1
-sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2]) # second condition for column 1 and 2
+```{r, echo = TRUE, eval = TRUE}
+sum(contrasts(bird$Diet2)[,1]) # first condition for column 1
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # second condition for column 1 and 2
 ```
 
 Conventional contrast coefficient matrices are already programmed in R,
