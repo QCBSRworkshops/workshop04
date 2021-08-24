@@ -637,13 +637,34 @@ the interaction term. Thus, a two-way ANOVA table corresponds to:
 `a`: number of levels of the explanatory variable A\
 `b`: number of levels of the explanatory variable B\
 `r`: number of replicates per treatment\
-`$\epsilon$`:error\
+$\epsilon$ : error\
 
 
 ### 4.1 Running a two-way ANOVA
 
 In R, a two-way ANOVA model is implemented in the same fashion as a
 one-way ANOVA using the function `lm`.
+
+- One-way ANOVA
+```{r, echo = TRUE, eval = FALSE}
+aov <- lm(Y ~ X, data)
+```
+
+- Two-way ANOVA
+```{r, echo = TRUE, eval = FALSE}
+aov <- lm(Y ~ X1 * X2 * ..., data)
+```
+
+The * symbol indicates that the main effects, as well, as their **interaction** will be included in the model.
+
+Always start reading the output from the interaction term, then proceed to the main effects. According to law of parsimony, select the model that explain the most variance with the least model parameters as possible: If the multiplicative effect (interaction) is non-signficant, you may consider a model with only the additive effects.
+
+You can then remove the interaction and run the model again.
+
+If use the + symbol, the main effects, but their interaction are **not** included.
+```{r, echo = TRUE, eval = FALSE}
+aov <- lm(Y ~ X1 + X2 + ..., data)
+```
 
 ------------------------------------------------------------------------
 
@@ -661,29 +682,24 @@ the:\
 
 This verification can be done using the four diagnostic plots as
 previously explained for one-way ANOVA.\
-++++ Challenge 2: Solution \|
 
-```{r, echo = TRUE, eval = FALSE}
-anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data=bird)
+<details>
+  <summary>**Click to see the solution to Challenge 2!**</summary>
+
+Assumptions
+```{r, echo = TRUE, eval = TRUE}
+anov4 <- lm(logMaxAbund ~ Diet*Aquatic, data=bird)
 opar <- par(mfrow=c(2,2))
-plot(anova2)
+plot(anov4)
 par(opar)
-summary(anov2)
-anova(anov2)
 ```
 
-The `anova` command enables one to visualize the ANOVA table of the
+Assumptions are met so we use the `anova` command to visualize the ANOVA table of the
 model:\
 
-    Analysis of Variance Table
-    Response: logMaxAbund
-                  Df  Sum Sq Mean Sq  F value Pr(>F)
-    Diet              4  5.1059  1.27647  3.0378  0.02669 *
-    Aquatic           1  0.3183  0.31834  0.7576  0.38870
-    Diet:Aquatic      3  2.8250  0.94167  2.2410  0.09644 .
-    Residuals     45 18.9087 0.42019
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```{r, echo = TRUE, eval = TRUE}
+anova(anov4)
+```
 
 In this case, the only significant term of the model is the diet factor
 as the p-value associated with the interaction term is not significant,
@@ -693,21 +709,11 @@ can also be determined by comparing two nested ANOVA models, i.e. a
 first model with the interaction and a second model without the
 interaction, using the `anova` command:
 
-```{r, echo = TRUE, eval = FALSE}
-anov3 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
-anova(anov3, anov2)
+```{r, echo = TRUE, eval = TRUE}
+anov5 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
+anova(anov5, anov4)
 ```
 
-which gives the following output:
-
-     Analysis of Variance Table
-     Model 1: logMaxAbund ~ Diet + Aquatic
-     Model 2: logMaxAbund ~ Diet * Aquatic
-       Res.Df     RSS     Df  Sum of Sq       F   Pr(>F)
-     1     48         21.734
-     2     45 1       8.909   3       2.825       2.241   0.09644 .
-     ---
-     Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 As the only difference between the two compared ANOVA models is the
 presence of the interaction term, this R output presents the
@@ -725,9 +731,10 @@ and b = 2 and the DF for the interaction should be (a-1)(b-1) = 4\*1 =
 is extremely unbalanced. Namely, since there is no aquatic birds that
 feed on plants we loose that interaction (note the NA in the
 summary(anov4) output). Please refer to the advanced section on
-[Unbalanced
-ANOVA](http://qcbs.ca/wiki/r_workshop4?&#unbalanced_anova_advanced_section_optional)
-below for further details. ++++
+[Unbalanced ANOVA](#unbalanced-anova-advanced-section-optional)
+below for further details.
+
+</details>
 
 ------------------------------------------------------------------------
 

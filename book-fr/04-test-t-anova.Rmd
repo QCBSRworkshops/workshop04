@@ -666,7 +666,7 @@ deux facteurs :
 `a:` nombre de niveaux de la variable explicative A\
 `b`: nombre de niveaux de la variable explicative B\
 `r`: nombre de répétitions par groupe\
-`$\epsilon$`:erreur\
+$\epsilon$ : erreur\
 
 
 ### Effectuer une ANOVA à deux critères de classification
@@ -674,6 +674,28 @@ deux facteurs :
 Dans R, une ANOVA à deux critères de classification est effectuée de la
 même manière qu'une ANOVA à un critère de classification avec la
 fonction `lm()`.
+
+- ANOVA à un facteur
+```{r, echo = TRUE, eval = FALSE}
+aov <- lm(Y ~ X, data)
+```
+
+- ANOVA à deux facteurs ou plus
+```{r, echo = TRUE, eval = FALSE}
+aov <- lm(Y ~ X1 * X2 * ..., data)
+```
+
+Lorsque vous utilisez le symbole * avec `lm()`, le modèle inclut les effets de chaque facteur séparément, ainsi que leur **interaction**.
+
+Selon le principe de parcimonie, vous voulez que votre modèle explique le plus possible de la variance observée dans les données, avec le moins de termes possible
+
+Enlever le terme d'interaction s'il n'est pas significatif, et ré-exécuter le modèle.
+
+Lorsque vous utilisez le symbole + avec `lm()`, le modèle inclut les effets de chaque facteur séparément (**pas** d'interaction)
+```{r, echo = TRUE, eval = FALSE}
+aov <- lm(Y ~ X1 + X2 + ..., data)
+```
+
 
 ------------------------------------------------------------------------
 
@@ -690,29 +712,26 @@ base avant d'interpréter les résultats d'une ANOVA, soit :\
 
 Cette vérification peut être faite en utilisant les quatre graphiques de
 diagnostic expliqués dans la section précédente.\
-++++ Défi 2: Solution \|
 
-```{r, echo = TRUE, eval = FALSE}
+<details>
+  <summary>**Cliquez pour voir la solution au Défi 2!**</summary>
+
+Conditions d'applications
+```{r, echo = TRUE, eval = TRUE}
 anov4 <- lm(logMaxAbund ~ Diet*Aquatic, data=bird)
 opar <- par(mfrow=c(2,2))
-plot(anova4)
+plot(anov4)
 par(opar)
-summary(anov4)
-anova(anov4)
 ```
+
 
 La fonction `anova()` permet de visualiser le tableau d'ANOVA du modèle
 :\
 
-    Analysis of Variance Table
-    Response: logMaxAbund
-                  Df  Sum Sq Mean Sq  F value Pr(>F)
-    Diet              4  5.1059  1.27647  3.0378  0.02669 *
-    Aquatic           1  0.3183  0.31834  0.7576  0.38870
-    Diet:Aquatic      3  2.8250  0.94167  2.2410  0.09644 .
-    Residuals     45 18.9087 0.42019
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```{r, echo = TRUE, eval = TRUE}
+anova(anov4)
+```
+
 
 Dans ce cas-ci, le seul facteur significatif est la diète. La valeur de
 p de l'interaction n'est pas significative, ce qui signifie que
@@ -722,21 +741,10 @@ deux modèles nichés, i.e. en incluant un premier modèle avec une
 interaction et un deuxième modèle avec sans l'interaction. La fonction
 `anova()` est utilisée :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 anov5 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
 anova(anov5, anov4)
 ```
-
-Voici la sortie dans R :
-
-     Analysis of Variance Table
-     Model 1: logMaxAbund ~ Diet + Aquatic
-     Model 2: logMaxAbund ~ Diet * Aquatic
-       Res.Df     RSS     Df  Sum of Sq       F   Pr(>F)
-     1     48         21.734
-     2     45 1       8.909   3       2.825       2.241   0.09644 .
-     ---
-     Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Étant donné que la seule différence entre ces deux modèles est la
 présence de l'interaction, cette sortie de R présente le seuil de
@@ -756,8 +764,9 @@ degrés de liberté est de 3. Cette interaction est extrêmement non
 équilibrée () : les oiseaux aquatiques ne se nourrissent pas de plante,
 donc ce niveau n'est pas considéré (prenez note du NA dans la sortie de
 summary(anov4)). Consultez la section sur les [ANOVA non
-équilibrées](http://qcbs.ca/wiki/r_atelier4#anova_non_equilibree_section_avancee_et_optionnelle)
-plus bas pour plus de détails. ++++
+équilibrées](#anova-non-équilibrée-section-avancéefacultative) plus bas pour plus de détails.
+
+</details>
 
 ------------------------------------------------------------------------
 
