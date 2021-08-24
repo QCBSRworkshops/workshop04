@@ -36,7 +36,7 @@ source('images/figAnova.R')
 In the ANOVA, the comparison of the between-level variance to the
 within-level variance is made through the calculation of the
 F-statistic that correspond to the ratio of the mean sum of squares of
-the level (MS~Lev~) on the mean sum of squares of the error (MS~E~).
+the level (MS~Lev~) on the mean sum of squares of the error (MS~$\epsilon$~).
 These two last terms are obtained by dividing their two respective sums
 of squares by their corresponding degrees of freedom, as is typically
 presented in a ANOVA table . Finally, the p-value of the ANOVA is calculated 
@@ -51,7 +51,7 @@ from the F-statistic that follows a Chi-square (χ^2^) distribution.
 
   Facteur A     $a-1$               $SS_{f}=\sum(\hat{y_{i}}-\overline{y})^{2}$                   $MS_{f}=\frac{SS_{f}}{(a-1)}$                            $F=\frac{MS_{f}} {MS_{E}}$
 
-  Error        $a(r-1)$               $SS_{\epsilon}=\sum(y_{i}-\hat{y_{i}})^{2}$                           ${MS_E}=\frac{SS_{\epsilon}}{a(r-1)}$
+  Error        $a(r-1)$               $SS_{\epsilon}=\sum(y_{i}-\hat{y_{i}})^{2}$                           $MS_{\epsilon}=\frac{SS_{\epsilon}}{a(r-1)}$
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 $a$: number of levels of the explanatory variable A
@@ -612,31 +612,32 @@ B. For example, perhaps relationship between the colour of a fruit and
 its mass will depend on the plant species: if so, we say there is an
 interaction between colour and species.
 
-Click to see the math in more detail below.  The one-way ANOVA
-table has to be rewritten to add the second explanatory term as well as
+The one-way ANOVA table has to be rewritten to add the second explanatory term as well as
 the interaction term. Thus, a two-way ANOVA table corresponds to:
 
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Source of\      Degrees of\             Sums of squares                                                                                Mean squares   F-statistic
+  Source of\      Degrees of\             Sums of squares                                                                                Mean squares                                                                                               F-statistic
   variation       freedom (df)
-  --------------- ----------------------- ---------------------------------------------------------------------------------------------- -------------- -------------------------------------------- --------------------------------------------
-  Total           $abr-1$       ${SS_Tot}=sum{i,j,k}{}({y_ijk}-overline{y})                                                2$
+  --------------- ----------------------- ---------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------- --------------------------------------------
+  Total           $abr-1$                   $SS_{t}=\sum_{i,j,k}{}(y_{ijk}-\overline{y})^2$
 
-  Cells           $ab-1$        ${SS_Cells}= sum{i,j}{}({overline{y}\_ij}-overline{y})                                     2$
+  Cells           $ab-1$                   $SS_{Cells}=\sum_{i,j}(\overline{y}_{ij}-\overline{y})^2$
 
-  Within-\        $ab(r-1)$     ${SS_E}= sum{i,j,k}{}({y}\_ijk-{overline{y}\_ij})                                          2$       ${MS_E}={SS_E}/{ab(r-1)}$
+  Within-\        $ab(r-1)$                   $SS_{\epsilon}=\sum_{i,j,k}(y_{ijk}-\overline{y}_{ij})^2$                                     $MS_{\epsilon}=\frac{SS_{\epsilon}}{ab(r-1)}$
   cells (error)
 
-  Factor A        $a-1$         ${SS_FactorA}= rb sum{i}{}({overline{y}\_i.}-overline{y})                                  2$       ${MS_FactorA}={SS_FactorA}/{a-1}$  ${F_FactorA}={MS_FactorA}/{MS_E}\</m\>
+  Factor A        $a-1$                   $SS_{A}= rb\sum_{i}(\overline{y}_{i.}-\overline{y})^2$                                                 $MS_{A}=\frac{SS_{A}}{a-1}$                                                                  $F_{A}=\frac{MS_{A}}{MS_{\epsilon}}$
 
-  Factor B        $b-1$         ${SS_FactorB}= ra sum{j}{}({overline{y}\_.j}-overline{y})                                  2$       ${MS_FactorB}={SS_FactorB}/{b-1}$  ${F_FactorB}={MS_FactorB}/{MS_E}\</m\>
+  Factor B        $b-1$                   $SS_{B}= ra\sum_{j}(\overline{y}_{.j}-\overline{y})^2$                                                 $MS_{B}=\frac{SS_{B}}{b-1}$                                                                   ${F_B}=\frac{MS_{B}}{MS_\epsilon}$
 
-  Interaction\    $(a-1)(b-1)$  ${SS_AB}= r sum{i,j,k}{}({overline{y}\_{..k}}-{overline{y}\_{.jk}}-{overline{y}\_{i.k}})   2$       ${MS_AB}={SS_AB}/{(a-1)(b-1)}$     ${F_AB}={MS_AB}/{MS_E}\</m\>
+  Interaction\    $(a-1)(b-1)$                   $SS_{AB}= r\sum_{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2$                                                 $MS_{AB}=\frac{SS_{AB}}{(a-1)(b-1)}$     $F_{AB}=\frac{MS_{AB}}{MS_\epsilon}$
   AB
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-a: number of levels of the explanatory variable A; b: number of levels
-of the explanatory variable B; r: number of replicates per treatment
+`a`: number of levels of the explanatory variable A\
+`b`: number of levels of the explanatory variable B\
+`r`: number of replicates per treatment\
+`$\epsilon$`:error\
 
 
 ### 4.1 Running a two-way ANOVA

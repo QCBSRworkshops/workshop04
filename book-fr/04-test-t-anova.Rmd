@@ -35,7 +35,7 @@ source('images/figAnova.R')
 Dans un ANOVA, la comparaison de la variance entre les groupes à
 celle intra-groupe se fait en calculant la **statistique F**. Cette
 statistique correspond au ratio entre la moyenne des carrés des
-groups (MS~Trt~) et la moyenne des carrés des erreurs (MS~E~). Ces
+groups (MS~Trt~) et la moyenne des carrés des erreurs (MS~$\epsilon$~). Ces
 deux termes sont obtenus en divisant leurs sommes des carrés respectives
 par leurs degrés de liberté, comme on le voit présenté typiquement dans
 un tableau d'ANOVA. Une valeur de **p** peut ensuite être calculée à 
@@ -49,7 +49,7 @@ partir de la statistique de F, qui suit une distribution de khi carré (χ^2^)
 
   Facteur A     $a-1$               $SS_{f}=\sum(\hat{y_{i}}-\overline{y})^{2}$                   $MS_{f}=\frac{SS_{f}}{(a-1)}$                            $F=\frac{MS_{f}} {MS_{E}}$
 
-  Résidus        $a(r-1)$               $SS_{\epsilon}=\sum(y_{i}-\hat{y_{i}})^{2}$                ${MS_E}=\frac{SS_{\epsilon}}{a(r-1)}$
+  Résidus        $a(r-1)$               $SS_{\epsilon}=\sum(y_{i}-\hat{y_{i}})^{2}$                $MS_{\epsilon}=\frac{SS_{\epsilon}}{a(r-1)}$
   -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 $a$: nombre de niveaux de la variable explicative A
@@ -640,32 +640,33 @@ niveau de la variable B. Par exemple, la relation entre la couleur d'un
 fruit et sa masse dépend de l'espèce de la plante: si oui, on peut dire
 qu'il y a une interaction entre la couleur et l'espèce.
 
-Cliquez ci-dessous pour plus des détails mathématiques.  Le
-tableau de calcul de l'ANOVA vu à la section précédente doit être
+Le tableau de calcul de l'ANOVA vu à la section précédente doit être
 modifié afin d'inclure le deuxième facteur et l'interaction entre ces
 deux facteurs :
 
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Source de\       Degrés de\              Sommes des carrés\                                                                             Moyenne des carrés   Statistique de F                               
+  Source de\       Degrés de\              Sommes des carrés\                                                                                                       Moyenne des carrés                                                                         Statistique de F                               
   variation        liberté (df)            des écarts à la moyenne                                                                                                                                            
-  ---------------- ----------------------- ---------------------------------------------------------------------------------------------- -------------------- ---------------------------------------------- ----------------------------------------------
-  Total            $abr-1$       ${SS_Tot}=sum{i,j,k}{}({y_ijk}-overline{y})                                                2$                                                            
+  ---------- ------------------- -------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------- ----------------------------------------------
+  Total              $abr-1$                   $SS_{t}=\sum_{i,j,k}{}(y_{ijk}-\overline{y})^2$
 
-  Intra-\          $ab(r-1)$     ${SS_E}= sum{i,j,k}{}({y}\_ijk-{overline{y}\_ij})                                          2$             ${MS_E}={SS_E}/{ab(r-1)}$            
-  cases (erreur)                                                                                                                                                                                              
+  Cases              $ab-1$                   $SS_{Cases}=\sum_{i,j}(\overline{y}_{ij}-\overline{y})^2$
 
-  Cases            $ab-1$        ${SS_Cells}= sum{i,j}{}({overline{y}\_ij}-overline{y})                                     2$                                                            
+  Intra-\            $ab(r-1)$                   $SS_{\epsilon}=\sum_{i,j,k}(y_{ijk}-\overline{y}_{ij})^2$                                           $MS_{\epsilon}=\frac{SS_{\epsilon}}{ab(r-1)}$
+  case
 
-  Facteur A        $a-1$         ${SS_FacteurA}= rb sum{i}{}({overline{y}\_i.}-overline{y})                                 2$             ${MS_FacteurA}={SS_FacteurA}/{a-1}$  ${F_FacteurA}={MS_FacteurA}/{MS_E}\</m\>
+  Facteur A        $a-1$                   $SS_{A}= rb\sum_{i}(\overline{y}_{i.}-\overline{y})^2$                                                 $MS_{A}=\frac{SS_{A}}{a-1}$                                                                                             $F_{A}=\frac{MS_{A}}{MS_{\epsilon}}$
 
-  Facteur B        $b-1$         ${SS_FacteurB}= ra sum{j}{}({overline{y}\_.j}-overline{y})                                 2$             ${MS_FacteurB}={SS_FacteurB}/{b-1}$  ${F_FacteurB}={MS_FacteurB}/{MS_E}\</m\>
+  Facteur B        $b-1$                   $SS_{B}= ra\sum_{j}(\overline{y}_{.j}-\overline{y})^2$                                                 $MS_{B}=\frac{SS_{B}}{b-1}$                                                                                             ${F_B}=\frac{MS_{B}}{MS_\epsilon}$
 
-  Interaction\     $(a-1)(b-1)$  ${SS_AB}= r sum{i,j,k}{}({overline{y}\_{..k}}-{overline{y}\_{.jk}}-{overline{y}\_{i.k}})   2$             ${MS_AB}={SS_AB}/{(a-1)(b-1)}$       ${F_AB}={MS_AB}/{MS_E}\</m\>
-  entre A et B                                                                                                                                                                                                
+  Intéraction\       $(a-1)(b-1)$                   $SS_{AB}= r\sum_{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2$                                                $MS_{AB}=\frac{SS_{AB}}{(a-1)(b-1)}$                                                        $F_{AB}=\frac{MS_{AB}}{MS_\epsilon}$
+  AB                                                                                                 
   ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-a: nombre de niveaux de la variable explicative A; b: nombre de niveaux
-de la variable explicative B; r: nombre de répétitions par groupe
+`a:` nombre de niveaux de la variable explicative A\
+`b`: nombre de niveaux de la variable explicative B\
+`r`: nombre de répétitions par groupe\
+`$\epsilon$`:erreur\
 
 
 ### Effectuer une ANOVA à deux critères de classification
