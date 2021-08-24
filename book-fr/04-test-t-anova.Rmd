@@ -775,25 +775,16 @@ summary(anov4)). Consultez la section sur les [ANOVA non
 Les interactions peuvent être visualisées à l'aide de la fonction
 `interaction.plot()` :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 interaction.plot(bird$Diet, bird$Aquatic, bird$logMaxAbund, col="black",
                  ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet")
 ```
 
-![](images/interaction_plot.png){width="650"}
-
 Que signifie le trou sur la ligne des oiseaux aquatiques?
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 table(bird$Diet, bird$Aquatic)
 ```
-
-                 0  1
-    Insect      14  6
-    InsectVert   1  1
-    Plant        2  0
-    PlantInsect 17  1
-    Vertebrate   5  7
 
 Le plan est **non-équilibré**: il y a un nombre inégal d'observations
 entre les diètes pour les oiseaux aquatiques (représentés par le 1) et
@@ -808,13 +799,14 @@ non-équilibré.
 Tester le seuil de signification du facteur \"Aquatic\" en comparant
 deux modèles nichés (i.e. avec et sans ce facteur).
 
-++++ Défi 3: Solution \|
+<details>
+  <summary>**Cliquez pour voir la solution au Défi 3!**</summary>
 
-```{r, echo = TRUE, eval = FALSE}
-anova(anov3,anov5) # Rappel que anov3 est le modèle avec le facteur "Diet" seulement.
+```{r, echo = TRUE, eval = TRUE}
+anova(anov1,anov5) # Rappel que anov3 est le modèle avec le facteur "Diet" seulement.
 ```
 
-++++
+</details>
 
 ------------------------------------------------------------------------
 
