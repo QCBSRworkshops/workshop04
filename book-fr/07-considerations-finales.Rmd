@@ -8,10 +8,9 @@ caractéristiques écologiques de vos données.
 
 # Résumé
 
-Un modèle linéaire est..
+Le modèle linéaire décrit la relation entre une variable **réponse** et une ou plusieurs autres variables **prédictrices**. Elle est utilisée pour analyser une **hypothèse bien formulée**, souvent associée à une question de recherche plus générale. La régression détermine si les variables sont correllées en inférent la **direction** et la **force** d'une relation, et notre **confiance** dans les estimations de l'effet.
 
-
-Lors du prochaine atelier, vous verrez comment...
+Lors du prochaine atelier, vous verrez comment programmer en R. Vous apprendrez à utiliser des structures de contrôle (boucles `for`, `if`, `while`) afin d'éviter la répétition de code, de faciliter l'organisation et d'effectuer des simulations. Vous apprendrez également à écrire vos propres fonctions et quelques astuces pour programmer plus efficacement.
 
 # Resources additionnels
 
