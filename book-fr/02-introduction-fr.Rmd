@@ -32,8 +32,6 @@ Nous hypothétisons donc que les oiseaux caractérisés par une masse plus imprt
 
 En fonction de notre prédiction, nous pouvons nous attendre à ce que la direction de la relation entre la variable réponse et le prédicteur soit inverse ou 'négative', de façon à ce qu'une masse plus élevée entraîne une abondance plus faible. Cependant, nous ne pouvons pas formuler d'attentes sur la force de la relation !
 
-------------------------------------------------------------------------
-
 **Les données**
 
 L'exemple suivant explore le jeu de données "birdsdiet" :
@@ -56,8 +54,6 @@ Les variables d'intérêt au test de l'hypothèse sont :
 
 * "MaxAbund" : La plus grande abondance observée sur un site en Amérique du Nord (continu / numérique)
 * "Masse" : La taille du corps moyenne en grammes (continue / numérique)
-
-------------------------------------------------------------------------
 
 **Concepts de base**
 
@@ -91,8 +87,6 @@ Par contre, en élevant toutes les valeurs au carré, on change les unités de n
 # Écart type de l'abondance maximale observée
 sd(bird$MaxAbund)
 ```
-
-------------------------------------------------------------------------
 
 **Exploration visuelle**
 
@@ -164,8 +158,6 @@ Pour être valide, tous les modèles linéaires s'appuient sur 4 conditions de b
 Notez que ces 4 conditions concernent les résidus, et non les variables réponses ou explicatives. **Cela ne veut pas dire** que l'ensemble des valeurs observées $y$ doivent suivre une distribution normale !
 :::
 
-------------------------------------------------------------------------
-
 ### Normalité des résidus
 
 Pour que les résultats d'un modèle linéaire soient valides, les **résidus** $\epsilon$ doivent suivre une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$, de façon à ce que la majorité des résidus aient une valeur proche de 0 (i.e. l'erreur est très petite) et que leur distribution soit symmétrique (i.e. la variable réponse est sous-estimée autant qu'elle est surestimée) :
@@ -176,13 +168,9 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 $$y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)$$
 
-------------------------------------------------------------------------
-
 ### Homoscédasticité
 
 De la même façon, les residus doivent être homoscédastiques. C'est-à-dire que l'erreur ne change pas beaucoup pour les différentes valeurs des variables explicatives. Tous les résidus $\epsilon$ suivent la même distribution, la **variance** $\sigma^2$ **reste constante**.
-
-------------------------------------------------------------------------
 
 ### Indépendance des résidus
 
@@ -194,8 +182,6 @@ Il est également essentiel que les résidus soient indépendants, c'est-à-dire
 
 Cette section vise à fournir une compréhension de base des différents types de description de modèles linéaires qu'il est possible de rencontrer. La première est la notation mathématique et la seconde la notation en `R`.
 
-------------------------------------------------------------------------
-
 ### Notation mathématique 
 
 La notation mathématique est la seule forme de notation appropriée pour la rédaction de manuscrits. Nous notons les observations individuelles à l'aide de l'équation de la droite telle que vue dans les sections précédentes et de l'équation pour la distribution des résidus:   
@@ -205,8 +191,6 @@ $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \eps
 Pour noter l'ensemble des observations, nous suivons la notation matricielle et incluons l'intercept dans$\mathbf{X}$ et $\boldsymbol{\beta}$) :   
 
 $$\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$$ 
-
-------------------------------------------------------------------------
 
 ### Notation en R
 
@@ -232,14 +216,13 @@ La variable prédite est toujours placée à gauche du tilde `~`alors que les va
 Il ne faut jamais mélanger les différents types de notation !
 :::
 
+------------------------------------------------------------------------
 
 ## Effectuer une modèle linéaire
 
 Nous avons vu qu'il est possible de définir un modèle linéaire avec cette équation :
 
-$$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
-
-------------------------------------------------------------------------
+$$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$n   
 
 ### Estimation du modèle
 
@@ -256,192 +239,3 @@ La régression linéaire se découle en multiple variantes telles que le Test de
 
 
 ![:scale 80%](images/schema.png)
-
-
-
-
-
-
-
-
-### 1.1 Définir la moyenne et la variation
-
-En science, on s'intéresse souvent à déterminer les relations entre des
-variables. Dans cet atelier, nous apprendrons comment utiliser des
-modèles linéaires, un ensemble de modèles qui quantifie les relations
-entre des variables.
-
-On commencera par définir deux concepts-clés pour comprendre les modèles
-linéaires: la moyenne et la variation. La **moyenne** est une mesure de
-de la localisation d'une population. Supposons que nous avons une
-variable aléatoire x, comme la grandeur des personnes dans une salle, et
-que nous voulons représenter les patrons de cette variable. En premier
-lieu, on peut utiliser la moyenne arithmétique (qui peut être calculée de plusieurs
-manières).
-
-Par contre, la moyenne ne peut pas représenter une population au
-complet. On peut aussi décrire une population à l'aide de mesures de
-variation. La **variation** est la dispersion (ou l'écart) des
-observations autour de la moyenne. Par exemple, il y a peu de variation
-si tout le monde dans une salle ont presque la même grandeur, et
-beaucoup de variation si plusieurs personnes sont de grandeurs très
-différentes. L'écart moyen, la variance, l'écart type, et le
-coefficient de variation (ou l'écart type relatif) sont tous des
-mesures de variation que nous définirons ci-dessous. On peut mesurer
-l'écart de chaque élément par rapport à la moyenne:
-
-Avec l'écart de tous les éléments, on peut calculer l'**écart moyen**:
-
-Afin de transformer tous les variables en valeurs positives sans
-utiliser de valeurs absolues, on peut mettre chaque valeur au carré. On
-obtient alors la **variance**:
-
-Par contre, en mettant toutes les valeurs au carré, on change les unités
-de nos variables. Si on reprend notre exemple des grandeurs de personnes
-dans la salle, la variance sera en m^2^, une unité qui n'est plus
-pertinente pour notre question initiale. Pour transformer ces valeurs en
-unités appropriées, on peut calculer l'**écart type**:
-
-Finalement, pour exprimer le **coefficient de variation** (également
-nommé l'écart type relatif) en pourcentage, nous avons:
-
-### 1.2 Les modèles linéaires
-
-Dans les modèles linéaires, on utilise les concepts de moyenne et de
-variation pour décrire la relation entre deux variables. On dit
-\"modèles linéaires\", parce qu'ils décrivent la relation entre
-variables avec une droite:
-
-$ {y_i} = {β_0} + {β_1}{x\_{i1}} + \... + {β_p}{x\_{ip}} + {ε_i}
-\</m\>
-
-où\
-${y_i}$est la variable réponse,\
-${β_0}$est l'ordonnée à l'origine de la droite de
-régression,\
-${β_1}$est le coefficient de variation de la 1^ère^ variable
-explicative,\
-${β_p}$est le coefficient de variation de la p^ème^ variable
-explicative,\
-${x_i1}$est la variable explicative continue pour la première
-observation,\
-${x_ip}$est la variable explicative continue pour la p^ième^
-observation,\\\\\
-${ε_i}$sont les résidus du modèle (i.e. la variance
-inexpliquée).\
-La **variable réponse** ($y\</m\>) est la variable que nous voulons
-expliquer, ou la variable dépendante. Il n'y a qu'une variable
-réponse. Les **variables explicatives** ($x\</m\>) sont des
-variables qui peuvent (potentiellement) expliquer la variable réponse.
-Celles-ci sont les variables indépendantes. On peut inclure une ou
-plusieurs variables explicatives. Par exemple, supposons que nous
-voulons expliquer la variation en grandeur des personnes dans cette
-salle. La grandeur est la variable réponse. Des variables explicatives
-peuvent être l'âge ou le sexe.
-
-Dans les modèles linéaires, les variables réponses doivent être
-continues, mais les variables explicatives peuvent être continues ou
-catégoriques. Une **variable continue** a une infinité de valeurs
-possibles. Une **variable catégorique** a un nombre limité de valeurs
-possibles. L'âge, la température, et la latitude sont des variables
-continues. Le sexe, le stade de développement, et le pays sont des
-variables catégoriques. Pour les variables explicatives continues, le
-modèle linéaire évalue s'il y a une corrélation significative entre la
-variable réponse et la ou les variables explicatives. Pour les variables
-explicatives catégoriques, le modèle linéaire évalue si la valeur
-moyenne de la variable réponse diffère significativement entre les
-différents niveaux (ou groupes) des variables explicatives. Ceci
-deviendra plus clair en explorant les types de modèles linéaires dans
-les sections suivantes.
-
-Dans presque tous les cas, les variables explicatives n'expliquent pas
-toute la variation dans la variable réponse. Par exemple, le sexe et
-l'âge ne ne seront pas assez pour prédire la grandeur de chaque
-personne parfaitement. La variation qui reste inexpliquée sont les
-**résidus**, ou l'erreur.
-
-Le but d'un modèle linéaire est de trouver la meilleure estimation des
-paramètres (les variables β), puis d'évaluer la qualité de
-l'ajustement (\"*goodness of fit*\") du modèle. Plusieurs méthodes ont
-été développées pour calculer l'intercept et les coefficient de modèles
-linéaires. Le choix approprié dépend du modèle. Le concept général de
-ces méthodes consiste de minimiser les résidus.
-
-Selon le type et le nombre de variables explicatives considérées,
-différents outils statistiques peuvent être utilisés pour évaluer ces
-relations entre variables. Le tableau ci-dessous liste les 5 types
-d'analyses statistiques abordées dans cet atelier:
-
-  -------------------------------------------------------------------------------------------------------------------
-  Analyse statistique          Type de variable\   Type de variable\   Nombre de\                        Nombre de\
-                               réponse Y           explicative X       variables explicatives            niveaux k
-  ---------------------------- ------------------- ------------------- --------------------------------- ------------
-  Régression linéaire simple   Continue            Continue            1                                 
-
-  Test de t                    :::                 Catégorique         1                                 2
-
-  ANOVA                        :::                 Catégorique         1 (ANOVA à un facteur), 2\        3 ou plus
-                                                                       (ANOVA à deux facteurs) ou plus   
-
-  ANCOVA                       :::                 Continue\           2 ou plus                         2 ou plus
-                                                   ET catégorique                                        
-
-  Régression multiple          :::                 Continue            2 ou plus                         
-  -------------------------------------------------------------------------------------------------------------------
-
-### 1.3 Conditions de base du modèle linéaire
-
-Pour être valide, les modèles linéaires s'appuient sur 4 conditions de
-base. Si les 4 conditions ne sont pas respectées, les résultats du
-modèle ne peuvent pas être interprétés de façon valable.
-
-1.  Les résidus sont **indépendants**
-2.  Les résidus suivent une **distribution normale**
-3.  Les résidus ont une **moyenne de 0**
-4.  Les résidus sont **homoscédastiques** (i.e. leur variance est
-    constante)
-
-Notez que ces 4 conditions concernent les résidus, et non les variables
-réponses ou explicatives. Les résidus doivent être indépendants,
-c'est-à-dire qu'il n'y a pas de structure manquante dans le modèle
-(comme une autocorrélation spatiale ou temporelle). Les résidus doivent
-aussi suivre une distribution normale avec une moyenne de 0, signifiant
-que la majorité des résidus ont une valeur proche de 0 (i.e. l'erreur
-est très petite) et que la distribution est symmétrique (i.e. la
-variable réponse est sous-estimée autant qu'elle est surestimée). Les
-residus doivent être homoscédastiques, c'est-à-dire que l'erreur ne
-change pas beaucoup quand les variables explicatives changent de valeur.
-
-Dans les section suivantes, nous ne répétons pas les conditions
-ci-dessus pour chaque modèle. **Prenez conscience, par contre, que ces
-conditions de base s'appliquent à tous les modèles linéaires, incluant
-tous ceux qui seront abordés ci-dessous.**
-
-### 1.4 Statistiques de tests et p-values
-
-Une fois que le modèle a été exécuté dans R, on reçoit une **sortie du
-modèle** composé de plusieurs éléments. Comprendre chacun de ces
-éléments et identifier les éléments pertinents de la sortie demande un
-peu de pratique. La sortie inclut une estimation des paramètres (les
-variables β), ainsi que des statistiques de tests. Le statistique de
-test dépend du modèle linéaire employé (t est le statistique de test
-pour la régression linéaire et le test de t, et F est le statistique de
-test pour l'ANOVA).
-
-Dans un modèle linéaire, l'**hypothèse nulle** est typiquement qu'il
-n'y a aucune relation entre deux variables continues, out qu'il n'y a
-pas de différence entre les niveaux d'une variable catégorique. **Plus
-la valeur absolue d'un statistique de test est grande, moins il est
-probable que l'hypothèse nulle soit valide**. La probabilité exacte se
-trouve dans la sortie du modèle, et s'appelle le **\"p-value\"**. On
-peut penser au p-value comme la probabilité que l'hypothèse nulle est
-valide, malgré que c'est une simplification. *(Plus précisément, le
-p-value est la probabilité que, étant donné que l'hypothèse nulle est
-valide, la magnitude du statistique de test serait plus grande ou égale
-à le statistique de test réellement observé.)* Par convention, si un
-p-value est **inférieur à 0.05 (5%)**, l'hypothèse nulle est rejetée.
-Cette valeur de seuil s'appelle **α** (alpha). Si on rejette
-l'hypothèse nulle, on dit alors que l'hypothèse contraire est
-soutenue: il y a une relation significative entre variables ou une
-différence significative entre groupes. **Notez qu'on ne \"prouve\" pas
-d'hypothèses**, mais qu'on les soutient ou on les rejette.
