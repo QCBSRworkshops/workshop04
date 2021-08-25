@@ -779,7 +779,7 @@ anova(anov1,anov5) # Recall: anov1 is model with only Diet as a factor
 
 ## Unbalanced ANOVA (advanced section/ optional)
 
- One-way and two-way ANOVA enabled us to determine the effect
+One-way and two-way ANOVA enabled us to determine the effect
 of categorical explanatory variables on a continuous response variable
 for the case of balanced experimental designs (i.e. when all levels of
 the explanatory variables contain the same number of replicates).
@@ -801,17 +801,16 @@ H~1~: there is at least one µi that differs from the others.
 
 Using this mathematical model:
 
-$y_{ijk} = µ + A{_i} + B_{j} + {A_i}{B_j} + {ε\_{ijk}}\</m\>
+$y_{ijk} = µ + A_{i} + B_{j} + A_{i}B_{j} + ε_{ijk}$
 
 Recall the sum of squares calculation of the ANOVA with balanced design:
 
-$ {SS_FactorA} = rb sum{i}{}{({overline{y}\_{i.}}-overline{y})}\^2 =
-SS(A) \</m\>\
-$ {SS_FactorB} = ra sum{j}{}{({overline{y}\_{.j}}-overline{y})}\^2 =
-SS(B\|A) = SS(A,B)-SS(B) \</m\>\
-$ {SS_AB} = r
-sum{i,j,k}{}({overline{y}\_{..k}}-{overline{y}\_{.jk}}-{overline{y}\_{i.k}})\^2
-= SS(A,B,AB)-SS(A,B) \</m\>
+$$ SS_{A} = rb\sum_{i}(\overline{y}_{i.}-\overline{y})^2 = SS(A)$$                                                                     
+
+$$ SS_{B} = ra \sum_{j}(\overline{y}_{.j}-\overline{y})^2 = SS(B\|A) = SS(A,B)-SS(B)$$
+
+
+$$ SS_{AB} = r \sum{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2= SS(A,B,AB)-SS(A,B)$$
 
 This corresponds to sequential sum of squares, or type I sum of squares,
 as the main effect of B is calculated after removing the main effect of
@@ -824,7 +823,7 @@ For unbalanced design, ANOVA results will depend on the order in which
 each explanatory variable appears in the model. This can be seen by
 comparing the results of the following two models:
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 unb_anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data=bird)
 unb_anov2 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
 anova(unb_anov1)
@@ -840,12 +839,12 @@ squares that perform calculations of main effect after removing the
 effect of all other factors ensure independence from sample size
 effects:
 
-${SS_FactorA}={SS(A\|B,AB)}=SS(A,B,AB)-SS(B,AB)\</m\>\
-${SS_FactorB}={SS(B\|A,AB)}=SS(A,B,AB)-SS(A,AB)\</m\>\
-${SS_AB}={SS(AB\|B,A)}=SS(A,B,AB)-SS(B,AB) \</m\>\
+$$SS_{A}=SS(A\|B,AB)=SS(A,B,AB)-SS(B,AB)$$
+$$SS_{B}=SS(B\|A,AB)=SS(A,B,AB)-SS(A,AB)$$
+$$SS_{AB}=SS(AB\|B,A)=SS(A,B,AB)-SS(B,AB)$$
 
 In R, ANOVA with type III sum of squares can be implemented using the
-Anova function of package 'car' and specifying "III" in the type option,
+`Anova` function of package [car](https://cran.r-project.org/web/packages/car/car.pdf) and specifying "III" in the type option,
 for example:
 
 ```{r, echo = TRUE, eval = FALSE}

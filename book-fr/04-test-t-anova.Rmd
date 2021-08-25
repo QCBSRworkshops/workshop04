@@ -812,7 +812,7 @@ anova(anov1,anov5) # Rappel que anov3 est le modèle avec le facteur "Diet" seul
 
 ## ANOVA non-équilibrée (section avancée/facultative)
 
- Les ANOVA à un et à deux critères de classification nous
+Les ANOVA à un et à deux critères de classification nous
 permettent de déterminer les effets de variables catégoriques sur une
 variable réponse continue lorsque nous avons un plan expérimental
 **équilibré** (i.e. lorsque le nombre de répétitions est égal pour
@@ -838,18 +838,18 @@ H~1~: il y a au moins une moyenne µi qui diffère des autres.
 
 On utilise ce modèle mathématique :
 
-${y\_{ijk}} = µ + {A_i} + {B_j} + {A_i}{B_j} + {ε\_{ijk}}\</m\>
+$y_{ijk} = µ + A_{i} + B_{j} + A_{i}B_{j} + ε_{ijk}$
 
 Rappelez-vous du calcul de la somme des carrés dans le cas d'une ANOVA
 à plan équilibré :
+                                             
+$$ SS_{A} = rb\sum_{i}(\overline{y}_{i.}-\overline{y})^2 = SS(A)$$                                                                     
 
-$ {SS_FactorA} = rb sum{i}{}{({overline{y}\_{i.}}-overline{y})}\^2 =
-SS(A) \</m\>\
-$ {SS_FactorB} = ra sum{j}{}{({overline{y}\_{.j}}-overline{y})}\^2 =
-SS(B\|A) = SS(A,B)-SS(B) \</m\>\
-$ {SS_AB} = r
-sum{i,j,k}{}({overline{y}\_{..k}}-{overline{y}\_{.jk}}-{overline{y}\_{i.k}})\^2
-= SS(A,B,AB)-SS(A,B) \</m\>
+$$ SS_{B} = ra \sum_{j}(\overline{y}_{.j}-\overline{y})^2 = SS(B\|A) = SS(A,B)-SS(B)$$
+
+
+$$ SS_{AB} = r \sum{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2= SS(A,B,AB)-SS(A,B)$$
+
 
 Ceci correspond à une somme des carrés séquentielle (aussi appelée de
 type I), car l'effet d'un facteur B est calculé après avoir retiré
@@ -863,7 +863,7 @@ d'ANOVA dépendent de l'ordre dans lequel chaque variable apparaît dans
 le modèle. Voyez comment les résultats diffèrent en comparant les deux
 modèles suivants :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 unb_anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data=bird)
 unb_anov2 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
 anova(unb_anov1)
@@ -880,15 +880,15 @@ appelée de type III) permet de calculer un effet principal après avoir
 retiré les effets des autres facteurs. Ceci rend le calcul indépendant
 de la taille des échantillons :
 
-${SS_FactorA}={SS(A\|B,AB)}=SS(A,B,AB)-SS(B,AB)\</m\>\
-${SS_FactorB}={SS(B\|A,AB)}=SS(A,B,AB)-SS(A,AB)\</m\>\
-${SS_AB}={SS(AB\|B,A)}=SS(A,B,AB)-SS(B,AB) \</m\>\
+$$SS_{A}=SS(A\|B,AB)=SS(A,B,AB)-SS(B,AB)$$
+$$SS_{B}=SS(B\|A,AB)=SS(A,B,AB)-SS(A,AB)$$
+$$SS_{AB}=SS(AB\|B,A)=SS(A,B,AB)-SS(B,AB)$$
 \
 Dans R, une ANOVA avec somme des carrés de type III peut être effectuée
-avec la fonction `Anova()` du paquet \"car\" et en spécifiant
+avec la fonction `Anova()` du paquet [car](https://cran.r-project.org/web/packages/car/car.pdf) et en spécifiant
 l'argument `type="III"` :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 Anova(unb_anov1,type="III")
 ```
 
