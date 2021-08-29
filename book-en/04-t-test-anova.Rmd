@@ -475,14 +475,29 @@ abline(h=0)
 
 ### Going further: Contrasts
 
+Contrasts compare each level of a factor to a baseline level. We can determine if each level of a factor are significantly different from each other.
+
 -   Contrasts are group mean comparisons based on an *a priori* hypothesis,
 -   These groups can be compounded of one or many levels of a factor ,
 -   We can test basic hypothesis (ex: μ~1~ = μ~2~) or more complex
     hypothesis (ex: (μ~1~ + μ~2~)/3 == μ~3~).
 
-The number of comparisons has to be lower or equal to the number of
+ The number of comparisons has to be lower or equal to the number of
 degrees of freedom of the ANOVA. Comparisons have to be independent from
 one another.
+
+Pour une ANOVA où la variable prédictrice est catégorique, The intercept is the baseline group and corresponds to the mean of the first (alphabetically) level. By calculating the intercept and coefficient estimates of each `Diet` level, *What did you notice*? 
+
+```{r, echo = T, eval = T}
+
+tapply(bird$logMaxAbund, bird$Diet, mean)
+coef(anov1)
+coef(anov1)[1] + coef(anov1)[2] # InsectVert
+coef(anov1)[1] + coef(anov1)[3] # Plant
+
+```
+
+La moyenne de la variable `Insect`, correspond à l'ordonnée à l'origine de notre de notre ANOVA `anov1`.
 
 Contrasts are given as an R output for ANOVA can be called to visualize
 the parameter estimates for each level of the explanatory variable in

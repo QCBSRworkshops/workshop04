@@ -489,7 +489,7 @@ abline(h=0)
 
 ### Allons plus loin: Contrastes
 
-
+Les constrastes servent à comparer chaque niveau du facteur à un niveau de référence, et de détecter des différences significatives entre chaque niveau.
 
 -   Les contrastes sont des comparaisons de moyennes basées sur des
     hypothèses *a priori*,
@@ -498,22 +498,33 @@ abline(h=0)
 -   On peut tester une hypothèse simple (e.g. μ~1~ = μ~2~) ou des
     hypothèses plus complexes (e.g. (μ~1~ + μ~2~)/3 == μ~3~).
 
-Le nombre de comparaisons doit être plus petit ou égal au nombre de
-degrés de liberté de l'ANOVA. Ces comparaisons doivent être
-indépendantes l'une de l'autre.
+ Le nombre de comparaisons doit être plus petit ou égal au nombre de
+degrés de liberté de l'ANOVA. Ces comparaisons doivent être indépendantes l'une de l'autre.
 
-Il est possible d'afficher des résultats supplémentaires de l'ANOVA
-dans R, qu'on appelle contrastes. Ceci permet de visualiser les
-estimations de paramètres pour chaque niveau de la variable catégorique
-en comparaison avec un niveau de référence. On peut afficher ces
-résultats avec la fonction `summmary.lm()` lorsque l'ANOVA a été
-effectuée avec la fonction `aov()` et avec la fonction `summary()`
-lorsque l'ANOVA a été effectuée avec la fonction `lm()`. Cette sortie
+Pour une ANOVA où la variable prédictrice est catégorique, l'estimation de l'ordonnée à l'origine est le niveau de référence et correspond à la moyenne du premier niveau (en ordre alphabétique) du facteur.En calculant l'ordonnée à l'origine de référence et l'ordonnée à l'origine de chaque niveau de `Diet`, *que remarquez-vous*? 
+
+```{r, echo = T, eval = T}
+
+tapply(bird$logMaxAbund, bird$Diet, mean)
+coef(anov1)
+coef(anov1)[1] + coef(anov1)[2] # InsectVert
+coef(anov1)[1] + coef(anov1)[3] # Plant
+
+```
+
+La moyenne de la variable `Insect`, correspond à l'ordonnée à l'origine de notre de notre ANOVA `anov1`.
+
+Il est aussi possible d'afficher ces résultats supplémentaires de l'ANOVA
+dans R avec la fonction `summmary.lm()`. Cette sortie
 montre les résultats de la régression linéaire pour chaque niveau de la
-variable catégorique :
+variable catégorique.
+
+**Note**: On peut afficher ces résultats avec la fonction `summmary.lm()` lorsque l'ANOVA a été effectuée avec la fonction `aov()` et avec la fonction `summary()`
+lorsque l'ANOVA a été effectuée avec la fonction `lm()`. 
 
 
 ```{r, echo = F, eval = T}
+
 summary(anov1)
 ```
 
