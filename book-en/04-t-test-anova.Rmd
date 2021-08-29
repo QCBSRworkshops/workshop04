@@ -475,18 +475,16 @@ abline(h=0)
 
 ### Going further: Contrasts
 
-Contrasts compare each level of a factor to a baseline level. We can determine if each level of a factor are significantly different from each other.
+Contrasts compare each level of a factor to a baseline level and therefore, we can determine if each level of a factor are significantly different from each other.
 
--   Contrasts are group mean comparisons based on an *a priori* hypothesis,
--   These groups can be compounded of one or many levels of a factor ,
--   We can test basic hypothesis (ex: μ~1~ = μ~2~) or more complex
-    hypothesis (ex: (μ~1~ + μ~2~)/3 == μ~3~).
+Contrasts are based on an *a priori* hypothesis, which makes them much more robust than *a posteriori* comparison like Tukey's test. With contrasts, groups can be compounded of one or many levels of a factor, and we can test basic hypothesis (ex: μ~1~ = μ~2~) or more complex hypothesis (ex: (μ~1~ + μ~2~)/3 == μ~3~).
 
- The number of comparisons has to be lower or equal to the number of
+*Important requirement*
+The number of comparisons has to be lower or equal to the number of
 degrees of freedom of the ANOVA. Comparisons have to be independent from
 one another.
 
-Pour une ANOVA où la variable prédictrice est catégorique, The intercept is the baseline group and corresponds to the mean of the first (alphabetically) level. By calculating the intercept and coefficient estimates of each `Diet` level, *What did you notice*? 
+For ANOVAs where explanatory variables are categorical, the intercept is the baseline group and corresponds to the mean of the first (alphabetically) level. By calculating the intercept and coefficient estimates of each `Diet` level, *What do you notice*? 
 
 ```{r, echo = T, eval = T}
 
@@ -497,23 +495,21 @@ coef(anov1)[1] + coef(anov1)[3] # Plant
 
 ```
 
-La moyenne de la variable `Insect`, correspond à l'ordonnée à l'origine de notre de notre ANOVA `anov1`.
+Mean for `Insect` corresponds to the intercept of our ANOVA `anov1`.
 
-Contrasts are given as an R output for ANOVA can be called to visualize
-the parameter estimates for each level of the explanatory variable in
-comparison to a baseline level. This output is called using the function
-`summary.lm(aov1)` when the ANOVA model was implemented with the `aov`
-function, and using the `summary(anov1)` when the ANOVA was implemented
-with the `lm` function. This output performs a linear regression for
-each level of the explanatory variable and calculates their associated
-parameters:
+You can also reach those results by using the function `summary.lm()` or `summary(). This output performs a linear regression for each level of the explanatory variable and calculates their associated
+parameters.
+
+**Note**: When the ANOVA model was implemented with the `aov`
+function, this output is called using the function
+`summary.lm()`. Use the function `summary()` when the ANOVA was implemented
+with the `lm` function.
 
 ```{r, echo = F, eval = T}
 summary(anov1)
 ```
 
-Users can note that the last line of this R output corresponds exactly
-to the previous R output shown in the ANOVA table. The F-statistic of
+Users can note that the last line of this R output corresponds exactly to the previous R output shown in the ANOVA table. The F-statistic of
 the ANOVA model and its associated p-value (i.e. 2.836 and 0.0341), are
 the same one as the values obtained from the ANOVA table, indicating
 diet explains the abundance better than a null model, and so, diet
@@ -521,19 +517,20 @@ significantly influence the abundance. The goodness-of-fit of the ANOVA
 model (i.e. adjusted R-square value) appears in the second to last line
 of this output. In this case, diet explains 12.17% of the abundance
 variability.\
+
 Contrasts adjust a linear regression of the response variable as
 function of each level of the categorical explanatory variable
 separately. In this case, 5 linear regressions (corresponding to the
 five lines of the coefficients table of the R output) are calculated by
-the lm function as the diet variable contains 5 levels. By default, the
+the `lm` function as the diet variable contains 5 levels. By default, the
 baseline level corresponding to the intercept is the first level of
 explanatory variables ranked in alphabetical order. So in this case, the
-"Insect" diet is automatically used as a baseline in R. In the R output,
+`Insect` diet is automatically used as a baseline in R. In the R output,
 the coefficient estimate of the baseline level (here, 1.1539) is first
 compared to 0 using a t-test (in this case, the t-test is significant
 with a p-value of 5.66e-10), while the coefficient estimates of the
 other explanatory variable level are compared to the baseline level. In
-this case, only the PlantInsect diet differs from the Insect diet, with
+this case, only the `PlantInsect` diet differs from the `Insect` diet, with
 an associated p-value of 0.0585.\
 In other words, this R output allows us to determine the mean of the
 response variable for each of the diet levels, for example:
@@ -550,32 +547,64 @@ level can, however, be changed using the `relevel` function. For
 example, the following lines compare each diet treatment to the Plant diet, now defined as the
 baseline level.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 bird$Diet2 <- relevel(bird$Diet, ref="Plant")
 anov_rl <- lm(logMaxAbund ~ Diet2, data=bird)
 summary(anov_rl)
 anova(anov_rl)
 ```
 
-```{r, echo = FALSE, eval = TRUE}
-bird$Diet2 <- relevel(bird$Diet, ref="Plant")
-```
-
-The contrasts coefficient matrix of these contr.treatment comparisons
-can be called by
+You can also reorder multiple levels according to median, instead of the alphabetical order:
 
 ```{r, echo = TRUE, eval = TRUE}
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+bird$Diet2 <- factor(bird$Diet, levels=names(med))
+anov2 <- lm(logMaxAbund ~ Diet2,data = bird)
+summary(anov2)
+anova(anov2)
+```
+
+The contrasts coefficient matrix of these `contr.treatment` comparisons can be called by
+
+```{r, echo = TRUE, eval = TRUE}
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
 contrasts(bird$Diet2)
 ```
 
-
-where each column corresponds to a comparison to the baseline Plant and
+where each column corresponds to a comparison to the baseline `Plant` and
 each line to a diet level. For example, the first comparison compares
-the Insect diet to the Plant diet, the second one compares the
-InsectVert diet to the Plant diet, etc.
+the `Insect` diet to the `Plant` diet, the second one compares the
+`InsectVert` diet to the `Plant` diet, etc. 
 
-Users can create their own contrasts coefficient matrix in order to
-perform the comparison they desire using the contrasts function. For
+The default contrasts `contr.treatment` is **not** orthogonal, meaning that the sum of the products of their coefficients is **not** null. We can verify if our previous contrasts are orthogonal by checking two things:
+- Coefficients must sum to 0
+- Any two contrast columns must sum to 0
+
+```{r, echo = TRUE, eval = TRUE}
+sum(contrasts(bird$Diet2)[,1]) # first condition for column 1
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # second condition for column 1 and 2
+```
+
+The first column equal to 1, which mean our contrasts are not orthogonal.\
+
+Orthogonality is important to make sure our contrasts are **independant**. You can use Helmert or polynomial contrasts to remedy the situation. Helmert contrast will contrast the second level with the first, the third with the average of the first two, and so on.
+
+```{r, echo = TRUE, eval = TRUE}
+options(contrasts=c("contr.helmert", "contr.poly"))
+sum(contrasts(bird$Diet2)[,1]) 
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) 
+```
+
+Our conditions are now equal to 0 and our contrasts are orthogonal.
+
+```{r, echo = TRUE, eval = TRUE}
+anov3 <- lm(logMaxAbund ~ Diet, data = bird)
+summary(anov3)
+```
+
+
+Users can also create their own contrasts coefficient matrix in order to
+perform the comparison they desire using the contrasts function.For
 example, the following lines create this contrasts coefficient matrix:
 
 ```{r, echo = TRUE, eval = TRUE}
@@ -584,33 +613,29 @@ contrasts(bird$Diet2)
 ```
 that compares:\
 
-- the Plant diet to all the other diets in the first comparison,\
-- the InsectVert and the Insect diets to the PlantInsect and the Vertebrate diets in the second one,\
-- the PlantInsect diet to the Vertebrate diet in the third one,\
-- and the Insect diet to the InsectVert diet in the fourth one.
+- the `Plant` diet to all the other diets in the first comparison,\
+- the `InsectVert` and the `Insect` diets to the `PlantInsect` and the `Vertebrate` diets in the second one,\
+- the `PlantInsect` diet to the `Vertebrate` diet in the third one,\
+- and the `Insect` diet to the `InsectVert` diet in the fourth one.
 
 Thus, for each column, the treatments with identical contrasts
 coefficient belong to the same two by two comparison group (e.g. in the
 column 1, the four treatment with a -1 coefficient belong to the first
 comparison group and are altogether compare to the second group
 corresponding to the treatment with a different coefficient, here the
-Plant diet with a coefficient 4). Thus, all comparison possible can be
-performed with personalized contrasts coefficient matrix. Only two
-conditions restrict the possible contrasts coefficient matrix:\
+`Plant` diet with a coefficient 4). \
 
-**- for each column, the sum of the coefficients must be equal to 0, and**\
-**- the sum of the product of each pair of column must be equal to 0.**
-
-This can be verified using the following R commands
+Let's verify the orthogonality of our contrasts:
 
 ```{r, echo = TRUE, eval = TRUE}
 sum(contrasts(bird$Diet2)[,1]) # first condition for column 1
 sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # second condition for column 1 and 2
 ```
+These constrats are orthogonal and could be used to compare factor levels with each other.
 
-Conventional contrast coefficient matrices are already programmed in R,
-such as the contr.helmert or the contr.poly matric (cf.
-`help(contrasts)` ).
+
+Other conventional contrast coefficient matrices are already programmed in R:
+`help(contrasts)`
 
 ## Two-way ANOVA
 

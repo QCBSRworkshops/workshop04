@@ -2377,6 +2377,7 @@ anova(anov2)
 2. Reorder multiple levels according to median
 
 ```{r,eval=FALSE}
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 bird$Diet2 <- factor(bird$Diet, levels=names(med))
 anov2 <- lm(logMaxAbund ~ Diet2,
             data = bird)

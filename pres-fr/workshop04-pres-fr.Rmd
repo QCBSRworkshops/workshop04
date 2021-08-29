@@ -2382,6 +2382,7 @@ anova(anov2)
 2. Ordonner les niveaux selon leur médiane
 
 ```{r,eval=FALSE}
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 bird$Diet2 <- factor(bird$Diet, levels=names(med))
 anov2 <- lm(logMaxAbund ~ Diet2,
             data = bird)
@@ -2396,8 +2397,8 @@ anova(anov2)
 
 .comment[Un point important à remarquer à propos du contraste par défaut dans R (`contr.treatment`) est qu'il n'est PAS orthogonal]
 
-Pour être orthogonal :
-  - Pour être orthogonal, les propriétés suivantes doivent être respectées:
+Pour être orthogonal, les propriétés suivantes doivent être respectées:
+  - La somme des coefficients doit être égale à 0.
   - La somme du produit de deux colonnes égale 0
 
 ```{r}
