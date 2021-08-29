@@ -830,9 +830,17 @@ misleading results related due to incorrect sum of squares calculations.
 For unbalanced experimental design, ANOVA must be modified to correctly
 account for the missing values of the response variable.
 
+**A dataset is considered unbalanced when the sample sizes of two factor levels are not equal.** 
+
+The `birdsdiet` data is actually unbalanced (number of Aquatic and non-Aquatic is not equal)
+
+```{r, echo = TRUE, eval = TRUE}
+table(bird$Aquatic)
+```
+
 While mathematical model, statistical hypothesis and statistical
 assumptions for ANOVA with unbalanced designs remain the same as for
-ANOVA with balanced designs the sum of squares calculation changes.
+ANOVA with balanced designs, the sum of squares calculation changes.
 
 For unbalanced design, ANOVA thus test the hypothesis:
 
@@ -852,10 +860,10 @@ $$ SS_{B} = ra \sum_{j}(\overline{y}_{.j}-\overline{y})^2 = SS(B\|A) = SS(A,B)-S
 
 $$ SS_{AB} = r \sum{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2= SS(A,B,AB)-SS(A,B)$$
 
-This corresponds to sequential sum of squares, or type I sum of squares,
+This corresponds to *sequential* sum of squares, or **Type I** sum of squares,
 as the main effect of B is calculated after removing the main effect of
 A, and the interaction effect is calculated after removing the two main
-effects. These calculations are sample size dependent as the effect of
+effects. **Type I** sum of suqares is the default type used in R. These calculations are sample size dependent as the effect of
 each factor is calculated after removing the effect of the precedent
 factor.
 
@@ -874,21 +882,29 @@ While the same explanatory variables are used in these two models, the
 ANOVA tables show different results due to the unbalanced design (i.e.
 different number of observations for aquatic and non-aquatic birds).
 
-For unbalanced designs, marginal sum of squares, or type III sum of
-squares that perform calculations of main effect after removing the
+A **Type II** sum of squares will test for the presence of a main effect after the other main effect.
+
+For unbalanced designs, *marginal* sum of squares, or **Type III** sum of
+squares is the most used. It performs calculations of main effect after removing the
 effect of all other factors ensure independence from sample size
-effects:
+effects.
+
+**SIf you are considering using Type II or III for your own dataset, you should read more about the subject. You can start with this [link](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)**
+
+The equation for the sum of squre **Type III** is:
 
 $$SS_{A}=SS(A\|B,AB)=SS(A,B,AB)-SS(B,AB)$$
 $$SS_{B}=SS(B\|A,AB)=SS(A,B,AB)-SS(A,AB)$$
 $$SS_{AB}=SS(AB\|B,A)=SS(A,B,AB)-SS(B,AB)$$
 
-In R, ANOVA with type III sum of squares can be implemented using the
+In R, ANOVA with **type III** sum of squares can be implemented using the
 `Anova` function of package [car](https://cran.r-project.org/web/packages/car/car.pdf) and specifying "III" in the type option,
 for example:
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = FALSE,message=F}
+library(car)
 Anova(unb_anov1,type="III")
+Anova(unb_anov2,type="III")
 ```
 
 By comparing ANOVA tables of models with different order of explanatory

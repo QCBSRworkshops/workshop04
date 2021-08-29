@@ -865,6 +865,14 @@ carrés. Pour des plans expérimentaux non-équilibrés, l'ANOVA doit être
 modifiée pour prendre en compte les données manquantes de la variable
 réponse.
 
+**Un jeu de données est considéré non équilibré lorsque le nombre d'échantillons entre deux niveaux n'est pas égal.** 
+
+Le jeu de données `bird` est en réalité non équilibré (le nombre d'espèces aquatiques n'égale pas le nombre d'espèces non-aquatiques).
+
+```{r, echo = TRUE, eval = TRUE}
+table(bird$Aquatic)
+```
+
 Le modèle mathématique, les hypothèses statistiques, et les conditions
 de base d'une ANOVA à plan non-équilibré demeurent les mêmes que deux
 de l'ANOVA à plan équilibré. Le calcul de la somme des carrés, par
@@ -891,10 +899,10 @@ $$ SS_{B} = ra \sum_{j}(\overline{y}_{.j}-\overline{y})^2 = SS(B\|A) = SS(A,B)-S
 $$ SS_{AB} = r \sum{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2= SS(A,B,AB)-SS(A,B)$$
 
 
-Ceci correspond à une somme des carrés séquentielle (aussi appelée de
-type I), car l'effet d'un facteur B est calculé après avoir retiré
+Ceci correspond à une somme des carrés *séquentielle* (aussi appelée de
+**Type I**), car l'effet d'un facteur B est calculé après avoir retiré
 l'effet d'un facteur A. L'interaction est calculée après avoir retiré
-les effets principaux de ces deux facteurs. Ces calculs dépendent de la
+les effets principaux de ces deux facteurs. Le **Type I** est le paramètre par défaut dans R. Ces calculs dépendent de la
 taille de l'échantillon, car l'effet de chaque facteur est calculé
 après avoir retiré l'effet du facteur précédent.
 
@@ -915,21 +923,29 @@ les tableaux d'ANOVA montrent des résultats différents à cause d'un
 plan non-équilibré (i.e. un nombre différent d'observations pour les
 oiseaux aquatiques et terrestres).
 
-Pour les plans non-équilibrés, une somme des carrés marginale (aussi
-appelée de type III) permet de calculer un effet principal après avoir
+La somme des carrés de **Type II** teste les effets de chaque facteur, mais après avoir tester l'autre facteur.
+
+Pour les plans non-équilibrés, une somme des carrés *marginale* (aussi
+appelée de **Type III**) est souvent utilisé. Cela permet de calculer un effet principal après avoir
 retiré les effets des autres facteurs. Ceci rend le calcul indépendant
-de la taille des échantillons :
+de la taille des échantillons.
+
+**Si vous considérez utiliser le Type II ou III avec vos propres données, vous devriez en lire plus sur le sujet avant de choisir. Vous pouvez commencer avec ce [lien](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)**
+
+L'équation mathématique pour une somme des carrés de **Type III** correspond à:
 
 $$SS_{A}=SS(A\|B,AB)=SS(A,B,AB)-SS(B,AB)$$
 $$SS_{B}=SS(B\|A,AB)=SS(A,B,AB)-SS(A,AB)$$
 $$SS_{AB}=SS(AB\|B,A)=SS(A,B,AB)-SS(B,AB)$$
 \
-Dans R, une ANOVA avec somme des carrés de type III peut être effectuée
+Dans R, une ANOVA avec somme des carrés de **type III** peut être effectuée
 avec la fonction `Anova()` du paquet [car](https://cran.r-project.org/web/packages/car/car.pdf) et en spécifiant
 l'argument `type="III"` :
 
-```{r, echo = TRUE, eval = TRUE}
+```{r, echo = TRUE, eval = TRUE,message=FALSE}
+library(car)
 Anova(unb_anov1,type="III")
+Anova(unb_anov2,type="III")
 ```
 
 En comparant les tableaux d'ANOVA de modèles avec un ordre différent

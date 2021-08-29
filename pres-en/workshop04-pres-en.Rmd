@@ -2490,7 +2490,7 @@ car::Anova(unb.anov2, type = "III")
 ```
 ]]
 
-.comment[What have you noticed when using `Anova()`?]ff
+.comment[What have you noticed when using `Anova()`?]
 
 ---
 class: inverse, center, middle
