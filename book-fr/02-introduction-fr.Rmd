@@ -1,18 +1,18 @@
 # Le modèle linéaire
 
-Les ateliers précédents ont explorés l'utilisation de `R` pour manipuler et représenter des données. Cependant, on s'intéresse souvent en science à déterminer les relations entre des variables. Cet atelier bâti sur les connaissances acquises préalablement et s'intéresse à la régression linéaire comme premier pas dans l'univers de l'analyse statistique. 
+Les ateliers précédents ont exploré l'utilisation de `R` pour manipuler et représenter des données. Cependant, on s'intéresse souvent en science à déterminer les relations entre des variables. Cet atelier bâti sur les connaissances acquises préalablement et s'intéresse à la régression linéaire comme premier pas dans l'univers de l'analyse statistique. 
 
 **Objectifs d'apprentissage**
 
 * Apprendre la structure d'un modèle linéaire et ses différentes variantes.
 * Apprendre comment faire un modèle linéaire dans R avec `lm()` et `anova()`
-* Apprendre comment identifier un modèle dont les conditions d'application ne sont pas rencontrées et comment règler le problème.
+* Apprendre comment identifier un modèle dont les conditions d'application ne sont pas satisfaites et comment régler le problème.
 
 ## Qu'est-ce qu'un modèle linéaire ?
 
 ------------------------------------------------------------------------
 
-Le modèle linéaire décrit la relation entre une variable **réponse** et une ou plusieurs autres variables **prédictrices**. Elle est utilisée pour analyser une **hypothèse bien formulée**, souvent associée à une question de recherche plus générale. La régression détermine si les variables sont correllées en inférent la **direction** et la **force** d'une relation, et notre **confiance** dans les estimations de l'effet.
+Le modèle linéaire décrit la relation entre une variable **réponse** et une ou plusieurs autres variables **prédictrices**. Elle est utilisée pour analyser une **hypothèse bien formulée**, souvent associée à une question de recherche plus générale. La régression détermine si les variables sont corrélées en inférant la **direction** et la **force** d'une relation, et notre **confiance** dans les estimations de l'effet.
 
 Un travail scientifique important est nécessaire pour formuler un modèle linéaire. Puisque le modèle analyse une hypothèse, il est recommandé de formuler clairement les attentes concernant la direction et la force d'une relation en tant que prédictions avant d'effectuer un modèle linéaire. 
 
@@ -28,7 +28,7 @@ Un travail scientifique important est nécessaire pour formuler un modèle liné
 
 > Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.
 
-Nous hypothétisons donc que les oiseaux caractérisés par une masse plus imprtante ont besoin de plus de nourriture et d'espace : la variable réponse est l'abondance maximale, et le prédicteur le poids moyen d'un individu. 
+Nous hypothétisons donc que les oiseaux caractérisés par une masse plus importante ont besoin de plus de nourriture et d'espace : la variable réponse est l'abondance maximale, et le prédicteur le poids moyen d'un individu. 
 
 En fonction de notre prédiction, nous pouvons nous attendre à ce que la direction de la relation entre la variable réponse et le prédicteur soit inverse ou 'négative', de façon à ce qu'une masse plus élevée entraîne une abondance plus faible. Cependant, nous ne pouvons pas formuler d'attentes sur la force de la relation !
 
@@ -57,10 +57,10 @@ Les variables d'intérêt au test de l'hypothèse sont :
 
 **Concepts de base**
 
-Il existe deux concepts-clés pour comprendre les modèles linéaires: la **localisation** et la **variation**. 
+Il existe deux concepts clés pour comprendre les modèles linéaires: la **localisation** et la **variation**. 
 Attention! Ces concepts sont centraux à la compréhension des autres concepts présentés dans l'atelier.
 
-La **localisation** est une mesure de tendance centrale d'une population. Elle peut être mesurée entre-autres avec la **moyenne arithmétique** $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$ : 
+La **localisation** est une mesure de tendance centrale d'une population. Elle peut être mesurée entre autres avec la **moyenne arithmétique** $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}$ : 
 
 ```{r}
 # Moyenne de l'abondance maximale observée
@@ -74,7 +74,7 @@ ou la **médiane** :
 median(bird$MaxAbund)
 ```
 
-Par contre, la moyenne ne peut pas caractériser une population au complet. Nous pouvons donc aussi décrire une population à l'aide de mesures de variation. La **variation** est la dispersion (ou l'écart) des observations autour de la moyenne. Elle se mesure avec la **variance** $\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$. La variance est la somme de l'écart élevée au carrée entre chaque valeur et la moyenne. L'élévation de l'écart au carré permet de transformer les valeurs en valeurs positives sans utiliser de valeurs absolues.
+Par contre, la moyenne ne peut pas caractériser une population au complet. Nous pouvons donc aussi décrire une population à l'aide de mesures de variation. La **variation** est la dispersion (ou l'écart) des observations autour de la moyenne. Elle se mesure avec la **variance** $\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2$. La variance est la somme de l'écart élevée au carré entre chaque valeur et la moyenne. L'élévation de l'écart au carré permet de transformer les valeurs en valeurs positives sans utiliser de valeurs absolues.
 
 ```{r}
 # Variance de l'abondance maximale observée
@@ -97,7 +97,7 @@ La figure suivante trace la variable réponse en fonction du prédicteur :
 plot(bird$Mass, bird$MaxAbund)
 ```
  
-Cette figure présente la variation de l'abondance maximale en fonction de la masse de l'oiseau. Nons somme intéressés à quantifier cette relation. Autrement dit, nous somme intéressés à quantifier l'effet de la masse des espèce d'oiseaux sur leur abondance maximale. Cependant, comment trouver la "meilleure" estimation de la relation ?
+Cette figure présente la variation de l'abondance maximale en fonction de la masse de l'oiseau. Nons sommes intéressés à quantifier cette relation. Autrement dit, nous sommes intéressés à quantifier l'effet de la masse des espèces d'oiseaux sur leur abondance maximale. Cependant, comment trouver la "meilleure" estimation de la relation ?
  
 ```{r, echo=FALSE}
 plot(bird$Mass, bird$MaxAbund)
@@ -133,21 +133,21 @@ $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
 ## Évaluation du modèle linéaire
 
-Le modèle linéaire évalue s'il y a une correlation significative entre la variable réponse et la ou les variables explicatives. Ceci est fait en évaluant si la valeur moyenne de la variable réponse diffère signifitivement entre les différentes valeurs des variables explicatives, comme pour la variation de l'abondance maximale des oiseaux en fonction de leur masse.
+Le modèle linéaire évalue s'il y a une corrélation significative entre la variable réponse et la ou les variables explicatives. Ceci est fait en évaluant si la valeur moyenne de la variable réponse diffère significativement entre les différentes valeurs des variables explicatives, comme pour la variation de l'abondance maximale des oiseaux en fonction de leur masse.
 
 Pour les variables explicatives catégoriques, le modèle linéaire évalue si la valeur moyenne de la variable réponse diffère significativement entre les différents niveaux (ou groupes) des variables explicatives. Ceci deviendra plus clair en explorant les types de modèles linéaires dans les sections suivantes.
 
-Dans presque tous les cas, les variables explicatives n'expliquent pas toute la variation dans la variable réponse. La variation qui reste inexpliquée sont les **résidus**, ou l'erreur.
+Dans presque tous les cas, les variables explicatives n'expliquent pas toute la variation dans la variable réponse. La variation qui reste inexpliquée est les **résidus**, ou l'erreur.
 
 ------------------------------------------------------------------------
 
-## Conditions d'application du modèle linéraire
+## Conditions d'application du modèle linéaire
 
-Le modèle linéaire est défini celon l'équation que nous avons exploré précédemment :
+Le modèle linéaire est défini selon l'équation que nous avons explorée précédemment :
 
 $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
 
-Pour être valide, tous les modèles linéaires s'appuient sur 4 conditions de base. Si les 4 conditions ne sont pas respectées, les résultats du modèle ne peuvent pas être interprétés de façon valable.
+Pour être valides, tous les modèles linéaires s'appuient sur 4 conditions de base. Si les 4 conditions ne sont pas respectées, les résultats du modèle ne peuvent pas être interprétés de façon valable.
 
 * Relation linéaire entre la réponse et le prédicteur
 * Les résidus suivent une distribution normale avec une moyenne de $0$
@@ -160,7 +160,7 @@ Notez que ces 4 conditions concernent les résidus, et non les variables répons
 
 ### Normalité des résidus
 
-Pour que les résultats d'un modèle linéaire soient valides, les **résidus** $\epsilon$ doivent suivre une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$, de façon à ce que la majorité des résidus aient une valeur proche de 0 (i.e. l'erreur est très petite) et que leur distribution soit symmétrique (i.e. la variable réponse est sous-estimée autant qu'elle est surestimée) :
+Pour que les résultats d'un modèle linéaire soient valides, les **résidus** $\epsilon$ doivent suivre une **distribution normale** avec une moyenne de $0$ et une variance de $\sigma^2$, de façon à ce que la majorité des résidus aient une valeur proche de 0 (i.e. l'erreur est très petite) et que leur distribution soit symétrique (i.e. la variable réponse est sous-estimée autant qu'elle est surestimée) :
 
 $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
@@ -170,7 +170,7 @@ $$y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)$$
 
 ### Homoscédasticité
 
-De la même façon, les residus doivent être homoscédastiques. C'est-à-dire que l'erreur ne change pas beaucoup pour les différentes valeurs des variables explicatives. Tous les résidus $\epsilon$ suivent la même distribution, la **variance** $\sigma^2$ **reste constante**.
+De la même façon, les résidus doivent être homoscédastiques. C'est-à-dire que l'erreur ne change pas beaucoup pour les différentes valeurs des variables explicatives. Tous les résidus $\epsilon$ suivent la même distribution, la **variance** $\sigma^2$ **reste constante**.
 
 ### Indépendance des résidus
 
@@ -188,7 +188,7 @@ La notation mathématique est la seule forme de notation appropriée pour la ré
 
 $$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
-Pour noter l'ensemble des observations, nous suivons la notation matricielle et incluons l'intercept dans$\mathbf{X}$ et $\boldsymbol{\beta}$) :   
+Pour noter l'ensemble des observations, nous suivons la notation matricielle et incluons l'intercepte dans$\mathbf{X}$ et $\boldsymbol{\beta}$) :   
 
 $$\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$$ 
 
@@ -218,7 +218,7 @@ Il ne faut jamais mélanger les différents types de notation !
 
 ------------------------------------------------------------------------
 
-## Effectuer une modèle linéaire
+## Effectuer un modèle linéaire
 
 Nous avons vu qu'il est possible de définir un modèle linéaire avec cette équation :
 
@@ -226,16 +226,16 @@ $$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$n
 
 ### Estimation du modèle
 
-Effectuer une modèle linéaire revient à trouver les "meilleures" estimations des paramètres $\beta_0,\, \beta_1$. C'est ce que nous appelons faire **l'estimation du modèle**.
+Effectuer un modèle linéaire revient à trouver les "meilleures" estimations des paramètres $\beta_0,\, \beta_1$. C'est ce que nous appelons faire **l'estimation du modèle**.
 
-Les "meilleurs" paramètres sont ceux qui minimisent la variation dans la variable réponse. La méthode la plus répendue pour minimiser la variation d'un modèle est de faire la somme des résidus au carré $\sum{\epsilon_i^2}$. Cette méthode est appelée la méthode de **moindres carrés ordinaire** (MCO).
+Les "meilleurs" paramètres sont ceux qui minimisent la variation dans la variable réponse. La méthode la plus répandue pour minimiser la variation d'un modèle est de faire la somme des résidus au carré $\sum{\epsilon_i^2}$. Cette méthode est appelée la méthode de **moindres carrés ordinaire** (MCO).
 
 
 ## Modèles linéaires 
 
 ------------------------------------------------------------------------
 
-La régression linéaire se découle en multiple variantes telles que le Test de T et l'analyse de variance. Ces méthodes rendent possible la quatification de relations entre variables.
+La régression linéaire se découle en multiples variantes telles que le Test de T et l'analyse de variance. Ces méthodes rendent possible la quantification de relations entre variables.
 
 
 ![](images/schema.png)

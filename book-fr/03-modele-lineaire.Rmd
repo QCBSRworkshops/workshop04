@@ -7,7 +7,7 @@ Dans l'exemple suivant, nous reprendrons les données d'abondance et de masse de
 
 ------------------------------------------------------------------------
 
-Les données sont composées de la masse moyenne des individus d'une espèce et l'abondance de ces espèces. Nous somme intéressé à quantifier la relation entre la masse d'un individu et l'abondance de l'espèce (ou l'effet de la masse sur l'abondance).
+Les données sont composées de la masse moyenne des individus d'une espèce et l'abondance de ces espèces. Nous sommes intéressés à quantifier la relation entre la masse d'un individu et l'abondance de l'espèce (ou l'effet de la masse sur l'abondance).
 
 Nous avons formulé l'hypothèse que pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
 
@@ -55,7 +55,7 @@ La fonction `lm()` est utilisée pour ajuster un modèle linéaire, en fournissa
 lm1 <- lm(MaxAbund ~ Mass, data = bird)
 ```
 
-Avec cette ligne de code, nous définissons un nouvel objet `lm1` qui contient le modèle linéaire. Nous spécifions également deux arguments dans la fonction. Le premier `MaxAbund ~ Mass` est la formule du modèle et le second `bird` défini l'objet qui contient les variables.
+Avec cette ligne de code, nous définissons un nouvel objet `lm1` qui contient le modèle linéaire. Nous spécifions également deux arguments dans la fonction. Le premier `MaxAbund ~ Mass` est la formule du modèle et le second `bird` définis l'objet qui contient les variables.
 
 > Avant d'utiliser une nouvelle fonction dans R, vous devriez vous référer à sa page d'aide (`?nomdelafonction`) afin de comprendre comment utiliser la fonction ainsi que les paramètres par défaut.
 
@@ -72,7 +72,7 @@ Cependant, pouvons-nous nous fier aux estimations? Pour en être certain, il fau
 
 ### **Étape 2.** Vérifier les conditions d'application avec les graphiques diagnostics
 
-Une méthode efficace pour vérifier le respect des conditions d'application du modèle est de procéder à un examen visuel. Quatres graphiques diagnostiques peuvent être produits d'un objet `lm`. Pour ce faire, nous utilisons ces commandes :
+Une méthode efficace pour vérifier le respect des conditions d'application du modèle est de procéder à un examen visuel. Quatre graphiques diagnostiques peuvent être produits d'un objet `lm`. Pour ce faire, nous utilisons ces commandes :
 
 ```{r, eval=FALSE, fig.height=6, fig.width=8}
 par(mfrow=c(2,2))
@@ -125,7 +125,7 @@ lm=lm(y~scale(x))
 plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
 ```
 
-Ces exemples présentent une relation non-linéaire et un exemple d'hétéroscédasticité qui est l'opposé de homoscédastique, ce qui signifie que la condition de normalité est non-respectée. 
+Ces exemples présentent une relation non linéaire et un exemple d'hétéroscédasticité qui est l'opposé de l’homoscédasticité, ce qui signifie que la condition de normalité est n'est pas respectée. 
 
 Dans cette situation, il faut plutôt utiliser un **modèle linéaire généralisé** (MLG) qui permet d'autres distributions (Poisson, binomial, binomial négatif, etc.) ou essayer de **transformer** la variable réponse et/ou les prédicteurs.
 
@@ -145,7 +145,7 @@ plot(lm,which = 3)
 
 Sur l'axe des **y** nous retrouvons la racine carrée des résidus standardisés $\sqrt{\frac{\epsilon_i}{\sigma}}$ et sur l'axe des **x** les valeurs prédites $\hat{y_i} = \beta_0 + \beta_1 \times x_i$.
 
-Nous recherchons ici aussi une dispersion des points sans patron, donc un prédicteur distributé de manière égale.
+Nous recherchons ici aussi une dispersion des points sans patron, donc un prédicteur distribué de manière égale.
 
 ------------------------------------------------------------------------
 
@@ -199,7 +199,7 @@ Dans ce cas-ci, les points ne sont pas bien alignés sur la droite, ce qui sugg�
 
 Ce dernier graphique diagnostique présente les résidus et leur influence. Il permet de déterminer si certaines observations ont une forte influence. Bien que nous ne testons pas un test de condition de base, la présence de points avec une forte influence peut influencer notre interprétation des données. Si une ou certaines observations sont aberrantes (dont, si elles ont des valeurs très différentes des autres), le modèle peut être mal ajusté en raison de leur influence exagérée sur l'estimation du modèle. 
 
-Le graphique des résidus vs effet de levier pésente les *points de levier* qui sont des observations extêmes du prédicteur et leur influence sur la régression. L'influence est quantifiée par la *ditance Cook*. **Une distance suppérieure à 0,5 est problématique**.
+Le graphique des résidus vs effet de levier présente les *points de levier* qui sont des observations extrêmes du prédicteur et leur influence sur la régression. L'influence est quantifiée par la *distance Cook*. **Une distance supérieure à 0,5 est problématique**.
 
 **Exemple d'effet de levier et d'influence**
 
@@ -269,7 +269,7 @@ lm=lm(y~scale(x))
 plot(lm, which = 5, main = "Effet de levier et influence élevée")
 ```
 
-Le 29 a un effet de levier et une distance de Cook de plus de 0,5. Il correspond à une donnée abérante. Il ne faut cependant jamais supprimer les valeurs aberrantes sans avoir des bonnes raisons de le faire ! Si (et seulement si!) ces observations correspondent à des
+Le 29 a un effet de levier et une distance de Cook de plus de 0,5. Il correspond à une donnée aberrante. Il ne faut cependant jamais supprimer les valeurs aberrantes sans avoir de bonnes raisons de le faire ! Si (et seulement si!) ces observations correspondent à des
 erreurs de mesure ou à des exceptions, elles peuvent être retirées du jeu de données.
 
 ------------------------------------------------------------------------
@@ -290,7 +290,7 @@ En se basant sur les connaissances acquises dans les sections précédentes, ces
 
 ------------------------------------------------------------------------
 
-### Conditions non-respectées - Quelle est la cause ?
+### Conditions non respectées - Quelle est la cause ?
 
 Pour comprendre la source des problèmes du modèle linéaire, traçons le modèle avec les observations :
 
@@ -304,7 +304,7 @@ hist(residuals(lm1)) # graphique à droite : distribution des résidus
 
 À gauche nous avons les données ainsi que la droite représentant l'estimation du modèle (`MaxAbund ~ Mass`). À gauche, la distribution des résidus.
 
-Nous pouvons verifier si les résidus suivent une distribution normale à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
+Nous pouvons vérifier si les résidus suivent une distribution normale à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
 
 ```{r}
 shapiro.test(residuals(lm1))
@@ -313,16 +313,16 @@ library(e1071)
 skewness(residuals(lm1))
 ```
 
-Les test de Shapiro-Wilk compare la distribution des données observées à une distribution normale. Les données observées peuvent être considérées comme normalement distribuées lorsque la valeur de p calculée par le test de Shapiro-Wilk est supérieure au seuil de significativité α (généralement 0.05). Ici, la valeur de p (`p-value`) retournée indique une distribution significativement différente d'une normale.
+Le test de Shapiro-Wilk compare la distribution des données observées à une distribution normale. Les données observées peuvent être considérées comme normalement distribuées lorsque la valeur de p calculée par le test de Shapiro-Wilk est supérieure au seuil de significativité α (généralement 0.05). Ici, la valeur de p (`p-value`) retournée indique une distribution significativement différente d'une normale.
 
 Le test d'asymétrie mesure le décalage des résidus. Une valeur positive représente un décalage vers la gauche et une valeur négative un décalage vers la droite. Ici, la valeur positive d'asymétrie indique que la distribution est décalée vers la gauche. 
 
 
 ------------------------------------------------------------------------
 
-### Conditions non-respectées - Comment procéder ?
+### Conditions non respectées - Comment procéder ?
 
-Clairement, les conditions d'application du modèle linéraire `lm1` ne sont pas respectées. Nous ne pouvons donc pas nous fier aux résultats du modèle. Il faut se tourner vers une autre alternative et il y a deux options lorsque les conditions d'application du modèle linéaire ne sont pas respectées.
+Clairement, les conditions d'application du modèle linéaire `lm1` ne sont pas respectées. Nous ne pouvons donc pas nous fier aux résultats du modèle. Il faut se tourner vers une autre alternative et il y a deux options lorsque les conditions d'application du modèle linéaire ne sont pas respectées.
 
 **Utiliser un autre type de modèle**
 
@@ -340,7 +340,7 @@ Il est également possible de modifier ses données, que ce soit la variable ré
 
 Notre modèle présente de sérieux problèmes. Essayons une transformation logarithmique pour voir si ça peut corriger la situation. 
 
-Premièrement, transformez données et exécutez une nouvelle régression linéaire sur ces données. Par la suite, vérifiez le respect des conditions d'application du nouveau modèle en utilisant les graphique diagnostics.
+Premièrement, transformez données et exécutez une nouvelle régression linéaire sur ces données. Par la suite, vérifiez le respect des conditions d'application du nouveau modèle en utilisant les graphiques diagnostiques.
 
 **Étape 1**
 
@@ -359,11 +359,11 @@ Avec ces données `logMaxAbund` et `logMass` transformées, nous exécutons une 
 lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ```
 
-Nous pouvons observer que les paramètres s'alignent avec notre prédiciton. c'est-à-dire, que le coefficient `logMass` est négatif et donc que l'abondance décroit avec la masse de l'espèce. Cependant, il faut encore vérifier conditions d'application du modèle pour s'assurer de la validité des résultats.
+Nous pouvons observer que les paramètres s'alignent avec notre prédiction. C'est-à-dire, que le coefficient `logMass` est négatif et donc que l'abondance décroit avec la masse de l'espèce. Cependant, il faut encore vérifier conditions d'application du modèle pour s'assurer de la validité des résultats.
 
 **Étape 2** 
 
-Vérifions les conditions pour `lm2` en utilisant les graphique diagnostics.
+Vérifions les conditions pour `lm2` en utilisant les graphiques diagnostiques.
 
 ```{r, fig.height=5.5, fig.width=7.5}
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
@@ -375,13 +375,13 @@ Les graphiques diagnostiques semblent beaucoup mieux, mais il reste des problèm
 ```{r, fig.height=4, fig.width=11,}
 # Graphique du modèle et des observations
 par(mfrow = c(1,2))
-coef(lm2) # constante et pente
+coef(lm2) # constantes et pente
 plot(logMaxAbund ~ logMass, data=bird) # graphique à gauche
 abline(lm2) # ligne définie par les paramètres du modèle
 hist(residuals(lm2)) # graphique à droite : distribution des résidus
 ```
 
-Le modèle semble mieux expliquer les données et la distribution des résidus s'est beaucoup rapproché de la distribution normale.
+Le modèle semble mieux expliquer les données et la distribution des résidus s'est beaucoup rapprochée de la distribution normale.
 
 ------------------------------------------------------------------------
 
@@ -395,7 +395,7 @@ summary(lm2)
 ```
 
 La sortie de `summary()` présente plusieurs valeurs :
-  1. `Coefficients` : Estimations des paramètres et leur écarts type
+  1. `Coefficients` : Estimations des paramètres et leur écart type
   2. `Pr(>|t|)` : Résultats d'un test de t visant à déterminer si les paramètres sont différents de 0
   3. `Adjusted R squared` (R au carré ajusté) : Dans quelle mesure le modèle explique-t-il les données ?
   4. `F-statistic` (statistique F) (ANOVA) : Le modèle est-il significativement différent d'un modèle sans prédicteur (modèle nul) ?
@@ -405,7 +405,7 @@ Nous aborderons dans la prochaine section les Tests de T et l'ANOVA. Nous pouvon
 Avec l'objet `lm2`, nous pouvons aussi extraire les paramètres du modèle et les autres résultats :
 
 ```{r}
-# Vecteurs de résidus et valeures prédites
+# Vecteurs de résidus et valeurs prédites
 e <- residuals(lm2)
 y <- fitted(lm2)
 coefficients(lm2) # coefficients
@@ -417,7 +417,7 @@ summary(lm2)$adj.r.squared # R au carré ajusté
 
 ------------------------------------------------------------------------
 
-L'interprétation du modèle est l'étape finale lorsque nous obtenons un modèle qui respecte les conditions d'application. L'interprétation est l'évaluation de l'appuis du modèle pour l'hypothèse. Bref, nous répondons à la question: *Dans quelle mesure le modèle soutient-il notre hypothèse ?*
+L'interprétation du modèle est l'étape finale lorsque nous obtenons un modèle qui respecte les conditions d'application. L'interprétation est l'évaluation de l'appui du modèle pour l'hypothèse. Bref, nous répondons à la question: *Dans quelle mesure le modèle soutient notre hypothèse ?*
 
 **Hypothèse**
 
@@ -428,21 +428,21 @@ L'interprétation du modèle est l'étape finale lorsque nous obtenons un modèl
 summary(lm2)
 ```
 
-Le modèle `lm2` ne présente que très **peu preuves à l'appuis** de l'hypothèse. En regardant les paramètres du modèle comme nous l'avons vu précédemment, nous observons que le modèle explique peu de la réponse. 
+Le modèle `lm2` ne présente que très **peu preuves à l'appui** de l'hypothèse. En regardant les paramètres du modèle comme nous l'avons vu précédemment, nous observons que le modèle explique peu de la réponse. 
 
 Le faible `R au carré ajusté` indique qu'une faible partie de la variance de la variable réponse est expliquée par le modèle. La masse n'explique qu'une petite fraction de l'abondance des espèces.
 
 Le `F-test` est à peine significatif ce qui indique que le modèle n'est que légèrement meilleur qu'un modèle sans variables prédictives.
 
-Finallement, la taille d'effet estimé (le coefficient) du paramètre `logMass` est très près de zéro et n'est que marginallement significatif, c'est-à-dire qu'une augmentation ou une diminution de la masse des espèces n'entraine quasiment pas de changement dans leur abondance. 
+Finalement, la taille d'effet estimé (le coefficient) du paramètre `logMass` est très près de zéro et n'est que marginalement significative, c'est-à-dire qu'une augmentation ou une diminution de la masse des espèces n'entraine quasiment pas de changement dans leur abondance. 
 
 Les résultats ne sont pas à la hauteur de ce que nous aimerions, peut-être devrions-nous formuler une hypothèse plus précise ?
 
 ### Trouver un meilleur modèle: oiseaux terrestres
 
-Formulons une nouvelle hypothèse plus précise. Cette fois, concentrons-nous seulement sur les oiseaux terrestres. L'abondance des oiseaux aquatiques ne répond peut être pas de la même façon à la masse que les oiseaux terrestres.
+Formulons une nouvelle hypothèse plus précise. Cette fois, concentrons-nous seulement sur les oiseaux terrestres. L'abondance des oiseaux aquatiques ne répond peut-être pas de la même façon à la masse que les oiseaux terrestres.
 
-**Nouvel hypothèse**
+**Nouvelle hypothèse**
 
 >  Pour différentes espèces d'oiseaux <span style="color:green">**terrestres**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
 
@@ -489,7 +489,7 @@ Pour le deuxième défi, rassemblons toutes les étapes et essayons avec de nouv
 
 1. Formuler une autre hypothèse similaire sur l'abondance maximale et la masse moyenne d'un individu, cette fois pour les **passereaux** ("passerine birds").
 2. Ajuster un **modèle** pour évaluer cette hypothèse, en utilisant les variables transformées (c'est-à-dire `logMaxAbund` et `logMass`). Sauvegarder le modèle sous le nom de `lm4`.
-3. **Vérifier les conditions d'application** du modèle linéaire à l'aide des graphiques diagnostics.
+3. **Vérifier les conditions d'application** du modèle linéaire à l'aide des graphiques diagnostiques.
 4. Interpréter les résultats : Le modèle fournit-il des **preuves à l'appui de l'hypothèse ?**
 
 > Indice : Comme les espèces aquatiques, les passereaux (variable `Passerine` sont codées 0/1 (vérifier avec `str(bird)`)
@@ -525,7 +525,7 @@ plot(lm4)
 summary(lm4)
 ```
 
-Les résultats du modèle ne doivent pas être interprétés car les conditions d'application du modèle linéaire ne sont pas respectées!
+Les résultats du modèle ne doivent pas être interprétés, car les conditions d'application du modèle linéaire ne sont pas respectées!
 
 ## Régression linéaire avec R
 
@@ -533,7 +533,7 @@ Les résultats du modèle ne doivent pas être interprétés car les conditions 
 
 Effectuer une régression linéaire avec R se découpe en trois étapes:
 
-1. Formuler et exécuter un modèle linéaire basé sur un hypothèse
+1. Formuler et exécuter un modèle linéaire basé sur une hypothèse
 2. Vérifier les conditions d'application du modèle linéaire
 3. Examiner la sortie du modèle et si les conditions sont respectées
     * Analyser les paramètres de régression
@@ -542,7 +542,7 @@ Effectuer une régression linéaire avec R se découpe en trois étapes:
 
 Nous allons explorer chaque étape dans les sections suivantes.
 
-Aussi, dans le cas ou les conditions ne sont pas respectées, nous verrons qu'il est possible d'envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données.
+Aussi, dans le cas où les conditions ne sont pas respectées, nous verrons qu'il est possible d'envisager l'utilisation d'un *Modèle linéaire généralisé* (GLM) ou la transformation des données.
 
 ## Noms de variables
 
