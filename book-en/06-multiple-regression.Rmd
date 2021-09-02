@@ -1,400 +1,106 @@
+# Multiple linear regression
+
+![](images/schema_multReg.png)
+
+A multiple regression tests the effects of several continuous explanatory variables on a continuous response variable. It differs from simple linear regression by having *more than one explanatory variable*.
+
+### Model formulation
+
+**Variables**
+
+The multiple linear regression is defined by the variables $y$ representing the response variable (**continuous**) and $x$ for the explanatory variables (**continuous** or **categorical**).
+
+**The assumed relationship**
+
+The relationship between the response variable and the predictors is defined in the same way as for simple regression. The difference is in the addition of $\beta$ parameters for the additional variables:
+
+$$y_i = \beta_0 + \beta_1x_{1,i}+ \beta_2x_{2,i}+ \beta_3x_{3,i}+...+ \beta_kx_{k,i} + \epsilon_i$$
+
+* The parameter $\beta_0$ is **the intercept** (or constant)
+* The parameter $\beta_1$ quantifies **the effect** of $x$ on $y$
+* The residual $\epsilon_i$ represents the **unexplained** variation
+* The **predicted value** of $y_i$ is defined as: $\hat{y}_i = \beta_0 + \beta_1x_{1,i}+ \beta_2x_{2,i}+ \beta_3x_{3,i}+...+\beta_kx_{k,i}$.
+
+The unexplained variation or error remains normally distributed, centered on zero with a variance of $\sigma^2$ :
+
+$$epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
+
+## Assumptions
+
+------------------------------------------------------------------------
+
+In the case of multiple linear regressions, two conditions are added to the usual conditions for linear models. First, there must be a **linear relationship** between **each** explanatory variable and the response variable. Second, the explanatory variables are independent of each other (there is no **colinearity**).
+
+### If variables are collinear
+
+In case of collinearity, there are some solutions:
+
+* Keep only one of the variables collinear
+* Try a multidimensional analysis (see workshop 9)
+* Try a pseudo-orthogonal analysis
+
+##  Multiple linear regression in R
+
+------------------------------------------------------------------------
+
+### The data
+
+Using the `Dickcissel` dataset we will compare the relative importance of climate (`clTma`), productivity (`NDVI`) and soil cover (`grass`) as predictors of dickcissel abundance (`abund`).
+
+```{r, eval=TRUE}
+Dickcissel = read.csv("data/dickcissel.csv")
+str(Dickcissel)
+```
+
+### Verify assumptions
+
+First, we must verify the presence of **colinearity** between all the explanatory and interest variables:
+
+:::explanation
+An observable pattern between two explanatory variables may indicate that they are **colinear**! You must avoid this, or their effects on the response variable will be confounded.
+:::
+
+### Linear regression
+
+Now, let's run the multiple regression of abundance (`abund`) against the variables `clTma + NDVI + grass` :
+
+```{r}
 # Multiple regression
-
-Multiple regression tests the effects of several continuous explanatory
-variables on a response variable.
-
-### 7.1 Assumptions
-
-In addition to the usual assumptions of linear models, it is important
-to test for orthogonality because it will affect model interpretation.
-Variables are not orthogonal when explanatory variables are collinear.
-If one explanatory variable is correlated to another, they are likely to
-explain the same variability of the response variable, and the effect of
-one variable will be masked by the other.
-
-If you see any pattern between two explanatory variables, they are
-collinear. Collinearity must be avoided as the effect of each
-explanatory variable will be confounded! Possible solutions are:
-
-1.  Keep only **one** of the collinear variables,
-2.  Try multidimensional analysis *[(see
-    workshop 9)](http://qcbs.ca/wiki/r_workshop9)*,
-3.  Try a pseudo-orthogonal analysis.
-
-Collinearity between explanatory variables can be assessed based on the
-variance inflation factor using the `vif` function of package 'HH':
-
-```{r, echo = TRUE, eval = FALSE}
-vif(clDD ~ clFD + clTmi + clTma + clP + grass, data=Dickcissel)
-```
-
-which gives the following output:
-
-      clFD        clTmi       clTma           clP         grass
-     13.605855    9.566169    4.811837    3.196599    1.165775
-
-As variance inflation factor higher than 5 represents collinear
-variables, the R output shows that *clDD*, *clFD* and *clTmi* are highly
-collinear. Only one of these explanatory variables can thus be retained
-in the final regression model.
-
-### 7.2 Dickcissel dataset
-
-The Dickcissel dataset explores environmental variables that drive the
-abundance and presence/ absence of a grassland bird with peak abundances
-in Kansas, USA. It contains 15 variables:
-
-  --------------------------------------------------------------------------------------------------------------------
-  Variable Name                     Description                                    Type
-  --------------------------------- ---------------------------------------------- -----------------------------------
-  abund                             The number of individuals\                     Continuous/ numeric
-                                    observed at each route
-
-  Present                           Presence/ absence of the\                      Boolean (\"Present\"/ \"Absent\")
-                                    species
-
-  broadleaf, conif, crop, grass,\   Land use variables within 20 km radius\        Continuous/ numeric
-  shrub, urban, wetland             of the center route
-
-  NDVI                              Vegetation index (a measure of productivity)   Interger
-
-  clDD, clFD, clTma, clTmi, clP     Climate date (DD = degree days,\               Continuous/ numeric
-                                    FD = frost days, Tma = max temperature,\
-                                    Tmi = min temperature,\
-                                    P = precipitation)
-  --------------------------------------------------------------------------------------------------------------------
-
-In R, multiple regression are implemented using the `lm` function and
-its results are viewed using the `summary` function. Using, for example,
-the Dickcissel data, we can test the effects of *climate*,
-*productivity* and *land cover* on the *abundance* of the Dickcissel
-species abundance by applying the model:
-
-------------------------------------------------------------------------
-
-CHALLENGE 5
-
-Is a transformation needed for the response variable *abund*?
-
-++++ Challenge 5: Solution\|
-
-```{r, echo = TRUE, eval = FALSE}
-hist(Dickcissel$abund, main="", xlab="Dickcissel abundance")
-shapiro.test(Dickcissel$abund)
-skewness(Dickcissel$abund)
-summary(Dickcissel$abund)
-```
-
-There are numerous zeros in the *abund* distribution. We can try adding
-a constant to the log10() transformation given the severe skewness:
-
-```{r, echo = TRUE, eval = FALSE}
-hist(log10(Dickcissel$abund+0.1), main="", xlab=expression("log"[10]*"(Dickcissel Abundance + 0.1)"))
-shapiro.test(log10(Dickcissel$abund+0.1))
-skewness(log10(Dickcissel$abund+0.1))
-```
-
-The resulting transformed distribution is still non-normal.
-
-++++
-
-------------------------------------------------------------------------
-
-As you likely noticed in Challenge 5, the *abund* variable could not be
-normalized, suggesting that we might need to relax the assumptions of a
-normally distributed response variable and move on to [Generalized
-Linear Models](http://qcbs.ca/wiki/r_workshop7), but that will wait
-until later!
-
-For now, let's simply use the untransformed *abund* and compare the
-relative importance of the three variables (*climate*, *productivity*,
-and *land cover*) on *abund*
-
-```{r, echo = TRUE, eval = FALSE}
-lm.mult <- lm(abund ~ clTma + NDVI + grass, data=Dickcissel)
+lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
 summary(lm.mult)
 ```
 
-The R output enables one to visualize the significant explanatory
-variables:
+Then, let us check the other assumptions, as for the simple linear regression:
 
-    lm(formula = abund ~ clTma + NDVI + grass, data = Dickcissel)
-    Residuals:
-     Min          1Q          Median          3Q           Max
-    -35.327   -11.029     -4.337      2.150       180.725
-    Coefficients:
-                  Estimate    Std. Error  t value     Pr(>|t|)
-    (Intercept)   -83.60813       11.57745    -7.222      1.46e-12 ***
-    clTma         3.27299     0.40677     8.046       4.14e-15 ***
-    NDVI          0.13716     0.05486     2.500       0.0127 *
-    grass         10.41435        4.68962     2.221       0.0267 *
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-    Residual standard error: 22.58 on 642 degrees of freedom
-    Multiple R-squared:  0.117,     Adjusted R-squared:  0.1128
-    F-statistic: 28.35 on 3 and 642 DF,  p-value: < 2.2e-16
-
-In this case, the three explanatory variables significantly influence
-the abundance of the Dickcissel species, the most significant one being
-the climate (p-value=4.14e-15). Altogether these variables explain
-11.28% of the Dickcissel abundance variability (Adjusted R-squared=
-0.1128). The overall model is also significant and explains the
-Dickcissel abundance variability better than a null model (p-value: \<
-2.2e-16).
-
-A plot of the response variable as a function of each explanatory
-variable can be used to represent graphically the model results:
-
-```{r, echo = TRUE, eval = FALSE}
-plot(abund ~ clTma, data=Dickcissel, pch=19, col="orange")
-plot(abund ~ NDVI, data=Dickcissel, pch=19, col="skyblue")
-plot(abund ~ grass, data=Dickcissel, pch=19, col="green")
+```{r, fig.height=5.5, fig.width=8,echo=-2}
+# Assumptions
+par(mfrow = c(2, 2))
+par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
+plot(lm.mult)
 ```
 
-![](images/lm_fig 13.png){width="850"}
+### Find the best-fit model
 
-### Going further: Polynomial regression
+There is a principle of primary importance in model selection. It is the **principle of parsimony**. That is, explain the most variation with the least number of terms. We could therefore remove the least significant variable.
 
- Response variables are not always linearly related to
-explanatory variables. In this case, linear regression that fits a
-straight line through the two variables is unable to correctly represent
-the data. Instead, polynomial regression that fits a polynomial curves
-between the response variable and the explanatory variables can be used
-to represent non-linear relationship based on the mathematical model:
-
-${y_i} = {β_0} + {β_1}{x_i} +
-{β_2}![](images/x_i}^2} + {β_3}{{x_i}^3} + {ε_i}> for a polynomial of Degree 3\\
-<m> {y_i} = {β_0} + {β_1}{x_i} + {β_2}{{x_i}^2} + {ε_i}$> for a polynomial of Degree 2
-
-where
-
-β<sub>0</sub> is the intercept of the regression line,\\
-β<sub>1</sub> is effect of the variable x,\\
-β<sub>2</sub> is effect of the variable x<sub>2</sub>,\\
-β<sub>3</sub> is effect of the variable x<sub>3</sub>,\\
-ε<sub>i</sub> are the residuals of the model (i.e. the unexplained variation).
-
-The Degree is the largest exponent of that variable. When you know a Degree, you can also give the polynomial a name/
-
-{{/polynomial_degree.png){width="250"}
-
-In R, these models are implemented with the `lm` function and can be
-compared to a linear regression with the `anova` function:
-
-```{r, echo = TRUE, eval = FALSE}
-lm.linear <- lm(abund ~ clDD, data=Dickcissel)
-lm.quad <- lm(abund ~ clDD + I(clDD^2), data=Dickcissel)
-lm.cubic <- lm(abund ~ clDD + I(clDD^2) + I(clDD^3), data=Dickcissel)
+```{r}
+summary(lm.mult)$coefficients
 ```
 
-------------------------------------------------------------------------
+All 3 variables are important. We keep everything!
 
-**CHALLENGE 7**
+The model explains 11.28% of the variability in dickcissel abundance $R²_{adj} = 0.11$.
 
-Compare the different polynomial models in the previous example, and
-determine which model is the most appropriate. Extract the adjusted R
-squared, the regression coefficients, and the p-values of this chosen
-model.
+:::noway
+However, this information is not valid, because the conditions for applying the linear model are not met.
+:::
 
-++++ Challenge 7: Solution\|
+It is important to note that the response variable does not vary linearly with the explanatory variables:
 
-```{r, echo = TRUE, eval = FALSE}
-anova(lm.linear,lm.quad,lm.cubic) # list models in increasing complexity
-# We should take the lowest line that has a significant p-value
-
-# Examine the summary
-summary(lm.quad)
-# Regression coefficients
-summary(lm.quad)$coefficients[,1]
-# Estimate p-values
-summary(lm.quad)$coefficients[,4]
-# R2-adj
-summary(lm.quad)$adj.r.squared
+```{r, fig.height=3.5, fig.width=11,echo=-1}
+# Plot the response vs predictor variables
+par(mfrow=c(1,3), mar=c(4, 4, 0.5, 0.5), cex = 1)
+plot(abund ~ clTma, data = Dickcissel)
+plot(abund ~ NDVI,  data = Dickcissel)
+plot(abund ~ grass, data = Dickcissel)
 ```
-
-++++
-
-------------------------------------------------------------------------
-
-The model comparison shows that the quadratic regression (i.e. the
-polynomial of degree 2) is the best model. The cubic term can thus be
-dropped from the final model:
-
-    Analysis of Variance Table
-    Model 1: abund ~ clDD
-    Model 2: abund ~ clDD + I(clDD^2)
-    Model 3: abund ~ clDD + I(clDD^2) + I(clDD^3)
-    Model     Res.Df      RSS             Df  Sum of Sq        F          Pr(>F)
-    1         644     365039
-    2         643     355871      1       9168.3      16.5457         5.34e-05 ***
-    3         642     355743      1       127.7       0.2304      0.6314
-
-The R output for the final model is:
-
-    Call: lm(formula = abund ~ clDD + I(clDD^2), data = Dickcissel)
-    Residuals:
-        Min           1Q          Median          3Q          Max
-       -14.057        -12.253     -8.674      1.495       190.129
-    Coefficients:
-                  Estimate    Std. Error  t value     Pr(>|t|)
-    (Intercept)   -1.968e+01      5.954e+00   -3.306      0.001 **
-    clDD          1.297e-02   2.788e-03       4.651       4.00e-06 ***
-    I(clDD^2)     -1.246e-06      3.061e-07   -4.070      5.28e-05 ***
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-    Residual standard error: 23.53 on 643 degrees of freedom
-    Multiple R-squared:  0.04018,   Adjusted R-squared:  0.0372
-    F-statistic: 13.46 on 2 and 643 DF,  p-value: 1.876e-06
-
-In this example, the linear term influenced the response variable more
-than the quadratic term, as their p-values are respectively 4.00e-06 and
-5.28e-05. They explained together 3.72% of the abundance variability
-(Adjusted R-squared).
-
-### 7.4 Stepwise regression
-
- To obtain a final multiple regression model, users can first
-implement a full regression model containing all the explanatory
-variables and then drop the non-significant variable using a stepwise
-selection procedure. In this method, non-significant variables are
-successively dropped one by one from the model and the goodness-of-fit
-of each successive model are compared based on AIC [(Akaike's
-Information
-Criterion)](http://en.wikipedia.org/wiki/Akaike_information_criterion),
-until all the explanatory variables of the model are significant. Note
-that a lower AIC value indicates a better goodness of fit (i.e., the
-best model is the one with the lowest AIC). In R, stepwise selection is
-implemented using the function `step`:
-
-```{r, echo = TRUE, eval = FALSE}
-lm.full <- lm(abund ~ . - Present, data=Dickcissel)
-lm.step <- step(lm.full)
-summary(lm.step)
-```
-
-According to the stepwise selection, only 6 significant explanatory
-variables among the 13 tested are retained in the final model:
-
-     Call:    lm(formula = abund ~ clDD + clFD + clTmi + clTma + clP + grass,  data = Dickcissel)
-     Residuals:
-      Min         1Q          Median          3Q          Max
-      -30.913     -9.640      -3.070      4.217       172.133
-    Coefficients:
-                  Estimate    Std. Error  t value     Pr(>|t|)
-    (Intercept)   -4.457e+02      3.464e+01   -12.868     < 2e-16 ***
-    clDD          5.534e-02   8.795e-03       6.292       5.83e-10 ***
-    clFD          1.090e+00   1.690e-01       6.452       2.19e-10 ***
-    clTmi         -6.717e+00      7.192e-01   -9.339      < 2e-16 ***
-    clTma         3.172e+00   1.288e+00       2.463       0.014030 *
-    clP           1.562e-01   4.707e-02       3.318       0.000959 ***
-    grass         1.066e+01   4.280e+00       2.490       0.013027 *
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-    Residual standard error: 19.85 on 639 degrees of freedom
-    Multiple R-squared:  0.3207,    Adjusted R-squared:  0.3144
-    F-statistic: 50.29 on 6 and 639 DF,  p-value: < 2.2e-16
-
-The model now accounts for 31.44% of the Dickcissel abundance
-variability, the clTmi being the most significant explanatory variable.\
-Nevertheless, some of the selected explanatory variables are highly
-correlated and should be dropped from the final model in order to remove
-uninformative variables.
-
-## Going further: Variance partitioning
-
- To assess the relative contribution of two (or more)
-explanatory datasets to a response variable, the `varpart` function of
-vegan package can be used. This function partitions the explained
-variance of a response variable to compare the contribution of various
-sets of explanatory variables. For example, the contribution of land
-cover variables on the first hand, and of climate variables on the other
-hand on Dickcissel abundance can be implemented using:
-
-```{r, echo = TRUE, eval = FALSE}
-part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")],
-                  Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
-part.lm
-```
-
-The R output of this function enables one to visualize the variance
-partitioning results:
-
-    Partition of variation in RDA
-    Call: varpart(Y = Dickcissel$abund, X = Dickcissel[, c("clDD", "clFD", "clTmi", "clTma", "clP")],
-    Dickcissel[, c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
-    Explanatory tables:
-    X1:  Dickcissel[, c("clDD", "clFD", "clTmi", "clTma", "clP")]
-    X2:  Dickcissel[, c("broadleaf", "conif", "grass", "crop", "urban", "wetland")]
-    No. of explanatory tables: 2
-    Total variation (SS): 370770
-    Variance: 574.84
-    No. of observations: 646
-    Partition table:
-                         Df       R.squared       Adj.R.squared        Testable
-    [a+b] = X1           5        0.31414         0.30878              TRUE
-    [b+c] = X2           6        0.03654         0.02749              TRUE
-    [a+b+c] = X1+X2      11       0.32378         0.31205              TRUE
-    Individual fractions
-    [a] = X1|X2          5                        0.28456              TRUE
-    [b]                  0                        0.02423              FALSE
-    [c] = X2|X1          6                        0.00327              TRUE
-    [d] = Residuals                               0.68795              FALSE
-    ---
-
-Use function `rda` to test significance of fractions of interest
-
-This R output shows that the two explanatory datasets explain 31.205%
-(\[a+b+c\] = X1+X2) of the Dickcissel abundance variability, while the
-climate dataset contributes to 28.46% of the Dickcissel abundance
-variability (\[a\] = X1\|X2) and the land cover dataset only contributes
-to 0.33% of the Dickcissel abundance variability (\[c\] = X2\|X1). The
-interaction of these two datasets also explained 2.42% (\[b\]) of the
-variability. The significance of each fraction can be tested using
-partial RDA and permutational ANOVA using the functions `rda` and
-`anova`:
-
-```{r, echo = TRUE, eval = FALSE}
-# Climate set
-out.1 = rda(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")],
-            Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
-anova(out.1, step=1000, perm.max=1000)
-
-# Land cover set
-out.2 = rda(Dickcissel$abund, Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")],
-        Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")])
-anova(out.2, step=1000, perm.max=1000)
-```
-
-with the following R ouputs:
-
-    Climate set
-    Permutation test for rda under reduced model
-    Model: rda(X = Dickcissel$abund, Y = Dickcissel[, c("clDD", "clFD", "clTmi", "clTma", "clP")],
-           Z = Dickcissel[, c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
-              Df      Var      F     N.Perm   Pr(>F)
-    Model         5   165.12   53.862    999      0.001 ***
-    Residual  634     388.72
-
-    Land cover set
-    Permutation test for rda under reduced model
-    Model: rda(X = Dickcissel$abund, Y=Dickcissel[, c("broadleaf", "conif", "grass", "crop", "urban", "wetland")],
-            Z = Dickcissel[, c("clDD", "clFD", "clTmi", "clTma", "clP")])
-              Df      Var      F     N.Perm   Pr(>F)
-    Model         6       5.54     1.5063    999      0.152
-    Residual  634     388.72
-
-In this case, the fraction of variance explained by the climate set is
-significant (p-value=0.001) while the fraction explained by the land
-cover set is not (p-value=0.152).
-
-The results of variance partitioning are generally graphically
-represented using Venn diagrams on which each explanatory datasets is
-represented by a circle inside which their corresponding fraction of
-explained variance is annotated:
-
-```{r, echo = TRUE, eval = FALSE}
-showvarparts(2)
-plot(part.lm,digits=2, bg=rgb(48,225,210,80,maxColorValue=225), col="turquoise4")
-```
-
-![](images//varpart.png){width="300"}

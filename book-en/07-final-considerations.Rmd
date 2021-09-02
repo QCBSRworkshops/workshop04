@@ -7,10 +7,9 @@ ecological background of your data.
 
 # Summary
 
-Linear models are...
+The linear model describes the relationship between a **response** variable and one or more other **predictor** variables. It is used to analyze a well-formulated **hypothesis**, often associated with a more general research question. Regression determines whether variables are correlated by inferring the **direction** and **strength** of a relationship, and our **confidence** in the effect estimates.
 
-In the next workshop, ...
-
+In the next workshop, you will learn how to program in R. You will learn how to use control structures (`for`, `if`, `while` loops) to avoid repeating code, to make organization easier, and to perform simulations. You will also learn how to write your own functions and some tricks to program more efficiently.
 
 # Additional resources
 
@@ -28,4 +27,3 @@ In the next workshop, ...
 
 #### A few useful links
 
--   list here

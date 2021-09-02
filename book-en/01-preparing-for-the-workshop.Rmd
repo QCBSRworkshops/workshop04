@@ -2,18 +2,7 @@
 
 # Learning objectives
 
-In this workshop, you will learn how to implement in R basic linear models commonly used in ecology such as simple regression, analysis of variance (ANOVA), analysis of covariance (ANCOVA), and multiple regression. After verifying visually and statistically the assumptions of these models and transforming your data when necessary, the interpretation of model outputs and the plotting of your final model will no longer keep secrets from you! 
-
-By the end of this workshop, we will have accomplished these objectives:
-
-1.  Simple linear regression
-2.  T-test
-3.  ANOVA
-4.  Two-way ANOVA
-5.  Unbalanced ANOVA
-    *(advanced section/ optional)*
-6.  ANCOVA
-7.  Multiple linear regression
+**Summary :** In this workshop, you will learn the structure of a linear model and its different variants such as simple regression, analysis of variance (ANOVA), analysis of covariance (ANCOVA) and multiple regression. This workshop focuses on implementing linear models in R with `lm()` and `anova()`, identifying models that do not meet the conditions for application and solving problems.
 
 # Preparing for the workshop
 
@@ -21,10 +10,16 @@ All workshop materials are found at [github.com/QCBSRworkshops/workshop04](https
 
 For this workshop, we will be working with the following datasets:
 
-* list here
+* [birdsdiet](http://qcbs.ca/wiki/_media/birdsdiet.csv)
+* [dickcissel](http://qcbs.ca/wiki/_media/dickcissel.csv)
 
 > To download this data, do right click + save on the page that opens.
 
 You should also make sure you have downloaded, installed, and loaded these packages:
 
-* list here
+* [dplyr](https://cran.r-project.org/package=dplyr) (to work with data)
+* [vegan](https://cran.r-project.org/package=vegan) (for population data analyses)
+* [e1071](https://cran.r-project.org/package=e1071) (to test models)
+* [MASS](https://cran.r-project.org/package=MASS) (for linear discriminant analysis)
+* [car](https://cran.r-project.org/package=car) (for the analysis of variance)
+* [effect](https://cran.r-project.org/package=effect) (to visualize models)
