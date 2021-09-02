@@ -26,6 +26,7 @@ Dans le langage de programmation R, l'équation est traduite par :
 ```
 MaxAbund ~ Mass
 ```
+
 où la variable prédite est placée à gauche du tilde et la variable prédicteur est à droite.
 
 
@@ -75,6 +76,7 @@ Cependant, pouvons-nous nous fier aux estimations? Pour en être certain, il fau
 Une méthode efficace pour vérifier le respect des conditions d'application du modèle est de procéder à un examen visuel. Quatre graphiques diagnostiques peuvent être produits d'un objet `lm`. Pour ce faire, nous utilisons ces commandes :
 
 ```{r, eval=FALSE, fig.height=6, fig.width=8}
+# Tracer les quatres graphiques diagnostiques
 par(mfrow=c(2,2))
 plot(lm1)
 ```
@@ -177,7 +179,7 @@ plot(lm, which = 2)
 
 Sur l'axe des **y** nous retrouvons les résidus standardisés $\frac{\epsilon_i}{\sigma}$ et sur l'axe des **x** les quantiles d'une distribution normale standard $\mathcal{N}(0, \sigma^2)$.
 
-Nous voulons voir les résidus standardisés près de la ligne 1:1. Ainsi, les résidus peuvent être considérés comme normalement distribués.
+Nous voulons voir les résidus standardisés sont près de la ligne 1:1. Ainsi, les résidus peuvent être considérés comme normalement distribués.
 
 ------------------------------------------------------------------------
 
@@ -197,7 +199,7 @@ Dans ce cas-ci, les points ne sont pas bien alignés sur la droite, ce qui sugg�
 
 #### Graphique #4 - Résidus vs effet de levier
 
-Ce dernier graphique diagnostique présente les résidus et leur influence. Il permet de déterminer si certaines observations ont une forte influence. Bien que nous ne testons pas un test de condition de base, la présence de points avec une forte influence peut influencer notre interprétation des données. Si une ou certaines observations sont aberrantes (dont, si elles ont des valeurs très différentes des autres), le modèle peut être mal ajusté en raison de leur influence exagérée sur l'estimation du modèle. 
+Ce dernier graphique diagnostique présente les résidus et leur influence. Il permet de déterminer si certaines observations ont une forte influence. Bien que nous ne testons pas un test de condition de base, la présence de points avec une forte influence peut influencer notre interprétation des données. Si une ou certaines observations sont aberrantes (donc, si elles ont des valeurs très différentes des autres), le modèle peut être mal ajusté en raison de leur influence exagérée sur l'estimation du modèle. 
 
 Le graphique des résidus vs effet de levier présente les *points de levier* qui sont des observations extrêmes du prédicteur et leur influence sur la régression. L'influence est quantifiée par la *distance Cook*. **Une distance supérieure à 0,5 est problématique**.
 
@@ -295,6 +297,7 @@ En se basant sur les connaissances acquises dans les sections précédentes, ces
 Pour comprendre la source des problèmes du modèle linéaire, traçons le modèle avec les observations :
 
 ```{r, fig.height=4, fig.width=11}
+# Graphique du modèle et des observations
 par(mfrow = c(1,2))
 coef(lm1) # constante et pente
 plot(MaxAbund ~ Mass, data=bird) # graphique à gauche
@@ -307,8 +310,10 @@ hist(residuals(lm1)) # graphique à droite : distribution des résidus
 Nous pouvons vérifier si les résidus suivent une distribution normale à l'aide d'un test de *Shapiro-Wilk* et d'un test d'asymétrie (*skewness*) :
 
 ```{r}
+# Test de la normalité des résidus
 shapiro.test(residuals(lm1))
 
+# Test d'asymétrie
 library(e1071)
 skewness(residuals(lm1))
 ```
@@ -316,7 +321,6 @@ skewness(residuals(lm1))
 Le test de Shapiro-Wilk compare la distribution des données observées à une distribution normale. Les données observées peuvent être considérées comme normalement distribuées lorsque la valeur de p calculée par le test de Shapiro-Wilk est supérieure au seuil de significativité α (généralement 0.05). Ici, la valeur de p (`p-value`) retournée indique une distribution significativement différente d'une normale.
 
 Le test d'asymétrie mesure le décalage des résidus. Une valeur positive représente un décalage vers la gauche et une valeur négative un décalage vers la droite. Ici, la valeur positive d'asymétrie indique que la distribution est décalée vers la gauche. 
-
 
 ------------------------------------------------------------------------
 
@@ -366,6 +370,7 @@ Nous pouvons observer que les paramètres s'alignent avec notre prédiction. C'e
 Vérifions les conditions pour `lm2` en utilisant les graphiques diagnostiques.
 
 ```{r, fig.height=5.5, fig.width=7.5}
+# Graphiques diagnostiques
 par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
@@ -424,7 +429,7 @@ L'interprétation du modèle est l'étape finale lorsque nous obtenons un modèl
 > Pour différentes espèces d'oiseaux, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
 
 ```{r, comment=""}
-# Simmaire du modèle linéaire avec les données log-transformées
+# Sommaire du modèle linéaire avec les données log-transformées
 summary(lm2)
 ```
 
@@ -446,7 +451,7 @@ Formulons une nouvelle hypothèse plus précise. Cette fois, concentrons-nous se
 
 >  Pour différentes espèces d'oiseaux <span style="color:green">**terrestres**</span>, la **masse moyenne d'un individu a un effet sur l'abondance maximale** de l'espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l'habitat, etc.).
 
-Nous pouvons maintenant ajuster le modèle linéaire pour exclure les oiseaux aquatiques. Il suffit  :
+Nous pouvons maintenant ajuster le modèle linéaire pour exclure les oiseaux aquatiques. Il suffit :
 
 ```{r}
 # Modèle linéaire avec oiseaux terrestres
@@ -492,7 +497,7 @@ Pour le deuxième défi, rassemblons toutes les étapes et essayons avec de nouv
 3. **Vérifier les conditions d'application** du modèle linéaire à l'aide des graphiques diagnostiques.
 4. Interpréter les résultats : Le modèle fournit-il des **preuves à l'appui de l'hypothèse ?**
 
-> Indice : Comme les espèces aquatiques, les passereaux (variable `Passerine` sont codées 0/1 (vérifier avec `str(bird)`)
+> Indice : Comme les espèces aquatiques, les passereaux (variable `Passerine`) sont codées 0/1 (vérifier avec `str(bird)`)
 
 ### Solutions
 
@@ -503,6 +508,7 @@ Pour le deuxième défi, rassemblons toutes les étapes et essayons avec de nouv
 **Ajuster le modèle**
 
 ```{r}
+# Modèle linéaire pour les passeraux
 lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
 lm4
 ```
@@ -515,6 +521,7 @@ plot(lm4)
 ```
 
 ```{r,fig.height=6, fig.width=8, echo=FALSE}
+# Conditions d'application du modèle
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm4)
 ```

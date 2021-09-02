@@ -222,7 +222,7 @@ Il ne faut jamais mélanger les différents types de notation !
 
 Nous avons vu qu'il est possible de définir un modèle linéaire avec cette équation :
 
-$$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$n   
+$$ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$   
 
 ### Estimation du modèle
 
