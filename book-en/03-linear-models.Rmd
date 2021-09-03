@@ -121,11 +121,11 @@ set.seed(1234564)
 x = rnorm(100,10,10)
 y = (x)^2 + rnorm(length(x),0,30)
 lm=lm(y~scale(x))
-plot(lm,which = 1, main = "Non-linéaire", col.main="red")
+plot(lm,which = 1, main = "Nonlinear", col.main="red")
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
 lm=lm(y~scale(x))
-plot(lm,which = 1, main = "Hétéroscédastique", col.main="red")
+plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 ```
 
 These examples present a non-linear relationship and an example of heteroscedasticity which is the opposite of homoscedasticity, meaning that the normality condition is not met. 
@@ -212,7 +212,7 @@ The residuals vs. leverage plot shows the *leverage points* which are extreme ob
 
 These are not diagnostic plots, but figures that illustrate the concepts of leverage and influence.
 
-```{r, echo=FALSE, fig.height=8, fig.width=7.7, warning=FALSE}
+```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
 ## Diagnostic plot # 4 - Residuals vs Leverage
 par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
 set.seed(1234564)
@@ -224,20 +224,20 @@ plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points
 # add 20, 10 point to the new lm
 xx <- c(x, 11); yy <- c(y, -3)
 abline(lm(yy ~ xx), col = 2, lty = 3)
-text(-20, 10, srt=0, adj = 0, labels = "* Pas d'effet de levier \n* Faible influence
-", xpd = TRUE, cex = 1.5)
+text(-18, 10, srt=0, adj = 0, labels = '* No leverage \n* Low influence', xpd = TRUE, cex = 1.5)
 # plot 2
 plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 30)
 abline(lm(yy ~ xx), col = 2, lty = 3)
-text(-33, 15, srt=0, adj = 0, labels = "* Effet de levier \n* Pas d'influence", xpd = TRUE, cex = 1.5)
+text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* No influence', xpd = TRUE, cex = 1.5)
+
 # plot 3
 plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 15)
 abline(lm(yy ~ xx), col = 2, lty = 3)
-text(-33, 15, srt=0, adj = 0, labels = '* Effet de levier \n* Influence élevée', xpd = TRUE, cex = 1.5)
+text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* High influence', xpd = TRUE, cex = 1.5)
 ```
 
 We want to observe residuals that fall within the dotted lines marking the Cook distance of 0.5.
@@ -253,7 +253,7 @@ x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
 y[29] <- 100
 lm=lm(y~scale(x))
-plot(lm, which = 5, main = "Effet de levier et influence élevée")
+plot(lm, which = 5, main = "High leverage and high influence")
 ```
 
 The 29 has leverage and a Cook's distance of more than 0.5. It corresponds to an outlier. However, outliers should never be removed without good reason to do so! If (and only if!) these observations are measurement errors or exceptions, they can be removed from the data set.
