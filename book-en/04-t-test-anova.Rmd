@@ -1,5 +1,5 @@
 # t-test and ANOVA 
-
+![](images/schema_ttest.png)
 ```{r, echo = FALSE, eval = TRUE, message=FALSE}
 # data and all requirements
 library(car)

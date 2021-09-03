@@ -1,4 +1,5 @@
 # Analysis of covariance (ANCOVA)
+![](images/schema_ancova.png)
 ```{r, echo = F, eval = T, message=FALSE}
 # data and all requirements
 library(car)

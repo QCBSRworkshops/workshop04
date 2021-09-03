@@ -1,4 +1,5 @@
 # Test de t et ANOVA
+![](images/schema_ttest.png)
 ```{r, echo = F, eval = T, message=FALSE}
 # data and all requirements
 library(car)

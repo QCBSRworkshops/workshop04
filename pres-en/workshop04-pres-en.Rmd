@@ -2500,7 +2500,7 @@ class: inverse, center, middle
 ---
 # Polynomial regression
 
-As we noticed in the section on **multiple linear regression**, `MaxAbund` was non-linearly related to some variables
+As we noticed in the section on **multiple linear regression**, `abund` was non-linearly related to some variables
 
 To test for non-linear relationships, polynomial models of different degrees are compared.
 

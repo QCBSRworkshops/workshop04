@@ -114,3 +114,5 @@ plot(abund ~ clTma, data = Dickcissel)
 plot(abund ~ NDVI,  data = Dickcissel)
 plot(abund ~ grass, data = Dickcissel)
 ```
+
+

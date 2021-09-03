@@ -2513,7 +2513,7 @@ class: inverse, center, middle
 ---
 # Régression polynomiale
 
-Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `MaxAbund`
+Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `abund`
 
 Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées
 
