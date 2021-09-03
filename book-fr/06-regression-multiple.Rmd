@@ -116,3 +116,155 @@ plot(abund ~ grass, data = Dickcissel)
 ```
 
 
+## Régression polynomiale (matériel facultatif)
+
+Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `abund`.
+
+Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées
+
+Un modèle polynômial ressemble à ceci :
+
+$$\underbrace{2x^4}+\underbrace{3x}-\underbrace{2}$$
+
+Ce polynôme a **trois termes**.\
+
+Pour un polynôme avec une variable (comme $x$ ), le *degré* est l'exposant le plus élevé de cette variable. Nous avons ici un polynôme de *degré 4*:
+
+$$2x^\overbrace{4} + 3x - 2$$
+
+Lorsque vous connaissez le degré, vous pouvez lui donner un nom :
+
+```{r echo=FALSE, warning=FALSE}
+
+poly.reg=data.frame(Degré = 0:5,
+                    Nom = c("Constante","Linéaire","Quadratique",
+                             "Cubique","Quartique","Quintique"),
+                    Example = c("\\(3\\)",
+                                "\\(x+9\\)",
+                                "\\(x^2-x+4\\)",
+                                "\\(x^3-x^2+5\\)",
+                                "\\(6x^4-x^3+x-2\\)",
+                                "\\(x^5-3x^3+x^2+8\\)"))
+knitr::kable(poly.reg, format = "html", escape=FALSE)
+```
+
+Nous pouvson maintenant règler notre problème avec le jeu de données `Dickcissel`en testant la relation non-linéaire entre l'abondance et la température en comparant trois modèles polynômiaux groupés (de degrés 0, 1, and 3) :
+
+```{r,echo=T,eval=T}
+lm.linear <- lm(abund ~ clDD, data = Dickcissel)
+lm.quad   <- lm(abund ~ clDD + I(clDD^2), data = Dickcissel)
+lm.cubic  <- lm(abund ~ clDD + I(clDD^2) + I(clDD^3), data = Dickcissel)
+
+```
+
+En comparant les modèles polynomiaux, nous pouvons déterminer quel modèle niché nous devrions sélectionner:
+
+```{r,echo=T,eval=T}
+summary(lm.linear)
+summary(lm.quad)
+summary(lm.cubic)
+```
+
+*Quel modèle devriez-vous choisir*
+
+## Partitionnement de la variation (matériel facultatif)
+
+Certaines variables explicatives de la **régression linéaire multiple** étaient fortement corrélées (c.-à-d.multicolinéarité)
+
+La colinéarité entre variables explicatives peut être détectée à l'aide de critères d'inflation de la variance (fonction `vif()` du package `car`).
+
+Les valeurs supérieures à 5 sont considérées colinéaires:
+
+```{r warning=FALSE,message=FALSE}
+mod <- lm(clDD ~ clFD + clTmi + clTma + clP + grass, data = Dickcissel)
+car::vif(mod)
+```
+
+Dans cet exemple, `clFD`,`clTmi` et`clTma` sont colinéaires avec `clDD`.\
+
+Plutôt que d'enlever des variables à notre modèle, il est possible réduire l'effet de colinéarité en regroupant certaines variables entre elles. Vous pouvez utiliser `varpart()` afin de partitionner la variation de la variable `abund` avec toutes les variables de la couverture du paysage groupées ensemble (`"broadleaf"`,`"conif"`,`"grass"`,`"crop"`, `"urban"`,`"wetland"`) et toutes les variables du climat groupées ensemble (`"clDD"`,`"clFD"`,`"clTmi"`,`"clTma"`,`"clP"`). Laissez NDVI à part
+
+```{r warning=FALSE,message=FALSE,eval=TRUE}
+library(vegan)
+part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD","clFD","clTmi","clTma","clP")],
+Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+part.lm
+```
+
+**Note** : les variables colinéaires n'ont pas besoin d'être enlevées avant l'analyse.\
+
+Avec `showvarpart()`, il est possible de visualiser comment ces deux groupes (climat et paysage) expliquent la variation de la variable `abund`.
+
+Par exemple:
+
+```{r,fig.height=3.2,echo=-1}
+par(mar=rep(0.5,4))
+showvarparts(2)
+```
+
+```{r,eval=FALSE}
+?showvarparts
+# With two explanatory tables, the fractions
+# explained uniquely by each of the two tables
+# are ‘[a]’ and ‘[c]’, and their joint effect
+# is ‘[b]’ following Borcard et al. (1992).
+```
+
+Essayons avec nos données `Dickcissel` et notre modèle.
+```{r,fig.height=4,echo=T}
+par(mar=rep(0.5,4))
+plot(part.lm,
+     digits = 2,
+     bg = rgb(48,225,210,80,
+              maxColorValue=225),
+     col = "turquoise4")
+```
+
+La proportion de la variation de la variable `abund` expliquée par:
+- Le climat est  de 28.5% (obtenu par X1|X2)\
+- La couverture du paysage est ~0% (X2|X1)\
+- Les deux combinés est 2.4%.\
+
+La variation non-expliquée par ces groupes (les résidus) est de 68.8%.
+
+Nous pouvons tester si chaque fraction est significative:
+
+- Climat seul
+```{r,eval=T}
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+```
+
+- Couverture du paysage seul
+```{r,eval=T}
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
+```
+
+```{r,include=FALSE}
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+```
+
+```{r}
+# Climat seul
+anova(out.1, step = 1000, perm.max = 1000)
+```
+
+```{r}
+# Couverture du paysage seul
+anova(out.2, step = 1000, perm.max = 1000)
+```
+
+
+La fraction expliquée par la couverture du paysage n'est pas significative une fois que nous avons pris en compte l'effet du climat. Ceci était attendu puisque la variation expliqué pour ce groupe était seulement 0.3%.
+
+En conclusion, en partitionnant la variation, nous avons pu tenir compte de notre colinéarité entre nos variables et tout de même tester l'effet du climat et du paysage d'une façon simple et facile d'interprétation!
+

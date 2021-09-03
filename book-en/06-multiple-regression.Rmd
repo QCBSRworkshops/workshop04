@@ -104,3 +104,156 @@ plot(abund ~ clTma, data = Dickcissel)
 plot(abund ~ NDVI,  data = Dickcissel)
 plot(abund ~ grass, data = Dickcissel)
 ```
+
+## Polynomial regression (additional material)
+
+As we noticed in the section on **multiple linear regression**, `abund` was non-linearly related to some variables
+
+To test for non-linear relationships, polynomial models of different degrees are compared.
+
+A polynomial model looks like this:
+
+$$\underbrace{2x^4}+\underbrace{3x}-\underbrace{2}$$
+
+This polynomial has **3 terms**.\
+
+For a polynomial with one variable ($x$), the *degree* is the largest exponent of that variable. This is a the *degree 4 polynomial*:
+
+$$2x^\overbrace{4} + 3x - 2$$
+
+When you know a degree, you can also give it a name:
+
+```{r echo=FALSE, warning=FALSE}
+
+poly.reg=data.frame(Degree = 0:5,
+                    Name = c("Constant","Linear","Quadratic",
+                             "Cubic","Quartic","Quintic"),
+                    Example = c("\\(3\\)",
+                                "\\(x+9\\)",
+                                "\\(x^2-x+4\\)",
+                                "\\(x^3-x^2+5\\)",
+                                "\\(6x^4-x^3+x-2\\)",
+                                "\\(x^5-3x^3+x^2+8\\)"))
+knitr::kable(poly.reg, format = "html", escape=FALSE)
+```
+
+
+Now we can fix our problem with the `Dickcissel` dataset by testing the non-linear relationship between max abundance and temperature by comparing three sets of nested polynomial models (of degrees 0, 1, and 3):
+
+```{r,echo=T,eval=T}
+lm.linear <- lm(abund ~ clDD, data = Dickcissel)
+lm.quad   <- lm(abund ~ clDD + I(clDD^2), data = Dickcissel)
+lm.cubic  <- lm(abund ~ clDD + I(clDD^2) + I(clDD^3), data = Dickcissel)
+
+```
+
+By comparing the polynomial models and determine which nested model we should keep:
+
+```{r,echo=T,eval=T}
+summary(lm.linear)
+summary(lm.quad)
+summary(lm.cubic)
+```
+
+*Which one should you keep?*
+
+
+## Variation Partitioning (additional material)
+
+Some of the selected explanatory variables in the **multiple linear regression** section were highly correlated./
+
+Collinearity between explanatory variables can be assessed using the variance inflation factor `vif()` function of package `car`.\
+
+Variable with `VIF > 5` are considered collinearity.\
+
+```{r warning=FALSE,message=FALSE}
+mod <- lm(clDD ~ clFD + clTmi + clTma + clP + grass, data = Dickcissel)
+car::vif(mod)
+```
+
+In this example, `clDD` is correlated with `clFD`,`clTmi` and `clTma`.\
+
+Instead of removing variable from the modal, we can reduce effect of colinearity by grouoping variables together. You can use `varpart()` to partition the variation in max abundance with all land cover variables (`"broadleaf"`,`"conif"`,`"grass"`,`"crop"`, `"urban"`,`"wetland"`) in one set and all climate variables in the other set (`"clDD"`,`"clFD"`,`"clTmi"`,`"clTma"`,`"clP"`). We can leave out NDVI for now.
+
+```{r warning=FALSE,message=FALSE,eval=TRUE}
+library(vegan)
+part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD","clFD","clTmi","clTma","clP")],
+Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+part.lm
+```
+
+**Note**: Collinear variables do not have to be removed prior to partitioning.\
+
+With `showvarpart()`, we can visualise hpow these two groups (land cover and climate) explain variation in `abund`.
+
+For example:
+
+```{r,fig.height=4,echo=T}
+par(mar=rep(0.5,4))
+showvarparts(2)
+```
+
+```{r,eval=FALSE}
+?showvarparts
+# With two explanatory tables, the fractions
+# explained uniquely by each of the two tables
+# are ‘[a]’ and ‘[c]’, and their joint effect
+# is ‘[b]’ following Borcard et al. (1992).
+```
+
+Let's try with our dataset `Dickcissel` and our model.
+```{r,fig.height=5,echo=-1}
+par(mar=rep(0.5,4))
+plot(part.lm,
+     digits = 2,
+     bg = rgb(48,225,210,80,
+              maxColorValue=225),
+     col = "turquoise4")
+```
+
+Proportion of variance explained by:\
+- Climate alone is 28.5% (given by X1|X2).\
+- Land cover alone is ~0% (X2|X1).\
+- Both combined is 2.4%.\
+
+Unexplained variation by these groups (residuals) is 68.8%.
+
+We can now test the significance of each fraction:
+
+- Climate
+```{r,eval=T}
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+```
+
+- Land cover
+```{r,eval=T}
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
+```
+
+```{r,include=FALSE}
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+```
+
+```{r}
+# Climate
+anova(out.1, step = 1000, perm.max = 1000)
+```
+
+```{r}
+# Land cover
+anova(out.2, step = 1000, perm.max = 1000)
+```
+
+The land cover fraction is non-significant once climate data is accounted for, which is not surprising given the low variation explained by the land cover.
+
+Thanks to variation partitioning, we were able to account for the collinearity of our variables and still test the effect of the climate and land cover in a simple and easy way!
