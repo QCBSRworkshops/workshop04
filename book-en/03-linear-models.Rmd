@@ -256,7 +256,7 @@ lm=lm(y~scale(x))
 plot(lm, which = 5, main = "Effet de levier et influence élevée")
 ```
 
-The 29 has a leverage and a Cook's distance of more than 0.5. It corresponds to an outlier. However, outliers should never be removed without good reason to do so! If (and only if!) these observations are measurement errors or exceptions, they can be removed from the data set.
+The 29 has leverage and a Cook's distance of more than 0.5. It corresponds to an outlier. However, outliers should never be removed without good reason to do so! If (and only if!) these observations are measurement errors or exceptions, they can be removed from the data set.
 
 ------------------------------------------------------------------------
 
@@ -271,7 +271,7 @@ plot(lm1)
 ```
 
 Based on the insights gained in the previous sections, there are serious problems with these diagnostic plots. 
-* Plots 1 and 2 show strong trends,
+* Plots 1 and 2 shows strong trends,
 * Plot 3 shows that the residuals do not follow a normal distribution,
 * Plot 4 highlights the leverage of point 32 and its very high influence.
 
@@ -319,7 +319,7 @@ QCBS R Workshops 6-8 explore other models that may be a better fit for the hypot
 
 **Transform the data**
 
-It is also possible to modify one's data, whether it be the response variable or the predictors. Several types of transformations are possible and their usefulness depends on the distribution of the variable and the type of model. However, **modifying variables is often tricky in practice**. The transformation may **solve some** problems, but may **create others**. 
+It is also possible to modify one's data, whether it be the response variable or the predictors. Several types of transformations are possible and their usefulness depends on the distribution of the variable and the type of model. However, **modifying variables is often tricky in practice**. The transformation may **solve some** problems, but may **create other**. 
 
 > Note that **results of statistical tests** on transformed data **do not automatically hold** for the untransformed data.
 
@@ -329,7 +329,7 @@ It is also possible to modify one's data, whether it be the response variable or
 
 Our model has some serious problems. Let's try a logarithmic transformation to see if it can correct the situation. 
 
-First, transform the data and run a new linear regression on it. Then, verify the assumptions of model usin diagnostic plots.
+First, transform the data and run a new linear regression on it. Then, verify the assumptions of model using diagnostic plots.
 
 **Step 1**
 
@@ -434,7 +434,7 @@ Let us formulate a new and more precise hypothesis. This time let's focus only o
 
 **New hypothesis**
 
-> For different bird species <span style="color:green">**terrestrial**</span>, the **average mass of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc).
+> For different bird species <span style="color:green">**terrestrial**</span>, the **average mass of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
 We can now fit the linear model to exclude waterfowl:
 
@@ -510,7 +510,7 @@ plot(lm4)
 summary(lm4)
 ```
 
-The results of the model should not be interpreted, because the conditions of application of the linear model are not met!
+The results of the model should not be interpreted, because the assumptions of the linear model are not met!
 
 ## Linear regression in R
 
