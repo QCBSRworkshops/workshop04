@@ -94,6 +94,7 @@ plot(lm1)
 The first plot informs us of the distribution of the residuals according to the values predicted by the linear regression model. Each point represents the distance between the response variable and the model prediction. It informs us about the *independence* of the residuals and their *distribution*. Remember that with linear regression, we need a uniform distribution of the residuals (the *homoscedasticity* condition).
 
 ```{r, echo = FALSE, fig.height=5, fig.width=6.5}
+## Diagnostic plot # 1 - Residuals vs Fitted
   set.seed(1234564)
   x <- rnorm(100,10,10)
   y <- 2*x+0 + rnorm(100)
@@ -114,6 +115,7 @@ In an ideal situation, there is no pattern to the dispersion of the points.
 **Warning!** You should be alerted if the distribution of the points is non-linear as in these two examples:
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
+## Example of non-independence of residuals
 par(mfrow=c(1,2))
 set.seed(1234564)
 x = rnorm(100,10,10)
@@ -137,6 +139,7 @@ In this situation, one should rather use a **generalized linear model** (GLM) th
 The second diagnostic graph allows us to check if the *dispersion of the residuals* is increasing for a given predicted value (i.e. if the dispersion of the residuals is caused by the explanatory variable). If the dispersion increases, the basic condition of homoscedasticity is not respected.
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Diagnostic plot # 2 - Scale Location
 set.seed(1234564)
 x <- 1:100
 y <- x + rnorm(100,sd=5)
@@ -153,6 +156,7 @@ Here we are also looking for a dispersion of the points without a pattern, thus 
 **Caution!** Be careful if the distribution of the points shows a marked trend:
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Example of non-equal dispersion of the residuals
 set.seed(2)
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
@@ -169,6 +173,7 @@ In a situation like this, we cannot rely on model results and should instead try
 The third plot shows the distribution of the residuals. With this quantile-quantile plot, we can evaluate the normality of the residuals. This plot compares the probability distribution of the residuals of the model to a probability distribution of normal data. 
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Diagnostic plot # 3 - Normal QQ
 set.seed(1234564)
 x <- 1:100
 y <- x + rnorm(100,sd=5)
@@ -185,6 +190,7 @@ We want to see the standardized residuals are near the 1:1 line.  Thus, the resi
 **Caution!** Be suspicious if the distribution of the points does not follow the 1:1 line:
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Example of non-normal distribution of the residuals
 set.seed(2)
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
@@ -207,6 +213,7 @@ The residuals vs. leverage plot shows the *leverage points* which are extreme ob
 These are not diagnostic plots, but figures that illustrate the concepts of leverage and influence.
 
 ```{r, echo=FALSE, fig.height=8, fig.width=7.7, warning=FALSE}
+## Diagnostic plot # 4 - Residuals vs Leverage
 par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
 set.seed(1234564)
 x <- 1:20
@@ -240,6 +247,7 @@ We want to observe residuals that fall within the dotted lines marking the Cook 
 **Caution!** Beware if a point or points lie outside the dotted line:
 
 ```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
+## Example of leverage
 set.seed(1234564)
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
@@ -257,6 +265,7 @@ The 29 has a leverage and a Cook's distance of more than 0.5. It corresponds to 
 Does `lm1` violate any assumptions of the linear model?
 
 ```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+## Verify assumptions of `lm1`
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
