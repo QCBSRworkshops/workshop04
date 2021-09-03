@@ -489,31 +489,38 @@ abline(h=0)
 
 ### Allons plus loin: Contrastes
 
+Les constrastes servent à comparer chaque niveau du facteur à un niveau de référence, et de détecter des différences significatives entre chaque niveau.
 
+Les contrastes sont dbasées sur des hypothèses *a priori*, ce qui les rend beaucoup plus robustes que les test *a posteriori* comme le test de Tukey. Avec les contrastes, les groupes peuvent être composés d'un ou plusieurs niveaux d'un facteur et on peut tester une hypothèse simple (e.g. μ~1~ = μ~2~) ou des hypothèses plus complexes (e.g. (μ~1~ + μ~2~)/3 == μ~3~).
 
--   Les contrastes sont des comparaisons de moyennes basées sur des
-    hypothèses *a priori*,
--   Ces groupes peuvent être composés d'un ou plusieurs niveaux d'un
-    facteur,
--   On peut tester une hypothèse simple (e.g. μ~1~ = μ~2~) ou des
-    hypothèses plus complexes (e.g. (μ~1~ + μ~2~)/3 == μ~3~).
+*Important*
+ Le nombre de comparaisons doit être plus petit ou égal au nombre de
+degrés de liberté de l'ANOVA. Ces comparaisons doivent être indépendantes l'une de l'autre.
 
-Le nombre de comparaisons doit être plus petit ou égal au nombre de
-degrés de liberté de l'ANOVA. Ces comparaisons doivent être
-indépendantes l'une de l'autre.
+Pour une ANOVA où la variable prédictrice est catégorique, l'estimation de l'ordonnée à l'origine est le niveau de référence et correspond à la moyenne du premier niveau (en ordre alphabétique) du facteur.En calculant l'ordonnée à l'origine de référence et l'ordonnée à l'origine de chaque niveau de `Diet`, *que remarquez-vous*? 
 
-Il est possible d'afficher des résultats supplémentaires de l'ANOVA
-dans R, qu'on appelle contrastes. Ceci permet de visualiser les
-estimations de paramètres pour chaque niveau de la variable catégorique
-en comparaison avec un niveau de référence. On peut afficher ces
-résultats avec la fonction `summmary.lm()` lorsque l'ANOVA a été
-effectuée avec la fonction `aov()` et avec la fonction `summary()`
-lorsque l'ANOVA a été effectuée avec la fonction `lm()`. Cette sortie
+```{r, echo = T, eval = T}
+
+tapply(bird$logMaxAbund, bird$Diet, mean)
+coef(anov1)
+coef(anov1)[1] + coef(anov1)[2] # InsectVert
+coef(anov1)[1] + coef(anov1)[3] # Plant
+
+```
+
+La moyenne de la variable `Insect` correspond à l'ordonnée à l'origine de notre de notre ANOVA `anov1`.
+
+Il est aussi possible d'afficher ces résultats supplémentaires de l'ANOVA
+dans R avec la fonction `summmary.lm()`. Cette sortie
 montre les résultats de la régression linéaire pour chaque niveau de la
-variable catégorique :
+variable catégorique.
+
+**Note**: On peut afficher ces résultats avec la fonction `summmary.lm()` lorsque l'ANOVA a été effectuée avec la fonction `aov()` et avec la fonction `summary()`
+lorsque l'ANOVA a été effectuée avec la fonction `lm()`. 
 
 
 ```{r, echo = F, eval = T}
+
 summary(anov1)
 ```
 
@@ -530,7 +537,7 @@ Les contrastes sont utilisés pour ajuster une variable réponse en
 fonction des différents niveaux d'une variable catégorique. Dans le cas
 de l'abondance en fonction de la diète, cinq régressions linéaires
 (correspondant aux cinq coefficients dans la sortie de R) sont calculées
-par la fonction `lm()`, car la variable \"diète\" contient cinq niveaux.
+par la fonction `lm()`, car la variable `Diet` contient cinq niveaux.
 Par défaut, le niveau de référence correspond au premier niveau (en
 ordre alphabétique) de la variable catégorique. Ce niveau est indiqué
 par la ligne `intercept` dans la sortie de R, soit `Insect` dans ce
@@ -551,25 +558,33 @@ etc.
 Ce type de contrastes compare chaque niveau de la variable explicative à
 un niveau de référence. Dans R, ceci correspond à la fonction
 `contr.treatment()` et représentent la méthode par défaut de la fonction
-`lm()`. Le niveau de référence peut être changé en utilisant la fonction
+`lm()`. 
+
+Le niveau de référence peut être changé en utilisant la fonction
 `relevel()`. Par exemple,les lignes suivantes comparent chaque diète à la diète `Plant` maintenant définie comme le niveau de référence.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 bird$Diet2 <- relevel(bird$Diet, ref="Plant")
 anov2 <- lm(logMaxAbund ~ Diet2, data=bird)
 summary(anov2)
 anova(anov2)
 ```
 
-```{r, echo = FALSE, eval = TRUE}
-bird$Diet2 <- relevel(bird$Diet, ref="Plant")
-```
+Il est aussi possible de réordonné les niveaux selon leur médiane, plutôt que par ordre alphabétique:
 
+```{r, echo = TRUE, eval = TRUE}
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+bird$Diet2 <- factor(bird$Diet, levels=names(med))
+anov2 <- lm(logMaxAbund ~ Diet2,data = bird)
+summary(anov2)
+anova(anov2)
+```
 
 La matrice de coefficients de contrastes peut être affichée par la
 commande suivante :
 
 ```{r, echo = TRUE, eval = T}
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
 contrasts(bird$Diet2)
 ```
 
@@ -578,7 +593,34 @@ où chaque colonne représente une comparaison avec le niveau de référence
 première comparaison est effectuée entre les diètes `Plant` et `Insect`.
 La seconde comparaison est effectuée entre `Plant` et `InsectVert` etc.
 
-Il est possible de créer une matrice de coefficients de contrastes afin
+Un point important à remarquer à propos du contraste par défaut dans R `contr.treatment` est qu'il n'est **PAS** orthogonal, c'est-à-dire que la somme des produits de leurs coefficients n'est **PAS** nulle. Nou pouvons vérifier que les contrastes sont orthogonaux en s'assurant que:
+- La somme des coefficients doit être égale à 0
+- La somme du produit de deux colonnes égale 0
+
+
+```{r, echo = TRUE, eval = TRUE}
+sum(contrasts(bird$Diet2)[,1]) # condition 1 pour colonne 1
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # condition 2 pour colonne 1 et 2
+```
+
+La première colonne éagle à 1, signifiant que les contrastes ne sont pas orthogonaux.\
+
+L'orthogonalité est importante pour s'assurer que nos contrastes sont **indépendants**. Nous pouvons utiliser des contrastes de Helmert ou des contrastes polynomiaux pour remédier à ce problème. Les contrastes Helmert vont contraster le deuxième niveau avec le premier, le troisième avec la moyenne des deux premiers niveaux, etc.
+
+```{r, echo = TRUE, eval = TRUE}
+options(contrasts=c("contr.helmert", "contr.poly"))
+sum(contrasts(bird$Diet2)[,1]) 
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) 
+```
+
+Nos conditions sont mainteant nulles et nos contrastes orthogonaux.
+
+```{r, echo = TRUE, eval = TRUE}
+anov3 <- lm(logMaxAbund ~ Diet, data = bird)
+summary(anov3)
+```
+
+Il est aussi possible de créer sa propre matrice de coefficients de contrastes afin
 d'effectuer certaines comparaisons bien précises à l'aide de la
 fonction `contrasts()`. Par exemple, les lignes suivantes créent la matrice de coefficients de contrastes suivante :
 
@@ -602,25 +644,23 @@ qui compare :\
 Pour chaque colonne, les diètes avec le même coefficient appartiennent
 au même groupe (e.g. pour la colonne 1, les quatre diètes avec un
 coefficient de -1 appartiennent au même groupe et sont comparés à la
-diète avec un coefficient différent; ici la diète \"Plant\" avec un
+diète avec un coefficient différent; ici la diète ` Plant`  avec un
 coefficient de 4). Il est donc possible d'effectuer n'importe quelle
 comparaison possible à l'aide d'une matrice de coefficients de
-contrastes. Deux conditions doivent être respectées afin d'utiliser
-correctement ces matrices :
+contrastes. \
 
-**- Pour chaque colonne, la somme des coefficients doit être égale à zéro et**\
-**- la somme des produits de chaque paire de colonnes doit être égale à zéro.**
-
-Ceci peut être vérifié à l'aide de la commande suivante :
+Vérifions l'orhtogonalité :
 
 ```{r, echo = TRUE, eval = TRUE}
 sum(contrasts(bird$Diet2)[,1]) # première condition pour la colonne 1
 sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # deuxième condition pour les colonnes 1 et 2
 ```
 
-Les contrastes utilisés fréquemment sont déjà programmés dans R :
-contrastes de Helmert, contrastes polynomiaux, etc. (cf.
-`help(contrasts)`). 
+Ces contrastes suivent l'orthogonalité et pourrait donc être utilisés.
+
+
+D'autres types de contrastes utilisés fréquemment sont déjà programmés dans R 
+`help(contrasts)`. 
 
 ------------------------------------------------------------------------
 
@@ -825,6 +865,14 @@ carrés. Pour des plans expérimentaux non-équilibrés, l'ANOVA doit être
 modifiée pour prendre en compte les données manquantes de la variable
 réponse.
 
+**Un jeu de données est considéré non équilibré lorsque le nombre d'échantillons entre deux niveaux n'est pas égal.** 
+
+Le jeu de données `bird` est en réalité non équilibré (le nombre d'espèces aquatiques n'égale pas le nombre d'espèces non-aquatiques).
+
+```{r, echo = TRUE, eval = TRUE}
+table(bird$Aquatic)
+```
+
 Le modèle mathématique, les hypothèses statistiques, et les conditions
 de base d'une ANOVA à plan non-équilibré demeurent les mêmes que deux
 de l'ANOVA à plan équilibré. Le calcul de la somme des carrés, par
@@ -851,10 +899,10 @@ $$ SS_{B} = ra \sum_{j}(\overline{y}_{.j}-\overline{y})^2 = SS(B\|A) = SS(A,B)-S
 $$ SS_{AB} = r \sum{i,j,k}(\overline{y}_{..k}-\overline{y}_{.jk}-\overline{y}_{i.k})^2= SS(A,B,AB)-SS(A,B)$$
 
 
-Ceci correspond à une somme des carrés séquentielle (aussi appelée de
-type I), car l'effet d'un facteur B est calculé après avoir retiré
+Ceci correspond à une somme des carrés *séquentielle* (aussi appelée de
+**Type I**), car l'effet d'un facteur B est calculé après avoir retiré
 l'effet d'un facteur A. L'interaction est calculée après avoir retiré
-les effets principaux de ces deux facteurs. Ces calculs dépendent de la
+les effets principaux de ces deux facteurs. Le **Type I** est le paramètre par défaut dans R. Ces calculs dépendent de la
 taille de l'échantillon, car l'effet de chaque facteur est calculé
 après avoir retiré l'effet du facteur précédent.
 
@@ -875,21 +923,29 @@ les tableaux d'ANOVA montrent des résultats différents à cause d'un
 plan non-équilibré (i.e. un nombre différent d'observations pour les
 oiseaux aquatiques et terrestres).
 
-Pour les plans non-équilibrés, une somme des carrés marginale (aussi
-appelée de type III) permet de calculer un effet principal après avoir
+La somme des carrés de **Type II** teste les effets de chaque facteur, mais après avoir tester l'autre facteur.
+
+Pour les plans non-équilibrés, une somme des carrés *marginale* (aussi
+appelée de **Type III**) est souvent utilisé. Cela permet de calculer un effet principal après avoir
 retiré les effets des autres facteurs. Ceci rend le calcul indépendant
-de la taille des échantillons :
+de la taille des échantillons.
+
+**Si vous considérez utiliser le Type II ou III avec vos propres données, vous devriez en lire plus sur le sujet avant de choisir. Vous pouvez commencer avec ce [lien](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)**
+
+L'équation mathématique pour une somme des carrés de **Type III** correspond à:
 
 $$SS_{A}=SS(A\|B,AB)=SS(A,B,AB)-SS(B,AB)$$
 $$SS_{B}=SS(B\|A,AB)=SS(A,B,AB)-SS(A,AB)$$
 $$SS_{AB}=SS(AB\|B,A)=SS(A,B,AB)-SS(B,AB)$$
 \
-Dans R, une ANOVA avec somme des carrés de type III peut être effectuée
+Dans R, une ANOVA avec somme des carrés de **type III** peut être effectuée
 avec la fonction `Anova()` du paquet [car](https://cran.r-project.org/web/packages/car/car.pdf) et en spécifiant
 l'argument `type="III"` :
 
-```{r, echo = TRUE, eval = TRUE}
+```{r, echo = TRUE, eval = TRUE,message=FALSE}
+library(car)
 Anova(unb_anov1,type="III")
+Anova(unb_anov2,type="III")
 ```
 
 En comparant les tableaux d'ANOVA de modèles avec un ordre différent

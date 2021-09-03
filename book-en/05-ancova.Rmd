@@ -28,6 +28,15 @@ between the response variable and the continuous explanatory variable;
 there is no interaction between the categorical and continuous
 explanatory variables.
 
+$Y = X * Z$
+
+where:
+$Y$: Response variable is continuous
+$X$: Explanatory variable is categorical
+$Z$: Explanatory cariable is continuous
+
+$$Y = \mu + Main Effect Factors + Interaction between Factors + Main Effect Covariates + Interactions between Covariates Factors + \epsilon$$
+
 ### 6.1 Assumptions
 
 As with models seen above, to be valid ANCOVA models must meet the
@@ -36,7 +45,7 @@ diagnostic plots. In addition, ANCOVA models must have:
 
 1.  The same value range for all covariates
 2.  Variables that are *fixed*
-3.  No interaction between categorical and continuous variables
+3.  No interaction between categorical and continuous variables (not colinear)
 
 **[Note:]{.ul}** A *fixed* variable is one that you are specifically
 interested in (i.e. bird mass). In contrast, a random variable is noise
@@ -64,8 +73,7 @@ of:
 3.  the categorical variable(s) on the relationship between the
     continuous variables(s) and the response variable
 
-Importantly, these goals are only met if there is no significant
-interaction between the categorical and continuous variables! Examples
+Importantly, these goals are only met if there is **no significant interaction** between the categorical and continuous variables! Examples
 of significant interactions between the categorical and continuous
 variables (for an ANCOVA with one factor and one covariate) are
 illustrated by the second and third panels below:
@@ -100,7 +108,7 @@ lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
 mtext('No interaction', side = 3, line = 2, cex = 1.5)
 ```
 
-The same logic follows for ANCOVAs with multiple categorical and/or
+If the interaction is significant, you will have a scenario that looks like the left and middle graphs. If your covariate and factor are significant, outputs will look like the left graph. The same logic follows for ANCOVAs with multiple categorical and/or
 continuous variables.
 
 ### 6.3 Running an ANCOVA
@@ -132,10 +140,9 @@ are significant, but the interaction is non-significant. If your replace
 *Treatment* with *Type*, however, you will see an example of a
 significant interaction.
 
-If you want to compare means across factors, you can use adjusted means,
-which uses the equations given by the ANCOVA to estimate the means of
-each level of the categorical variable, corrected for the effect of the
-categorical variable:
+To compare the mean values of each factor, conditional on the effect of the other
+
+The effects::effect() function uses the output of the ANCOVA model to estimate the means of each factor level, corrected by the effect of the covariate
 
 ```{r, echo = TRUE, eval = FALSE}
 install.packages("effects")
@@ -143,19 +150,28 @@ library(effects)
 ```
 
 ```{r, echo = TRUE, eval = TRUE, message=FALSE}
-adj.means <- effect('Treatment', ancova.example)
-plot(adj.means)
 
-adj.means <- effect('conc*Treatment', ancova.example)
-plot(adj.means)
+adj.means.ex <- effect('Treatment', ancova.example)
+plot(adj.means.ex)
 ```
 
 ------------------------------------------------------------------------
 
 CHALLENGE 4
 
-Run an ANCOVA to test the effect of *Diet*, *Mass*, and their
-interaction on *MaxAbund*.\
+Run an ANCOVA to test the effect of `Diet`, `Mass`, and their
+interaction on `MaxAbund`.\
+
+Response variable: `MaxAbund`
+Explanatory variables: 
+-`Diet` (factor with 5 levels)
+-`Mass` (numeric, continuous)
+
+```{r, echo = TRUE, eval = TRUE}
+str(bird)
+```
+
+
 <details>
   <summary>**Cliquez pour voir la solution au Défi 3!**</summary>
 
@@ -164,9 +180,13 @@ interaction on *MaxAbund*.\
 # comparison using the ''options()'' function
 # Otherwise, skip the first line of code below
 options(contrasts=c("contr.treatment", "contr.poly"))
+
+#solution
 ancov1 <- lm(logMaxAbund ~ logMass*Diet, data=bird)
-summary(ancov1)
 anova(ancov1)
+
+summary(ancov1)
+
 ```
 
 In this case, the interaction term is not significant, meaning that the

@@ -2377,6 +2377,7 @@ anova(anov2)
 2. Reorder multiple levels according to median
 
 ```{r,eval=FALSE}
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 bird$Diet2 <- factor(bird$Diet, levels=names(med))
 anov2 <- lm(logMaxAbund ~ Diet2,
             data = bird)
@@ -2489,7 +2490,7 @@ car::Anova(unb.anov2, type = "III")
 ```
 ]]
 
-.comment[What have you noticed when using `Anova()`?]ff
+.comment[What have you noticed when using `Anova()`?]
 
 ---
 class: inverse, center, middle
