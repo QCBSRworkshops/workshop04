@@ -10,8 +10,8 @@ All workshop materials are found at [github.com/QCBSRworkshops/workshop04](https
 
 For this workshop, we will be working with the following datasets:
 
-* [birdsdiet](http://qcbs.ca/wiki/_media/birdsdiet.csv)
-* [dickcissel](http://qcbs.ca/wiki/_media/dickcissel.csv)
+* [birdsdiet](https://github.com/QCBSRworkshops/workshop04/edit/main/book-en/data/birdsdiet.csv)
+* [dickcissel](https://github.com/QCBSRworkshops/workshop04/edit/main/book-en/data/dickcissel.csv)
 
 > To download this data, do right click + save on the page that opens.
 
