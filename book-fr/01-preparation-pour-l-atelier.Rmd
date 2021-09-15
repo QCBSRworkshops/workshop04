@@ -2,23 +2,7 @@
 
 # Objectifs d'apprentissage
 
-**Résumé :** Dans cet atelier, vous apprendrez comment effectuer des
-modèles linéaires fréquemment utilisés en écologie tels que la
-régression simple, l'analyse de variance (ANOVA), l'analyse de
-covariance (ANCOVA) et la régression multiple avec le logiciel R. Après
-avoir vérifié les postulats de ces modèles (visuellement et
-statistiquement) et transformé vos données si nécessaire,
-l'interprétation des résultats et leur représentation graphique n'auront
-plus de secrets pour vous!
-
-1.  Régression linéaire simple
-2.  Test de t
-3.  Analyse de la variance (ANOVA)
-4.  ANOVA à deux critères de classification
-5.  ANOVA non équilibrée\
-    *(section avancée et optionnelle)*
-6.  Analyse de la covariance (ANCOVA)
-7.  Régression linéaire multiple
+**Résumé :** Dans cet atelier, vous apprendrez la structure d'un modèle linéaire et ses différentes variantes telles que la régression simple, l'analyse de variance (ANOVA), l'analyse de covariance (ANCOVA) et la régression multiple. Cet atelier se concentre sur l'application de modèles linéaires dans R avec `lm()` et `anova()`, sur l'identification de modèles dont les conditions d'application ne sont pas rencontrées et sur régler les problèmes.
 
 # Préparez-vous pour cet atelier
 
@@ -26,10 +10,29 @@ Tout le matériel de l'atelier se trouve sur [github.com/QCBSRworkshops/workshop
 
 Pour cet atelier, nous travaillerons avec les jeux de données suivants :
 
-* list here
+* [birdsdiet](http://qcbs.ca/wiki/_media/birdsdiet.csv)
+* [dickcissel](http://qcbs.ca/wiki/_media/dickcissel.csv)
 
 > Pour télécharger ces données, faites un clic droit + enregistrer sur la page qui s'ouvre.
 
-Vous devriez également vous assurer que vous avez téléchargé, installé et chargé les librairies R suivantes:
+Vous devriez également vous assurer d'avoir téléchargé, installé et chargé les librairies R suivantes:
 
-* list here
+* [dplyr](https://cran.r-project.org/package=dplyr) (pour travailler avec les données)
+* [vegan](https://cran.r-project.org/package=vegan) (pour l'analyse de données populationnelles)
+* [e1071](https://cran.r-project.org/package=e1071) (pour tester les modèles)
+* [MASS](https://cran.r-project.org/package=MASS) (pour l’analyse discriminante linéaire)
+* [car](https://cran.r-project.org/package=car) (pour l'analyse de variance)
+* [effect](https://cran.r-project.org/package=effect) (pour la visualisation de modèles)
+
+```
+# Installez les paquets requis
+install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect'))
+
+# Chargez les paquets requis
+library(dplyr)
+library(vegan)
+library(e1071)
+library(MASS)
+library(car)
+library(effect)
+```

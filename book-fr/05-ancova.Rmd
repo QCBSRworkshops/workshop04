@@ -1,4 +1,17 @@
 ## 6. ANCOVA
+![](images/schema_ancova.png)
+
+```{r, echo = F, eval = T, message=FALSE}
+# data and all requirements
+library(car)
+library(effects)
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+bird$logMaxAbund <- log(bird$MaxAbund)
+bird$Diet <- as.factor(bird$Diet)
+```
+
 
 L'analyse de covariance (ANCOVA) est un modèle linéaire qui teste
 l'influence d'une (ou plusieurs) variable explicative catégorique sur
@@ -16,11 +29,18 @@ entre la variable réponse et la variable explicative catégorique; et
 qu'il n'y a pas d'interaction entre les variables catégoriques et
 continues.
 
+$Y = X * Z$
+
+où:
+$Y$: Variable réponse est continue
+$X$: Varaible prédictrice est catégorique (facteur)
+$Z$: Varaible prédictrice est continue
+
+$$Y = \mu + Effets Principaux Facteurs + Intéraction entre Facteurs + Effets Principaux Covariables + Intéractions entre Covariables Facteurs + \epsilon$$
+
 ### 6.1 Conditions de base
 
-Tout comme le test de t et l'ANOVA, l'ANCOVA doit respecter certaines
-conditions statistiques qu'on peut vérifier à l'aide de diagrammes de
-diagnostic:
+En plus des conditions d'application des modèles linéaires, les modèles ANCOVA doivent respecter :
 
 1.  Les covariables ont toutes la **même étendue de valeurs**
 2.  Les variables sont ***fixes***
@@ -30,8 +50,8 @@ diagnostic:
 une étude (e.g. la masse des oiseaux). En comparaison, une variable
 aléatoire représente surtout une source de bruit qu'on veut contrôler
 (i.e. le site où les oiseaux ont été échantillonnés). Si votre modèle
-comporte des effets aléatoires, consultez l'atelier sur les [modèles
-linéaires mixtes](http://qcbs.ca/wiki/r_atelier6)!
+comporte des effets aléatoires, consultez l'atelier 6 sur les [modèles
+linéaires mixtes](https://github.com/QCBSRworkshops/workshop06)!
 
 ### 6.2 Types d'ANCOVA
 
@@ -61,34 +81,64 @@ exemples d'interaction significative entre un facteur et une covariable
 (pour une ANCOVA avec un facteur et une covariable) sont illustrés
 ci-dessous dans les deux derniers graphiques:
 
-![](images/ancova_schematic.png){width="550"}
 
-La même logique s'applique aux ANCOVAs à plusieurs facteurs et/ou
+```{r,echo=FALSE,fig.height=3, fig.width=10}
+## functions
+f1 <- function(x, a, b) {
+  return(x*a+b)
+}
+# conf for plot
+col = rgb(118, 143, 175, maxColorValue = 255)
+x <- 1:20
+par(mfrow = c(1, 3), mar = c(1, 1, 6.5, 4))
+# plot 1
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=0.6,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('Un niveau du facteur\n a une pente différente', side = 3, line = 2, cex = 1.5)
+# plot 2
+plot(x, f1(x, a=.5,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=0.01,b=40), lwd = 2.5, col = col)
+mtext('Plusieurs niveaux\n ont une pente différente', side = 3, line = 2, cex = 1.5)
+# plot 3
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('Aucune intéraction', side = 3, line = 2, cex = 1.5)
+```
+
+Si l'interaction est significative, vous aurez un scénario qui ressemble aux graphiques de gauche et central. Si votre covariable et votre facteur sont significatifs, vous avez un cas comme le graphique de droite. La même logique s'applique aux ANCOVAs à plusieurs facteurs et/ou
 covariables.\
 
 ### 6.3 Effectuer une ANCOVA
 
+
 Effectuer une ANCOVA dans R ressemble à une ANOVA à deux critères de
 classification : on utilise la fonction `lm()`. Toutefois, au lieu
-d'avoir deux variables catégoriques (e.g. \"Diet\" et \"Aquatic\"), on
+d'avoir deux variables catégoriques (par exemple, \"Diet\" et \"Aquatic\"), on
 utilise maintenant une variable catégorique et une variable continue.
 
 Par exemple, en utilisant le jeu de données CO2 (déjà inclus dans R) où
 la variable réponse est *uptake*, on peut effectuer une ANCOVA avec la
 variable continue *conc* et le facteur *Treatment* :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 ancova.example <- lm(uptake ~ conc*Treatment, data=CO2)
 anova(ancova.example)
 ```
 
-Si l'analyse indique que seule la covariable est significative, on
+-Si l'analyse indique que seule la covariable est significative, on
 retire le facteur du modèle; on revient à une **ANOVA** à un critère de
 classification.\
-Si l'analyse indique que seul le facteur est significatif, on retire la
+-Si l'analyse indique que seul le facteur est significatif, on retire la
 covariable du modèle; on revient à une **régression linéaire simple**.\
-Si l'analyse indique que l'interaction est significative, il faut
+-Si l'analyse indique que l'interaction est significative, il faut
 trouver quels niveaux ont une pente différente.\
+
 Dans l'exemple du jeu de données CO2, la covariable et le facteur sont
 significatifs, mais l'interaction n'est pas significative. Si on
 remplace le facteur *Treatment* par le facteur *Type*, l'interaction
@@ -102,57 +152,66 @@ la covariable :
 ```{r, echo = TRUE, eval = FALSE}
 install.packages("effects")
 library(effects)
-adj.means <- effect('Treatment', ancova.example)
-plot(adj.means)
+```
 
-adj.means <- effect('conc*Treatment', ancova.example)
-plot(adj.means)
+Si vous voulez comparer les moyennes des différents facteurs, vous pouvez utiliser les moyennes ajustées. La fonction `effect()` utilise les équations données par l'ANCOVA pour estimer les moyennes de chaque niveau, corrigées pour l'effet de la covariable.
+
+```{r, echo = TRUE, eval = TRUE}
+
+adj.means.ex <- effect('Treatment', ancova.example)
+plot(adj.means.ex)
 ```
 
 ------------------------------------------------------------------------
 
 **DÉFI 4**
 
-Effectuez une ANCOVA qui teste l'effet du facteur *Diet*, de la
-covariable *Mass*, et de leur interaction sur la variable réponse
-*MaxAbund*.\
-++++ Défi 4: Solution \|
+Effectuez une ANCOVA qui teste l'effet du facteur `Diet`, de la
+covariable `Mass`, et de leur interaction sur la variable réponse
+`MaxAbund`.\
 
-```{r, echo = TRUE, eval = FALSE}
+Variable réponse: `MaxAbund`
+Variables prédictrices: 
+-`Diet` (facteur avec 5 groupes)
+-`Mass` (numérique, continuous)
+
+```{r, echo = TRUE, eval = TRUE}
+str(bird)
+```
+
+<details>
+  <summary>**Cliquez pour voir la solution au Défi 3!**</summary>
+
+```{r, echo = TRUE, eval = TRUE}
 # Si vous avez complété la section avancée sur les contrastes, vous devrez réinitialiser les contrastes
 # à l'aide de la fonction ''options()''
 # Si vous n'avez pas complété la section avancée sur les contrastes, ignorez la première ligne du script.
 options(contrasts=c("contr.treatment", "contr.poly"))
+
+#solution
 ancov1 <- lm(logMaxAbund ~ logMass*Diet, data=bird)
-summary(ancov1)
 anova(ancov1)
+
+summary(ancov1)
 ```
-
-R fournit la sortie suivante pour cette ANCOVA :
-
-    Analysis of Variance Table
-    Response: logMaxAbund
-                  Df      Sum Sq      Mean Sq     F value     Pr(>F)
-    logMass       1   1.9736      1.97357     4.6054      0.03743 *
-    Diet          4   3.3477      0.83691     1.9530      0.11850
-    logMass:Diet  4   2.9811      0.74527     1.7391      0.15849
-    Residuals     44  18.8556     0.42854
 
 Dans ce cas-ci, l'interaction n'est pas significative, ce qui signifie
 que l'effet de la masse sur l'abondance maximale est le même peu
 importe la diète. L'interaction est retirée du modèle et l'ANCOVA
 devient :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 ancov2 <- lm(logMaxAbund ~ logMass + Diet, data=bird)
+anova(ancov2)
 ```
 
 R nous indique que la diète n'est pas significative non plus, donc ce
 terme est retiré du modèle. Notre modèle final devient donc une
 régression linéaire simple :
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 lm2 <- lm(logMaxAbund ~ logMass, data=bird)
+summary(lm2)
 ```
 
 Les résultats de l'analyse peuvent être représentés graphiquement. On
@@ -164,7 +223,7 @@ Nous pouvons aussi tracez un diagramme représentant les pentes et
 ordonnées à l'origine d'une ANCOVA (le modèle ancov1 plus haut) à
 l'aide des fonctions `abline()` et `coef()`.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 coef(ancov1)
 
 
@@ -178,4 +237,4 @@ abline(a=sum(coef(ancov1)[1]+coef(ancov1)[5]),b=sum(coef(ancov1)[2]+coef(ancov1)
 abline(a=sum(coef(ancov1)[1]+coef(ancov1)[6]),b=sum(coef(ancov1)[2]+coef(ancov1)[10]),col="darkcyan", lwd=2)
 ```
 
-![](images/ancova_plot.png){width="350"} ++++
+</details>

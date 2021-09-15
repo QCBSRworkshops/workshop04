@@ -1,482 +1,545 @@
 # Linear regression in R
 
-## Simple linear regression
+In the following example, we will take the bird abundance and mass data and run a linear regression in R. Based on the hypothesis, we will formulate an equation that allows us to run the model and then check the assumptions under which the model can be run. We will also see how to interpret the output of the model and how to represent it graphically.
 
-Simple linear regression is a type of linear model which contains a
-single, continuous explanatory variable. The regression tests whether
-there is a significant correlation between the two variables.
+## Model formulation
 
-Simple linear regression involves two parameters which must be
-estimated: an intercept (${β_0}\</m\>) and a coefficient of
-correlation (${β_1}\</m\>). Ordinary least squares is the most
-widely used estimation method, and also corresponds to the default
-method of the `lm` function in R. Ordinary least squares fits a line
-such that the sum of the squared vertical distances between the observed
-data and the linear regression model (i.e. the residuals) is minimized.
+------------------------------------------------------------------------
 
-Click below to see the math in more detail.  Using ordinary
-least squares, the intercept β~0~ and the slope β~1~ of the linear
-regression can be calculated as:
+The data are composed of the average mass of individuals of a species and the abundance of those species. We are interested in quantifying the relationship between the mass of an individual and the abundance of the species (or the effect of mass on abundance).
 
-$β\_{1}={sum{i}{}{(x\_{i}y\_{i})}-overline{x}overline{y}}/sum{i}{}{(x\_{i}-overline{x})}\^2
-= {Cov(x,y)}/{Var(x)}\</m\>
+We hypothesized that for different bird species, the **average mass of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
-$β\_{0}=overline{y}-β\_{1}overline{x}$
+### Model equation
 
-## Work flow
+In mathematical notation, a linear model takes the form of the equation of a line for which the predicted variable is the maximum abundance "MaxAbund" and the predictor variable is the mass of individuals "Mass".
 
-Below we will explore several kinds of linear models. The way you create
-and interpret each model will differ in the specifics, but the
-principles behind them and the general work flow will remain the same.
-For each model we will work through the following steps:
+$$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$$
 
-1.  Visualize the data (data visualization could also come later in your
-    work flow)
-2.  Create a model
-3.  Test the model assumptions
-4.  Adjust the model if assumptions are violated
-5.  Interpret the model results
+> Note that the linear model has three variables: $\beta_0$ , $\beta_1$ and $\sigma^1$. $\sigma^1$ defines the variance of the data around the model and is a variable of the normal distribution that describes the distribution of the data around the model (on either side of our line).
 
-### 2.1 Running a linear model
+**Model formula in R**
 
-Using the bird dataset, we will first examine the linear regression of
-maximum abundance as a function of mass.
+In the R programming language, the equation is translated as :
 
-In R, linear regression is implemented using the lm function from the
-stats package:
 
-`lm (y ~ x)`
-
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  [**Note**]{.ul}: before using a new function in R, users should refer to its help documentation (`?functionname`) to find out how to use the function as well as its preset default methods.
-  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-```{r, echo = TRUE, eval = FALSE}
-# Loading libraries and bird dataset
-library(e1071)
-library(MASS)
-setwd("~/Desktop/...") # Don't forget to set your working directory (note: your directory will be different)
-bird<-read.csv("birdsdiet.csv")
-
-# Visualize the dataframe
-names(bird)
-str(bird)
-head(bird)
-summary(bird)
-plot(bird)
+```
+MaxAbund ~ Mass
 ```
 
-The bird dataset contains 7 variables:
+where the predicted variable is placed on the left of the tilde and the predictor variable is on the right.
 
-  --------------------------------------------------------------------------------------------------------------------------
-  Variable Name   Description                                                   Type
-  --------------- ------------------------------------------------------------- --------------------------------------------
-  Family          Common name of family                                         String
+## Linear regression in R
 
-  MaxAbund        The highest observed abundance at any site\                   Continuous/ numeric
-                  in North America
+------------------------------------------------------------------------
 
-  AvgAbund        The average abundance across all sites\                       Continuous/ numeric
-                  where found in NA
+Performing a linear regression with R is divided into three steps:
 
-  Mass            The body size in grams                                        Continuous/ numeric
+1. Formulate and run a linear model based on a hypothesis
+2. Check the conditions for the linear model
+3. Examine the output of the model and whether the conditions are met
+    * Analyze the regression parameters
+    * Plot the model
+    * Perform significance tests on the parameter estimates (if necessary)
 
-  Diet            Type of food consumed                                         Discrete -- 5 levels (Plant; PlantInsect;\
-                                                                                Insect; InsectVert; Vertebrate)
+We will explore each step in the following sections.
 
-  Passerine       Is it a songbird/ perching bird                               Boolean (0/1)
+Also, in the case where the conditions are not met, we will see that it is possible to consider the use of a *Generalized Linear Model* (GLM) or the transformation of the data.
 
-  Aquatic         Is it a bird that primarily lives in/ on/ next to the water   Boolean (0/1)
-  --------------------------------------------------------------------------------------------------------------------------
+### Step 1: Formulate and run a linear model
 
-Note that Family, Diet, Passerine, and Aquatic are all categorical
-variables although they are encoded in different ways (string, discrete,
-boolean).
+The `lm()` command is used to fit a linear model where the first argument is the model formula:
 
-We are now ready to run our linear model:
-
-```{r, echo = TRUE, eval = FALSE}
-lm1 <- lm(bird$MaxAbund ~ bird$Mass) # where Y ~ X means Y "as a function of" X>
+```{r eval=TRUE}
+# Linear regression of maximum abundance against mass
+lm1 <- lm(MaxAbund ~ Mass, data = bird)
 ```
 
-### Verifying assumptions
+With this line of code, we define a new `lm1` object that contains the linear model. We also specify two arguments to the function. The first `MaxAbund ~ Mass` is the model formula and the second `bird` defines the object that contains the variables.
 
-```{r, echo = TRUE, eval = FALSE}
-opar <- par(mfrow=c(2,2)) # draws subsequent figures in a 2-by-2 panel
+> Before using a new function in R, you should refer to its help page (`?functionname`) to understand how to use the function and the default parameters.
+
+Let's look at the parameter estimates:
+
+```{r, eval=TRUE}
+# Examination of the regression output
+lm1
+```
+
+How do the parameters compare to our predictions? You will notice that the parameter for mass is positive while we predicted a negative relationship (*Species characterized by larger individuals have lower maximum abundance*).
+
+However, can we trust the estimates? To be sure, we need to check the application conditions!
+
+### Step 2: Verify assumptions using diagnostic plots of the residuals
+
+An effective method of verifying that the model's assumptions are met is to conduct a visual examination. Four diagnostic plots can be produced from an `lm` object. To do this, we use these commands:
+
+```{r, eval=FALSE, fig.height=6, fig.width=8}
+# Plot the four diagnostic plots
+par(mfrow=c(2,2))
 plot(lm1)
-par(opar) # resets to 1-by-1 plot
 ```
 
-#### Verifying independence
-
-Linear models can only be applied to independent data. This means that
-the yi at a given xi value must not be influenced by other xi values.
-Violation of independence can happen if your data represent some form of
-dependence structure, such as spatial or temporal correlation.
-
-There is no simple diagnostic plot for independence, unfortunately.
-Instead, you must consider your data carefully. Is there some underlying
-structure in your data that makes your data points dependent on each
-other? If you collect data from the same sites over time (ie, a time
-series) or if you collect multiple data points from the same organism,
-your data violates the assumption of independence. You will need to use
-a different type of model instead.
-
-#### Verifying residual variance is constant and residual mean is 0
-
-*Residual vs Fitted plot* - The first graph of the diagnostic plots is
-called by `plot(lm1)`. This plot illustrates the spread of the residuals
-between each fitted values. Each point represents the distance of the
-response variable from the model prediction of the response variable. If
-the residuals spread randomly around the 0 line, this indicates that the
-relationship is linear and that the mean of the residuals is 0. If the
-residuals form an approximate horizontal band around the 0 line, this
-indicates homogeneity of error variance (ie, it is homoskedastic). If
-the residuals form a funnel shape, this indicates the residuals are not
-homoskedastic.
-
-![](images/workshop_3_lm1_residuals_vs_fitted.png){width="300"}
-
-*Scale-location plot* - The third graph of the diagnostic plots enables
-one to verify whether the residual spread increases with a given fitted
-values (i.e. identifies whether the spread in the residuals is due to
-the selected explanatory variable). If the spread increases, the
-homoscedasticity assumption is not respected.
-
-![](images/workshop_3_lm1_scale-location.png){width="300"}
-
-#### Verifying that residuals are normally distributed
-
-*QQ plot* - Normality can be assessed from the QQplot of the diagnostic
-plots. This graph compares the probability distribution of the model
-residuals to the probability distribution of normal data series. If the
-standardized residuals lie linearly on the 1:1 line of the QQplot, the
-residuals can be considered normally distributed.
-
-![](images/workshop_3_lm1_qq.png){width="300"}
-
-The points of the QQplot are nonlinear, which suggests that the
-residuals are not normally distributed.
-
-#### Checking for high leverage
-
-In addition to the assumption testing above, we are also interested in
-whether any of our data points have high leverage. This is not
-assumption testing *per se*, but it will affect our interpretation of
-the data. If some of the observations in a dataset possess strongly
-different values from others, a model fitting problem can arise such
-that these high leverage data influence the model calculation.
-
-*Residuals vs Leverage plot* - High leverage data can be visualised on
-the fourth diagnostic plots (i.e. residuals vs leverage), which
-identifies the observation numbers of the high leverage data point(s).
-If (and only if!) these observations correspond to mis-measurements or
-represent exceptions, they can be removed from the original dataset.\
-![](images/workshop_3_lm1_leverage.png){width="300"}
-
-### Normalizing data
-
-In the example provided above, the model residuals were not normally
-distributed and therefore the assumption of residual normality is
-violated. We may still be able to use a linear regression model if we
-can address this violation. The next step is to try to normalize the
-variables using transformations. Often if we can make the explanatory
-and/or response variables normally distributed then the model residuals
-will become normally distributed. In addition to QQ-plots we can assess
-the normality of a variable by drawing a histogram using the function
-`hist`, and check visually whether the data series appears to follow a
-normal distribution. For example:
-
-```{r, echo = TRUE, eval = FALSE}
-# Plot Y ~ X and the regression line
-plot(bird$MaxAbund ~ bird$Mass, pch=19, col="coral", ylab="Maximum Abundance",
-     xlab="Mass")
-abline(lm1, lwd=2)
-?plot # For further details on plot() arguments
-# see colours() for list of colours
-
-# Is the data normally distributed?
-hist(bird$MaxAbund,col="coral", main="Untransformed data",
-     xlab="Maximum Abundance")
-hist(bird$Mass, col="coral", main="Untransformed data", xlab="Mass")
+```{r, echo=FALSE, fig.height=4.75, fig.width=5.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
 ```
 
-![](images/lm1_yvsx.png){width="300"} ![](images/maxabund_hist.png){width="300"}
-![](images/mass_hist.png){width="300"}
+`par()` is a function that allows you to define the parameters of the graph. Here we specify `mfrow=c(2,2)` which displays a grid of 2 x 2 graphs at a time. Finally, `plot()` produces the graphics.
 
-A third way to assess normality is to use the Shapiro-Wilk normality
-test that compares the distribution of the observed data series to a
-normal distribution using the function `shapiro.test`.
+> To display only one plot at a time, we can specify `par(mfrow=1)`. 
 
-The null and alternate hypotheses of this test are:
+#### Diagnostic plot # 1 - Residuals vs Fitted
 
-H~0~: the observed data series is normally distributed,\
-H~1~: the observed data series is not normally distributed,
+The first plot informs us of the distribution of the residuals according to the values predicted by the linear regression model. Each point represents the distance between the response variable and the model prediction. It informs us about the *independence* of the residuals and their *distribution*. Remember that with linear regression, we need a uniform distribution of the residuals (the *homoscedasticity* condition).
 
-The observed data series can be considered normally distributed when the
-p-value calculated by the Shapiro-Wilk normality test is greater than or
-equal to α, typically set to 0.05.
-
-```{r, echo = TRUE, eval = FALSE}
-# Test null hypothesis that the sample came from a normally distributed population
-shapiro.test(bird$MaxAbund)
-shapiro.test(bird$Mass)
-# If p < 0.05, then distribution is not-normal
-# if p > 0.05, then distribution is normal
+```{r, echo = FALSE, fig.height=5, fig.width=6.5}
+## Diagnostic plot # 1 - Residuals vs Fitted
+  set.seed(1234564)
+  x <- rnorm(100,10,10)
+  y <- 2*x+0 + rnorm(100)
+  lm <- lm(y~x)
+  plot(lm, which = 1)
 ```
 
-We can also evaluate the skewness of each distribution using the
-`Skewness` function:
+On the **y** axis we find the residuals $\epsilon_i$ and on the **x** axis the predicted values $\hat{y_i} = \beta_0 + \beta_1 \times x_i$.
 
-```{r, echo = TRUE, eval = FALSE}
-skewness(bird$MaxAbund)
-skewness(bird$Mass)
-# where positive values indicate a left-skewed distribution, and negative value a right skew.
+In an ideal situation, there is no pattern to the dispersion of the points. 
+
+* If the residuals are scattered **randomly around the line of 0**, the relationship is linear and the mean of the residuals is 0.
+* If the residuals form an approximate **horizontal band** around the 0 line, the variance of the residuals is homogeneous (i.e. they are homoscedastic).
+* If the residuals are organized in a **funnel shape**, the residuals are not homoscedastic.
+
+------------------------------------------------------------------------
+
+**Warning!** You should be alerted if the distribution of the points is non-linear as in these two examples:
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
+## Example of non-independence of residuals
+par(mfrow=c(1,2))
+set.seed(1234564)
+x = rnorm(100,10,10)
+y = (x)^2 + rnorm(length(x),0,30)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Nonlinear", col.main="red")
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 ```
 
-The histograms, Shapiro tests and Skewness all indicate that the
-variables need to be transformed to normalize (e.g. a log~10~
-transformation).
+These examples present a non-linear relationship and an example of heteroscedasticity which is the opposite of homoscedasticity, meaning that the normality condition is not met. 
 
-### Data transformation
+In this situation, one should rather use a **generalized linear model** (GLM) that allows for other distributions (Poisson, binomial, negative binomial, etc.) or try to **transform** the response variable and/or the predictors.
 
-In case of non-normality, response and explanatory variables can be
-transformed to enhance their normality following these rules:
+------------------------------------------------------------------------
 
-  --------------------------------------------------------------------------------------------------
-  Type of distribution              Transformation             R function
-  --------------------------------- -------------------------- -------------------------------------
-  Moderately positive skewness      $sqrt{x}$        sqrt(x)
+#### Diagnostic plot # 2 - Scale Location
 
-  Substantially positive skewness   $log_10{(x)}$    log10(x)
+The second diagnostic graph allows us to check if the *dispersion of the residuals* is increasing for a given predicted value (i.e. if the dispersion of the residuals is caused by the explanatory variable). If the dispersion increases, the basic condition of homoscedasticity is not respected.
 
-  Substantially positive skewness   $log_10{(x+C)}$  log10(x + C) where C is a constant\
-                                                               added to each value of x so that\
-                                                               the smallest score is 1
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Diagnostic plot # 2 - Scale Location
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm,which = 3)
+```
 
-  Moderately negative skewness      $sqrt{(K-x)}$    sqrt(K - x) where K is a constant\
-                                                               subtracted from each value of x\
-                                                               so that the smallest score is 1
+On the **y** axis we find the square root of the standardized residuals $\sqrt{\frac{\epsilon_i}{\sigma}}$ and on the **x** axis the predicted values $\hat{y_i} = \beta_0 + \beta_1 \times x_i$.
 
-  Substantially negative skewness   $log_10{(K-x)}$  log10(K - x)
-  --------------------------------------------------------------------------------------------------
+Here we are also looking for a dispersion of the points without a pattern, thus an evenly distributed predictor.
 
-Thus, log~10~ transformations should be applied and saved in the bird
-data frame. The model can then be re-run, verified and interpreted.
+------------------------------------------------------------------------
 
-```{r, echo = TRUE, eval = FALSE}
-# Add log10() transformed variables to your dataframe
+**Caution!** Be careful if the distribution of the points shows a marked trend:
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Example of non-equal dispersion of the residuals
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 3)
+```
+
+In a situation like this, we cannot rely on model results and should instead try to use a **generalized linear model** (GLM) that allows for other distributions (Poisson, binomial, negative binomial, etc.) or **transform** the response variable and/or the predictors.
+
+------------------------------------------------------------------------
+
+#### Diagnostic plot # 3 - Normal QQ
+
+The third plot shows the distribution of the residuals. With this quantile-quantile plot, we can evaluate the normality of the residuals. This plot compares the probability distribution of the residuals of the model to a probability distribution of normal data. 
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Diagnostic plot # 3 - Normal QQ
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm, which = 2)
+```
+
+On the **y** axis we find the standardized residuals $\frac{epsilon_i}{\sigma}$ and on the **x** axis the quantiles of a standard normal distribution $\mathcal{N}(0, \sigma^2)$.
+
+We want to see the standardized residuals are near the 1:1 line.  Thus, the residuals can be considered normally distributed.
+
+------------------------------------------------------------------------
+
+**Caution!** Be suspicious if the distribution of the points does not follow the 1:1 line:
+
+```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
+## Example of non-normal distribution of the residuals
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm, which = 2)
+```
+
+In this case, the points are not well aligned on the line, suggesting that the residuals are not normally distributed. Instead, try using a **generalized linear model** (GLM) that allows for other distributions (Poisson, binomial, negative binomial, etc.) or **transform** the response variable and/or the predictors.
+
+------------------------------------------------------------------------
+
+#### Diagnostic plot # 4 - Residuals vs Leverage
+
+This last diagnostic plot shows the residuals and their influence. It allows us to determine if certain observations have a strong influence. Although we are not testing for a baseline condition, the presence of points with a strong influence can influence our interpretation of the data. If one or more observations are outliers (i.e., if they have very different values from the others), the model may be misfitted because of their exaggerated influence on the model estimate. 
+
+The residuals vs. leverage plot shows the *leverage points* which are extreme observations of the predictor and their influence on the regression. The influence is quantified by the *Cook distance*. **A distance greater than 0.5 is problematic**.
+
+**Example of leverage and influence**.
+
+These are not diagnostic plots, but figures that illustrate the concepts of leverage and influence.
+
+```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
+## Diagnostic plot # 4 - Residuals vs Leverage
+par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
+set.seed(1234564)
+x <- 1:20
+y <- rnorm(x, x, 2)
+lm0 <- lm(y ~ x)
+# plot 1
+plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 11); yy <- c(y, -3)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-18, 10, srt=0, adj = 0, labels = '* No leverage \n* Low influence', xpd = TRUE, cex = 1.5)
+# plot 2
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 30)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* No influence', xpd = TRUE, cex = 1.5)
+
+# plot 3
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 15)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* High influence', xpd = TRUE, cex = 1.5)
+```
+
+We want to observe residuals that fall within the dotted lines marking the Cook distance of 0.5.
+
+------------------------------------------------------------------------
+
+**Caution!** Beware if a point or points lie outside the dotted line:
+
+```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
+## Example of leverage
+set.seed(1234564)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+y[29] <- 100
+lm=lm(y~scale(x))
+plot(lm, which = 5, main = "High leverage and high influence")
+```
+
+The 29 has leverage and a Cook's distance of more than 0.5. It corresponds to an outlier. However, outliers should never be removed without good reason to do so! If (and only if!) these observations are measurement errors or exceptions, they can be removed from the data set.
+
+------------------------------------------------------------------------
+
+### **Step 2**. Verify assumptions of `lm1`
+
+Does `lm1` violate any assumptions of the linear model?
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+## Verify assumptions of `lm1`
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
+```
+
+Based on the insights gained in the previous sections, there are serious problems with these diagnostic plots. 
+* Plots 1 and 2 shows strong trends,
+* Plot 3 shows that the residuals do not follow a normal distribution,
+* Plot 4 highlights the leverage of point 32 and its very high influence.
+
+------------------------------------------------------------------------
+
+### Assumptions not met - what is wrong?
+
+To understand the source of the problems with the linear model, let's plot the model with the observations:
+
+```{r, fig.height=4, fig.width=11}
+# Plot linear model and observations
+par(mfrow = c(1,2))
+coef(lm1) # constant and slope
+plot(MaxAbund ~ Mass, data=bird) # left plot
+abline(lm1) # line defined by the model parameters
+hist(residuals(lm1)) # plot on the right : distribution of residuals
+```
+
+On the left we have the data as well as the line representing the model estimation (`MaxAbund ~ Mass`). On the left, the distribution of the residuals.
+
+We can check if the residuals follow a normal distribution using a *Shapiro-Wilk* test and a skewness test (*skewness*):
+
+```{r}
+# Test the normality of residuals
+shapiro.test(residuals(lm1))
+
+# Skewness test
+library(e1071)
+skewness(residuals(lm1))
+```
+
+The Shapiro-Wilk test compares the distribution of the observed data to a normal distribution. The observed data can be considered normally distributed when the p-value calculated by the Shapiro-Wilk test is greater than the α significance level (usually 0.05). Here, the p-value (`p-value`) returned indicates a distribution that is significantly different from normal.
+
+The skewness test measures the shift of the residuals. A positive value represents a leftward shift and a negative value a rightward shift. Here, the positive skewness value indicates that the distribution is left-shifted. 
+
+------------------------------------------------------------------------
+
+### Assumptions not met - how to proceed?
+
+Clearly, the assumptions of the linear model `lm1` are violated. Therefore, we cannot rely on the results of the model. We must turn to another alternative and there are two options when the assumptions of the linear model are violated.
+
+**Use a different type of model
+
+QCBS R Workshops 6-8 explore other models that may be a better fit for the hypothesis and data.
+
+**Transform the data**
+
+It is also possible to modify one's data, whether it be the response variable or the predictors. Several types of transformations are possible and their usefulness depends on the distribution of the variable and the type of model. However, **modifying variables is often tricky in practice**. The transformation may **solve some** problems, but may **create other**. 
+
+> Note that **results of statistical tests** on transformed data **do not automatically hold** for the untransformed data.
+
+------------------------------------------------------------------------
+
+#### Challenge 1: A model on transformed variables
+
+Our model has some serious problems. Let's try a logarithmic transformation to see if it can correct the situation. 
+
+First, transform the data and run a new linear regression on it. Then, verify the assumptions of model using diagnostic plots.
+
+**Step 1**
+
+Let's start by transforming the data in our dataset:
+
+```{r}
+# log-transform the variables
 bird$logMaxAbund <- log10(bird$MaxAbund)
 bird$logMass <- log10(bird$Mass)
-names(bird) # to view the dataframe + new transformed variables
-
-hist(bird$logMaxAbund,col="yellowgreen", main="Log transformed",
-     xlab=expression("log"[10]*"(Maximum Abundance)"))
-hist(bird$logMass,col="yellowgreen", main="Log transformed",
-     xlab=expression("log"[10]*"(Mass)"))
-shapiro.test(bird$logMaxAbund); skewness(bird$logMaxAbund)
-shapiro.test(bird$logMass); skewness(bird$logMass)
-
-# Re-run your analysis with the appropriate transformations
-lm2 <- lm(bird$logMaxAbund ~ bird$logMass)
-
-# Are there remaining problems with the diagnostics (heteroscedasticity, non-independence, high leverage)?
-opar <- par(mfrow=c(2,2))
-plot(lm2, pch=19, col="gray")
-par(opar)
 ```
 
-![](images/hist_logmaxabund.png){width="300"}
-![](images/hist_logmass.png){width="300"} ![](images/plot_lm2_.png){width="550"}
+With these `logMaxAbund` and `logMass` data transformed, we run a new linear regression and save the model object as `lm2`.
 
-### Model output
+```{r}
+# Linear model with transformed data
+lm2 <- lm(logMaxAbund ~ logMass, data = bird)
+```
 
-Once all these assumptions have been verified, the model results can be
-interpreted. These results are called in R using the function `summary`.
+We can observe that the parameters align with our prediction. That is, the `logMass` coefficient is negative and therefore the abundance decreases with the mass of the species. However, we still need to check the assumptions of the model to ensure the validity of the results.
 
-```{r, echo = TRUE, eval = FALSE}
-# Now we can look at the model coefficients and p-values
+**Step 2** 
+
+Let's check the assumptions for `lm2` using the diagnostic plots.
+
+```{r, fig.height=5.5, fig.width=7.5}
+# Diagnostic plots
+par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
+plot(lm2)
+```
+
+The diagnostic plots look much better, but there are still problems. Some plots still show strong trends. Let's plot the model with the observations:
+
+```{r, fig.height=4, fig.width=11,}
+# Plot linear model and observations
+par(mfrow = c(1,2))
+coef(lm2) 
+plot(logMaxAbund ~ logMass, data=bird)
+abline(lm2) 
+hist(residuals(lm2)) 
+```
+
+The model appears to explain the data better and the distribution of residuals has moved much closer to the normal distribution.
+
+------------------------------------------------------------------------
+
+### **Step 3.** Analyze parameter estimates
+
+The last step in a linear regression with R is to check the model parameters. We then use the `summary()` command to get more information about the fitted model.
+
+```{r, comment=""}
+# Print fitted model parameters
 summary(lm2)
-
-# You can also just call up the coefficients of the model
-lm2$coef
-
-# What else?
-str(summary(lm2))
-summary(lm2)$coefficients # where Std. Error is the standard error of each estimate
-summary(lm2)$r.squared # Coefficient of determination
-summary(lm2)$adj.r.squared # Adjusted coefficient of determination
-summary(lm2)$sigma # Residual standard error (square root of Error Mean Square)
-# etc…
-
-# You can also check for yourself the equation for R2:
-SSE = sum(resid(lm2)^2)
-SST = sum((bird$logMaxAbund - mean(bird$logMaxAbund))^2)
-R2 = 1 - ((SSE)/SST)
-R2
 ```
 
-The output of this function presents all the results of your validated
-model:
+The output of `summary()` contains several values:
+  1. `Coefficients`: Estimates of the parameters and their standard deviation
+  2. `Pr(>|t|)`: Results of a t-test to determine if the parameters are different from 0
+  3. `Adjusted R squared`: How well does the model explain the data?
+  4. `F-statistic`(ANOVA): Is the model significantly different from a model with no predictor (null model)?
+  
+We will discuss T-tests and ANOVA in the next section. However, we can already see that our model is only marginally better than the null model.
 
-    lm(formula = logMaxAbund ~ logMass, data = bird)
-    Residuals:
-              Min         1Q          Median          3Q          Max
-                   -1.93562   -0.39982    0.05487     0.40625     1.61469
-                  Estimate    Std. Error  t value     Pr(>|t|)
-    (Intercept)     1.6724        0.2472      6.767       1.17e-08 ***
-    logMass          -0.2361          0.1170      -2.019      0.0487 *
-    ---
-    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-    Residual standard error: 0.6959 on 52 degrees of freedom
-    Multiple R-squared:  0.07267,   Adjusted R-squared:  0.05484
-    F-statistic: 4.075 on 1 and 52 DF,  p-value: 0.04869
+With the `lm2` object, we can also extract the parameters of the model and the other results:
 
-The coefficients of the regression model and their associated standard
-error appear in the second and third columns of the regression table,
-respectively. Thus,\
-β~0~ = 1.6724 ± 0.2472 is the intercept (± se) of the regression model,\
-β~1~ = -0.2361 ± 0.1170 is the slope (± se) of the regression model.
-
-and finally: $ $*logMaxAbund* = 1.6724 (± 0.2472) - 0.2361 (±
-0.1170) x *logMass*
-
-The t-value and their associated p-value (in the fourth and fifth
-columns of the regression table, respectively) test for a significant
-difference between the calculated coefficients and zero. In this case,
-we can see that *logMass* has a significant influence on *logMaxAbund*
-because the p-value associated with the slope of the regression model is
-inferior to 0.05. Moreover, these two variables are negatively related
-as the slope of the regression model is negative.\
-Users must, however, be aware that significant relationship between two
-variables does not always imply causality. Conversely, the absence of
-significant linear regression between y and x does not always imply an
-absence of relationship between these two variables; this is for example
-the case when a relationship is not linear.
-
-The goodness of fit of the linear regression model is assessed from the
-**adjusted-R^2^** (here, 0.05484). This value is a measure of the
-proportion of variation explained by the model.
-
-Click below to see the math in more detail.  $
-overline{R}\^2=1-(1-R\^2){n-1}/{n-p-1} \</m\>
-
-where\
-p is the total number of regressors and n is the sample size,\
-$ R\^2={SS_reg}/{SS_tot} \</m\>\
-$ {SS_tot}=sum{i}{}{({y_i}-overline{y})}\^2 $is the total sums
-of squares,\
-$ {SS_reg}=sum{i}{}{(hat{y_i}-overline{y})}\^2 $is the
-regression sums of squares - also called the explained sums of squares.
-
-
-
-The higher the adjusted-R^2^ is, the better the data fit the statistical
-model, knowing that this coefficient varies between 0 and 1. In this
-case, the relationship between *logMaxAbund* and *logMass* is quite
-weak.\
-The last line of the R output represents the F-statistic of the model
-and its associated p-value. If this p-value is inferior to 0.05, the
-model explains the data relationship better than a null model.\
-==== 2.6 Plotting ====
-
-Linear regression results are generally represented by a plot of the
-response variable as a function of the explanatory variable on which the
-regression line is added (and if needed the confidence intervals), using
-the R code:
-
-```{r, echo = TRUE, eval = FALSE}
-plot(logMaxAbund ~ logMass, data=bird, pch=19, col="yellowgreen",
-                   ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = expression("log"[10]*"(Mass)"))
-abline(lm2, lwd=2)
-
-# You may also flag the previously identified high-leveraged points
-points(bird$logMass[32], bird$logMaxAbund[32], pch=19, col="violet")
-points(bird$logMass[21], bird$logMaxAbund[21], pch=19, col="violet")
-points(bird$logMass[50], bird$logMaxAbund[50], pch=19, col="violet")
-
-# We can also plot the confidence intervals
-confit<-predict(lm2,interval="confidence")
-points(bird$logMass,confit[,2])
-points(bird$logMass,confit[,3])
+```{r}
+# Vectors of residuals and predicted values
+e <- residuals(lm2)
+y <- fitted(lm2)
+coefficients(lm2) # coefficients
+summary(lm2)$coefficients # coefficients and T-tests
+summary(lm2)$adj.r.squared # adjusted R squared
 ```
 
-![](images/yvxx_lm2.png){width="400"}
+## Model interpretation
 
-### Subsetting
+------------------------------------------------------------------------
 
-We may also run the analysis on a subset of observations, for example,
-on terrestrial birds only.
+Model interpretation is the final step when we obtain a model that meets the assumptions. Interpretation is the evaluation of the model's support for the hypothesis. In short, we answer the question: *To what extent does the model support our hypothesis?*
 
-```{r, echo = TRUE, eval = FALSE}
-# Recall that you can exclude objects using "!"
-# We can analyze a subset of this data using this subset command in lm()
-lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset =! bird$Aquatic) # removing the Aquatic birds
+**Hypothesis**
 
-# or equivalently
-lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Aquatic == 0)
+> For different bird species, the **average mass of an individual affects the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
 
-# Examine the model
-opar <- par(mfrow=c(2,2))
-plot(lm3, pch=19, col=rgb(33,33,33,100,maxColorValue=225))
+```{r, comment=""}
+# Summary of the linear model with log-transformed data
+summary(lm2)
+```
+
+The `lm2` model has very **little evidence to support** the hypothesis. Looking at the parameters of the model as discussed above, we observe that the model explains little of the response. 
+
+The low `Adjusted R squared` indicates that little of the variance in the response variable is explained by the model. Mass explains only a small fraction of the species abundance.
+
+The `F-test` is barely significant indicating that the model is only slightly better than a model without predictor variables.
+
+Finally, the estimated effect size (the coefficient) of the parameter `logMass` is very close to zero and is only marginally significant, i.e. an increase or decrease in species mass causes almost no change in their abundance. 
+
+The results are not as good as we would like, perhaps we should formulate a more precise hypothesis?
+
+### Finding a better model: terrestrial birds
+
+Let us formulate a new and more precise hypothesis. This time let's focus only on land birds. Waterfowl abundance may not respond to mass in the same way as land birds.
+
+**New hypothesis**
+
+> For different bird species <span style="color:green">**terrestrial**</span>, the **average mass of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
+
+We can now fit the linear model to exclude waterfowl:
+
+```{r}
+# Linear model with terrestrial birds
+lm3 <- lm(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
+# excludes waterfowls (!birdsAquatic == TRUE)
+# or in an equivalent way:
+# lm3 <- lm(logMaxAbund~logMass, data=bird, subset=bird$Aquatic == 0)
+
+# Model output
+lm3
+```
+
+```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm3)
+```
+
+From the diagnostic plots, we can conclude that the application conditions are met!
+
+Finally, the model provides **evidence to support** our hypothesis:
+
+```{r, comment=""}
 summary(lm3)
-par(opar)
-
-# Compare the two datasets
-opar <- par(mfrow=c(1,2))
-plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"))
-abline(lm2,lwd=2)
-
-plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = expression("log"[10]*"(Mass)"))
-abline(lm3,lwd=2)
-opar(par)
 ```
 
+The `Adjusted R-squared` is 0.25, indicating that the model is a reasonably good fit to the data. The model is much better than a model without predictor variables. The `F-test` is significant (< 0.05). The `T-test` shows that the estimate of the parameter "logMass" is clearly different from 0 and that mass has an effect on species abundance.
 
-## CHALLENGE 1
+------------------------------------------------------------------------
 
-Examine the relationship between *log~10~(MaxAbund)* and *log~10~(Mass)*
-for passerine birds.\
-`HINT:` Passerine is coded 0 and 1 just like Aquatic. You can verify
-this by viewing the structure `str(bird)`.
+## Challenge 2
 
-++++ Challenge 1: Solution \|
+For the second challenge, let's put all the steps together and try with new data:
 
-```{r, echo = TRUE, eval = FALSE}
+1. Formulate another similar hypothesis about the maximum abundance and average mass of an individual, this time for passerine birds.
+2. Fit a **model** to evaluate this hypothesis, using the transformed variables (i.e. `logMaxAbund` and `logMass`). Save the model as `lm4`.
+3. **Verify assumptions** of the linear model using the diagnostic plots.
+4. Interpret the results: Does the model provide **evidence to support the hypothesis**?
+
+> Hint: Like aquatic species, passerines (variable `Passerine`) are coded 0/1 (check with `str(bird)`)
+
+### Solutions
+
+**Hypothesis**
+
+> For different species of <span style="color:green">**passers**</span>, the **average mass of an individual affects the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
+
+**Fitting the model**
+
+```{r}
+# Fitting a linear model on passerine birds
 lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
-
-# Examine the diagnostic plots
-opar <- par(mfrow=c(2,2))
-plot(lm4)
-summary(lm4)
-par(opar)
-
-# Compare variance explained by lm2, lm3 and lm4
-str(summary(lm4)) # Recall: we want adj.r.squared
-summary(lm4)$adj.r.squared # R2-adj = -0.02
-summary(lm2)$adj.r.squared # R2-adj = 0.05
-summary(lm3)$adj.r.squared # R2-adj = 0.25
-
-# Visually compare the three models
-opar <- par(mfrow=c(1,3))
-plot(logMaxAbund ~ logMass, data=bird, main="All birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"), pch=19, col="yellowgreen")
-abline(lm2,lwd=2)
-
-plot(logMaxAbund ~ logMass, subset=Passerine == 1, data=bird, main="Passerine birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"), pch=19, col="violet")
-abline(lm4,lwd=2)
-
-plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"), pch=19, col="skyblue")
-abline(lm3,lwd=2)
-par(opar)
+lm4
 ```
 
-**Conclusion:** The best model among the three is lm3 (only terrestrial
-birds) ![](images/lm2_lm3_lm4.png){width="850"} ++++
+**Verify assumptions of the linear model**
+
+```{r, eval=FALSE}
+par(mfrow=c(2,2))
+plot(lm4)
+```
+
+```{r,fig.height=6, fig.width=8, echo=FALSE}
+# Model assumptions
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm4)
+```
+
+**Is it worth interpreting the results?**
+
+```{r, comment=""}
+summary(lm4)
+```
+
+The results of the model should not be interpreted, because the assumptions of the linear model are not met!
+
+## Linear regression in R
+
+------------------------------------------------------------------------
+
+Performing a linear regression with R is divided into three steps:
+
+1. Formulate and run a linear model based on a hypothesis
+2. Check the assumptions for the linear model
+3. Examine the output of the model and whether the conditions are met
+    * Analyze the regression parameters
+    * Plot the model
+    * Perform significance tests on the parameter estimates (if necessary)
+
+We will explore each step in the following sections.
+
+Also, in the case where the assumptions are not met, we will see that it is possible to consider the use of a *Generalized Linear Model* (GLM) or data transformation.
+
+## Variable names
+
+------------------------------------------------------------------------
+
+Different terms are used for the *response* and the *predictor*, depending on the context and the scientific field. The terms are not always synonymous. Here are two tables to help you understand the jargon you will encounter.
+
+|response          | predictor        |
+|:-----------------|:-----------------|
+|                  |explanatory var.  |
+|                  |covariate         |
+|outcome           |                  |
+|output var.       |input var.        |
+|dependent var.    |independent var.  |
+

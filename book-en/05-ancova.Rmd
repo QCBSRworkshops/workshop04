@@ -1,4 +1,17 @@
 # Analysis of covariance (ANCOVA)
+![](images/schema_ancova.png)
+```{r, echo = F, eval = T, message=FALSE}
+# data and all requirements
+library(car)
+library(effects)
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+bird$logMaxAbund <- log(bird$MaxAbund)
+bird$Diet <- as.factor(bird$Diet)
+```
+
+
 
 Analysis of covariance (ANCOVA) is a linear model that tests the
 influence of one categorical explanatory variable (or more) and one
@@ -16,6 +29,15 @@ between the response variable and the continuous explanatory variable;
 there is no interaction between the categorical and continuous
 explanatory variables.
 
+$Y = X * Z$
+
+where:
+$Y$: Response variable is continuous
+$X$: Explanatory variable is categorical
+$Z$: Explanatory cariable is continuous
+
+$$Y = \mu + Main Effect Factors + Interaction between Factors + Main Effect Covariates + Interactions between Covariates Factors + \epsilon$$
+
 ### 6.1 Assumptions
 
 As with models seen above, to be valid ANCOVA models must meet the
@@ -24,13 +46,13 @@ diagnostic plots. In addition, ANCOVA models must have:
 
 1.  The same value range for all covariates
 2.  Variables that are *fixed*
-3.  No interaction between categorical and continuous variables
+3.  No interaction between categorical and continuous variables (not colinear)
 
 **[Note:]{.ul}** A *fixed* variable is one that you are specifically
 interested in (i.e. bird mass). In contrast, a random variable is noise
 that you want to control for (i.e. site a bird was sampled in). If you
 have random variables, see the workshop on [Linear Mixed-effect
-Models](http://qcbs.ca/wiki/r_workshop6)!
+Models](https://github.com/QCBSRworkshops/workshop06)!
 
 ### 6.2 Types of ANCOVA
 
@@ -52,15 +74,42 @@ of:
 3.  the categorical variable(s) on the relationship between the
     continuous variables(s) and the response variable
 
-Importantly, these goals are only met if there is no significant
-interaction between the categorical and continuous variables! Examples
+Importantly, these goals are only met if there is **no significant interaction** between the categorical and continuous variables! Examples
 of significant interactions between the categorical and continuous
 variables (for an ANCOVA with one factor and one covariate) are
 illustrated by the second and third panels below:
 
-![](images/ancova_schematic.png){width="550"}
 
-The same logic follows for ANCOVAs with multiple categorical and/or
+```{r,echo=FALSE,fig.height=3, fig.width=10}
+## functions
+f1 <- function(x, a, b) {
+  return(x*a+b)
+}
+# conf for plot
+col = rgb(118, 143, 175, maxColorValue = 255)
+x <- 1:20
+par(mfrow = c(1, 3), mar = c(1, 1, 6.5, 4))
+# plot 1
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=0.6,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('One level of the factor\n has a different slope', side = 3, line = 2, cex = 1.5)
+# plot 2
+plot(x, f1(x, a=.5,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=0.01,b=40), lwd = 2.5, col = col)
+mtext('Many levels have\n different slopes', side = 3, line = 2, cex = 1.5)
+# plot 3
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('No interaction', side = 3, line = 2, cex = 1.5)
+```
+
+If the interaction is significant, you will have a scenario that looks like the left and middle graphs. If your covariate and factor are significant, outputs will look like the left graph. The same logic follows for ANCOVAs with multiple categorical and/or
 continuous variables.
 
 ### 6.3 Running an ANCOVA
@@ -74,7 +123,7 @@ For example, using a build in dataset called CO2, where the response
 variable is *uptake*, the continuous variable is *conc* and the factor
 is *Treatment*, the ANCOVA is:
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 ancova.example <- lm(uptake ~ conc*Treatment, data=CO2)
 anova(ancova.example)
 ```
@@ -92,48 +141,54 @@ are significant, but the interaction is non-significant. If your replace
 *Treatment* with *Type*, however, you will see an example of a
 significant interaction.
 
-If you want to compare means across factors, you can use adjusted means,
-which uses the equations given by the ANCOVA to estimate the means of
-each level of the categorical variable, corrected for the effect of the
-categorical variable:
+To compare the mean values of each factor, conditional on the effect of the other
+
+The effects::effect() function uses the output of the ANCOVA model to estimate the means of each factor level, corrected by the effect of the covariate
 
 ```{r, echo = TRUE, eval = FALSE}
 install.packages("effects")
 library(effects)
-adj.means <- effect('Treatment', ancova.example)
-plot(adj.means)
+```
 
-adj.means <- effect('conc*Treatment', ancova.example)
-plot(adj.means)
+```{r, echo = TRUE, eval = TRUE, message=FALSE}
+
+adj.means.ex <- effect('Treatment', ancova.example)
+plot(adj.means.ex)
 ```
 
 ------------------------------------------------------------------------
 
 CHALLENGE 4
 
-Run an ANCOVA to test the effect of *Diet*, *Mass*, and their
-interaction on *MaxAbund*.\
-++++ Challenge 4: Solution \|
+Run an ANCOVA to test the effect of `Diet`, `Mass`, and their
+interaction on `MaxAbund`.\
 
-```{r, echo = TRUE, eval = FALSE}
+Response variable: `MaxAbund`
+Explanatory variables: 
+-`Diet` (factor with 5 levels)
+-`Mass` (numeric, continuous)
+
+```{r, echo = TRUE, eval = TRUE}
+str(bird)
+```
+
+
+<details>
+  <summary>**Cliquez pour voir la solution au Défi 3!**</summary>
+
+```{r, echo = TRUE, eval = TRUE}
 # If you did the section on Contrasts above, you will need to reset the contrast to Treatment for ease of
 # comparison using the ''options()'' function
 # Otherwise, skip the first line of code below
 options(contrasts=c("contr.treatment", "contr.poly"))
+
+#solution
 ancov1 <- lm(logMaxAbund ~ logMass*Diet, data=bird)
-summary(ancov1)
 anova(ancov1)
+
+summary(ancov1)
+
 ```
-
-The R output of this model is given by
-
-    Analysis of Variance Table
-    Response: logMaxAbund
-                  Df      Sum Sq      Mean Sq     F value     Pr(>F)
-    logMass       1   1.9736      1.97357     4.6054      0.03743 *
-    Diet          4   3.3477      0.83691     1.9530      0.11850
-    logMass:Diet  4   2.9811      0.74527     1.7391      0.15849
-    Residuals     44  18.8556     0.42854
 
 In this case, the interaction term is not significant, meaning that the
 effect of *logMass* on *logMaxAbund* does not differ between Diet
@@ -159,7 +214,7 @@ of the categorical variable.
 Plot the ANCOVA intercept and slopes (model ancov1 above) using the
 `abline()` and `coef()` functions.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 coef(ancov1)
 
 
@@ -173,4 +228,4 @@ abline(a=sum(coef(ancov1)[1]+coef(ancov1)[5]),b=sum(coef(ancov1)[2]+coef(ancov1)
 abline(a=sum(coef(ancov1)[1]+coef(ancov1)[6]),b=sum(coef(ancov1)[2]+coef(ancov1)[10]),col="darkcyan", lwd=2)
 ```
 
-![](images/ancova_plot.png){width="350"}
+</details>
