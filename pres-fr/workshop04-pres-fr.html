@@ -811,7 +811,6 @@ shapiro.test(residuals(lm1))
 # 
 # data:  residuals(lm1)
 # W = 0.64158, p-value = 3.172e-10
-
 library(e1071)
 skewness(residuals(lm1))
 # [1] 3.154719
@@ -1005,7 +1004,6 @@ summary(lm2)$coefficients # coefficients avec test de t
 #               Estimate Std. Error   t value     Pr(&gt;|t|)
 # (Intercept)  1.6723673  0.2471519  6.766557 1.166186e-08
 # logMass     -0.2361498  0.1169836 -2.018658 4.869342e-02
-
 summary(lm2)$adj.r.squared # R au carré ajusté
 # [1] 0.05483696
 ```
@@ -1646,6 +1644,7 @@ conditions d'application
 Test complémentaire
 - Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s)
 - Un test couramment utilisé *a posteriori* pour répondre à cette question est le **Test de Tukey**
+- Vous voudrez peut-être comparer vos groupes avec des comparaison planifiées. Ceci est souvent plus robust et élégant puisque les différences attendues sont établies *a priori*.
 
 ---
 # Exécuter une ANOVA dans R
@@ -2748,6 +2747,7 @@ anova(anov2)
 
 
 ```r
+med &lt;- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 bird$Diet2 &lt;- factor(bird$Diet, levels=names(med))
 anov2 &lt;- lm(logMaxAbund ~ Diet2,
             data = bird)
@@ -2762,8 +2762,8 @@ anova(anov2)
 
 .comment[Un point important à remarquer à propos du contraste par défaut dans R (`contr.treatment`) est qu'il n'est PAS orthogonal]
 
-Pour être orthogonal :
-  - Pour être orthogonal, les propriétés suivantes doivent être respectées:
+Pour être orthogonal, les propriétés suivantes doivent être respectées:
+  - La somme des coefficients doit être égale à 0.
   - La somme du produit de deux colonnes égale 0
 
 
@@ -2953,7 +2953,7 @@ class: inverse, center, middle
 ---
 # Régression polynomiale
 
-Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `MaxAbund`
+Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `abund`
 
 Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées
 
@@ -3207,7 +3207,6 @@ out.1 = rda(Dickcissel$abund,
 out.2 = rda(Dickcissel$abund,
             Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
             Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
-
 ```
 
 

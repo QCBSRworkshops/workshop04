@@ -1548,6 +1548,7 @@ conditions d'application
 Test complémentaire
 - Lorsque l'ANOVA détecte une différence significative entre les groupes, l'analyse n'indique pas quel(s) groupe(s) diffère(nt) de(s) l'autre(s)
 - Un test couramment utilisé *a posteriori* pour répondre à cette question est le **Test de Tukey**
+- Vous voudrez peut-être comparer vos groupes avec des comparaison planifiées. Ceci est souvent plus robust et élégant puisque les différences attendues sont établies *a priori*.
 
 ---
 # Exécuter une ANOVA dans R
@@ -2381,6 +2382,7 @@ anova(anov2)
 2. Ordonner les niveaux selon leur médiane
 
 ```{r,eval=FALSE}
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
 bird$Diet2 <- factor(bird$Diet, levels=names(med))
 anov2 <- lm(logMaxAbund ~ Diet2,
             data = bird)
@@ -2395,8 +2397,8 @@ anova(anov2)
 
 .comment[Un point important à remarquer à propos du contraste par défaut dans R (`contr.treatment`) est qu'il n'est PAS orthogonal]
 
-Pour être orthogonal :
-  - Pour être orthogonal, les propriétés suivantes doivent être respectées:
+Pour être orthogonal, les propriétés suivantes doivent être respectées:
+  - La somme des coefficients doit être égale à 0.
   - La somme du produit de deux colonnes égale 0
 
 ```{r}
@@ -2511,7 +2513,7 @@ class: inverse, center, middle
 ---
 # Régression polynomiale
 
-Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `MaxAbund`
+Comme nous l'avons remarqué dans la section sur la **régression linéaire multiple**, certaines variables semblent avoir des relations non-linéaires avec la variable `abund`
 
 Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées
 
