@@ -23,3 +23,28 @@ You should also make sure you have downloaded, installed, and loaded these packa
 * [MASS](https://cran.r-project.org/package=MASS) (for linear discriminant analysis)
 * [car](https://cran.r-project.org/package=car) (for the analysis of variance)
 * [effect](https://cran.r-project.org/package=effect) (to visualize models)
+
+To install them from CRAN, run:
+
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results = 'hide'}
+# Install the required packages
+install.packages("dplyr")
+install.packages("vegan")
+install.packages("e1071")
+install.packages("MASS")
+install.packages("car")
+install.packages("effect")
+```
+
+To load these packages, run:
+
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
+# Load the required packages
+library(dplyr)
+library(vegan)
+library(e1071)
+library(MASS)
+library(car)
+library(effect)
+```
+
