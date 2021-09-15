@@ -10,8 +10,8 @@ Tout le matériel de l'atelier se trouve sur [github.com/QCBSRworkshops/workshop
 
 Pour cet atelier, nous travaillerons avec les jeux de données suivants :
 
-* [birdsdiet](http://qcbs.ca/wiki/_media/birdsdiet.csv)
-* [dickcissel](http://qcbs.ca/wiki/_media/dickcissel.csv)
+* [birdsdiet](https://github.com/QCBSRworkshops/workshop04/edit/main/book-fr/data/birdsdiet.csv)
+* [dickcissel](https://github.com/QCBSRworkshops/workshop04/edit/main/book-fr/data/dickcissel.csv)
 
 > Pour télécharger ces données, faites un clic droit + enregistrer sur la page qui s'ouvre.
 
@@ -24,11 +24,22 @@ Vous devriez également vous assurer d'avoir téléchargé, installé et chargé
 * [car](https://cran.r-project.org/package=car) (pour l'analyse de variance)
 * [effect](https://cran.r-project.org/package=effect) (pour la visualisation de modèles)
 
-```
-# Installez les paquets requis
-install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect'))
+Pour les installer du CRAN, roulez:
 
-# Chargez les paquets requis
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE, results = 'hide'}
+# Installez les librairies requises
+install.packages("dplyr")
+install.packages("vegan")
+install.packages("e1071")
+install.packages("MASS")
+install.packages("car")
+install.packages("effect")
+```
+
+Pour charger les librairies, roulez:
+
+```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
+# Load the required packages
 library(dplyr)
 library(vegan)
 library(e1071)
@@ -36,3 +47,4 @@ library(MASS)
 library(car)
 library(effect)
 ```
+
