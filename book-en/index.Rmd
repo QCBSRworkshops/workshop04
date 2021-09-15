@@ -73,13 +73,19 @@ Examples of unacceptable behaviour by participants at any workshop event/platfor
 THIS SECTION MUST ONLY BE EDITED BY THE COORDINATORS OF THE WORKSHOP SERIES
 ```
 
-Originally developed by: Catherine Baltazar, Bérenger Bourgeois, Zofia Taranu.
+This workshop was originally developed by Catherine Baltazar, Bérenger Bourgeois, Zofia Taranu, and Shaun Turney. 
 
-Contributed with changes to the presentation:
+Since 2014, several QCBS members contributed to consistently and collaboratively develop and update this workshop, as part of the *Learning and Development Award* from the Québec Centre for Biodiversity Science. They were:
 
-Contributed with changes to the written material:
-
-Contributed by reporting issues and suggesting modifications:
+|      2022 - 2021 - 2020     |      2019 - 2018 - 2017     |      2016 - 2015 - 2014      |
+|:---------------------------:|:---------------------------:|:----------------------------:|
+| Victor Cameron  | Willian Vieira | Catherine Baltazar |
+| Laurie Maynard  | Shaun Turney  | Bérenger Bourgeois |
+| Daniel Schoenig  | Marie-Hélène Brice | Zofia Taranu |
+|   | Katherine Hébert | Shaun Turney |
+|   |  | Emmanuelle Chrétien |
+|   |  | Maxwell Farrell |
+|   |  | Vincent Fugère |
 
 
 ## Contributing
