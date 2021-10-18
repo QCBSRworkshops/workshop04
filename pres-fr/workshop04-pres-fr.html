@@ -30,10 +30,9 @@ class: inverse, center, middle
 # À propos de cet atelier
 
 [![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=repo&amp;message=dev&amp;color=6f42c1&amp;logo=github)](https://github.com/QCBSRworkshops/workshop04)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=wiki&amp;message=04&amp;logo=wikipedia)](https://wiki.qcbs.ca/r_atelier4)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Diapos&amp;message=04&amp;color=red&amp;logo=html5)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.html)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Diapos&amp;message=04&amp;color=red&amp;logo=adobe-acrobat-reader)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.pdf)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=script&amp;message=04&amp;color=2a50b8&amp;logo=r)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.R)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Diapos&amp;message=04&amp;color=red&amp;logo=html5)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.html)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Diapos&amp;message=04&amp;color=red&amp;logo=adobe-acrobat-reader)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.pdf)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=script&amp;message=04&amp;color=2a50b8&amp;logo=r)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.R)
 
 ---
 
@@ -811,6 +810,7 @@ shapiro.test(residuals(lm1))
 # 
 # data:  residuals(lm1)
 # W = 0.64158, p-value = 3.172e-10
+
 library(e1071)
 skewness(residuals(lm1))
 # [1] 3.154719
@@ -1004,6 +1004,7 @@ summary(lm2)$coefficients # coefficients avec test de t
 #               Estimate Std. Error   t value     Pr(&gt;|t|)
 # (Intercept)  1.6723673  0.2471519  6.766557 1.166186e-08
 # logMass     -0.2361498  0.1169836 -2.018658 4.869342e-02
+
 summary(lm2)$adj.r.squared # R au carré ajusté
 # [1] 0.05483696
 ```
@@ -1829,7 +1830,7 @@ shapiro.test(resid(anov1))
 ```r
 data$logY &lt;- log10(data$Y)
 ```
-* Voir le wiki de l'atelier 1 pour les règles de transformation de données
+* Voir [l'atelier 1](https://r.qcbs.ca/fr/workshops/r-workshop-01/) pour les règles de transformation de données
 * ré-exécuter votre modèle avec la variable transformée et vérifier à nouveau les hypothèses
 
 **Test de Kruskal-Wallis**: équivalent non paramétrique de l'ANOVA si vous ne pouvez pas
@@ -2404,7 +2405,7 @@ En plus des conditions d'application habituelles des modèles linéaires :
 #### En cas de colinéarité
 
 - Garder seulement une des variables colinéaires
-- Essayer une analyse multidimensionnelle (voir l'atelier 9)
+- Essayer une analyse multidimensionnelle (voir l'[atelier 9](https://r.qcbs.ca/fr/workshops/r-workshop-09/))
 - Essayer une analyse pseudo-orthogonale
 
 ---
@@ -3207,6 +3208,7 @@ out.1 = rda(Dickcissel$abund,
 out.2 = rda(Dickcissel$abund,
             Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
             Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
 ```
 
 
