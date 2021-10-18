@@ -48,10 +48,10 @@ if(length(new.packages) > 0) {
 
 # À propos de cet atelier
 
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=html5)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.html)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=adobe-acrobat-reader)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.pdf)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.R)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=diapos&message=01&color=red&logo=html5)](https://r.qcbs.ca/workshop04/pres-fr/workshop04-pres-fr.html)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=livre&message=01&logo=github)](https://r.qcbs.ca/workshop04/book-fr/index.html)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=script&message=01&color=2a50b8&logo=r)](https://r.qcbs.ca/workshop04/book-fr/workshop04-script-fr.R)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04) 
 
 ---
 
