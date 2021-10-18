@@ -2,7 +2,7 @@
 title: "Atelier 4: Modèles linéaires"
 subtitle: "Série d'ateliers R du CSBQ"
 author:
-- Développé et entretenu par les contributeurs et les contributrices de la Série d'ateliers R du CSBQ^[La Série d'ateliers R du CSBQ fait partie du [Centre de la science de la biodiversité du Québec](https://www.qcbs.ca), et est maintenue par les coordonnateurs et les coordonnatrices de la série, et les membres étudiants diplômés, postdoctoraux et professionnels de la recherche. **La liste des contributeurs et des contributrices de cet atelier sont accessibles[ici](lien)**].
+- Développé et entretenu par les contributeurs et les contributrices de la Série d'ateliers R du CSBQ^[La Série d'ateliers R du CSBQ fait partie du [Centre de la science de la biodiversité du Québec](https://www.qcbs.ca), et est maintenue par les coordonnateurs et les coordonnatrices de la série, et les membres étudiants diplômés, postdoctoraux et professionnels de la recherche. **La liste des contributeurs et des contributrices de cet atelier sont accessibles[ici](https://r.qcbs.ca/fr/workshops/r-workshop-04/)**].
 date: "`r Sys.time()`"
 site: bookdown::bookdown_site
 documentclass: book

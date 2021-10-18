@@ -75,7 +75,7 @@ $\hat{y_{i}}$ : moyenne de la variable réponse du groupe i.
     L'ANOVA peut être utilisée pour des mesures répétées, mais ce sujet
     n'est pas abordé dans cet atelier. Un **modèle linéaire mixte**
     peut également être utilisé pour ce type de données [(voir
-    l'atelier 6)](https://github.com/QCBSRworkshops/workshop06).
+    l'atelier 6)](https://r.qcbs.ca/fr/workshops/r-workshop-06/).
 
 ### Test de t
 

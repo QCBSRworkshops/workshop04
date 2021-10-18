@@ -36,7 +36,7 @@ In the case of multiple linear regressions, two conditions are added to the usua
 In case of collinearity, there are some solutions:
 
 * Keep only one of the variables collinear
-* Try a multidimensional analysis (see workshop 9)
+* Try a multidimensional analysis (see [Workshop 9](https://r.qcbs.ca/workshops/r-workshop-09/))
 * Try a pseudo-orthogonal analysis
 
 ##  Multiple linear regression in R

@@ -51,8 +51,8 @@ diagnostic plots. In addition, ANCOVA models must have:
 **[Note:]{.ul}** A *fixed* variable is one that you are specifically
 interested in (i.e. bird mass). In contrast, a random variable is noise
 that you want to control for (i.e. site a bird was sampled in). If you
-have random variables, see the workshop on [Linear Mixed-effect
-Models](https://github.com/QCBSRworkshops/workshop06)!
+have random variables, see the workshop on [Linear And Generalized Linear Mixed
+Models](https://r.qcbs.ca/workshops/r-workshop-07/)!
 
 ### 6.2 Types of ANCOVA
 

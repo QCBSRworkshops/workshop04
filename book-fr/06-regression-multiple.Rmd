@@ -36,7 +36,7 @@ Dans le cas des régressions linéaires multiples, deux conditions d'application
 En cas de colinéarité, il existe quelques solutions :
 
 * Garder seulement une des variables colinéaires
-* Essayer une analyse multidimensionnelle (voir l'atelier 9)
+* Essayer une analyse multidimensionnelle (voir l'[atelier 9](https://r.qcbs.ca/fr/workshops/r-workshop-09/))
 * Essayer une analyse pseudo-orthogonale
 
 

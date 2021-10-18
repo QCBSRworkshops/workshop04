@@ -77,7 +77,7 @@ $\hat{y_{i}}$ : mean of the explanatory variable for all the replicates of the l
 3.  **Repeated measures**\
     ANOVA can be used for repeated measures, but we won't cover this
     today. **Linear Mixed-effect Models** can also be used for this kind
-    of data *[(see Workshop 6)](https://github.com/QCBSRworkshops/workshop06)*.
+    of data *[(see Workshop 6)](https://r.qcbs.ca/workshops/r-workshop-06/)*.
 
 ### T-test
 
