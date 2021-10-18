@@ -50,8 +50,8 @@ En plus des conditions d'application des modèles linéaires, les modèles ANCOV
 une étude (e.g. la masse des oiseaux). En comparaison, une variable
 aléatoire représente surtout une source de bruit qu'on veut contrôler
 (i.e. le site où les oiseaux ont été échantillonnés). Si votre modèle
-comporte des effets aléatoires, consultez l'atelier 6 sur les [modèles
-linéaires mixtes](https://github.com/QCBSRworkshops/workshop06)!
+comporte des effets aléatoires, consultez l'atelier 7 sur les [modèles linéaires et 
+généralisés linéaires mixtes](https://r.qcbs.ca/fr/workshops/r-workshop-07/)!
 
 ### 6.2 Types d'ANCOVA
 

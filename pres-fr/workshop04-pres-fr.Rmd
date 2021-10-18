@@ -49,10 +49,9 @@ if(length(new.packages) > 0) {
 # À propos de cet atelier
 
 [![badge](https://img.shields.io/static/v1?style=for-the-badge&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=wiki&message=04&logo=wikipedia)](https://wiki.qcbs.ca/r_atelier4)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=html5)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.html)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=adobe-acrobat-reader)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.pdf)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://qcbsrworkshops.github.io/workshop04/workshop04-fr/workshop04-fr.R)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=html5)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.html)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Diapos&message=04&color=red&logo=adobe-acrobat-reader)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.pdf)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://r.qcbs.ca/workshop04/workshop04-fr/workshop04-fr.R)
 
 ---
 
@@ -1679,7 +1678,7 @@ shapiro.test(resid(anov1))
 ```{r eval=FALSE}
 data$logY <- log10(data$Y)
 ```
-* Voir le wiki de l'atelier 1 pour les règles de transformation de données
+* Voir [l'atelier 1](https://r.qcbs.ca/fr/workshops/r-workshop-01/) pour les règles de transformation de données
 * ré-exécuter votre modèle avec la variable transformée et vérifier à nouveau les hypothèses
 
 **Test de Kruskal-Wallis**: équivalent non paramétrique de l'ANOVA si vous ne pouvez pas
@@ -2155,7 +2154,7 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 #### En cas de colinéarité
 
 - Garder seulement une des variables colinéaires
-- Essayer une analyse multidimensionnelle (voir l'atelier 9)
+- Essayer une analyse multidimensionnelle (voir l'[atelier 9](https://r.qcbs.ca/fr/workshops/r-workshop-09/))
 - Essayer une analyse pseudo-orthogonale
 
 ---

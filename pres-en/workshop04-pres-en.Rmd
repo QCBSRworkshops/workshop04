@@ -47,10 +47,9 @@ if(length(new.packages) > 0) {
 
 # About this workshop
 [![badge](https://img.shields.io/static/v1?style=for-the-badge&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=wiki&message=04&logo=wikipedia)](https://wiki.qcbs.ca/r_workshop4)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Slides&message=04&color=red&logo=html5)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.html)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Slides&message=04&color=red&logo=adobe-acrobat-reader)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.pdf)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.R)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Slides&message=04&color=red&logo=html5)](https://r.qcbs.ca/workshop04/workshop04-en/workshop04-en.html)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=Slides&message=04&color=red&logo=adobe-acrobat-reader)](https://r.qcbs.ca/workshop04/workshop04-en/workshop04-en.pdf)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&label=script&message=04&color=2a50b8&logo=r)](https://r.qcbs.ca/workshop04/workshop04-en/workshop04-en.R)
 
 ---
 
@@ -1643,7 +1642,7 @@ shapiro.test(resid(anov1))
 ```{r eval=FALSE}
 data$logY <- log10(data$Y)
 ```
-.small[- See [Workshop 1](https://qcbsrworkshops.github.io/workshop01) for rules on data transformation;
+.small[- See [Workshop 1](https://r.qcbs.ca/workshops/r-workshop-01/) for rules on data transformation;
 
 - You must verify the assumptions once again with the transformed data adjusted in your model (*i*.*e*., `lm(Y ~ X, data)` changes to `lm(logY ~ X, data)`).
 ]
@@ -2147,7 +2146,7 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 #### If variables are collinear:
 
 - Reduce the amount of collinear variables.
-- Migrate to multidimensional analyses (see [Workshop 9]()).
+- Migrate to multidimensional analyses (see [Workshop 9](https://r.qcbs.ca/workshops/r-workshop-09/)).
 - Try a pseudo-orthogonal analysis.
 
 ---
