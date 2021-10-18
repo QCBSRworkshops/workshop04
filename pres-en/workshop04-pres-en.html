@@ -29,10 +29,9 @@ class: inverse, center, middle
 
 # About this workshop
 [![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=repo&amp;message=dev&amp;color=6f42c1&amp;logo=github)](https://github.com/QCBSRworkshops/workshop04)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=wiki&amp;message=04&amp;logo=wikipedia)](https://wiki.qcbs.ca/r_workshop4)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Slides&amp;message=04&amp;color=red&amp;logo=html5)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.html)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Slides&amp;message=04&amp;color=red&amp;logo=adobe-acrobat-reader)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.pdf)
-[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=script&amp;message=04&amp;color=2a50b8&amp;logo=r)](https://qcbsrworkshops.github.io/workshop04/workshop04-en/workshop04-en.R)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Slides&amp;message=04&amp;color=red&amp;logo=html5)](https://r.qcbs.ca/workshop04/workshop04-en/workshop04-en.html)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=Slides&amp;message=04&amp;color=red&amp;logo=adobe-acrobat-reader)](https://r.qcbs.ca/workshop04/workshop04-en/workshop04-en.pdf)
+[![badge](https://img.shields.io/static/v1?style=for-the-badge&amp;label=script&amp;message=04&amp;color=2a50b8&amp;logo=r)](https://r.qcbs.ca/workshop04/workshop04-en/workshop04-en.R)
 
 ---
 
@@ -788,6 +787,7 @@ shapiro.test(residuals(lm1))
 # 
 # data:  residuals(lm1)
 # W = 0.64158, p-value = 3.172e-10
+
 library(e1071)
 skewness(residuals(lm1))
 # [1] 3.154719
@@ -968,6 +968,7 @@ summary(lm2)$coefficients # coefficients with t-tests
 #               Estimate Std. Error   t value     Pr(&gt;|t|)
 # (Intercept)  1.6723673  0.2471519  6.766557 1.166186e-08
 # logMass     -0.2361498  0.1169836 -2.018658 4.869342e-02
+
 summary(lm2)$adj.r.squared # Adjusted R squared
 # [1] 0.05483696
 ```
@@ -1789,7 +1790,7 @@ shapiro.test(resid(anov1))
 ```r
 data$logY &lt;- log10(data$Y)
 ```
-.small[- See [Workshop 1](https://qcbsrworkshops.github.io/workshop01) for rules on data transformation;
+.small[- See [Workshop 1](https://r.qcbs.ca/workshops/r-workshop-01/) for rules on data transformation;
 
 - You must verify the assumptions once again with the transformed data adjusted in your model (*i*.*e*., `lm(Y ~ X, data)` changes to `lm(logY ~ X, data)`).
 ]
@@ -2393,7 +2394,7 @@ In addition to the usual assumptions of linear models:
 #### If variables are collinear:
 
 - Reduce the amount of collinear variables.
-- Migrate to multidimensional analyses (see [Workshop 9]()).
+- Migrate to multidimensional analyses (see [Workshop 9](https://r.qcbs.ca/workshops/r-workshop-09/)).
 - Try a pseudo-orthogonal analysis.
 
 ---
@@ -3188,6 +3189,7 @@ out.1 = rda(Dickcissel$abund,
 out.2 = rda(Dickcissel$abund,
             Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
             Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
 ```
 
 
