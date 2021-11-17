@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Atelier 4: Modèles linéaires</title>
+  <title>Chapitre 3 Le modèle linéaire | Atelier 4: Modèles linéaires</title>
   <meta name="description" content="Modèles linéaires" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Atelier 4: Modèles linéaires" />
+  <meta property="og:title" content="Chapitre 3 Le modèle linéaire | Atelier 4: Modèles linéaires" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/qcbsRworkshops/" />
   <meta property="og:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="qcbsRworkshops/workshop04" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Atelier 4: Modèles linéaires" />
+  <meta name="twitter:title" content="Chapitre 3 Le modèle linéaire | Atelier 4: Modèles linéaires" />
   
   <meta name="twitter:description" content="Modèles linéaires" />
   <meta name="twitter:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="objectifs-dapprentissage.html"/>
+<link rel="prev" href="préparez-vous-pour-cet-atelier.html"/>
+<link rel="next" href="régression-linéaire-avec-r.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -265,118 +265,182 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
 --!>
-<div id="header">
-<h1 class="title">Atelier 4: Modèles linéaires</h1>
-<h2 class="subtitle"><em>Série d’ateliers R du CSBQ</em></h2>
-<p class="author"><em>Développé et entretenu par les contributeurs et les contributrices de la Série d’ateliers R du CSBQ<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</em></p>
-<p class="date"><em>2021-11-17 16:42:19</em></p>
-</div>
-<div id="préface" class="section level1 unnumbered">
-<h1>Préface</h1>
-<p>La <strong>Série d’ateliers R du CSBQ</strong> est une série de 10 ateliers qui guide les participants à travers les étapes nécessaires à l’utilisation de R pour un large éventail d’analyses statistiques pertinentes pour la recherche en biologie et en écologie. Ces ateliers en accès libre ont été créés par des membres du CSBQ, à la fois pour les membres du CSBQ et pour la communauté au sens large.</p>
-<p>Le contenu de cet atelier a été revu par plusieurs membres du CSBQ. Si vous souhaitez suggérer des modifications, veuillez contacter les coordinateurs de la série actuelle, dont la liste figure sur la page principale de Github</p>
-<div id="code-de-conduite" class="section level2">
-<h2><span class="header-section-number">0.1</span> Code de conduite</h2>
-<p>La Série d’ateliers R du CSBQ et le Symposium R du CSBQ sont des lieux dédiés à fournir un environnement accueillant et favorable à toutes les personnes, indépendamment de leurs origines ou de leur identité.</p>
-<p>Les participants, les présentateurs et les organisateurs de la série d’ateliers et d’autres activités connexes acceptent le présent code de conduite lorsqu’ils assistent à des activités liées aux ateliers.</p>
-<p>Nous ne tolérons pas les comportements irrespectueux ou qui excluent, intimident ou gênent les autres.</p>
-<p>Nous ne tolérons pas la discrimination ou le harcèlement fondés sur des caractéristiques telles que, mais sans s’y limiter, l’identité et l’expression du genre, l’orientation sexuelle, le handicap, l’apparence physique, la taille du corps, la citoyenneté, la nationalité, les origines ethniques ou sociales, la grossesse, le statut familial, les informations génétiques, la religion ou les convictions (ou l’absence de celles-ci), l’appartenance à une minorité nationale, la propriété, l’âge, l’éducation, le statut socio-économique, les choix techniques et le niveau d’expérience.</p>
-<p>Il s’applique à tous les espaces gérés par l’atelier ou affiliés à celui-ci, y compris, mais sans s’y limiter, les ateliers, les listes de diffusion et les forums en ligne tels que GitHub, Slack et Twitter.</p>
-<div id="comportement-attendu" class="section level3">
-<h3><span class="header-section-number">0.1.1</span> Comportement attendu</h3>
-<p>Tous les participants sont tenus de faire preuve de respect et de courtoisie envers les autres. Toutes les interactions doivent être professionnelles, quelle que soit la plateforme utilisée : en ligne ou en personne.</p>
-<p>Afin de favoriser un environnement d’apprentissage positif et professionnel, nous encourageons les types de comportements suivants dans tous les événements et plates-formes des ateliers :</p>
+<div id="le-modèle-linéaire" class="section level1">
+<h1><span class="header-section-number">Chapitre 3</span> Le modèle linéaire</h1>
+<p>Les ateliers précédents ont exploré l’utilisation de <code>R</code> pour manipuler et représenter des données. Cependant, on s’intéresse souvent en science à déterminer les relations entre des variables. Cet atelier bâti sur les connaissances acquises préalablement et s’intéresse à la régression linéaire comme premier pas dans l’univers de l’analyse statistique.</p>
+<p><strong>Objectifs d’apprentissage</strong></p>
 <ul>
-<li>Utiliser un langage accueillant et inclusif ;</li>
-<li>Respecter les différents points de vue et expériences ;</li>
-<li>Accepter avec grâce les critiques constructives ;</li>
-<li>Se concentrer sur ce qui est le mieux pour la communauté ;</li>
-<li>Faire preuve de courtoisie et de respect envers les autres membres de la communauté.</li>
+<li>Apprendre la structure d’un modèle linéaire et ses différentes variantes.</li>
+<li>Apprendre comment faire un modèle linéaire dans R avec <code>lm()</code> et <code>anova()</code></li>
+<li>Apprendre comment identifier un modèle dont les conditions d’application ne sont pas satisfaites et comment régler le problème.</li>
 </ul>
-</div>
-<div id="comportements-inacceptables" class="section level3">
-<h3><span class="header-section-number">0.1.2</span> Comportements inacceptables</h3>
-<p>Voici quelques exemples de comportements inacceptables de la part des participants à tout événement ou plateforme d’atelier :</p>
-<ul>
-<li>les commentaires écrits ou verbaux qui ont pour effet d’exclure des personnes sur la base de leur appartenance à un groupe spécifique ;</li>
-<li>faire craindre à quelqu’un pour sa sécurité, par exemple en le harcelant ou en l’intimidant ;</li>
-<li>des menaces ou des propos violents dirigés contre une autre personne ;</li>
-<li>l’affichage d’images sexuelles ou violentes ;</li>
-<li>l’attention sexuelle non désirée ;</li>
-<li>les contacts physiques non consensuels ou non désirés ;</li>
-<li>des insultes ou des rabais ;</li>
-<li>les blagues sexistes, racistes, homophobes, transphobes, incapables ou d’exclusion ;</li>
-<li>l’incitation à la violence, au suicide ou à l’automutilation ;</li>
-<li>la poursuite de l’interaction (y compris la photographie ou l’enregistrement) avec une personne après qu’on - lui a demandé d’arrêter ;</li>
-<li>la publication d’une communication privée sans consentement.</li>
-</ul>
-</div>
-</div>
-<div id="contributeurs-et-contributrices" class="section level2">
-<h2><span class="header-section-number">0.2</span> Contributeurs et contributrices</h2>
-<p>Cet atelier a été développé à l’origine par Catherine Baltazar, Bérenger Bourgeois, Zofia Taranu, et Shaun Turney.</p>
-<p>Depuis 2014, plusieurs membres du CSBQ ont contribué à développer et à mettre à jour cet atelier collaborativement sur une base régulière, dans le cadre du <em>Prix d’apprentissage et de développement</em> du Centre de science de la biodiversité du Québec. Ces membres sont:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">2022 - 2021 - 2020</th>
-<th align="center">2019 - 2018 - 2017</th>
-<th align="center">2016 - 2015 - 2014</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">Victor Cameron</td>
-<td align="center">Willian Vieira</td>
-<td align="center">Catherine Baltazar</td>
-</tr>
-<tr class="even">
-<td align="center">Laurie Maynard</td>
-<td align="center">Shaun Turney</td>
-<td align="center">Bérenger Bourgeois</td>
-</tr>
-<tr class="odd">
-<td align="center">Daniel Schoenig</td>
-<td align="center">Marie-Hélène Brice</td>
-<td align="center">Zofia Taranu</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Katherine Hébert</td>
-<td align="center">Shaun Turney</td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">Emmanuelle Chrétien</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">Maxwell Farrell</td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">Vincent Fugère</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="contribuez-à-la-série" class="section level2">
-<h2><span class="header-section-number">0.3</span> Contribuez à la série!</h2>
-<p>En construction.</p>
-
-</div>
-</div>
-
-
-
-<div class="footnotes">
+<div id="quest-ce-quun-modèle-linéaire" class="section level2">
+<h2><span class="header-section-number">3.1</span> Qu’est-ce qu’un modèle linéaire ?</h2>
 <hr />
-<ol start="1">
-<li id="fn1"><p>La Série d’ateliers R du CSBQ fait partie du <a href="https://www.qcbs.ca">Centre de la science de la biodiversité du Québec</a>, et est maintenue par les coordonnateurs et les coordonnatrices de la série, et les membres étudiants diplômés, postdoctoraux et professionnels de la recherche. <strong>La liste des contributeurs et des contributrices de cet atelier sont accessibles<a href="https://r.qcbs.ca/fr/workshops/r-workshop-04/">ici</a></strong><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
+<p>Le modèle linéaire décrit la relation entre une variable <strong>réponse</strong> et une ou plusieurs autres variables <strong>prédictrices</strong>. Elle est utilisée pour analyser une <strong>hypothèse bien formulée</strong>, souvent associée à une question de recherche plus générale. La régression détermine si les variables sont corrélées en inférant la <strong>direction</strong> et la <strong>force</strong> d’une relation, et notre <strong>confiance</strong> dans les estimations de l’effet.</p>
+<p>Un travail scientifique important est nécessaire pour formuler un modèle linéaire. Puisque le modèle analyse une hypothèse, il est recommandé de formuler clairement les attentes concernant la direction et la force d’une relation en tant que prédictions avant d’effectuer un modèle linéaire.</p>
+<hr />
+<div id="exemple-abondance-et-masse-des-espèces-doiseaux" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Exemple : Abondance et masse des espèces d’oiseaux</h3>
+<p><strong>Hypothèse</strong></p>
+<blockquote>
+<p>Pour différentes espèces d’oiseaux, la masse moyenne d’un individu a un effet sur l’abondance maximale de l’espèce, en raison de contraintes écologiques (sources de nourriture, disponibilité de l’habitat, etc.).</p>
+</blockquote>
+<p><strong>Prédiction</strong></p>
+<blockquote>
+<p>Les espèces caractérisées par des individus plus grands ont une abondance maximale plus faible.</p>
+</blockquote>
+<p>Nous hypothétisons donc que les oiseaux caractérisés par une masse plus importante ont besoin de plus de nourriture et d’espace : la variable réponse est l’abondance maximale, et le prédicteur le poids moyen d’un individu.</p>
+<p>En fonction de notre prédiction, nous pouvons nous attendre à ce que la direction de la relation entre la variable réponse et le prédicteur soit inverse ou ‘négative’, de façon à ce qu’une masse plus élevée entraîne une abondance plus faible. Cependant, nous ne pouvons pas formuler d’attentes sur la force de la relation !</p>
+<p><strong>Les données</strong></p>
+<p>L’exemple suivant explore le jeu de données “birdsdiet” :</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="le-modèle-linéaire.html#cb3-1"></a><span class="co"># Importez le jeu de données &#39;bidsdiet&#39; et le sauver dans</span></span>
+<span id="cb3-2"><a href="le-modèle-linéaire.html#cb3-2"></a><span class="co"># l&#39;objet &#39;bird&#39;</span></span>
+<span id="cb3-3"><a href="le-modèle-linéaire.html#cb3-3"></a>bird &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/birdsdiet.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>Le jeu de données bird contient sept variables :</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="le-modèle-linéaire.html#cb4-1"></a><span class="co"># Explorez les variables du jeu de données &#39;bird&#39;</span></span>
+<span id="cb4-2"><a href="le-modèle-linéaire.html#cb4-2"></a><span class="kw">str</span>(bird)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    54 obs. of  7 variables:
+##  $ Family   : Factor w/ 53 levels &quot;Anhingas&quot;,&quot;Auks&amp; Puffins&quot;,..: 18 25 23 21 2 10 1 44 24 19 ...
+##  $ MaxAbund : num  2.99 37.8 241.4 4.4 4.53 ...
+##  $ AvgAbund : num  0.674 4.04 23.105 0.595 2.963 ...
+##  $ Mass     : num  716 5.3 35.8 119.4 315.5 ...
+##  $ Diet     : Factor w/ 5 levels &quot;Insect&quot;,&quot;InsectVert&quot;,..: 5 1 4 5 2 4 5 1 1 5 ...
+##  $ Passerine: int  0 1 1 0 0 0 0 0 0 0 ...
+##  $ Aquatic  : int  0 0 0 0 1 1 1 0 1 1 ...</code></pre>
+<p>Notez que Family, Diet, Passerine, et Aquatic sont toutes des variables catégoriques, malgré le fait qu’ils soient encodés de façons différentes (chaîne de caractères, catégorique, binaire).</p>
+<p>Les variables d’intérêt au test de l’hypothèse sont :</p>
+<ul>
+<li>“MaxAbund” : La plus grande abondance observée sur un site en Amérique du Nord (continu / numérique)</li>
+<li>“Masse” : La taille du corps moyenne en grammes (continue / numérique)</li>
+</ul>
+<p><strong>Concepts de base</strong></p>
+<p>Il existe deux concepts clés pour comprendre les modèles linéaires: la <strong>localisation</strong> et la <strong>variation</strong>.
+Attention! Ces concepts sont centraux à la compréhension des autres concepts présentés dans l’atelier.</p>
+<p>La <strong>localisation</strong> est une mesure de tendance centrale d’une population. Elle peut être mesurée entre autres avec la <strong>moyenne arithmétique</strong> <span class="math inline">\(\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}\)</span> :</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="le-modèle-linéaire.html#cb6-1"></a><span class="co"># Moyenne de l&#39;abondance maximale observée</span></span>
+<span id="cb6-2"><a href="le-modèle-linéaire.html#cb6-2"></a><span class="kw">mean</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 44.90577</code></pre>
+<p>ou la <strong>médiane</strong> :</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="le-modèle-linéaire.html#cb8-1"></a><span class="co"># Médiane de l&#39;abondance maximale observée</span></span>
+<span id="cb8-2"><a href="le-modèle-linéaire.html#cb8-2"></a><span class="kw">median</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 24.14682</code></pre>
+<p>Par contre, la moyenne ne peut pas caractériser une population au complet. Nous pouvons donc aussi décrire une population à l’aide de mesures de variation. La <strong>variation</strong> est la dispersion (ou l’écart) des observations autour de la moyenne. Elle se mesure avec la <strong>variance</strong> <span class="math inline">\(\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2\)</span>. La variance est la somme de l’écart élevée au carré entre chaque valeur et la moyenne. L’élévation de l’écart au carré permet de transformer les valeurs en valeurs positives sans utiliser de valeurs absolues.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="le-modèle-linéaire.html#cb10-1"></a><span class="co"># Variance de l&#39;abondance maximale observée</span></span>
+<span id="cb10-2"><a href="le-modèle-linéaire.html#cb10-2"></a><span class="kw">var</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 5397.675</code></pre>
+<p>Par contre, en élevant toutes les valeurs au carré, on change les unités de nos variables. Dans cet exemple, la variance est donnée en abondance^2, une unité qui n’est plus pertinente pour notre question initiale. Pour transformer ces valeurs en unités appropriées, nous pouvons calculer l’<strong>écart type</strong> <span class="math inline">\(\sigma\)</span>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="le-modèle-linéaire.html#cb12-1"></a><span class="co"># Écart type de l&#39;abondance maximale observée</span></span>
+<span id="cb12-2"><a href="le-modèle-linéaire.html#cb12-2"></a><span class="kw">sd</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 73.46887</code></pre>
+<p><strong>Exploration visuelle</strong></p>
+<p>La figure suivante trace la variable réponse en fonction du prédicteur :</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="le-modèle-linéaire.html#cb14-1"></a><span class="co"># Tracer la réponse en fonction du prédicteur</span></span>
+<span id="cb14-2"><a href="le-modèle-linéaire.html#cb14-2"></a><span class="kw">plot</span>(bird<span class="op">$</span>Mass, bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Cette figure présente la variation de l’abondance maximale en fonction de la masse de l’oiseau. Nons sommes intéressés à quantifier cette relation. Autrement dit, nous sommes intéressés à quantifier l’effet de la masse des espèces d’oiseaux sur leur abondance maximale. Cependant, comment trouver la “meilleure” estimation de la relation ?</p>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>La “meilleure” estimation est la ligne qui minimise la somme des carrés. Cela se clarifiera dans les prochaines sections. Notez que la “meilleure” estimation peut également être l’absence de relation, similaire à la ligne bleue dans la figure.</p>
+<hr />
+</div>
+</div>
+<div id="formulation-dun-modèle-linéaire" class="section level2">
+<h2><span class="header-section-number">3.2</span> Formulation d’un modèle linéaire</h2>
+<p>Le modèle linéaire décrit la “meilleure” relation entre une variable réponse (“MaxAbund”) et une ou plusieurs prédicteurs (ici “Mass”). La variable réponse est la variable que nous voulons expliquer, ou la variable dépendante. Il n’y a qu’une variable réponse. Les variables explicatives sont des variables qui peuvent (potentiellement) expliquer la variable réponse. On peut inclure une ou plusieurs variables explicatives.</p>
+<p>Dans un modèle linéaire, nous définissons une observation de la variable <strong>réponse</strong> <span class="math inline">\(y\)</span>, comme étant <span class="math inline">\(y_i\)</span>. Dans notre exemple, cela représente une observation d’abondance maximale pour une espèce <span class="math inline">\(i\)</span>.</p>
+<p>Une observation correspondante du <strong>prédicteur</strong> <span class="math inline">\(x\)</span> est définie comme <span class="math inline">\(x_i\)</span> et représente, par exemple, le poids moyen d’un individu d’une espèce <span class="math inline">\(i\)</span>.</p>
+<p>Dans les modèles linéaires, on utilise les concepts de moyenne et de variation pour décrire la relation entre deux variables. Nous disons “modèles linéaires”, parce qu’ils décrivent la relation entre variables avec une droite. Cette droite représente la relation supposée:</p>
+<p><span class="math display">\[ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i\]</span></p>
+<ul>
+<li><span class="math inline">\(y_i\)</span> est la variable réponse</li>
+<li><span class="math inline">\(x_i\)</span> est le prédicteur</li>
+<li>Le paramètre <span class="math inline">\(\beta_0\)</span> est <strong>l’ordonnée à l’origine</strong></li>
+<li>Le paramètre <span class="math inline">\(\beta_1\)</span> quantifie <strong>l’effet</strong> de <span class="math inline">\(x\)</span> sur <span class="math inline">\(y\)</span></li>
+<li>Le résidu <span class="math inline">\(\epsilon_i\)</span> représent la variation <strong>non expliquée</strong></li>
+<li>La <strong>valeur prédite</strong> de <span class="math inline">\(y_i\)</span> se définit comme : <span class="math inline">\(\hat{y}_i = \beta_0 + \beta_1 \times x_i\)</span></li>
+</ul>
+<hr />
+</div>
+<div id="évaluation-du-modèle-linéaire" class="section level2">
+<h2><span class="header-section-number">3.3</span> Évaluation du modèle linéaire</h2>
+<p>Le modèle linéaire évalue s’il y a une corrélation significative entre la variable réponse et la ou les variables explicatives. Ceci est fait en évaluant si la valeur moyenne de la variable réponse diffère significativement entre les différentes valeurs des variables explicatives, comme pour la variation de l’abondance maximale des oiseaux en fonction de leur masse.</p>
+<p>Pour les variables explicatives catégoriques, le modèle linéaire évalue si la valeur moyenne de la variable réponse diffère significativement entre les différents niveaux (ou groupes) des variables explicatives. Ceci deviendra plus clair en explorant les types de modèles linéaires dans les sections suivantes.</p>
+<p>Dans presque tous les cas, les variables explicatives n’expliquent pas toute la variation dans la variable réponse. La variation qui reste inexpliquée est les <strong>résidus</strong>, ou l’erreur.</p>
+<hr />
+</div>
+<div id="conditions-dapplication-du-modèle-linéaire" class="section level2">
+<h2><span class="header-section-number">3.4</span> Conditions d’application du modèle linéaire</h2>
+<p>Le modèle linéaire est défini selon l’équation que nous avons explorée précédemment :</p>
+<p><span class="math display">\[ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i\]</span></p>
+<p>Pour être valides, tous les modèles linéaires s’appuient sur 4 conditions de base. Si les 4 conditions ne sont pas respectées, les résultats du modèle ne peuvent pas être interprétés de façon valable.</p>
+<ul>
+<li>Relation linéaire entre la réponse et le prédicteur</li>
+<li>Les résidus suivent une distribution normale avec une moyenne de <span class="math inline">\(0\)</span></li>
+<li>Les résidus sont distribués de manière identique (<em>homoscédasticité</em>)</li>
+<li>Les résidus sont indépendants les uns des autres</li>
+</ul>
+<div class="explanation">
+<p>Notez que ces 4 conditions concernent les résidus, et non les variables réponses ou explicatives. <strong>Cela ne veut pas dire</strong> que l’ensemble des valeurs observées <span class="math inline">\(y\)</span> doivent suivre une distribution normale !</p>
+</div>
+<div id="normalité-des-résidus" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Normalité des résidus</h3>
+<p>Pour que les résultats d’un modèle linéaire soient valides, les <strong>résidus</strong> <span class="math inline">\(\epsilon\)</span> doivent suivre une <strong>distribution normale</strong> avec une moyenne de <span class="math inline">\(0\)</span> et une variance de <span class="math inline">\(\sigma^2\)</span>, de façon à ce que la majorité des résidus aient une valeur proche de 0 (i.e. l’erreur est très petite) et que leur distribution soit symétrique (i.e. la variable réponse est sous-estimée autant qu’elle est surestimée) :</p>
+<p><span class="math display">\[\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)\]</span></p>
+<p><strong>Cela veut dire :</strong> Chaque obsevation <span class="math inline">\(y_i\)</span> suit une distribution normale, avec moyenne <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 \times x_i\)</span> et variance <span class="math inline">\(\sigma^2\)</span>:</p>
+<p><span class="math display">\[y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)\]</span></p>
+</div>
+<div id="homoscédasticité" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Homoscédasticité</h3>
+<p>De la même façon, les résidus doivent être homoscédastiques. C’est-à-dire que l’erreur ne change pas beaucoup pour les différentes valeurs des variables explicatives. Tous les résidus <span class="math inline">\(\epsilon\)</span> suivent la même distribution, la <strong>variance</strong> <span class="math inline">\(\sigma^2\)</span> <strong>reste constante</strong>.</p>
+</div>
+<div id="indépendance-des-résidus" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> Indépendance des résidus</h3>
+<p>Il est également essentiel que les résidus soient indépendants, c’est-à-dire qu’il n’y a pas de structure manquante dans le modèle (comme une autocorrélation spatiale ou temporelle). Autrement dit, chaque résidu <span class="math inline">\(\epsilon_i\)</span> est <strong>indépendant</strong> de tout autre résidu.</p>
+<hr />
+</div>
+</div>
+<div id="notation-des-modèles-linéaires" class="section level2">
+<h2><span class="header-section-number">3.5</span> Notation des modèles linéaires</h2>
+<p>Cette section vise à fournir une compréhension de base des différents types de description de modèles linéaires qu’il est possible de rencontrer. La première est la notation mathématique et la seconde la notation en <code>R</code>.</p>
+<div id="notation-mathématique" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Notation mathématique</h3>
+<p>La notation mathématique est la seule forme de notation appropriée pour la rédaction de manuscrits. Nous notons les observations individuelles à l’aide de l’équation de la droite telle que vue dans les sections précédentes et de l’équation pour la distribution des résidus:</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)\]</span></p>
+<p>Pour noter l’ensemble des observations, nous suivons la notation matricielle et incluons l’intercepte dans<span class="math inline">\(\mathbf{X}\)</span> et <span class="math inline">\(\boldsymbol{\beta}\)</span>) :</p>
+<p><span class="math display">\[\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)\]</span></p>
+</div>
+<div id="notation-en-r" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> Notation en R</h3>
+<p>Il est à noter que la notation R n’est pas adéquate pour préparer une publication.</p>
+<p>En <code>R</code>, nous écrivons la formule du modèle comme :</p>
+<pre><code>y ~ 1 + x</code></pre>
+<p>Ou encore plus simplement comme :</p>
+<pre><code>y ~ x</code></pre>
+<p>qui inclut aussi la constante.</p>
+<p>La variable prédite est toujours placée à gauche du tilde <code>~</code>alors que les variables prédictricteurs sont placées à droite.</p>
+<div class="noway">
+<p>Il ne faut jamais mélanger les différents types de notation !</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="effectuer-un-modèle-linéaire" class="section level2">
+<h2><span class="header-section-number">3.6</span> Effectuer un modèle linéaire</h2>
+<p>Nous avons vu qu’il est possible de définir un modèle linéaire avec cette équation :</p>
+<p><span class="math display">\[ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i\]</span></p>
+<div id="estimation-du-modèle" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Estimation du modèle</h3>
+<p>Effectuer un modèle linéaire revient à trouver les “meilleures” estimations des paramètres <span class="math inline">\(\beta_0,\, \beta_1\)</span>. C’est ce que nous appelons faire <strong>l’estimation du modèle</strong>.</p>
+<p>Les “meilleurs” paramètres sont ceux qui minimisent la variation dans la variable réponse. La méthode la plus répandue pour minimiser la variation d’un modèle est de faire la somme des résidus au carré <span class="math inline">\(\sum{\epsilon_i^2}\)</span>. Cette méthode est appelée la méthode de <strong>moindres carrés ordinaire</strong> (MCO).</p>
+</div>
+</div>
+<div id="modèles-linéaires" class="section level2">
+<h2><span class="header-section-number">3.7</span> Modèles linéaires</h2>
+<hr />
+<p>La régression linéaire se découle en multiples variantes telles que le Test de T et l’analyse de variance. Ces méthodes rendent possible la quantification de relations entre variables.</p>
+<p><img src="images/schema.png" /></p>
+
+</div>
 </div>
 <hr>
 <center> 
@@ -389,8 +453,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="objectifs-dapprentissage.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="préparez-vous-pour-cet-atelier.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="régression-linéaire-avec-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

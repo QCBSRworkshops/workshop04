@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapitre 4 Régression multiple | Atelier 4: Modèles linéaires</title>
+  <title>Chapitre 6 Régression multiple | Atelier 4: Modèles linéaires</title>
   <meta name="description" content="Modèles linéaires" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapitre 4 Régression multiple | Atelier 4: Modèles linéaires" />
+  <meta property="og:title" content="Chapitre 6 Régression multiple | Atelier 4: Modèles linéaires" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/qcbsRworkshops/" />
   <meta property="og:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="qcbsRworkshops/workshop04" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapitre 4 Régression multiple | Atelier 4: Modèles linéaires" />
+  <meta name="twitter:title" content="Chapitre 6 Régression multiple | Atelier 4: Modèles linéaires" />
   
   <meta name="twitter:description" content="Modèles linéaires" />
   <meta name="twitter:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -147,57 +147,89 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Modèles linéaires en <code>R</code></b></span></li>
 <li class="chapter" data-level="1" data-path="objectifs-dapprentissage.html"><a href="objectifs-dapprentissage.html"><i class="fa fa-check"></i><b>1</b> Objectifs d’apprentissage</a></li>
-<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier</a><ul>
-<li class="chapter" data-level="2.1" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#aperçu"><i class="fa fa-check"></i><b>2.1</b> 1. Aperçu</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#définir-la-moyenne-et-la-variation"><i class="fa fa-check"></i><b>2.1.1</b> 1.1 Définir la moyenne et la variation</a></li>
-<li class="chapter" data-level="2.1.2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#les-modèles-linéaires"><i class="fa fa-check"></i><b>2.1.2</b> 1.2 Les modèles linéaires</a></li>
-<li class="chapter" data-level="2.1.3" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#conditions-de-base-du-modèle-linéaire"><i class="fa fa-check"></i><b>2.1.3</b> 1.3 Conditions de base du modèle linéaire</a></li>
-<li class="chapter" data-level="2.1.4" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#statistiques-de-tests-et-p-values"><i class="fa fa-check"></i><b>2.1.4</b> 1.4 Statistiques de tests et p-values</a></li>
+<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier</a></li>
+<li class="chapter" data-level="3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html"><i class="fa fa-check"></i><b>3</b> Le modèle linéaire</a><ul>
+<li class="chapter" data-level="3.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#quest-ce-quun-modèle-linéaire"><i class="fa fa-check"></i><b>3.1</b> Qu’est-ce qu’un modèle linéaire ?</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#exemple-abondance-et-masse-des-espèces-doiseaux"><i class="fa fa-check"></i><b>3.1.1</b> Exemple : Abondance et masse des espèces d’oiseaux</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>2.2</b> 2. Régression linéaire simple</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#flux-de-travail"><i class="fa fa-check"></i><b>2.2.1</b> Flux de travail</a></li>
-<li class="chapter" data-level="2.2.2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>2.2.2</b> 2.1 Effectuer un modèle linéaire</a></li>
-<li class="chapter" data-level="2.2.3" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#validation-des-conditions-de-base"><i class="fa fa-check"></i><b>2.2.3</b> 2.2 Validation des conditions de base</a></li>
-<li class="chapter" data-level="2.2.4" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#normalisation-des-données"><i class="fa fa-check"></i><b>2.2.4</b> 2.3 Normalisation des données</a></li>
-<li class="chapter" data-level="2.2.5" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#transformation-des-données"><i class="fa fa-check"></i><b>2.2.5</b> 2.4 Transformation des données</a></li>
-<li class="chapter" data-level="2.2.6" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#sortie-du-modèle"><i class="fa fa-check"></i><b>2.2.6</b> 2.5 Sortie du modèle</a></li>
-<li class="chapter" data-level="2.2.7" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#sous-ensembles-dobservations"><i class="fa fa-check"></i><b>2.2.7</b> 2.7 Sous-ensembles d’observations</a></li>
+<li class="chapter" data-level="3.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#formulation-dun-modèle-linéaire"><i class="fa fa-check"></i><b>3.2</b> Formulation d’un modèle linéaire</a></li>
+<li class="chapter" data-level="3.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#évaluation-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.3</b> Évaluation du modèle linéaire</a></li>
+<li class="chapter" data-level="3.4" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#conditions-dapplication-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.4</b> Conditions d’application du modèle linéaire</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#normalité-des-résidus"><i class="fa fa-check"></i><b>3.4.1</b> Normalité des résidus</a></li>
+<li class="chapter" data-level="3.4.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#homoscédasticité"><i class="fa fa-check"></i><b>3.4.2</b> Homoscédasticité</a></li>
+<li class="chapter" data-level="3.4.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#indépendance-des-résidus"><i class="fa fa-check"></i><b>3.4.3</b> Indépendance des résidus</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html#défi-1"><i class="fa fa-check"></i><b>2.3</b> DÉFI 1</a></li>
+<li class="chapter" data-level="3.5" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-des-modèles-linéaires"><i class="fa fa-check"></i><b>3.5</b> Notation des modèles linéaires</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-mathématique"><i class="fa fa-check"></i><b>3.5.1</b> Notation mathématique</a></li>
+<li class="chapter" data-level="3.5.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-en-r"><i class="fa fa-check"></i><b>3.5.2</b> Notation en R</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>3</b> Test de t et ANOVA</a><ul>
-<li class="chapter" data-level="3.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>3.1</b> ANOVA</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>3.1.1</b> 3.1 Types d’ANOVA</a></li>
-<li class="chapter" data-level="3.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>3.1.2</b> 3.2 Test de t</a></li>
-<li class="chapter" data-level="3.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>3.1.3</b> 3.3 Effectuer une ANOVA</a></li>
-<li class="chapter" data-level="3.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-de-base"><i class="fa fa-check"></i><b>3.1.4</b> 3.4 Vérification des conditions de base</a></li>
-<li class="chapter" data-level="3.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle-1"><i class="fa fa-check"></i><b>3.1.5</b> 3.5 Sortie du modèle</a></li>
-<li class="chapter" data-level="3.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-complémentaire"><i class="fa fa-check"></i><b>3.1.6</b> 3.6 Test complémentaire</a></li>
-<li class="chapter" data-level="3.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>3.1.7</b> 3.7 Visualisation des résultats</a></li>
-<li class="chapter" data-level="3.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>3.1.8</b> Allons plus loin: Contrastes</a></li>
+<li class="chapter" data-level="3.6" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>3.6</b> Effectuer un modèle linéaire</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#estimation-du-modèle"><i class="fa fa-check"></i><b>3.6.1</b> Estimation du modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>3.2</b> 4. ANOVA à deux critères de classification</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>3.2.1</b> 4.1 Effectuer une ANOVA à deux critères de classification</a></li>
-<li class="chapter" data-level="3.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>3.2.2</b> 4.2 Diagramme d’interaction</a></li>
+<li class="chapter" data-level="3.7" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#modèles-linéaires"><i class="fa fa-check"></i><b>3.7</b> Modèles linéaires</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>3.3</b> 5. ANOVA non-équilibrée (section avancée/facultative)</a></li>
-<li class="chapter" data-level="3.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>3.4</b> 6. ANCOVA</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>3.4.1</b> 6.1 Conditions de base</a></li>
-<li class="chapter" data-level="3.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>3.4.2</b> 6.2 Types d’ANCOVA</a></li>
-<li class="chapter" data-level="3.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>3.4.3</b> 6.3 Effectuer une ANCOVA</a></li>
+<li class="chapter" data-level="4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html"><i class="fa fa-check"></i><b>4</b> Régression linéaire avec R</a><ul>
+<li class="chapter" data-level="4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#formulation-du-modèle"><i class="fa fa-check"></i><b>4.1</b> Formulation du modèle</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#équation-du-modèle"><i class="fa fa-check"></i><b>4.1.1</b> Équation du modèle</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-1"><i class="fa fa-check"></i><b>4.2</b> Régression linéaire avec R</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-1.-formuler-et-exécuter-un-modèle-linéaire"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Étape 1.</strong> Formuler et exécuter un modèle linéaire</a></li>
+<li class="chapter" data-level="4.2.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-avec-les-graphiques-diagnostics"><i class="fa fa-check"></i><b>4.2.2</b> <strong>Étape 2.</strong> Vérifier les conditions d’application avec les graphiques diagnostics</a></li>
+<li class="chapter" data-level="4.2.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-pour-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Étape 2</strong>. Vérifier les conditions d’application pour <code>lm1</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---quelle-est-la-cause"><i class="fa fa-check"></i><b>4.2.4</b> Conditions non respectées - Quelle est la cause ?</a></li>
+<li class="chapter" data-level="4.2.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---comment-procéder"><i class="fa fa-check"></i><b>4.2.5</b> Conditions non respectées - Comment procéder ?</a></li>
+<li class="chapter" data-level="4.2.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-3.-analyser-les-paramètres"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Étape 3.</strong> Analyser les paramètres</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#interprétation-du-modèle"><i class="fa fa-check"></i><b>4.3</b> Interprétation du modèle</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#trouver-un-meilleur-modèle-oiseaux-terrestres"><i class="fa fa-check"></i><b>4.3.1</b> Trouver un meilleur modèle: oiseaux terrestres</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#défi-2"><i class="fa fa-check"></i><b>4.4</b> Défi 2</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-2"><i class="fa fa-check"></i><b>4.5</b> Régression linéaire avec R</a></li>
+<li class="chapter" data-level="4.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#noms-de-variables"><i class="fa fa-check"></i><b>4.6</b> Noms de variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>5</b> Test de t et ANOVA</a><ul>
+<li class="chapter" data-level="5.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>5.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>5.1.1</b> Types d’ANOVA</a></li>
+<li class="chapter" data-level="5.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>5.1.2</b> Test de t</a></li>
+<li class="chapter" data-level="5.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>5.1.3</b> Effectuer une ANOVA</a></li>
+<li class="chapter" data-level="5.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-dapplication"><i class="fa fa-check"></i><b>5.1.4</b> Vérification des conditions d’application</a></li>
+<li class="chapter" data-level="5.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#exemple-avec-le-jeu-de-données-bird"><i class="fa fa-check"></i><b>5.1.5</b> Exemple avec le jeu de données <code>bird</code></a></li>
+<li class="chapter" data-level="5.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle"><i class="fa fa-check"></i><b>5.1.6</b> Sortie du modèle</a></li>
+<li class="chapter" data-level="5.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#tests-complémentaires"><i class="fa fa-check"></i><b>5.1.7</b> Tests complémentaires</a></li>
+<li class="chapter" data-level="5.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>5.1.8</b> Visualisation des résultats</a></li>
+<li class="chapter" data-level="5.1.9" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>5.1.9</b> Allons plus loin: Contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2</b> ANOVA à deux critères de classification</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2.1</b> Effectuer une ANOVA à deux critères de classification</a></li>
+<li class="chapter" data-level="5.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>5.2.2</b> Diagramme d’interaction</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>5.3</b> ANOVA non-équilibrée (section avancée/facultative)</a></li>
+<li class="chapter" data-level="5.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>5.4</b> 6. ANCOVA</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>5.4.1</b> 6.1 Conditions de base</a></li>
+<li class="chapter" data-level="5.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>5.4.2</b> 6.2 Types d’ANCOVA</a></li>
+<li class="chapter" data-level="5.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>5.4.3</b> 6.3 Effectuer une ANCOVA</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>4</b> Régression multiple</a><ul>
-<li class="chapter" data-level="4.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-de-base-2"><i class="fa fa-check"></i><b>4.0.1</b> 7.1 Conditions de base</a></li>
-<li class="chapter" data-level="4.0.2" data-path="régression-multiple.html"><a href="régression-multiple.html#jeu-de-données-dickcissel"><i class="fa fa-check"></i><b>4.0.2</b> 7.2 Jeu de données Dickcissel</a></li>
-<li class="chapter" data-level="4.0.3" data-path="régression-multiple.html"><a href="régression-multiple.html#allons-plus-loin-régression-polynomiale"><i class="fa fa-check"></i><b>4.0.3</b> Allons plus loin: Régression polynomiale</a></li>
-<li class="chapter" data-level="4.0.4" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-pas-à-pas"><i class="fa fa-check"></i><b>4.0.4</b> 7.4 Régression pas à pas</a></li>
-<li class="chapter" data-level="4.1" data-path="régression-multiple.html"><a href="régression-multiple.html#allons-plus-loin-partition-de-la-variation"><i class="fa fa-check"></i><b>4.1</b> Allons plus loin: Partition de la variation</a></li>
+<li class="chapter" data-level="6" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>6</b> Régression multiple</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#formulation-du-modèle-1"><i class="fa fa-check"></i><b>6.0.1</b> Formulation du modèle</a></li>
+<li class="chapter" data-level="6.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-dapplication"><i class="fa fa-check"></i><b>6.1</b> Conditions d’application</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="régression-multiple.html"><a href="régression-multiple.html#en-cas-de-colinéarité"><i class="fa fa-check"></i><b>6.1.1</b> En cas de colinéarité</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire-multiple-dans-r"><i class="fa fa-check"></i><b>6.2</b> Régression linéaire multiple dans R</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="régression-multiple.html"><a href="régression-multiple.html#les-données"><i class="fa fa-check"></i><b>6.2.1</b> Les données</a></li>
+<li class="chapter" data-level="6.2.2" data-path="régression-multiple.html"><a href="régression-multiple.html#vérification-des-conditions-dapplication-1"><i class="fa fa-check"></i><b>6.2.2</b> Vérification des conditions d’application</a></li>
+<li class="chapter" data-level="6.2.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire"><i class="fa fa-check"></i><b>6.2.3</b> Régression linéaire</a></li>
+<li class="chapter" data-level="6.2.4" data-path="régression-multiple.html"><a href="régression-multiple.html#définir-le-meilleur-modèle"><i class="fa fa-check"></i><b>6.2.4</b> Définir le meilleur modèle</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-polynomiale-matériel-facultatif"><i class="fa fa-check"></i><b>6.3</b> Régression polynomiale (matériel facultatif)</a></li>
+<li class="chapter" data-level="6.4" data-path="régression-multiple.html"><a href="régression-multiple.html#partitionnement-de-la-variation-matériel-facultatif"><i class="fa fa-check"></i><b>6.4</b> Partitionnement de la variation (matériel facultatif)</a></li>
 </ul></li>
 <li class="part"><span><b>Considérations finales</b></span></li>
-<li class="chapter" data-level="5" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>5</b> Résumé</a></li>
-<li class="chapter" data-level="6" data-path="resources-additionnels.html"><a href="resources-additionnels.html"><i class="fa fa-check"></i><b>6</b> Resources additionnels</a></li>
-<li class="chapter" data-level="7" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>7</b> Réferences</a></li>
+<li class="chapter" data-level="7" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>7</b> Résumé</a></li>
+<li class="chapter" data-level="8" data-path="ressources-additionnelles.html"><a href="ressources-additionnelles.html"><i class="fa fa-check"></i><b>8</b> Ressources additionnelles</a></li>
+<li class="chapter" data-level="9" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>9</b> Réferences</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/qcbsRworkshops" target="blank">QCBS R Workshop Series</a></li>
 
@@ -234,365 +266,395 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </div>
 --!>
 <div id="régression-multiple" class="section level1">
-<h1><span class="header-section-number">Chapitre 4</span> Régression multiple</h1>
-<p>Une régression multiple teste les effets de plusieurs variables
-explicatives continues sur une variable réponse continue.</p>
-<div id="conditions-de-base-2" class="section level3">
-<h3><span class="header-section-number">4.0.1</span> 7.1 Conditions de base</h3>
-<p>En plus des conditions de base habituelles des modèles linéaires, il est
-important de tester pour <strong>l’orthogonalité</strong> parce que ceci influence
-l’interprétation du modèle. Les variables sont orthogonales quand les
-variables explicatives sont colinéaires. Si une variable explicative est
-corrélée avec une autre variable, elles expliquent probablement la même
-variabilité dans la variable réponse, et l’effet d’une variable sera
-caché par l’autre.S’il existe une relation entre deux variables
-explicatives, elles sont donc <strong>colinéaires</strong>.</p>
-<p>La colinéarité doit être évitée, car il ne sera pas possible de
-distinguer les effets propres à chaque variable. Voici quelques
-solutions possibles :</p>
-<ol style="list-style-type: decimal">
-<li>Gardez seulement <strong>une</strong> des variables colinéaires,</li>
-<li>Essayez une analyse multidimensionelle <em><a href="http://qcbs.ca/wiki/r_atelier9">(voir
-l’atelier 9)</a></em>,</li>
-<li>Essayez une analyse pseudo-orthogonale.</li>
-</ol>
-<p>La colinéarité entre variables explicatives peut être vérifiée à l’aide
-du <strong>facteur d’inflation de la variance</strong> (VIF ou <em>"variance inflation
-factor"</em>) en utilisant la fonction <code>vif</code> du paquet <code>HH</code>.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="régression-multiple.html#cb56-1"></a><span class="kw">vif</span>(clDD <span class="op">~</span><span class="st"> </span>clFD <span class="op">+</span><span class="st"> </span>clTmi <span class="op">+</span><span class="st"> </span>clTma <span class="op">+</span><span class="st"> </span>clP <span class="op">+</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span></code></pre></div>
-<p>qui produit la sortie suivante:</p>
-<pre><code>  clFD        clTmi       clTma           clP         grass
- 13.605855    9.566169    4.811837    3.196599    1.165775</code></pre>
-<p>Les variables colinéaires ont un VIF plus grand que 5. La sortie R
-montre alors que <em>clDD</em>, <em>clFD</em>, et <em>clTmi</em> sont fortement colinéaires.
-Seulement une de ces variables explicatives peut être retenue dans le
-modèle de régression final.</p>
+<h1><span class="header-section-number">Chapitre 6</span> Régression multiple</h1>
+<p><img src="images/schema_multReg.png" /></p>
+<p>Une régression multiple teste les effets de plusieurs variables explicatives continues sur une variable réponse continue. Elle se distingue de la régression linéaire simple en ayant <em>plusieurs variables explicatives</em>.</p>
+<div id="formulation-du-modèle-1" class="section level3">
+<h3><span class="header-section-number">6.0.1</span> Formulation du modèle</h3>
+<p><strong>Les variables</strong></p>
+<p>La régression linéaire multiple sont définies par les variables <span class="math inline">\(y\)</span> représentant la variable réponse (<strong>continue</strong>) et <span class="math inline">\(x\)</span> pour les variables explicatives (<strong>continues</strong> ou <strong>catégoriques</strong>).</p>
+<p><strong>La relation supposée</strong></p>
+<p>La relation entre la variable réponse et les prédicteurs se définit comme pour la régression simple. La différence est dans l’ajout de paramètres <span class="math inline">\(\beta\)</span> pour les variables supplémentaires :</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i} + \epsilon_i\]</span></p>
+<ul>
+<li>Le paramètre <span class="math inline">\(\beta_0\)</span> est <strong>l’ordonnée à l’origine</strong> (ou constante)</li>
+<li>Les paramètres <span class="math inline">\(\beta_1\)</span> quantifie <strong>l’effet</strong> de <span class="math inline">\(x\)</span> sur <span class="math inline">\(y\)</span></li>
+<li>Le résidu <span class="math inline">\(\epsilon_i\)</span> représente la variation <strong>non expliquée</strong></li>
+<li>La <strong>valeur prédite</strong> de <span class="math inline">\(y_i\)</span> se définit comme : <span class="math inline">\(\hat{y}_i = \beta_0 + \beta_1x_{1,i}+\beta_2x_{2,i}+\beta_3x_{3,i}+...+\beta_kx_{k,i}\)</span>.</li>
+</ul>
+<p>La variation non expliquée ou l’erreur demeure distribuée normalement, centrée sur zéro avec une variance de <span class="math inline">\(\sigma^2\)</span> :</p>
+<p><span class="math display">\[\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)\]</span></p>
 </div>
-<div id="jeu-de-données-dickcissel" class="section level3">
-<h3><span class="header-section-number">4.0.2</span> 7.2 Jeu de données Dickcissel</h3>
-<p>Le jeu de données Dickcissel (du nom d’un petit oiseau granivore de la
-famille des Cardinalidae) explore les effets de plusieurs variables
-environnementales qui pourraient expliquer l’abondance et la présence
-d’une espèce d’oiseau des prairies nord-américaines avec des pics
-d’abondance au Kansas, É-U. Le jeu de données contient 15 variables :</p>
-<table style="width:98%;">
-<colgroup>
-<col width="26%" />
-<col width="43%" />
-<col width="28%" />
-</colgroup>
+<div id="conditions-dapplication" class="section level2">
+<h2><span class="header-section-number">6.1</span> Conditions d’application</h2>
+<hr />
+<p>Dans le cas des régressions linéaires multiples, deux conditions d’application s’ajoutent conditions habituelles des modèles linéaires. Premièrement, il doit y avoir une <strong>relation linéaire</strong> entre <strong>chaque</strong> variable explicative et la variable réponse. Deuxièmement, les variables explicatives sont indépendantes les unes des autres (il n’y a pas de <strong>colinéarité</strong>).</p>
+<div id="en-cas-de-colinéarité" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> En cas de colinéarité</h3>
+<p>En cas de colinéarité, il existe quelques solutions :</p>
+<ul>
+<li>Garder seulement une des variables colinéaires</li>
+<li>Essayer une analyse multidimensionnelle (voir l’<a href="https://r.qcbs.ca/fr/workshops/r-workshop-09/">atelier 9</a>)</li>
+<li>Essayer une analyse pseudo-orthogonale</li>
+</ul>
+</div>
+</div>
+<div id="régression-linéaire-multiple-dans-r" class="section level2">
+<h2><span class="header-section-number">6.2</span> Régression linéaire multiple dans R</h2>
+<hr />
+<div id="les-données" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Les données</h3>
+<p>En utilisant le jeu de données <code>Dickcissel</code> nous comparerons l’importance relative du climat (<code>clTma</code>), de la productivité (<code>NDVI</code>) et de la couverture du sol (<code>grass</code>) comme prédicteurs de l’abondance de dickcissels (<code>abund</code>).</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="régression-multiple.html#cb168-1"></a>Dickcissel =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/dickcissel.csv&quot;</span>)</span>
+<span id="cb168-2"><a href="régression-multiple.html#cb168-2"></a><span class="kw">str</span>(Dickcissel)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    646 obs. of  15 variables:
+##  $ abund    : num  5 0.2 0.4 0 0 0 0 0 0 0 ...
+##  $ Present  : chr  &quot;Absent&quot; &quot;Absent&quot; &quot;Absent&quot; &quot;Present&quot; ...
+##  $ clDD     : num  5543 5750 5395 5920 6152 ...
+##  $ clFD     : num  83.5 67.5 79.5 66.7 57.6 59.2 59.5 51.5 47.4 46.3 ...
+##  $ clTmi    : num  9 9.6 8.6 11.9 11.6 10.8 10.8 11.6 13.6 13.5 ...
+##  $ clTma    : num  32.1 31.4 30.9 31.9 32.4 32.1 32.3 33 33.5 33.4 ...
+##  $ clTmn    : num  15.2 15.7 14.8 16.2 16.8 ...
+##  $ clP      : num  140 147 148 143 141 ...
+##  $ NDVI     : int  -56 -44 -36 -49 -42 -49 -48 -50 -64 -58 ...
+##  $ broadleaf: num  0.3866 0.9516 0.9905 0.0506 0.2296 ...
+##  $ conif    : num  0.0128 0.0484 0 0.9146 0.7013 ...
+##  $ grass    : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ crop     : num  0.2716 0 0 0.0285 0.044 ...
+##  $ urban    : num  0.2396 0 0 0 0.0157 ...
+##  $ wetland  : num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<div id="vérification-des-conditions-dapplication-1" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Vérification des conditions d’application</h3>
+<p>Il faut d’abord vérifier la présence de <strong>colinéarité</strong> entre toutes les variables explicatives et d’intérêt :</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="régression-multiple.html#cb170-1"></a><span class="co"># Sélectionner lesvariables</span></span>
+<span id="cb170-2"><a href="régression-multiple.html#cb170-2"></a>var &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;NDVI&quot;</span>, <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;abund&quot;</span>)</span>
+<span id="cb170-3"><a href="régression-multiple.html#cb170-3"></a></span>
+<span id="cb170-4"><a href="régression-multiple.html#cb170-4"></a><span class="co"># Graphiques des relations entre variables</span></span>
+<span id="cb170-5"><a href="régression-multiple.html#cb170-5"></a><span class="kw">plot</span>(Dickcissel[, var])</span></code></pre></div>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<div class="explanation">
+<p>Un patron observable entre deux variables explicatives peut indiquer qu’elles sont <strong>colinéaires</strong> ! Vous devez éviter ceci, sinon leurs effets sur la variable réponse seront confondus.</p>
+</div>
+</div>
+<div id="régression-linéaire" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Régression linéaire</h3>
+<p>Maintenant, exécutons la régression multiple de l’abondance (<code>abund</code>) en fonction des variables <code>clTma + NDVI + grass</code> :</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="régression-multiple.html#cb171-1"></a><span class="co"># Régression multiple</span></span>
+<span id="cb171-2"><a href="régression-multiple.html#cb171-2"></a>lm.mult &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clTma <span class="op">+</span><span class="st"> </span>NDVI <span class="op">+</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span>
+<span id="cb171-3"><a href="régression-multiple.html#cb171-3"></a><span class="kw">summary</span>(lm.mult)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = abund ~ clTma + NDVI + grass, data = Dickcissel)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -35.327 -11.029  -4.337   2.150 180.725 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -83.60813   11.57745  -7.222 1.46e-12 ***
+## clTma         3.27299    0.40677   8.046 4.14e-15 ***
+## NDVI          0.13716    0.05486   2.500   0.0127 *  
+## grass        10.41435    4.68962   2.221   0.0267 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 22.58 on 642 degrees of freedom
+## Multiple R-squared:  0.117,  Adjusted R-squared:  0.1128 
+## F-statistic: 28.35 on 3 and 642 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Puis, vérifions les autres conditions d’application, comme pour la régression linéaire simple :</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="régression-multiple.html#cb173-1"></a><span class="co"># Conditions d&#39;application</span></span>
+<span id="cb173-2"><a href="régression-multiple.html#cb173-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">3.9</span>, <span class="dv">4</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb173-3"><a href="régression-multiple.html#cb173-3"></a>    <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb173-4"><a href="régression-multiple.html#cb173-4"></a><span class="kw">plot</span>(lm.mult)</span></code></pre></div>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-104-1.png" width="768" /></p>
+</div>
+<div id="définir-le-meilleur-modèle" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> Définir le meilleur modèle</h3>
+<p>Il existe un principe de première importance dans la sélection de modèles. Il s’agit du <strong>principe de parcimonie</strong>. C’est-à-dire, expliquer le plus de variation avec le plus petit nombre de termes. Nous pourrions donc enlever la variable la moins significative.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="régression-multiple.html#cb174-1"></a><span class="kw">summary</span>(lm.mult)<span class="op">$</span>coefficients</span></code></pre></div>
+<pre><code>##                Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept) -83.6081274 11.5774529 -7.221634 1.458749e-12
+## clTma         3.2729872  0.4067706  8.046272 4.135118e-15
+## NDVI          0.1371634  0.0548603  2.500231 1.265953e-02
+## grass        10.4143451  4.6896157  2.220725 2.671787e-02</code></pre>
+<p>Les 3 variables sont importantes. On garde tout !</p>
+<p>Le modèle explique 11.28% de la variabilité de l’abondance de dickcissels <span class="math inline">\(R²_{adj} = 0.11\)</span>.</p>
+<div class="noway">
+<p>Toutefois, ces informations ne sont pas valables, car les conditions d’application du modèle linéaire ne sont pas respectées.</p>
+</div>
+<p>Il est important de noter que la variable réponse ne varie pas de façon linéaire avec les variables explicatives :</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="régression-multiple.html#cb176-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="dt">cex =</span> <span class="dv">1</span>)</span>
+<span id="cb176-2"><a href="régression-multiple.html#cb176-2"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>clTma, <span class="dt">data =</span> Dickcissel)</span>
+<span id="cb176-3"><a href="régression-multiple.html#cb176-3"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>NDVI, <span class="dt">data =</span> Dickcissel)</span>
+<span id="cb176-4"><a href="régression-multiple.html#cb176-4"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span></code></pre></div>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-106-1.png" width="1056" /></p>
+</div>
+</div>
+<div id="régression-polynomiale-matériel-facultatif" class="section level2">
+<h2><span class="header-section-number">6.3</span> Régression polynomiale (matériel facultatif)</h2>
+<p>Comme nous l’avons remarqué dans la section sur la <strong>régression linéaire multiple</strong>, certaines variables semblent avoir des relations non-linéaires avec la variable <code>abund</code>.</p>
+<p>Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées</p>
+<p>Un modèle polynômial ressemble à ceci :</p>
+<p><span class="math display">\[\underbrace{2x^4}+\underbrace{3x}-\underbrace{2}\]</span></p>
+<p>Ce polynôme a <strong>trois termes</strong>.<br />
+</p>
+<p>Pour un polynôme avec une variable (comme <span class="math inline">\(x\)</span> ), le <em>degré</em> est l’exposant le plus élevé de cette variable. Nous avons ici un polynôme de <em>degré 4</em>:</p>
+<p><span class="math display">\[2x^\overbrace{4} + 3x - 2\]</span></p>
+<p>Lorsque vous connaissez le degré, vous pouvez lui donner un nom :</p>
+<table>
 <thead>
-<tr class="header">
-<th align="left">Nom de la variable</th>
-<th align="left">Description</th>
-<th align="left">Type</th>
+<tr>
+<th style="text-align:right;">
+Degré
+</th>
+<th style="text-align:left;">
+Nom
+</th>
+<th style="text-align:left;">
+Example
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">abund</td>
-<td align="left">Le nombre d’individus  C
-observé sur chaque route</td>
-<td align="left">ontinu/ numérique</td>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Constante
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(3\)</span>
+</td>
 </tr>
-<tr class="even">
-<td align="left">Present</td>
-<td align="left">Présence/ absence<br />
-de l’espèce</td>
-<td align="left">Binaire ("Présent"/ "Absent")</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Linéaire
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(x+9\)</span>
+</td>
 </tr>
-<tr class="odd">
-<td align="left">broadleaf, conif, crop, grass,<br />
-shrub, urban, wetland</td>
-<td align="left">Variables du paysage à moins de 20 km de rayon<br />
-du centre de la route</td>
-<td align="left">Continu/ numérique</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Quadratique
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(x^2-x+4\)</span>
+</td>
 </tr>
-<tr class="even">
-<td align="left">NDVI</td>
-<td align="left">Indice de végétation (une mesure de la productivité)</td>
-<td align="left">Nombre entier</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Cubique
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(x^3-x^2+5\)</span>
+</td>
 </tr>
-<tr class="odd">
-<td align="left">clDD, clFD, clTma, clTmi, clP</td>
-<td align="left">Données climatiques (DD = degrés jours,<br />
-FD = jours de gel, Tma = température max,<br />
-Tmi = température min,<br />
-P = précipitation)</td>
-<td align="left">Continu/ numérique</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Quartique
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(6x^4-x^3+x-2\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Quintique
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(x^5-3x^3+x^2+8\)</span>
+</td>
 </tr>
 </tbody>
 </table>
-<p>Dans R, une régression multiple est effectuée à l’aide de la fonction
-<code>lm()</code> et les résultats peuvent être visualisés avec la fonction
-<code>summary()</code>. En utilisant le jeu de données Dickcissel, on peut tester
-les effets du <em>climat</em>, de la <em>productivité</em> et du <em>paysage</em> sur
-l’<em>abondance</em> du Dickcissel à l’aide d’un modèle de régression
-multiple.</p>
-<hr />
-<p><strong>DÉFI 5</strong></p>
-<p>Est-il nécessaire de transformer la variable réponse <em>abund</em> ?</p>
-<p>++++ Défi 5: Solution|</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="régression-multiple.html#cb58-1"></a><span class="kw">hist</span>(Dickcissel<span class="op">$</span>abund, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Dickcissel abundance&quot;</span>)</span>
-<span id="cb58-2"><a href="régression-multiple.html#cb58-2"></a><span class="kw">shapiro.test</span>(Dickcissel<span class="op">$</span>abund)</span>
-<span id="cb58-3"><a href="régression-multiple.html#cb58-3"></a><span class="kw">skewness</span>(Dickcissel<span class="op">$</span>abund)</span>
-<span id="cb58-4"><a href="régression-multiple.html#cb58-4"></a><span class="kw">summary</span>(Dickcissel<span class="op">$</span>abund)</span></code></pre></div>
-<p>Il y a plusieurs zéros dans la distribution de la variable <em>abund</em>. On
-peut ajouter une constante avant d’effectuer une transformation
-logarithmique, étant donnée la forte asymétrie de la distribution :</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="régression-multiple.html#cb59-1"></a><span class="kw">hist</span>(<span class="kw">log10</span>(Dickcissel<span class="op">$</span>abund<span class="fl">+0.1</span>), =<span class="dt">main=</span><span class="st">&quot;&quot;</span>, <span class="dt">xlab=</span><span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>]<span class="op">*</span><span class="st">&quot;(Dickcissel Abundance + 0.1)&quot;</span>))</span>
-<span id="cb59-2"><a href="régression-multiple.html#cb59-2"></a><span class="kw">shapiro.test</span>(<span class="kw">log10</span>(Dickcissel<span class="op">$</span>abund<span class="fl">+0.1</span>))</span>
-<span id="cb59-3"><a href="régression-multiple.html#cb59-3"></a><span class="kw">skewness</span>(<span class="kw">log10</span>(Dickcissel<span class="op">$</span>abund<span class="fl">+0.1</span>))</span></code></pre></div>
-<p>La variable n’est toujours pas distribuée normalement après la
-transformation.</p>
-<p>++++</p>
-<hr />
-<p>Dans le défi 5, vous avez probablement remarqué que la variable réponse
-<em>abund</em> n’a pas pu être normalisée. Il faudrait alors peut-être laisser
-tomber la supposition de normalité et passer à un <a href="http://qcbs.ca/wiki/r_atelier7">modèle linéaire
-généralisé</a>, mais ceci ira à plus tard !</p>
-<p>Pour l’instant, nous allons utiliser la variable <em>abund</em>
-non-transformée et comparer l’importance relative de trois variables
-explicatives (<em>climat</em>, <em>productivité</em> et <em>paysage</em>) sur l’<em>abondance</em>.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="régression-multiple.html#cb60-1"></a>lm.mult &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clTma <span class="op">+</span><span class="st"> </span>NDVI <span class="op">+</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb60-2"><a href="régression-multiple.html#cb60-2"></a><span class="kw">summary</span>(lm.mult)</span></code></pre></div>
-<p>La sortie de R indique quelles variables explicatives sont
-significatives :</p>
-<pre><code>lm(formula = abund ~ clTma + NDVI + grass, data = Dickcissel)
-Residuals:
- Min          1Q          Median          3Q           Max
--35.327   -11.029     -4.337      2.150       180.725
-Coefficients:
-              Estimate    Std. Error  t value     Pr(&gt;|t|)
-(Intercept)   -83.60813       11.57745    -7.222      1.46e-12 ***
-clTma         3.27299     0.40677     8.046       4.14e-15 ***
-NDVI          0.13716     0.05486     2.500       0.0127 *
-grass         10.41435        4.68962     2.221       0.0267 *
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 22.58 on 642 degrees of freedom
-Multiple R-squared:  0.117,     Adjusted R-squared:  0.1128
-F-statistic: 28.35 on 3 and 642 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Dans ce cas-ci, les trois variables explicatives ont une influence
-significative sur l’abondance de Dickcissel, la plus significative
-étant le climat (p = 4.14e-15). Ces trois variables expliquent 11.28% de
-la variabilité de l’abondance de Dickcissel (R carré ajusté = 0.1128).
-Le modèle global est également significatif et explique la variabilité
-de l’abondance de Dickcissel mieux qu’un modèle nul (p &lt; 2.2e-16).</p>
-<p>Un graphique de la variable réponse en fonction de chaque variable
-explicative peut être utilisé pour représenter les résultats du modèle :</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="régression-multiple.html#cb62-1"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>clTma, <span class="dt">data =</span> Dickcissel, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;orange&quot;</span>)</span>
-<span id="cb62-2"><a href="régression-multiple.html#cb62-2"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>NDVI, <span class="dt">data =</span> Dickcissel, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;skyblue&quot;</span>)</span>
-<span id="cb62-3"><a href="régression-multiple.html#cb62-3"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<p><img src="images/lm_fig%2013.png" width="850" /></p>
+<p>Nous pouvson maintenant règler notre problème avec le jeu de données <code>Dickcissel</code>en testant la relation non-linéaire entre l’abondance et la température en comparant trois modèles polynômiaux groupés (de degrés 0, 1, and 3) :</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="régression-multiple.html#cb177-1"></a>lm.linear &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD, <span class="dt">data =</span> Dickcissel)</span>
+<span id="cb177-2"><a href="régression-multiple.html#cb177-2"></a>lm.quad &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Dickcissel)</span>
+<span id="cb177-3"><a href="régression-multiple.html#cb177-3"></a>lm.cubic &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> Dickcissel)</span></code></pre></div>
+<p>En comparant les modèles polynomiaux, nous pouvons déterminer quel modèle niché nous devrions sélectionner:</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="régression-multiple.html#cb178-1"></a><span class="kw">summary</span>(lm.linear)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = abund ~ clDD, data = Dickcissel)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -17.062 -10.608  -7.758  -2.487 193.128 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) 1.864566   2.757554   0.676  0.49918   
+## clDD        0.001870   0.000588   3.180  0.00154 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.81 on 644 degrees of freedom
+## Multiple R-squared:  0.01546,    Adjusted R-squared:  0.01393 
+## F-statistic: 10.11 on 1 and 644 DF,  p-value: 0.001545</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="régression-multiple.html#cb180-1"></a><span class="kw">summary</span>(lm.quad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = abund ~ clDD + I(clDD^2), data = Dickcissel)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -14.057 -12.253  -8.674   1.495 190.129 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.968e+01  5.954e+00  -3.306    0.001 ** 
+## clDD         1.297e-02  2.788e-03   4.651 4.00e-06 ***
+## I(clDD^2)   -1.246e-06  3.061e-07  -4.070 5.28e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.53 on 643 degrees of freedom
+## Multiple R-squared:  0.04018,    Adjusted R-squared:  0.0372 
+## F-statistic: 13.46 on 2 and 643 DF,  p-value: 1.876e-06</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="régression-multiple.html#cb182-1"></a><span class="kw">summary</span>(lm.cubic)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = abund ~ clDD + I(clDD^2) + I(clDD^3), data = Dickcissel)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -14.417 -12.247  -8.394   1.473 189.955 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -1.465e+01  1.206e+01  -1.215    0.225
+## clDD         8.612e-03  9.493e-03   0.907    0.365
+## I(clDD^2)   -1.628e-07  2.277e-06  -0.071    0.943
+## I(clDD^3)   -8.063e-11  1.680e-10  -0.480    0.631
+## 
+## Residual standard error: 23.54 on 642 degrees of freedom
+## Multiple R-squared:  0.04053,    Adjusted R-squared:  0.03605 
+## F-statistic:  9.04 on 3 and 642 DF,  p-value: 7.202e-06</code></pre>
+<p><em>Quel modèle devriez-vous choisir</em></p>
 </div>
-<div id="allons-plus-loin-régression-polynomiale" class="section level3">
-<h3><span class="header-section-number">4.0.3</span> Allons plus loin: Régression polynomiale</h3>
-<p>Les relations entre variables réponses et variables
-explicatives ne sont pas toujours linéaires. Dans ce cas, une régression
-linéaire, qui correspond à une droite reliant deux variables, est
-incapable de représenter la relation entre ces deux variables. Une
-régression polynomiale permet de tracer une courbe polynomiale entre la
-variable réponse et la variable explicative, et permet de représenter
-une relation non linéaire basée sur le modèle mathématique suivant :</p>
-<p>$ {y_i} = {β_0} + {β_1}{x_i} +
-{β_2}[](images/x_i}^2} + {β_3}{{x_i}^3} + {ε_i} </m> pour un polynôme de degré 3\
-<m> {y_i} = {β_0} + {β_1}{x_i} + {β_2}{{x_i}^2} + {ε_i} </m> pour un polynôme de degré 2</p>
-<p>où</p>
-<p>β<sub>0</sub> est l’ordonnée à l’origine de la droite de régression,\
-β<sub>1</sub> est l’effet de la variable x,\
-β<sub>2</sub> est l’effet de la variable x au carré (x<sup>2</sup>),\
-β<sub>3</sub> est l’effet de la variable x au cube (x<sup>3</sup>),\
-ε<sub>i</sub> sont les résidus du modèle (i.e. la variation inexpliquée).</p>
-<p>Le degré du polynôme est l’exposant le plus élevé de l’équation. En connaissant le degré du polynôme, on peut le qualifier /</p>
-<p>{{/polynomial_degree.png){width=“250”}</p>
-<p>Dans R, ces modèles sont effectués avec la fonction <code>lm()</code> et peuvent
-être comparés entre eux avec la fonction <code>anova()</code> :</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="régression-multiple.html#cb63-1"></a>lm.linear &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb63-2"><a href="régression-multiple.html#cb63-2"></a>lm.quad &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb63-3"><a href="régression-multiple.html#cb63-3"></a>lm.cubic &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> Dickcissel)</span></code></pre></div>
-<hr />
-<p><strong>DÉFI 7</strong></p>
-<p>Comparez les différents modèles polynomiaux de l’exemple précédent et
-déterminez quel modèle est le plus approprié. Extrayez le R carré
-ajusté, les coefficients de régression et les valeurs de p de ce modèle.</p>
-<p>++++ Défi 7: Solution|</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="régression-multiple.html#cb64-1"></a><span class="kw">anova</span>(lm.linear, lm.quad, lm.cubic)  <span class="co"># fait la liste des modèles par ordre croissant de complexité.</span></span>
-<span id="cb64-2"><a href="régression-multiple.html#cb64-2"></a><span class="co"># On accepte le modèle se trouvant sur la ligne la plus</span></span>
-<span id="cb64-3"><a href="régression-multiple.html#cb64-3"></a><span class="co"># basse avec une valeur de p significative.  i.e. le modèle</span></span>
-<span id="cb64-4"><a href="régression-multiple.html#cb64-4"></a><span class="co"># lm.quad</span></span>
-<span id="cb64-5"><a href="régression-multiple.html#cb64-5"></a></span>
-<span id="cb64-6"><a href="régression-multiple.html#cb64-6"></a><span class="co"># Examinons le résumé du modèle</span></span>
-<span id="cb64-7"><a href="régression-multiple.html#cb64-7"></a><span class="kw">summary</span>(lm.quad)</span>
-<span id="cb64-8"><a href="régression-multiple.html#cb64-8"></a><span class="co"># Les coefficients de régression</span></span>
-<span id="cb64-9"><a href="régression-multiple.html#cb64-9"></a><span class="kw">summary</span>(lm.quad)<span class="op">$</span>coefficients[, <span class="dv">1</span>]</span>
-<span id="cb64-10"><a href="régression-multiple.html#cb64-10"></a><span class="co"># Estimation des valeurs de p</span></span>
-<span id="cb64-11"><a href="régression-multiple.html#cb64-11"></a><span class="kw">summary</span>(lm.quad)<span class="op">$</span>coefficients[, <span class="dv">4</span>]</span>
-<span id="cb64-12"><a href="régression-multiple.html#cb64-12"></a><span class="co"># Le R carré ajusté</span></span>
-<span id="cb64-13"><a href="régression-multiple.html#cb64-13"></a><span class="kw">summary</span>(lm.quad)<span class="op">$</span>adj.r.squared</span></code></pre></div>
-<p>++++</p>
-<hr />
-<p>La comparaison de modèles du défi 7 a montré que la régression
-quadratique (i.e. polynomiale de degré 2) était le meilleur modèle. Le
-polynôme de degré trois peut être retiré du modèle final :</p>
-<pre><code>Analysis of Variance Table
-Model 1: abund ~ clDD
-Model 2: abund ~ clDD + I(clDD^2)
-Model 3: abund ~ clDD + I(clDD^2) + I(clDD^3)
-Model     Res.Df      RSS             Df  Sum of Sq        F          Pr(&gt;F)
-1         644     365039
-2         643     355871      1       9168.3      16.5457         5.34e-05 ***
-3         642     355743      1       127.7       0.2304      0.6314</code></pre>
-<p>La sortie de R pour le modèle final est :</p>
-<pre><code>Call: lm(formula = abund ~ clDD + I(clDD^2), data = Dickcissel)
-Residuals:
-    Min           1Q          Median          3Q          Max
-   -14.057        -12.253     -8.674      1.495       190.129
-Coefficients:
-              Estimate    Std. Error  t value     Pr(&gt;|t|)
-(Intercept)   -1.968e+01      5.954e+00   -3.306      0.001 **
-clDD          1.297e-02   2.788e-03       4.651       4.00e-06 ***
-I(clDD^2)     -1.246e-06      3.061e-07   -4.070      5.28e-05 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 23.53 on 643 degrees of freedom
-Multiple R-squared:  0.04018,   Adjusted R-squared:  0.0372
-F-statistic: 13.46 on 2 and 643 DF,  p-value: 1.876e-06</code></pre>
-<p>Dans cet exemple, le terme linéaire influence plus la variable réponse
-que le terme quadratique, car leurs valeurs de p sont 4.00e-06 et
-5.28e-05 respectivement. Ces deux termes expliquent 3.72% de la
-variabilité de l’abondance (R carré ajusté), ce qui est très peu.</p>
-</div>
-<div id="régression-pas-à-pas" class="section level3">
-<h3><span class="header-section-number">4.0.4</span> 7.4 Régression pas à pas</h3>
-<p>Afin d’obtenir un modèle de régression multiple "optimal",
-on peut commencer avec un modèle qui inclut toutes les variables
-explicatives et retirer les variables non significatives, procédant donc
-à une <strong>sélection pas à pas</strong>. Les variables non significatives sont
-retirées une à la fois et l’ajustement de chaque modèle successif est
-évalué à l’aide de l’AIC <a href="http://fr.wikipedia.org/wiki/Crit%C3%A8re_d%27information_d%27Akaike">(Critère d’information
-d’Akaike)</a>,
-jusqu’à ce que toutes les variables explicatives soient significatives.
-Prenez note qu’une valeur plus basse d’AIC indique un meilleur
-ajustement (i.e. le meilleur modèle est celui avec la valeur d’AIC la
-plus basse). Dans R, la sélection pas à pas est effectuée à l’aide de
-la fonction <code>step()</code> :</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="régression-multiple.html#cb67-1"></a>lm.full &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>Present, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb67-2"><a href="régression-multiple.html#cb67-2"></a>lm.step &lt;-<span class="st"> </span><span class="kw">step</span>(lm.full)</span>
-<span id="cb67-3"><a href="régression-multiple.html#cb67-3"></a><span class="kw">summary</span>(lm.step)</span></code></pre></div>
-<p>Les résultats indiquent que seulement 6 variables sont significatives
-parmi les 13 variables de départ :</p>
-<pre><code> Call:    lm(formula = abund ~ clDD + clFD + clTmi + clTma + clP + grass,  data = Dickcissel)
- Residuals:
-  Min         1Q          Median          3Q          Max
-  -30.913     -9.640      -3.070      4.217       172.133
-Coefficients:
-              Estimate    Std. Error  t value     Pr(&gt;|t|)
-(Intercept)   -4.457e+02      3.464e+01   -12.868     &lt; 2e-16 ***
-clDD          5.534e-02   8.795e-03       6.292       5.83e-10 ***
-clFD          1.090e+00   1.690e-01       6.452       2.19e-10 ***
-clTmi         -6.717e+00      7.192e-01   -9.339      &lt; 2e-16 ***
-clTma         3.172e+00   1.288e+00       2.463       0.014030 *
-clP           1.562e-01   4.707e-02       3.318       0.000959 ***
-grass         1.066e+01   4.280e+00       2.490       0.013027 *
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-Residual standard error: 19.85 on 639 degrees of freedom
-Multiple R-squared:  0.3207,    Adjusted R-squared:  0.3144
-F-statistic: 50.29 on 6 and 639 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Le modèle explique maintenant 31.44% de la variabilité de l’abondance.
-La variable explicative la plus significative est clTmi.<br />
-Cependant, certaines des variables explicatives sont corrélées entre
-elles et devraient être retirées du modèle final afin de ne pas inclure
-de variables qui n’apportent pas d’information nouvelle.</p>
-</div>
-<div id="allons-plus-loin-partition-de-la-variation" class="section level2">
-<h2><span class="header-section-number">4.1</span> Allons plus loin: Partition de la variation</h2>
-<p>Afin d’évaluer la contribution relative de deux ou plusieurs
-variables explicatives à la variabilité d’une variable réponse, on peut
-utiliser la fonction <code>varpart()</code> de la librairie "vegan". Cette
-fonction permet de subdiviser la variation expliquée de la réponse
-variable entre différents groupes de variables explicatives. Par
-exemple, dans le jeu de données Dickcissel, on peut évaluer les
-contributions relatives des données climatiques et du paysage de la
-manière suivante :</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="régression-multiple.html#cb69-1"></a>part.lm =<span class="st"> </span><span class="kw">varpart</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
-<span id="cb69-2"><a href="régression-multiple.html#cb69-2"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
-<span id="cb69-3"><a href="régression-multiple.html#cb69-3"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span>
-<span id="cb69-4"><a href="régression-multiple.html#cb69-4"></a>part.lm</span></code></pre></div>
-<p>La sortie de R permet de visualiser la partition de la variation :</p>
-<pre><code>Partition of variation in RDA
-Call: varpart(Y = Dickcissel$abund, X = Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)],
-Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)])
-Explanatory tables:
-X1:  Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)]
-X2:  Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)]
-No. of explanatory tables: 2
-Total variation (SS): 370770
-Variance: 574.84
-No. of observations: 646
-Partition table:
-                     Df       R.squared       Adj.R.squared        Testable
-[a+b] = X1           5        0.31414         0.30878              TRUE
-[b+c] = X2           6        0.03654         0.02749              TRUE
-[a+b+c] = X1+X2      11       0.32378         0.31205              TRUE
-Individual fractions
-[a] = X1|X2          5                        0.28456              TRUE
-[b]                  0                        0.02423              FALSE
-[c] = X2|X1          6                        0.00327              TRUE
-[d] = Residuals                               0.68795              FALSE
----</code></pre>
-<p>Utilisez la fonction <code>rda</code> pour tester si les différentes fractions sont
-significatives.</p>
-<p>Cette sortie R montre que les deux groupes de variables explicatives
-expliquent 31.205% (<span class="math display">\[a+b+c\]</span> = X1+X2) de la variation de l’abondance
-de Dickcissel alors que les variables du climat expliquent à elles
-seules 28.46% de la variation (<span class="math display">\[a\]</span> = X1|X2) et les variables du
-paysage ne contribuent qu’à expliquer 0.33% de la variation de
-l’abondance de Dickcissel (<span class="math display">\[c\]</span> = X2|X1). L’interaction entre les
-deux groupes de variables expliquent 2.42% (<span class="math display">\[b\]</span>) de la variation.</p>
-<p>Pour tester si chaque fraction est significative, il est possible
-d’utiliser la RDA partielle et un test par permutation avec les
-fonctions <code>rda()</code> et <code>anova()</code> :</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="régression-multiple.html#cb71-1"></a><span class="co"># Variables climatiques</span></span>
-<span id="cb71-2"><a href="régression-multiple.html#cb71-2"></a>out<span class="fl">.1</span> =<span class="st"> </span><span class="kw">rda</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
-<span id="cb71-3"><a href="régression-multiple.html#cb71-3"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
-<span id="cb71-4"><a href="régression-multiple.html#cb71-4"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span>
-<span id="cb71-5"><a href="régression-multiple.html#cb71-5"></a><span class="kw">anova</span>(out<span class="fl">.1</span>, <span class="dt">step =</span> <span class="dv">1000</span>, <span class="dt">perm.max =</span> <span class="dv">1000</span>)</span>
-<span id="cb71-6"><a href="régression-multiple.html#cb71-6"></a></span>
-<span id="cb71-7"><a href="régression-multiple.html#cb71-7"></a><span class="co"># Variables du paysage</span></span>
-<span id="cb71-8"><a href="régression-multiple.html#cb71-8"></a>out<span class="fl">.2</span> =<span class="st"> </span><span class="kw">rda</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
-<span id="cb71-9"><a href="régression-multiple.html#cb71-9"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>,</span>
-<span id="cb71-10"><a href="régression-multiple.html#cb71-10"></a>    <span class="st">&quot;clFD&quot;</span>, <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)])</span>
-<span id="cb71-11"><a href="régression-multiple.html#cb71-11"></a><span class="kw">anova</span>(out<span class="fl">.2</span>, <span class="dt">step =</span> <span class="dv">1000</span>, <span class="dt">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
-<p>la sortie R :</p>
-<pre><code>Variables climatiques
-Permutation test for rda under reduced model
-Model: rda(X = Dickcissel$abund, Y = Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)],
-       Z = Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)])
-          Df      Var      F     N.Perm   Pr(&gt;F)
-Model         5   165.12   53.862    999      0.001 ***
-Residual  634     388.72
-
-Variables du paysage
-Permutation test for rda under reduced model
-Model: rda(X = Dickcissel$abund, Y=Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)],
-        Z = Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)])
-          Df      Var      F     N.Perm   Pr(&gt;F)
-Model         6       5.54     1.5063    999      0.152
-Residual  634     388.72</code></pre>
-<p>Dans ce cas, la fraction de la variation expliquée par les variables du
-climat est significative (p-value=0.001) alors que la fraction expliquée
-par les variables du paysage ne l’est pas (p-value=0.152).</p>
-<p>Les résultats du partitionnement de la variation sont généralement
-représentés graphiquement par un diagramme de Venn dans lequel chaque
-groupe de variables explicatives est représenté par un cercle. La
-fraction de la variation expliquée est indiquée à l’intérieur des
-cercles.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="régression-multiple.html#cb73-1"></a><span class="kw">showvarparts</span>(<span class="dv">2</span>)</span>
-<span id="cb73-2"><a href="régression-multiple.html#cb73-2"></a><span class="kw">plot</span>(part.lm, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">bg =</span> <span class="kw">rgb</span>(<span class="dv">48</span>, <span class="dv">225</span>, <span class="dv">210</span>, <span class="dv">80</span>, <span class="dt">maxColorValue =</span> <span class="dv">225</span>),</span>
-<span id="cb73-3"><a href="régression-multiple.html#cb73-3"></a>    <span class="dt">col =</span> <span class="st">&quot;turquoise4&quot;</span>)</span></code></pre></div>
-<p><img src="images//varpart.png" width="300" /></p>
+<div id="partitionnement-de-la-variation-matériel-facultatif" class="section level2">
+<h2><span class="header-section-number">6.4</span> Partitionnement de la variation (matériel facultatif)</h2>
+<p>Certaines variables explicatives de la <strong>régression linéaire multiple</strong> étaient fortement corrélées (c.-à-d.multicolinéarité)</p>
+<p>La colinéarité entre variables explicatives peut être détectée à l’aide de critères d’inflation de la variance (fonction <code>vif()</code> du package <code>car</code>).</p>
+<p>Les valeurs supérieures à 5 sont considérées colinéaires:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="régression-multiple.html#cb184-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(clDD <span class="op">~</span><span class="st"> </span>clFD <span class="op">+</span><span class="st"> </span>clTmi <span class="op">+</span><span class="st"> </span>clTma <span class="op">+</span><span class="st"> </span>clP <span class="op">+</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span>
+<span id="cb184-2"><a href="régression-multiple.html#cb184-2"></a>car<span class="op">::</span><span class="kw">vif</span>(mod)</span></code></pre></div>
+<pre><code>##      clFD     clTmi     clTma       clP     grass 
+## 13.605855  9.566169  4.811837  3.196599  1.165775</code></pre>
+<p>Dans cet exemple, <code>clFD</code>,<code>clTmi</code> et<code>clTma</code> sont colinéaires avec <code>clDD</code>.<br />
+</p>
+<p>Plutôt que d’enlever des variables à notre modèle, il est possible réduire l’effet de colinéarité en regroupant certaines variables entre elles. Vous pouvez utiliser <code>varpart()</code> afin de partitionner la variation de la variable <code>abund</code> avec toutes les variables de la couverture du paysage groupées ensemble (<code>"broadleaf"</code>,<code>"conif"</code>,<code>"grass"</code>,<code>"crop"</code>, <code>"urban"</code>,<code>"wetland"</code>) et toutes les variables du climat groupées ensemble (<code>"clDD"</code>,<code>"clFD"</code>,<code>"clTmi"</code>,<code>"clTma"</code>,<code>"clP"</code>). Laissez NDVI à part</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="régression-multiple.html#cb186-1"></a><span class="kw">library</span>(vegan)</span>
+<span id="cb186-2"><a href="régression-multiple.html#cb186-2"></a>part.lm =<span class="st"> </span><span class="kw">varpart</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
+<span id="cb186-3"><a href="régression-multiple.html#cb186-3"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
+<span id="cb186-4"><a href="régression-multiple.html#cb186-4"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span>
+<span id="cb186-5"><a href="régression-multiple.html#cb186-5"></a>part.lm</span></code></pre></div>
+<pre><code>## 
+## Partition of variance in RDA 
+## 
+## Call: varpart(Y = Dickcissel$abund, X = Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;,
+## &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)], Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;,
+## &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)])
+## 
+## Explanatory tables:
+## X1:  Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)]
+## X2:  Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)] 
+## 
+## No. of explanatory tables: 2 
+## Total variation (SS): 370770 
+##             Variance: 574.84 
+## No. of observations: 646 
+## 
+## Partition table:
+##                      Df R.squared Adj.R.squared Testable
+## [a+b] = X1            5   0.31414       0.30878     TRUE
+## [b+c] = X2            6   0.03654       0.02749     TRUE
+## [a+b+c] = X1+X2      11   0.32378       0.31205     TRUE
+## Individual fractions                                    
+## [a] = X1|X2           5                 0.28456     TRUE
+## [b]                   0                 0.02423    FALSE
+## [c] = X2|X1           6                 0.00327     TRUE
+## [d] = Residuals                         0.68795    FALSE
+## ---
+## Use function &#39;rda&#39; to test significance of fractions of interest</code></pre>
+<p><strong>Note</strong> : les variables colinéaires n’ont pas besoin d’être enlevées avant l’analyse.<br />
+</p>
+<p>Avec <code>showvarpart()</code>, il est possible de visualiser comment ces deux groupes (climat et paysage) expliquent la variation de la variable <code>abund</code>.</p>
+<p>Par exemple:</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="régression-multiple.html#cb188-1"></a><span class="kw">showvarparts</span>(<span class="dv">2</span>)</span></code></pre></div>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="régression-multiple.html#cb189-1"></a><span class="st">`</span><span class="dt">?</span><span class="st">`</span>(showvarparts)</span>
+<span id="cb189-2"><a href="régression-multiple.html#cb189-2"></a><span class="co"># With two explanatory tables, the fractions explained</span></span>
+<span id="cb189-3"><a href="régression-multiple.html#cb189-3"></a><span class="co"># uniquely by each of the two tables are ‘[a]’ and ‘[c]’,</span></span>
+<span id="cb189-4"><a href="régression-multiple.html#cb189-4"></a><span class="co"># and their joint effect is ‘[b]’ following Borcard et al.</span></span>
+<span id="cb189-5"><a href="régression-multiple.html#cb189-5"></a><span class="co"># (1992).</span></span></code></pre></div>
+<p>Essayons avec nos données <code>Dickcissel</code> et notre modèle.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="régression-multiple.html#cb190-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">rep</span>(<span class="fl">0.5</span>, <span class="dv">4</span>))</span>
+<span id="cb190-2"><a href="régression-multiple.html#cb190-2"></a><span class="kw">plot</span>(part.lm, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">bg =</span> <span class="kw">rgb</span>(<span class="dv">48</span>, <span class="dv">225</span>, <span class="dv">210</span>, <span class="dv">80</span>, <span class="dt">maxColorValue =</span> <span class="dv">225</span>),</span>
+<span id="cb190-3"><a href="régression-multiple.html#cb190-3"></a>    <span class="dt">col =</span> <span class="st">&quot;turquoise4&quot;</span>)</span></code></pre></div>
+<p><img src="book-fr_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
+<p>La proportion de la variation de la variable <code>abund</code> expliquée par:
+- Le climat est de 28.5% (obtenu par X1|X2)<br />
+- La couverture du paysage est ~0% (X2|X1)<br />
+- Les deux combinés est 2.4%.<br />
+</p>
+<p>La variation non-expliquée par ces groupes (les résidus) est de 68.8%.</p>
+<p>Nous pouvons tester si chaque fraction est significative:</p>
+<ul>
+<li>Climat seul</li>
+</ul>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="régression-multiple.html#cb191-1"></a>out<span class="fl">.1</span> =<span class="st"> </span><span class="kw">rda</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
+<span id="cb191-2"><a href="régression-multiple.html#cb191-2"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
+<span id="cb191-3"><a href="régression-multiple.html#cb191-3"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span></code></pre></div>
+<ul>
+<li>Couverture du paysage seul</li>
+</ul>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="régression-multiple.html#cb192-1"></a>out<span class="fl">.2</span> =<span class="st"> </span><span class="kw">rda</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
+<span id="cb192-2"><a href="régression-multiple.html#cb192-2"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>,</span>
+<span id="cb192-3"><a href="régression-multiple.html#cb192-3"></a>    <span class="st">&quot;clFD&quot;</span>, <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="régression-multiple.html#cb193-1"></a><span class="co"># Climat seul</span></span>
+<span id="cb193-2"><a href="régression-multiple.html#cb193-2"></a><span class="kw">anova</span>(out<span class="fl">.1</span>, <span class="dt">step =</span> <span class="dv">1000</span>, <span class="dt">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<pre><code>## Permutation test for rda under reduced model
+## Permutation: free
+## Number of permutations: 999
+## 
+## Model: rda(X = Dickcissel$abund, Y = Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)], Z = Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)])
+##           Df Variance      F Pr(&gt;F)    
+## Model      5   165.12 53.862  0.001 ***
+## Residual 634   388.72                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="régression-multiple.html#cb195-1"></a><span class="co"># Couverture du paysage seul</span></span>
+<span id="cb195-2"><a href="régression-multiple.html#cb195-2"></a><span class="kw">anova</span>(out<span class="fl">.2</span>, <span class="dt">step =</span> <span class="dv">1000</span>, <span class="dt">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<pre><code>## Permutation test for rda under reduced model
+## Permutation: free
+## Number of permutations: 999
+## 
+## Model: rda(X = Dickcissel$abund, Y = Dickcissel[, c(&quot;broadleaf&quot;, &quot;conif&quot;, &quot;grass&quot;, &quot;crop&quot;, &quot;urban&quot;, &quot;wetland&quot;)], Z = Dickcissel[, c(&quot;clDD&quot;, &quot;clFD&quot;, &quot;clTmi&quot;, &quot;clTma&quot;, &quot;clP&quot;)])
+##           Df Variance      F Pr(&gt;F)
+## Model      6     5.54 1.5063  0.167
+## Residual 634   388.72</code></pre>
+<p>La fraction expliquée par la couverture du paysage n’est pas significative une fois que nous avons pris en compte l’effet du climat. Ceci était attendu puisque la variation expliqué pour ce groupe était seulement 0.3%.</p>
+<p>En conclusion, en partitionnant la variation, nous avons pu tenir compte de notre colinéarité entre nos variables et tout de même tester l’effet du climat et du paysage d’une façon simple et facile d’interprétation!</p>
 
 </div>
 </div>
