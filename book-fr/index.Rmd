@@ -74,14 +74,19 @@ Voici quelques exemples de comportements inacceptables de la part des participan
 CETTE SECTION NE DOIT ÊTRE MODIFIÉE QUE PAR LES COORDINATEURS DE LA SÉRIE D'ATELIERS R
 ```
 
-Développé à l'origine par: Catherine Baltazar, Bérenger Bourgeois, Zofia Taranu.
+Cet atelier a été développé à l'origine par Catherine Baltazar, Bérenger Bourgeois, Zofia Taranu, et Shaun Turney.
 
-A contribué à modifier la présentation :
+Depuis 2014, plusieurs membres du CSBQ ont contribué à développer et à mettre à jour cet atelier collaborativement sur une base régulière, dans le cadre du *Prix d'apprentissage et de développement* du Centre de science de la biodiversité du Québec. Ces membres sont:
 
-Contribution avec des changements à la documentation écrite :
-
-Contribution en signalant des problèmes et en suggérant des modifications :
-
+|      2022 - 2021 - 2020     |      2019 - 2018 - 2017     |      2016 - 2015 - 2014      |
+|:---------------------------:|:---------------------------:|:----------------------------:|
+| Victor Cameron  | Willian Vieira | Catherine Baltazar |
+| Laurie Maynard  | Shaun Turney  | Bérenger Bourgeois |
+| Daniel Schoenig  | Marie-Hélène Brice | Zofia Taranu |
+|   | Katherine Hébert | Shaun Turney |
+|   |  | Emmanuelle Chrétien |
+|   |  | Maxwell Farrell |
+|   |  | Vincent Fugère |
 
 ## Contribuez à la série!
 
@@ -91,4 +96,6 @@ En construction.
 library(knitr)
 opts_chunk$set(tidy.opts = list(width.cutoff = 60),
                tidy = TRUE)
+
+options(repos = list(CRAN="http://cran.rstudio.com/"))
 ```

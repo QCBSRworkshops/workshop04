@@ -22,7 +22,7 @@ Vous devriez également vous assurer d'avoir téléchargé, installé et chargé
 * [e1071](https://cran.r-project.org/package=e1071) (pour tester les modèles)
 * [MASS](https://cran.r-project.org/package=MASS) (pour l’analyse discriminante linéaire)
 * [car](https://cran.r-project.org/package=car) (pour l'analyse de variance)
-* [effect](https://cran.r-project.org/package=effect) (pour la visualisation de modèles)
+* [effects](https://cran.r-project.org/package=effects) (pour la visualisation de modèles)
 
 Pour les installer du CRAN, roulez:
 
@@ -33,7 +33,7 @@ install.packages("vegan")
 install.packages("e1071")
 install.packages("MASS")
 install.packages("car")
-install.packages("effect")
+install.packages("effects")
 ```
 
 Pour charger les librairies, roulez:
@@ -45,6 +45,6 @@ library(vegan)
 library(e1071)
 library(MASS)
 library(car)
-library(effect)
+library(effects)
 ```
 
