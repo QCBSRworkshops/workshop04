@@ -33,7 +33,7 @@ install.packages("vegan")
 install.packages("e1071")
 install.packages("MASS")
 install.packages("car")
-install.packages("effect")
+install.packages("effects")
 ```
 
 To load these packages, run:
@@ -45,6 +45,6 @@ library(vegan)
 library(e1071)
 library(MASS)
 library(car)
-library(effect)
+library(effects)
 ```
 
