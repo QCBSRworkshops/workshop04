@@ -33,7 +33,7 @@ class: inverse, center, middle
 ```{r install_pkgs, message=FALSE, warning=FALSE, include=FALSE, results=0}
 # Standard procedure to check and install packages and their dependencies, if needed.
 
-list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect')
+list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effects')
 
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 
@@ -46,27 +46,30 @@ if(length(new.packages) > 0) {
 ```
 
 # About this workshop
-[![badge](https://img.shields.io/static/v1?style=flat-square&label=slides&message=01&color=red&logo=html5)](https://r.qcbs.ca/workshop04/pres-en/workshop04-pres-en.html)
-[![badge](https://img.shields.io/static/v1?style=flat-square&label=book&message=01&logo=github)](https://r.qcbs.ca/workshop04/book-en/index.html)
-[![badge](https://img.shields.io/static/v1?style=flat-square&label=script&message=01&color=2a50b8&logo=r)](https://r.qcbs.ca/workshop04/book-en/workshop04-script-en.R)
-[![badge](https://img.shields.io/static/v1?style=flat-square&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04)
+
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=slides&message=04&color=red&logo=html5)](https://r.qcbs.ca/workshop04/pres-en/workshop04-pres-en.html)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=book&message=04&color=9cf&logo=github)](https://r.qcbs.ca/workshop04/book-en/index.html)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=script&message=04&color=2a50b8&logo=r)](https://r.qcbs.ca/workshop04/book-en/workshop04-script-en.R)
+[![badge](https://img.shields.io/static/v1?style=flat-square&label=repo&message=dev&color=6f42c1&logo=github)](https://github.com/QCBSRworkshops/workshop04) [![badge](https://img.shields.io/static/v1?style=flat-square&label=r.qcbs.ca&message=04&color=brightgreen)](https://r.qcbs.ca/workshops/r-workshop-04)
 
 ---
 
-# Required packages
+# Required packages & data
 
 * [dplyr](https://cran.r-project.org/package=dplyr)
 * [vegan](https://cran.r-project.org/package=vegan)
 * [e1071](https://cran.r-project.org/package=e1071)
 * [MASS](https://cran.r-project.org/package=MASS)
 * [car](https://cran.r-project.org/package=car)
-* [effect](https://cran.r-project.org/package=effect)
+* [effects](https://cran.r-project.org/package=effects)
 
 <br>
 
 ```R
-install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effect'))
+install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effects'))
 ```
+<br><br>
+Download the datasets and additional R scripts for this workshop on [r.qcbs.ca](https://r.qcbs.ca/workshops/r-workshop-04/).
 
 ---
 # Linear models
