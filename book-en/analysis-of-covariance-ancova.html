@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="t-test-and-anova.html"/>
-<link rel="next" href="multiple-regression.html"/>
+<link rel="next" href="multiple-linear-regression.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -148,54 +148,82 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Linear models in <code>R</code></b></span></li>
 <li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning objectives</a></li>
 <li class="chapter" data-level="2" data-path="preparing-for-the-workshop.html"><a href="preparing-for-the-workshop.html"><i class="fa fa-check"></i><b>2</b> Preparing for the workshop</a></li>
-<li class="chapter" data-level="3" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>3</b> Linear models</a><ul>
-<li class="chapter" data-level="3.1" data-path="linear-models.html"><a href="linear-models.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="linear-models.html"><a href="linear-models.html#defining-mean-and-variation"><i class="fa fa-check"></i><b>3.1.1</b> Defining mean and variation</a></li>
-<li class="chapter" data-level="3.1.2" data-path="linear-models.html"><a href="linear-models.html#linear-models-1"><i class="fa fa-check"></i><b>3.1.2</b> Linear models</a></li>
-<li class="chapter" data-level="3.1.3" data-path="linear-models.html"><a href="linear-models.html#linear-model-assumptions"><i class="fa fa-check"></i><b>3.1.3</b> Linear model assumptions</a></li>
-<li class="chapter" data-level="3.1.4" data-path="linear-models.html"><a href="linear-models.html#test-statistics-and-p-values"><i class="fa fa-check"></i><b>3.1.4</b> Test statistics and p-values</a></li>
+<li class="chapter" data-level="3" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>3</b> The linear model</a><ul>
+<li class="chapter" data-level="3.1" data-path="the-linear-model.html"><a href="the-linear-model.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="the-linear-model.html"><a href="the-linear-model.html#example-abundance-and-mass-of-bird-species"><i class="fa fa-check"></i><b>3.1.1</b> Example: Abundance and mass of bird species</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="the-linear-model.html"><a href="the-linear-model.html#formulation-of-a-linear-model"><i class="fa fa-check"></i><b>3.2</b> Formulation of a linear model</a></li>
+<li class="chapter" data-level="3.3" data-path="the-linear-model.html"><a href="the-linear-model.html#evaluation-of-the-linear-model"><i class="fa fa-check"></i><b>3.3</b> Evaluation of the linear model</a></li>
+<li class="chapter" data-level="3.4" data-path="the-linear-model.html"><a href="the-linear-model.html#assumptions-of-the-linear-model"><i class="fa fa-check"></i><b>3.4</b> Assumptions of the linear model</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#normal-distribution-of-the-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Normal distribution of the residuals</a></li>
+<li class="chapter" data-level="3.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#homoskedasticity"><i class="fa fa-check"></i><b>3.4.2</b> Homoskedasticity</a></li>
+<li class="chapter" data-level="3.4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#independence-of-the-residuals"><i class="fa fa-check"></i><b>3.4.3</b> Independence of the residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="the-linear-model.html"><a href="the-linear-model.html#notation-for-linear-models"><i class="fa fa-check"></i><b>3.5</b> Notation for linear models</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5.1</b> Mathematical notation</a></li>
+<li class="chapter" data-level="3.5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#r-notation"><i class="fa fa-check"></i><b>3.5.2</b> R notation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="the-linear-model.html"><a href="the-linear-model.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>3.6</b> Fitting a linear model</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="the-linear-model.html"><a href="the-linear-model.html#model-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Model estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="the-linear-model.html"><a href="the-linear-model.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.7</b> Learning objectives</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html"><i class="fa fa-check"></i><b>4</b> Linear regression in R</a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#simple-linear-regression"><i class="fa fa-check"></i><b>4.1</b> Simple linear regression</a></li>
-<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#work-flow"><i class="fa fa-check"></i><b>4.2</b> Work flow</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#running-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> 2.1 Running a linear model</a></li>
-<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#verifying-assumptions"><i class="fa fa-check"></i><b>4.2.2</b> Verifying assumptions</a></li>
-<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#normalizing-data"><i class="fa fa-check"></i><b>4.2.3</b> Normalizing data</a></li>
-<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#data-transformation"><i class="fa fa-check"></i><b>4.2.4</b> Data transformation</a></li>
-<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-output"><i class="fa fa-check"></i><b>4.2.5</b> Model output</a></li>
-<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#subsetting"><i class="fa fa-check"></i><b>4.2.6</b> Subsetting</a></li>
+<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-formulation"><i class="fa fa-check"></i><b>4.1</b> Model formulation</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-equation"><i class="fa fa-check"></i><b>4.1.1</b> Model equation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-1"><i class="fa fa-check"></i><b>4.3</b> CHALLENGE 1</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-1"><i class="fa fa-check"></i><b>4.2</b> Linear regression in R</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-1-formulate-and-run-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Formulate and run a linear model</a></li>
+<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Verify assumptions using diagnostic plots of the residuals</a></li>
+<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2.-verify-assumptions-of-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---what-is-wrong"><i class="fa fa-check"></i><b>4.2.4</b> Assumptions not met - what is wrong?</a></li>
+<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---how-to-proceed"><i class="fa fa-check"></i><b>4.2.5</b> Assumptions not met - how to proceed?</a></li>
+<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-3.-analyze-parameter-estimates"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Step 3.</strong> Analyze parameter estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-interpretation"><i class="fa fa-check"></i><b>4.3</b> Model interpretation</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#finding-a-better-model-terrestrial-birds"><i class="fa fa-check"></i><b>4.3.1</b> Finding a better model: terrestrial birds</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-2"><i class="fa fa-check"></i><b>4.4</b> Challenge 2</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-2"><i class="fa fa-check"></i><b>4.5</b> Linear regression in R</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#variable-names"><i class="fa fa-check"></i><b>4.6</b> Variable names</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html"><i class="fa fa-check"></i><b>5</b> t-test and ANOVA</a><ul>
 <li class="chapter" data-level="5.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.1</b> Analysis of Variance (ANOVA)</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> 3.1 Types of ANOVA</a></li>
-<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> 3.2 T-test</a></li>
-<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> 3.3 Running an ANOVA</a></li>
-<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions-1"><i class="fa fa-check"></i><b>5.1.4</b> 3.4 Verifying assumptions</a></li>
-<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output-1"><i class="fa fa-check"></i><b>5.1.5</b> 3.5 Model output</a></li>
-<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> 3.6 Complementary test</a></li>
-<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> 3.7 Plotting</a></li>
+<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> Types of ANOVA</a></li>
+<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> T-test</a></li>
+<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> Running an ANOVA</a></li>
+<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions"><i class="fa fa-check"></i><b>5.1.4</b> Verifying assumptions</a></li>
+<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output"><i class="fa fa-check"></i><b>5.1.5</b> Model output</a></li>
+<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> Complementary test</a></li>
+<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> Plotting</a></li>
 <li class="chapter" data-level="5.1.8" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#going-further-contrasts"><i class="fa fa-check"></i><b>5.1.8</b> Going further: Contrasts</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> 4. Two-way ANOVA</a><ul>
+<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> Two-way ANOVA</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-a-two-way-anova"><i class="fa fa-check"></i><b>5.2.1</b> 4.1 Running a two-way ANOVA</a></li>
 <li class="chapter" data-level="5.2.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#interaction-plot"><i class="fa fa-check"></i><b>5.2.2</b> 4.2 Interaction plot</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> 5. Unbalanced ANOVA (advanced section/ optional)</a></li>
+<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> Unbalanced ANOVA (advanced section/ optional)</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html"><i class="fa fa-check"></i><b>6</b> Analysis of covariance (ANCOVA)</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#assumptions-1"><i class="fa fa-check"></i><b>6.0.1</b> 6.1 Assumptions</a></li>
 <li class="chapter" data-level="6.0.2" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#types-of-ancova"><i class="fa fa-check"></i><b>6.0.2</b> 6.2 Types of ANCOVA</a></li>
 <li class="chapter" data-level="6.0.3" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#running-an-ancova"><i class="fa fa-check"></i><b>6.0.3</b> 6.3 Running an ANCOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple regression</a><ul>
-<li class="chapter" data-level="7.0.1" data-path="multiple-regression.html"><a href="multiple-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.0.1</b> 7.1 Assumptions</a></li>
-<li class="chapter" data-level="7.0.2" data-path="multiple-regression.html"><a href="multiple-regression.html#dickcissel-dataset"><i class="fa fa-check"></i><b>7.0.2</b> 7.2 Dickcissel dataset</a></li>
-<li class="chapter" data-level="7.0.3" data-path="multiple-regression.html"><a href="multiple-regression.html#going-further-polynomial-regression"><i class="fa fa-check"></i><b>7.0.3</b> Going further: Polynomial regression</a></li>
-<li class="chapter" data-level="7.0.4" data-path="multiple-regression.html"><a href="multiple-regression.html#stepwise-regression"><i class="fa fa-check"></i><b>7.0.4</b> 7.4 Stepwise regression</a></li>
-<li class="chapter" data-level="7.1" data-path="multiple-regression.html"><a href="multiple-regression.html#going-further-variance-partitioning"><i class="fa fa-check"></i><b>7.1</b> Going further: Variance partitioning</a></li>
+<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple linear regression</a><ul>
+<li class="chapter" data-level="7.0.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#model-formulation-1"><i class="fa fa-check"></i><b>7.0.1</b> Model formulation</a></li>
+<li class="chapter" data-level="7.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.1</b> Assumptions</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#if-variables-are-collinear"><i class="fa fa-check"></i><b>7.1.1</b> If variables are collinear</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multiple-linear-regression-in-r"><i class="fa fa-check"></i><b>7.2</b> Multiple linear regression in R</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#the-data"><i class="fa fa-check"></i><b>7.2.1</b> The data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#verify-assumptions"><i class="fa fa-check"></i><b>7.2.2</b> Verify assumptions</a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.2.3</b> Linear regression</a></li>
+<li class="chapter" data-level="7.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#find-the-best-fit-model"><i class="fa fa-check"></i><b>7.2.4</b> Find the best-fit model</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#polynomial-regression-additional-material"><i class="fa fa-check"></i><b>7.3</b> Polynomial regression (additional material)</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#variation-partitioning-additional-material"><i class="fa fa-check"></i><b>7.4</b> Variation Partitioning (additional material)</a></li>
 </ul></li>
 <li class="part"><span><b>Final considerations</b></span></li>
 <li class="chapter" data-level="8" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8</b> Summary</a></li>
@@ -238,6 +266,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 --!>
 <div id="analysis-of-covariance-ancova" class="section level1">
 <h1><span class="header-section-number">Chapter 6</span> Analysis of covariance (ANCOVA)</h1>
+<p><img src="images/schema_ancova.png" /></p>
 <p>Analysis of covariance (ANCOVA) is a linear model that tests the
 influence of one categorical explanatory variable (or more) and one
 continuous explanatory variable (or more) on a continuous response
@@ -253,6 +282,12 @@ among levels of the categorical variable; there is no correlation
 between the response variable and the continuous explanatory variable;
 there is no interaction between the categorical and continuous
 explanatory variables.</p>
+<p><span class="math inline">\(Y = X * Z\)</span></p>
+<p>where:
+<span class="math inline">\(Y\)</span>: Response variable is continuous
+<span class="math inline">\(X\)</span>: Explanatory variable is categorical
+<span class="math inline">\(Z\)</span>: Explanatory cariable is continuous</p>
+<p><span class="math display">\[Y = \mu + Main Effect Factors + Interaction between Factors + Main Effect Covariates + Interactions between Covariates Factors + \epsilon\]</span></p>
 <div id="assumptions-1" class="section level3">
 <h3><span class="header-section-number">6.0.1</span> 6.1 Assumptions</h3>
 <p>As with models seen above, to be valid ANCOVA models must meet the
@@ -261,12 +296,12 @@ diagnostic plots. In addition, ANCOVA models must have:</p>
 <ol style="list-style-type: decimal">
 <li>The same value range for all covariates</li>
 <li>Variables that are <em>fixed</em></li>
-<li>No interaction between categorical and continuous variables</li>
+<li>No interaction between categorical and continuous variables (not colinear)</li>
 </ol>
 <p><strong><span class="ul">Note:</span></strong> A <em>fixed</em> variable is one that you are specifically
 interested in (i.e. bird mass). In contrast, a random variable is noise
 that you want to control for (i.e. site a bird was sampled in). If you
-have random variables, see the workshop on <a href="http://qcbs.ca/wiki/r_workshop6">Linear Mixed-effect
+have random variables, see the workshop on <a href="https://r.qcbs.ca/workshops/r-workshop-07/">Linear And Generalized Linear Mixed
 Models</a>!</p>
 </div>
 <div id="types-of-ancova" class="section level3">
@@ -288,13 +323,12 @@ removing the effect of the continuous variable</li>
 <li>the categorical variable(s) on the relationship between the
 continuous variables(s) and the response variable</li>
 </ol>
-<p>Importantly, these goals are only met if there is no significant
-interaction between the categorical and continuous variables! Examples
+<p>Importantly, these goals are only met if there is <strong>no significant interaction</strong> between the categorical and continuous variables! Examples
 of significant interactions between the categorical and continuous
 variables (for an ANCOVA with one factor and one covariate) are
 illustrated by the second and third panels below:</p>
-<p><img src="images/ancova_schematic.png" width="550" /></p>
-<p>The same logic follows for ANCOVAs with multiple categorical and/or
+<p><img src="book-en_files/figure-html/unnamed-chunk-90-1.png" width="960" /></p>
+<p>If the interaction is significant, you will have a scenario that looks like the left and middle graphs. If your covariate and factor are significant, outputs will look like the left graph. The same logic follows for ANCOVAs with multiple categorical and/or
 continuous variables.</p>
 </div>
 <div id="running-an-ancova" class="section level3">
@@ -306,8 +340,18 @@ variable.</p>
 <p>For example, using a build in dataset called CO2, where the response
 variable is <em>uptake</em>, the continuous variable is <em>conc</em> and the factor
 is <em>Treatment</em>, the ANCOVA is:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analysis-of-covariance-ancova.html#cb49-1"></a>ancova.example &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>conc <span class="op">*</span><span class="st"> </span>Treatment, <span class="dt">data =</span> CO2)</span>
-<span id="cb49-2"><a href="analysis-of-covariance-ancova.html#cb49-2"></a><span class="kw">anova</span>(ancova.example)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="analysis-of-covariance-ancova.html#cb145-1"></a>ancova.example &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>conc <span class="op">*</span><span class="st"> </span>Treatment, <span class="dt">data =</span> CO2)</span>
+<span id="cb145-2"><a href="analysis-of-covariance-ancova.html#cb145-2"></a><span class="kw">anova</span>(ancova.example)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: uptake
+##                Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## conc            1 2285.0 2284.99 28.5535 8.377e-07 ***
+## Treatment       1  988.1  988.11 12.3476 0.0007297 ***
+## conc:Treatment  1   31.9   31.87  0.3983 0.5297890    
+## Residuals      80 6402.0   80.02                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>If only your categorical variable is significant, drop your continuous
 variable from the model: you will then have an <strong>ANOVA</strong>.<br />
 If only your continuous variable is significant, drop your categorical
@@ -320,68 +364,118 @@ In the CO2 example above, both the continuous and categorical variable
 are significant, but the interaction is non-significant. If your replace
 <em>Treatment</em> with <em>Type</em>, however, you will see an example of a
 significant interaction.</p>
-<p>If you want to compare means across factors, you can use adjusted means,
-which uses the equations given by the ANCOVA to estimate the means of
-each level of the categorical variable, corrected for the effect of the
-categorical variable:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="analysis-of-covariance-ancova.html#cb50-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
-<span id="cb50-2"><a href="analysis-of-covariance-ancova.html#cb50-2"></a><span class="kw">library</span>(effects)</span>
-<span id="cb50-3"><a href="analysis-of-covariance-ancova.html#cb50-3"></a>adj.means &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;Treatment&quot;</span>, ancova.example)</span>
-<span id="cb50-4"><a href="analysis-of-covariance-ancova.html#cb50-4"></a><span class="kw">plot</span>(adj.means)</span>
-<span id="cb50-5"><a href="analysis-of-covariance-ancova.html#cb50-5"></a></span>
-<span id="cb50-6"><a href="analysis-of-covariance-ancova.html#cb50-6"></a>adj.means &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;conc*Treatment&quot;</span>, ancova.example)</span>
-<span id="cb50-7"><a href="analysis-of-covariance-ancova.html#cb50-7"></a><span class="kw">plot</span>(adj.means)</span></code></pre></div>
+<p>To compare the mean values of each factor, conditional on the effect of the other</p>
+<p>The effects::effect() function uses the output of the ANCOVA model to estimate the means of each factor level, corrected by the effect of the covariate</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="analysis-of-covariance-ancova.html#cb147-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
+<span id="cb147-2"><a href="analysis-of-covariance-ancova.html#cb147-2"></a><span class="kw">library</span>(effects)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="analysis-of-covariance-ancova.html#cb148-1"></a>adj.means.ex &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;Treatment&quot;</span>, ancova.example)</span>
+<span id="cb148-2"><a href="analysis-of-covariance-ancova.html#cb148-2"></a><span class="kw">plot</span>(adj.means.ex)</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 <hr />
 <p>CHALLENGE 4</p>
-<p>Run an ANCOVA to test the effect of <em>Diet</em>, <em>Mass</em>, and their
-interaction on <em>MaxAbund</em>.<br />
-++++ Challenge 4: Solution |</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="analysis-of-covariance-ancova.html#cb51-1"></a><span class="co"># If you did the section on Contrasts above, you will need</span></span>
-<span id="cb51-2"><a href="analysis-of-covariance-ancova.html#cb51-2"></a><span class="co"># to reset the contrast to Treatment for ease of comparison</span></span>
-<span id="cb51-3"><a href="analysis-of-covariance-ancova.html#cb51-3"></a><span class="co"># using the &#39;&#39;options()&#39;&#39; function Otherwise, skip the</span></span>
-<span id="cb51-4"><a href="analysis-of-covariance-ancova.html#cb51-4"></a><span class="co"># first line of code below</span></span>
-<span id="cb51-5"><a href="analysis-of-covariance-ancova.html#cb51-5"></a><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
-<span id="cb51-6"><a href="analysis-of-covariance-ancova.html#cb51-6"></a>ancov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb51-7"><a href="analysis-of-covariance-ancova.html#cb51-7"></a><span class="kw">summary</span>(ancov1)</span>
-<span id="cb51-8"><a href="analysis-of-covariance-ancova.html#cb51-8"></a><span class="kw">anova</span>(ancov1)</span></code></pre></div>
-<p>The R output of this model is given by</p>
-<pre><code>Analysis of Variance Table
-Response: logMaxAbund
-              Df      Sum Sq      Mean Sq     F value     Pr(&gt;F)
-logMass       1   1.9736      1.97357     4.6054      0.03743 *
-Diet          4   3.3477      0.83691     1.9530      0.11850
-logMass:Diet  4   2.9811      0.74527     1.7391      0.15849
-Residuals     44  18.8556     0.42854</code></pre>
+<p>Run an ANCOVA to test the effect of <code>Diet</code>, <code>Mass</code>, and their
+interaction on <code>MaxAbund</code>.<br />
+</p>
+<p>Response variable: <code>MaxAbund</code>
+Explanatory variables:
+-<code>Diet</code> (factor with 5 levels)
+-<code>Mass</code> (numeric, continuous)</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="analysis-of-covariance-ancova.html#cb149-1"></a><span class="kw">str</span>(bird)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    54 obs. of  9 variables:
+##  $ Family     : chr  &quot;Hawks&amp;Eagles&amp;Kites&quot; &quot;Long-tailed tits&quot; &quot;Larks&quot; &quot;Kingfishers&quot; ...
+##  $ MaxAbund   : num  2.99 37.8 241.4 4.4 4.53 ...
+##  $ AvgAbund   : num  0.674 4.04 23.105 0.595 2.963 ...
+##  $ Mass       : num  716 5.3 35.8 119.4 315.5 ...
+##  $ Diet       : Factor w/ 5 levels &quot;Insect&quot;,&quot;InsectVert&quot;,..: 5 1 4 5 2 4 5 1 1 5 ...
+##  $ Passerine  : int  0 1 1 0 0 0 0 0 0 0 ...
+##  $ Aquatic    : int  0 0 0 0 1 1 1 0 1 1 ...
+##  $ logMass    : num  6.57 1.67 3.58 4.78 5.75 ...
+##  $ logMaxAbund: num  1.09 3.63 5.49 1.48 1.51 ...</code></pre>
+<details>
+<p><summary><strong>Cliquez pour voir la solution au Défi 3!</strong></summary></p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="analysis-of-covariance-ancova.html#cb151-1"></a><span class="co"># If you did the section on Contrasts above, you will need</span></span>
+<span id="cb151-2"><a href="analysis-of-covariance-ancova.html#cb151-2"></a><span class="co"># to reset the contrast to Treatment for ease of comparison</span></span>
+<span id="cb151-3"><a href="analysis-of-covariance-ancova.html#cb151-3"></a><span class="co"># using the &#39;&#39;options()&#39;&#39; function Otherwise, skip the</span></span>
+<span id="cb151-4"><a href="analysis-of-covariance-ancova.html#cb151-4"></a><span class="co"># first line of code below</span></span>
+<span id="cb151-5"><a href="analysis-of-covariance-ancova.html#cb151-5"></a><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb151-6"><a href="analysis-of-covariance-ancova.html#cb151-6"></a></span>
+<span id="cb151-7"><a href="analysis-of-covariance-ancova.html#cb151-7"></a><span class="co"># solution</span></span>
+<span id="cb151-8"><a href="analysis-of-covariance-ancova.html#cb151-8"></a>ancov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
+<span id="cb151-9"><a href="analysis-of-covariance-ancova.html#cb151-9"></a><span class="kw">anova</span>(ancov1)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: logMaxAbund
+##              Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## logMass       1 10.464 10.4637  4.6054 0.03743 *
+## Diet          4 17.749  4.4372  1.9530 0.11850  
+## logMass:Diet  4 15.805  3.9513  1.7391 0.15849  
+## Residuals    44 99.971  2.2721                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="analysis-of-covariance-ancova.html#cb153-1"></a><span class="kw">summary</span>(ancov1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logMaxAbund ~ logMass * Diet, data = bird)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.1308 -0.7081 -0.0855  0.9854  2.5694 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)               3.7384     0.8042   4.648 3.05e-05 ***
+## logMass                  -0.2865     0.1934  -1.481   0.1457    
+## DietInsectVert           -4.4599     6.1652  -0.723   0.4733    
+## DietPlant                 1.6796     4.7819   0.351   0.7271    
+## DietPlantInsect           0.5537     1.3860   0.400   0.6914    
+## DietVertebrate           -7.7409     2.9359  -2.637   0.0115 *  
+## logMass:DietInsectVert    0.6745     1.2463   0.541   0.5911    
+## logMass:DietPlant        -0.2631     1.1602  -0.227   0.8216    
+## logMass:DietPlantInsect   0.1115     0.3427   0.325   0.7465    
+## logMass:DietVertebrate    1.1665     0.4556   2.561   0.0140 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.507 on 44 degrees of freedom
+## Multiple R-squared:  0.3057, Adjusted R-squared:  0.1637 
+## F-statistic: 2.153 on 9 and 44 DF,  p-value: 0.04469</code></pre>
 <p>In this case, the interaction term is not significant, meaning that the
 effect of <em>logMass</em> on <em>logMaxAbund</em> does not differ between Diet
 groups. The interaction term can thus be dropped, and the ANCOVA model
 becomes:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="analysis-of-covariance-ancova.html#cb53-1"></a>ancov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="analysis-of-covariance-ancova.html#cb155-1"></a>ancov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
 <p>Because the R output shows that diet is also non-significant, this term
 is dropped, and the final model corresponds to:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="analysis-of-covariance-ancova.html#cb54-1"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="analysis-of-covariance-ancova.html#cb156-1"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span></code></pre></div>
 <p>The model results can also be graphically represented using a plot of
 the response variable as a function of the continuous explanatory
 variable with different point and line colours for the different levels
 of the categorical variable.</p>
 <p>Plot the ANCOVA intercept and slopes (model ancov1 above) using the
 <code>abline()</code> and <code>coef()</code> functions.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="analysis-of-covariance-ancova.html#cb55-1"></a><span class="kw">coef</span>(ancov1)</span>
-<span id="cb55-2"><a href="analysis-of-covariance-ancova.html#cb55-2"></a></span>
-<span id="cb55-3"><a href="analysis-of-covariance-ancova.html#cb55-3"></a></span>
-<span id="cb55-4"><a href="analysis-of-covariance-ancova.html#cb55-4"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">col =</span> Diet, <span class="dt">pch =</span> <span class="dv">19</span>,</span>
-<span id="cb55-5"><a href="analysis-of-covariance-ancova.html#cb55-5"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb55-6"><a href="analysis-of-covariance-ancova.html#cb55-6"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
-<span id="cb55-7"><a href="analysis-of-covariance-ancova.html#cb55-7"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">1</span>], <span class="dt">b =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">&quot;deepskyblue1&quot;</span>)</span>
-<span id="cb55-8"><a href="analysis-of-covariance-ancova.html#cb55-8"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">3</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb55-9"><a href="analysis-of-covariance-ancova.html#cb55-9"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">7</span>]), <span class="dt">col =</span> <span class="st">&quot;green2&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb55-10"><a href="analysis-of-covariance-ancova.html#cb55-10"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">4</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb55-11"><a href="analysis-of-covariance-ancova.html#cb55-11"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">8</span>]), <span class="dt">col =</span> <span class="st">&quot;orange1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb55-12"><a href="analysis-of-covariance-ancova.html#cb55-12"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">5</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb55-13"><a href="analysis-of-covariance-ancova.html#cb55-13"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">9</span>]), <span class="dt">col =</span> <span class="st">&quot;lightsteelblue1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb55-14"><a href="analysis-of-covariance-ancova.html#cb55-14"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">6</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb55-15"><a href="analysis-of-covariance-ancova.html#cb55-15"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">10</span>]), <span class="dt">col =</span> <span class="st">&quot;darkcyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="images/ancova_plot.png" width="350" /></p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="analysis-of-covariance-ancova.html#cb157-1"></a><span class="kw">coef</span>(ancov1)</span></code></pre></div>
+<pre><code>##             (Intercept)                 logMass          DietInsectVert 
+##               3.7384247              -0.2864726              -4.4598537 
+##               DietPlant         DietPlantInsect          DietVertebrate 
+##               1.6795975               0.5537085              -7.7409274 
+##  logMass:DietInsectVert       logMass:DietPlant logMass:DietPlantInsect 
+##               0.6744893              -0.2631444               0.1114568 
+##  logMass:DietVertebrate 
+##               1.1665348</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="analysis-of-covariance-ancova.html#cb159-1"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">col =</span> Diet, <span class="dt">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb159-2"><a href="analysis-of-covariance-ancova.html#cb159-2"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
+<span id="cb159-3"><a href="analysis-of-covariance-ancova.html#cb159-3"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
+<span id="cb159-4"><a href="analysis-of-covariance-ancova.html#cb159-4"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">1</span>], <span class="dt">b =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">&quot;deepskyblue1&quot;</span>)</span>
+<span id="cb159-5"><a href="analysis-of-covariance-ancova.html#cb159-5"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">3</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb159-6"><a href="analysis-of-covariance-ancova.html#cb159-6"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">7</span>]), <span class="dt">col =</span> <span class="st">&quot;green2&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb159-7"><a href="analysis-of-covariance-ancova.html#cb159-7"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">4</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb159-8"><a href="analysis-of-covariance-ancova.html#cb159-8"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">8</span>]), <span class="dt">col =</span> <span class="st">&quot;orange1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb159-9"><a href="analysis-of-covariance-ancova.html#cb159-9"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">5</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb159-10"><a href="analysis-of-covariance-ancova.html#cb159-10"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">9</span>]), <span class="dt">col =</span> <span class="st">&quot;lightsteelblue1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb159-11"><a href="analysis-of-covariance-ancova.html#cb159-11"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">6</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
+<span id="cb159-12"><a href="analysis-of-covariance-ancova.html#cb159-12"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">10</span>]), <span class="dt">col =</span> <span class="st">&quot;darkcyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+</details>
 
 </div>
 </div>
@@ -397,7 +491,7 @@ of the categorical variable.</p>
         </div>
       </div>
 <a href="t-test-and-anova.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="multiple-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="multiple-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

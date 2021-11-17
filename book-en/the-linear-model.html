@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Preparing for the workshop | Workshop 4: Linear models</title>
+  <title>Chapter 3 The linear model | Workshop 4: Linear models</title>
   <meta name="description" content="Linear models" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Preparing for the workshop | Workshop 4: Linear models" />
+  <meta property="og:title" content="Chapter 3 The linear model | Workshop 4: Linear models" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://github.com/qcbsRworkshops/" />
   <meta property="og:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="qcbsRworkshops/workshop04" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Preparing for the workshop | Workshop 4: Linear models" />
+  <meta name="twitter:title" content="Chapter 3 The linear model | Workshop 4: Linear models" />
   
   <meta name="twitter:description" content="Linear models" />
   <meta name="twitter:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="learning-objectives.html"/>
-<link rel="next" href="the-linear-model.html"/>
+<link rel="prev" href="preparing-for-the-workshop.html"/>
+<link rel="next" href="linear-regression-in-r.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -264,43 +264,180 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
 --!>
-<div id="preparing-for-the-workshop" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Preparing for the workshop</h1>
-<p>All workshop materials are found at <a href="https://github.com/QCBSRworkshops/workshop04">github.com/QCBSRworkshops/workshop04</a>. This includes an <a href="https://r.qcbs.ca/workshop04/book-en/workshop04-script-en.R">R script</a> which contains all code chunks shown in this book.</p>
-<p>For this workshop, we will be working with the following datasets:</p>
+<div id="the-linear-model" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> The linear model</h1>
+<p>The previous workshops explored the use of <code>R</code> to manipulate and represent data. However, the focus in science is often on determining relationships between variables. This workshop builds on previous knowledge and focuses on linear regression as a first step into the world of statistical analysis.</p>
+<p><strong>Learning Objectives</strong></p>
 <ul>
-<li><a href="https://github.com/QCBSRworkshops/workshop04/edit/main/book-en/data/birdsdiet.csv">birdsdiet</a></li>
-<li><a href="https://github.com/QCBSRworkshops/workshop04/edit/main/book-en/data/dickcissel.csv">dickcissel</a></li>
+<li>Learn the structure of a linear model and its different variants.</li>
+<li>Learn how to make a linear model in R with <code>lm()</code> and <code>anova()</code>.</li>
+<li>Learn how to identify a model whose conditions are not satisfied and how to solve the problem.</li>
 </ul>
+<div id="what-is-a-linear-model" class="section level2">
+<h2><span class="header-section-number">3.1</span> What is a linear model?</h2>
+<hr />
+<p>A linear model describes the relationship between a <strong>response</strong> variable and one or more <strong>predictor</strong> variables. It is used to analyze a <strong>well-formed hypothesis</strong>, often associated with a more general research question. Regression determines whether variables are correlated by inferring the <strong>direction</strong> and <strong>strength</strong> of a relationship, and our <strong>confidence</strong> in the effect size estimates.</p>
+<p>Significant scientific work is required to formulate a linear model. Since the model is analyzing a hypothesis, it is recommended that expectations about the direction and strength of a relationship be clearly articulated as predictions before running a linear model.</p>
+<hr />
+<div id="example-abundance-and-mass-of-bird-species" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Example: Abundance and mass of bird species</h3>
+<p><strong>Hypothesis</strong></p>
 <blockquote>
-<p>To download this data, do right click + save on the page that opens.</p>
+<p>For different bird species, the average mass of an individual affects the maximum abundance of the species, due to ecological constraints (food sources, habitat availability, etc.).</p>
 </blockquote>
-<p>You should also make sure you have downloaded, installed, and loaded these packages:</p>
+<p><strong>Prediction</strong></p>
+<blockquote>
+<p>Species characterized by larger individuals have lower maximum abundance.</p>
+</blockquote>
+<p>We therefore hypothesize that birds characterized by greater mass require more food and space: the response variable is maximum abundance, and the predictor is the average weight of an individual.</p>
+<p>Based on our prediction, we can expect the direction of the relationship between the response variable and the predictor to be inverse or ‘negative’, so that higher mass leads to lower abundance. However, we cannot formulate expectations about the strength of the relationship!</p>
+<p><strong>The data</strong></p>
+<p>The following example explores the “birdsdiet” dataset:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="the-linear-model.html#cb3-1"></a><span class="co"># Import the &#39;bidsdiet&#39; dataset and save it in the &#39;bird&#39;</span></span>
+<span id="cb3-2"><a href="the-linear-model.html#cb3-2"></a><span class="co"># object</span></span>
+<span id="cb3-3"><a href="the-linear-model.html#cb3-3"></a>bird &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/birdsdiet.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>The bird dataset contains seven variables:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="the-linear-model.html#cb4-1"></a><span class="co"># Explore the variables in the &#39;bird&#39; dataset</span></span>
+<span id="cb4-2"><a href="the-linear-model.html#cb4-2"></a><span class="kw">str</span>(bird)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    54 obs. of  7 variables:
+##  $ Family   : Factor w/ 53 levels &quot;Anhingas&quot;,&quot;Auks&amp; Puffins&quot;,..: 18 25 23 21 2 10 1 44 24 19 ...
+##  $ MaxAbund : num  2.99 37.8 241.4 4.4 4.53 ...
+##  $ AvgAbund : num  0.674 4.04 23.105 0.595 2.963 ...
+##  $ Mass     : num  716 5.3 35.8 119.4 315.5 ...
+##  $ Diet     : Factor w/ 5 levels &quot;Insect&quot;,&quot;InsectVert&quot;,..: 5 1 4 5 2 4 5 1 1 5 ...
+##  $ Passerine: int  0 1 1 0 0 0 0 0 0 0 ...
+##  $ Aquatic  : int  0 0 0 0 1 1 1 0 1 1 ...</code></pre>
+<p>Note that Family, Diet, Passerine, and Aquatic are all categorical variables, despite the fact that they are encoded in different ways (string, categorical, binary).</p>
+<p>The variables of interest to the hypothesis test are:</p>
 <ul>
-<li><a href="https://cran.r-project.org/package=dplyr">dplyr</a> (to work with data)</li>
-<li><a href="https://cran.r-project.org/package=vegan">vegan</a> (for population data analyses)</li>
-<li><a href="https://cran.r-project.org/package=e1071">e1071</a> (to test models)</li>
-<li><a href="https://cran.r-project.org/package=MASS">MASS</a> (for linear discriminant analysis)</li>
-<li><a href="https://cran.r-project.org/package=car">car</a> (for the analysis of variance)</li>
-<li><a href="https://cran.r-project.org/package=effect">effect</a> (to visualize models)</li>
+<li>“MaxAbund”: The greatest abundance observed at a site in North America (continuous / numeric)</li>
+<li>“Mass”: The average body size in grams (continuous / numeric)</li>
 </ul>
-<p>To install them from CRAN, run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="preparing-for-the-workshop.html#cb1-1"></a><span class="co"># Install the required packages</span></span>
-<span id="cb1-2"><a href="preparing-for-the-workshop.html#cb1-2"></a><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
-<span id="cb1-3"><a href="preparing-for-the-workshop.html#cb1-3"></a><span class="kw">install.packages</span>(<span class="st">&quot;vegan&quot;</span>)</span>
-<span id="cb1-4"><a href="preparing-for-the-workshop.html#cb1-4"></a><span class="kw">install.packages</span>(<span class="st">&quot;e1071&quot;</span>)</span>
-<span id="cb1-5"><a href="preparing-for-the-workshop.html#cb1-5"></a><span class="kw">install.packages</span>(<span class="st">&quot;MASS&quot;</span>)</span>
-<span id="cb1-6"><a href="preparing-for-the-workshop.html#cb1-6"></a><span class="kw">install.packages</span>(<span class="st">&quot;car&quot;</span>)</span>
-<span id="cb1-7"><a href="preparing-for-the-workshop.html#cb1-7"></a><span class="kw">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span></code></pre></div>
-<p>To load these packages, run:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="preparing-for-the-workshop.html#cb2-1"></a><span class="co"># Load the required packages</span></span>
-<span id="cb2-2"><a href="preparing-for-the-workshop.html#cb2-2"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb2-3"><a href="preparing-for-the-workshop.html#cb2-3"></a><span class="kw">library</span>(vegan)</span>
-<span id="cb2-4"><a href="preparing-for-the-workshop.html#cb2-4"></a><span class="kw">library</span>(e1071)</span>
-<span id="cb2-5"><a href="preparing-for-the-workshop.html#cb2-5"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb2-6"><a href="preparing-for-the-workshop.html#cb2-6"></a><span class="kw">library</span>(car)</span>
-<span id="cb2-7"><a href="preparing-for-the-workshop.html#cb2-7"></a><span class="kw">library</span>(effects)</span></code></pre></div>
+<p>**Basic Concepts</p>
+<p>There are two key concepts for understanding linear models: <strong>localization</strong> and <strong>variation</strong>.
+Beware! These concepts are central to understanding the other concepts presented in the workshop.</p>
+<p>The <strong>localization</strong> is a measure of central tendency of a population. It can be measured with the <strong>arithmetic mean</strong> <span class="math inline">\(\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_{i}\)</span> :</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="the-linear-model.html#cb6-1"></a><span class="co"># Average maximum observed abundance</span></span>
+<span id="cb6-2"><a href="the-linear-model.html#cb6-2"></a><span class="kw">mean</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 44.90577</code></pre>
+<p>or the <strong>median</strong>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="the-linear-model.html#cb8-1"></a><span class="co"># Median of maximum observed abundance</span></span>
+<span id="cb8-2"><a href="the-linear-model.html#cb8-2"></a><span class="kw">median</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 24.14682</code></pre>
+<p>On the other hand, the mean cannot characterize an entire population. We can therefore also describe a population using measures of variation. <strong>Variation</strong> is the dispersion (or deviation) of observations around the mean. It is measured with the <strong>variance</strong> <span class="math inline">\(\sigma^2 = \frac{1}{n} \sum_{i=1}^{n} {(x_{i} - \bar{x})}^2\)</span>. The variance is the sum of the squared deviation between each value and the mean. Squaring the variance allows us to transform values into positive values without using absolute values.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="the-linear-model.html#cb10-1"></a><span class="co"># Variance of the maximum observed abundance</span></span>
+<span id="cb10-2"><a href="the-linear-model.html#cb10-2"></a><span class="kw">var</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 5397.675</code></pre>
+<p>On the other hand, squaring all values changes the units of our variables. In this example, the variance is given in abundance^2, a unit that is no longer relevant to our original question. To transform these values into the appropriate units, we can calculate the <strong>standard deviation</strong> <span class="math inline">\(\sigma\)</span>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="the-linear-model.html#cb12-1"></a><span class="co"># Standard deviation of the maximum observed abundance</span></span>
+<span id="cb12-2"><a href="the-linear-model.html#cb12-2"></a><span class="kw">sd</span>(bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<pre><code>## [1] 73.46887</code></pre>
+<p><strong>Visual exploration</strong></p>
+<p>The following figure shows the response variable against the predictor:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="the-linear-model.html#cb14-1"></a><span class="co"># plot the response in relation to the predictor</span></span>
+<span id="cb14-2"><a href="the-linear-model.html#cb14-2"></a><span class="kw">plot</span>(bird<span class="op">$</span>Mass, bird<span class="op">$</span>MaxAbund)</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>This figure shows the variation of maximum abundance with bird mass. We are interested in quantifying this relationship. In other words, we are interested in quantifying the effect of bird species mass on their maximum abundance. However, how do we find the “best” estimate of the relationship?</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>The “best” estimate is the line that minimizes the sum of squares. This will become clearer in the next sections. Note that the “best” estimate can also be the absence of a relationship, similar to the blue line in the figure.</p>
+<hr />
+</div>
+</div>
+<div id="formulation-of-a-linear-model" class="section level2">
+<h2><span class="header-section-number">3.2</span> Formulation of a linear model</h2>
+<p>The linear model describes the “best” relationship between a response variable (“MaxAbund”) and one or more predictors (here “Mass”). The response variable is the variable we want to explain, or the dependent variable. There is only one response variable. The explanatory variables are variables that can (potentially) explain the response variable. One or more explanatory variables can be included.</p>
+<p>In a linear model, we define an observation of the <strong>response</strong> variable <span class="math inline">\(y\)</span>, as <span class="math inline">\(y_i\)</span>. In our example, this represents an observation of maximum abundance for a species <span class="math inline">\(i\)</span>.</p>
+<p>A corresponding observation of the <strong>predictor</strong> <span class="math inline">\(x\)</span> is defined as <span class="math inline">\(x_i\)</span> and represents, for example, the average weight of an individual of a species <span class="math inline">\(i\)</span>.</p>
+<p>In linear models, the concepts of mean and variation are used to describe the relationship between two variables. We say “linear models”, because they describe the relationship between variables with a straight line. This line represents the assumed relationship:</p>
+<p><span class="math display">\[ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i\]</span></p>
+<ul>
+<li><span class="math inline">\(y_i\)</span> is the response variable</li>
+<li><span class="math inline">\(x_i\)</span> is the predictor</li>
+<li>The parameter <span class="math inline">\(\beta_0\)</span> is the <strong>intercept</strong>.</li>
+<li>The parameter <span class="math inline">\(\beta_1\)</span> quantifies the effect** of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span></li>
+<li>The residual <span class="math inline">\(\epsilon_i\)</span> represents the <strong>unexplained</strong> variation</li>
+<li>The <strong>predicted value</strong> of <span class="math inline">\(y_i\)</span> is defined as: <span class="math inline">\(hat{y}_i = \beta_0 + \beta_1 \times x_i\)</span></li>
+</ul>
+<hr />
+</div>
+<div id="evaluation-of-the-linear-model" class="section level2">
+<h2><span class="header-section-number">3.3</span> Evaluation of the linear model</h2>
+<p>The linear model evaluates whether there is a significant correlation between the response variable and the explanatory variable(s). This is done by assessing whether the mean value of the response variable differs significantly between different values of the explanatory variables, such as for variation in maximum bird abundance by mass.</p>
+<p>For categorical explanatory variables, the linear model assesses whether the mean value of the response variable differs significantly between different levels (or groups) of explanatory variables. This will become clearer as we explore the types of linear models in the following sections.</p>
+<p>In almost all cases, the explanatory variables do not explain all the variation in the response variable. The variation that remains unexplained is the <strong>residuals</strong>, or error.</p>
+<hr />
+</div>
+<div id="assumptions-of-the-linear-model" class="section level2">
+<h2><span class="header-section-number">3.4</span> Assumptions of the linear model</h2>
+<p>The linear model is defined according to the equation we explored earlier:</p>
+<p><span class="math display">\[ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i\]</span></p>
+<p>To be valid, all linear models rely on 4 basic assumptions. If the 4 assumptions are not met, the model results cannot be interpreted in a valid way.</p>
+<ul>
+<li>Linear relationship between the response and the predictor</li>
+<li>Residuals follow a normal distribution with a mean of $0</li>
+<li>Residuals are symmetrically distributed (<em>homoscedasticity</em>)</li>
+<li>Residuals are independent of each other</li>
+</ul>
+<div class="explanation">
+<p>Note that these 4 conditions concern the residuals, not the response or explanatory variables. <strong>This does not mean</strong> that all observed <span class="math inline">\(y\)</span> values must follow a normal distribution!</p>
+</div>
+<div id="normal-distribution-of-the-residuals" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Normal distribution of the residuals</h3>
+<p>For the results of a linear model to be valid, the residuals must follow a normal distribution with a mean of <span class="math inline">\(0\)</span> and a variance of <span class="math inline">\(\sigma^2\)</span>, so that the majority of the residuals have a value close to 0 (i.e. the error is very small) and their distribution is symmetrical (i.e. the response variable is underestimated as well as overestimated):</p>
+<p><span class="math display">\[\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)\]</span></p>
+<p><strong>This means:</strong> Each obsevation <span class="math inline">\(y_i\)</span> follows a normal distribution, with mean <span class="math inline">\(\hat{y} = \beta_0 + \beta_1 \times x_i\)</span> and variance <span class="math inline">\(\sigma^2\)</span>:</p>
+<p><span class="math display">\[y_i \sim \mathcal{N}(\hat{y},\,\sigma^2)\]</span></p>
+</div>
+<div id="homoskedasticity" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Homoskedasticity</h3>
+<p>In the same way, the residuals must be homoscedastic. That is, the error does not change much for different values of the explanatory variables. All residuals <span class="math inline">\(\epsilon\)</span> follow the same distribution, the <strong>variance</strong> <span class="math inline">\(\sigma^2\)</span> <strong>remains constant</strong>.</p>
+</div>
+<div id="independence-of-the-residuals" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> Independence of the residuals</h3>
+<p>It is also essential that the residuals are independent, i.e. that there is no missing structure in the model (such as spatial or temporal autocorrelation). In other words, each residual <span class="math inline">\(\epsilon_i\)</span> is <strong>independent</strong> of any other residual.</p>
+<hr />
+</div>
+</div>
+<div id="notation-for-linear-models" class="section level2">
+<h2><span class="header-section-number">3.5</span> Notation for linear models</h2>
+<p>This section aims to provide a basic understanding of the different types of linear model descriptions that can be encountered. The first is mathematical notation and the second is <code>R</code> notation.</p>
+<div id="mathematical-notation" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Mathematical notation</h3>
+<p>Mathematical notation is the only form of notation appropriate for manuscript writing. We note individual observations using the equation of the line as seen in the previous sections and the equation for the distribution of residuals:</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)\]</span></p>
+<p>To write down the set of observations, we follow the matrix notation and include the intercept in$<span class="math inline">\(mathbf{X}\)</span> and <span class="math inline">\(\boldsymbol{\beta}\)</span>) :</p>
+<p><span class="math display">\[\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)\]</span></p>
+</div>
+<div id="r-notation" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> R notation</h3>
+<p>Note that the R notation is not adequate for preparing a publication.</p>
+<p>In <code>R</code>, we write the model formula as :</p>
+<pre><code>y ~ 1 + x</code></pre>
+<p>Or simply as:</p>
+<pre><code>y ~ x</code></pre>
+<p>which also includes the constant.</p>
+<p>The predicted variable is always placed to the left of the <code>~</code> tilde, while the predictor variables are placed to the right.</p>
+<div class="noway">
+<p>You should never mix the different types of notation!</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="fitting-a-linear-model" class="section level2">
+<h2><span class="header-section-number">3.6</span> Fitting a linear model</h2>
+<p>We have seen that it is possible to define a linear model with this equation :</p>
+<p><span class="math display">\[ y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i\]</span></p>
+<div id="model-estimation" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Model estimation</h3>
+<p>To run a linear model is to find the “best” estimates of the parameters <span class="math inline">\(\beta_0,\, \beta_1\)</span>. This is what we call doing <strong>the estimation of the model</strong>.</p>
+<p>The “best” parameters are those that minimize the variation in the response variable. The most common method of minimizing the variation in a model is to sum the residuals squared <span class="math inline">\(\sum{epsilon_i^2}\)</span>. This method is called the <strong>ordinary least squares</strong> (OLS) method.</p>
+</div>
+</div>
+<div id="learning-objectives-1" class="section level2">
+<h2><span class="header-section-number">3.7</span> Learning objectives</h2>
+<p><img src="images/schema.png" /></p>
 
+</div>
 </div>
 <hr>
 <center> 
@@ -313,8 +450,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="learning-objectives.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-linear-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preparing-for-the-workshop.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-regression-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

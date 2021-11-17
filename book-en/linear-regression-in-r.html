@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
-<link rel="prev" href="linear-models.html"/>
+<link rel="prev" href="the-linear-model.html"/>
 <link rel="next" href="t-test-and-anova.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -148,54 +148,82 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>Linear models in <code>R</code></b></span></li>
 <li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning objectives</a></li>
 <li class="chapter" data-level="2" data-path="preparing-for-the-workshop.html"><a href="preparing-for-the-workshop.html"><i class="fa fa-check"></i><b>2</b> Preparing for the workshop</a></li>
-<li class="chapter" data-level="3" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>3</b> Linear models</a><ul>
-<li class="chapter" data-level="3.1" data-path="linear-models.html"><a href="linear-models.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="linear-models.html"><a href="linear-models.html#defining-mean-and-variation"><i class="fa fa-check"></i><b>3.1.1</b> Defining mean and variation</a></li>
-<li class="chapter" data-level="3.1.2" data-path="linear-models.html"><a href="linear-models.html#linear-models-1"><i class="fa fa-check"></i><b>3.1.2</b> Linear models</a></li>
-<li class="chapter" data-level="3.1.3" data-path="linear-models.html"><a href="linear-models.html#linear-model-assumptions"><i class="fa fa-check"></i><b>3.1.3</b> Linear model assumptions</a></li>
-<li class="chapter" data-level="3.1.4" data-path="linear-models.html"><a href="linear-models.html#test-statistics-and-p-values"><i class="fa fa-check"></i><b>3.1.4</b> Test statistics and p-values</a></li>
+<li class="chapter" data-level="3" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>3</b> The linear model</a><ul>
+<li class="chapter" data-level="3.1" data-path="the-linear-model.html"><a href="the-linear-model.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="the-linear-model.html"><a href="the-linear-model.html#example-abundance-and-mass-of-bird-species"><i class="fa fa-check"></i><b>3.1.1</b> Example: Abundance and mass of bird species</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="the-linear-model.html"><a href="the-linear-model.html#formulation-of-a-linear-model"><i class="fa fa-check"></i><b>3.2</b> Formulation of a linear model</a></li>
+<li class="chapter" data-level="3.3" data-path="the-linear-model.html"><a href="the-linear-model.html#evaluation-of-the-linear-model"><i class="fa fa-check"></i><b>3.3</b> Evaluation of the linear model</a></li>
+<li class="chapter" data-level="3.4" data-path="the-linear-model.html"><a href="the-linear-model.html#assumptions-of-the-linear-model"><i class="fa fa-check"></i><b>3.4</b> Assumptions of the linear model</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#normal-distribution-of-the-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Normal distribution of the residuals</a></li>
+<li class="chapter" data-level="3.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#homoskedasticity"><i class="fa fa-check"></i><b>3.4.2</b> Homoskedasticity</a></li>
+<li class="chapter" data-level="3.4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#independence-of-the-residuals"><i class="fa fa-check"></i><b>3.4.3</b> Independence of the residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="the-linear-model.html"><a href="the-linear-model.html#notation-for-linear-models"><i class="fa fa-check"></i><b>3.5</b> Notation for linear models</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5.1</b> Mathematical notation</a></li>
+<li class="chapter" data-level="3.5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#r-notation"><i class="fa fa-check"></i><b>3.5.2</b> R notation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="the-linear-model.html"><a href="the-linear-model.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>3.6</b> Fitting a linear model</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="the-linear-model.html"><a href="the-linear-model.html#model-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Model estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="the-linear-model.html"><a href="the-linear-model.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.7</b> Learning objectives</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html"><i class="fa fa-check"></i><b>4</b> Linear regression in R</a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#simple-linear-regression"><i class="fa fa-check"></i><b>4.1</b> Simple linear regression</a></li>
-<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#work-flow"><i class="fa fa-check"></i><b>4.2</b> Work flow</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#running-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> 2.1 Running a linear model</a></li>
-<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#verifying-assumptions"><i class="fa fa-check"></i><b>4.2.2</b> Verifying assumptions</a></li>
-<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#normalizing-data"><i class="fa fa-check"></i><b>4.2.3</b> Normalizing data</a></li>
-<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#data-transformation"><i class="fa fa-check"></i><b>4.2.4</b> Data transformation</a></li>
-<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-output"><i class="fa fa-check"></i><b>4.2.5</b> Model output</a></li>
-<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#subsetting"><i class="fa fa-check"></i><b>4.2.6</b> Subsetting</a></li>
+<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-formulation"><i class="fa fa-check"></i><b>4.1</b> Model formulation</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-equation"><i class="fa fa-check"></i><b>4.1.1</b> Model equation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-1"><i class="fa fa-check"></i><b>4.3</b> CHALLENGE 1</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-1"><i class="fa fa-check"></i><b>4.2</b> Linear regression in R</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-1-formulate-and-run-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Formulate and run a linear model</a></li>
+<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Verify assumptions using diagnostic plots of the residuals</a></li>
+<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2.-verify-assumptions-of-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---what-is-wrong"><i class="fa fa-check"></i><b>4.2.4</b> Assumptions not met - what is wrong?</a></li>
+<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---how-to-proceed"><i class="fa fa-check"></i><b>4.2.5</b> Assumptions not met - how to proceed?</a></li>
+<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-3.-analyze-parameter-estimates"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Step 3.</strong> Analyze parameter estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-interpretation"><i class="fa fa-check"></i><b>4.3</b> Model interpretation</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#finding-a-better-model-terrestrial-birds"><i class="fa fa-check"></i><b>4.3.1</b> Finding a better model: terrestrial birds</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-2"><i class="fa fa-check"></i><b>4.4</b> Challenge 2</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-2"><i class="fa fa-check"></i><b>4.5</b> Linear regression in R</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#variable-names"><i class="fa fa-check"></i><b>4.6</b> Variable names</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html"><i class="fa fa-check"></i><b>5</b> t-test and ANOVA</a><ul>
 <li class="chapter" data-level="5.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.1</b> Analysis of Variance (ANOVA)</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> 3.1 Types of ANOVA</a></li>
-<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> 3.2 T-test</a></li>
-<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> 3.3 Running an ANOVA</a></li>
-<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions-1"><i class="fa fa-check"></i><b>5.1.4</b> 3.4 Verifying assumptions</a></li>
-<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output-1"><i class="fa fa-check"></i><b>5.1.5</b> 3.5 Model output</a></li>
-<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> 3.6 Complementary test</a></li>
-<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> 3.7 Plotting</a></li>
+<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> Types of ANOVA</a></li>
+<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> T-test</a></li>
+<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> Running an ANOVA</a></li>
+<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions"><i class="fa fa-check"></i><b>5.1.4</b> Verifying assumptions</a></li>
+<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output"><i class="fa fa-check"></i><b>5.1.5</b> Model output</a></li>
+<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> Complementary test</a></li>
+<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> Plotting</a></li>
 <li class="chapter" data-level="5.1.8" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#going-further-contrasts"><i class="fa fa-check"></i><b>5.1.8</b> Going further: Contrasts</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> 4. Two-way ANOVA</a><ul>
+<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> Two-way ANOVA</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-a-two-way-anova"><i class="fa fa-check"></i><b>5.2.1</b> 4.1 Running a two-way ANOVA</a></li>
 <li class="chapter" data-level="5.2.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#interaction-plot"><i class="fa fa-check"></i><b>5.2.2</b> 4.2 Interaction plot</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> 5. Unbalanced ANOVA (advanced section/ optional)</a></li>
+<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> Unbalanced ANOVA (advanced section/ optional)</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html"><i class="fa fa-check"></i><b>6</b> Analysis of covariance (ANCOVA)</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#assumptions-1"><i class="fa fa-check"></i><b>6.0.1</b> 6.1 Assumptions</a></li>
 <li class="chapter" data-level="6.0.2" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#types-of-ancova"><i class="fa fa-check"></i><b>6.0.2</b> 6.2 Types of ANCOVA</a></li>
 <li class="chapter" data-level="6.0.3" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#running-an-ancova"><i class="fa fa-check"></i><b>6.0.3</b> 6.3 Running an ANCOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multiple-regression.html"><a href="multiple-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple regression</a><ul>
-<li class="chapter" data-level="7.0.1" data-path="multiple-regression.html"><a href="multiple-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.0.1</b> 7.1 Assumptions</a></li>
-<li class="chapter" data-level="7.0.2" data-path="multiple-regression.html"><a href="multiple-regression.html#dickcissel-dataset"><i class="fa fa-check"></i><b>7.0.2</b> 7.2 Dickcissel dataset</a></li>
-<li class="chapter" data-level="7.0.3" data-path="multiple-regression.html"><a href="multiple-regression.html#going-further-polynomial-regression"><i class="fa fa-check"></i><b>7.0.3</b> Going further: Polynomial regression</a></li>
-<li class="chapter" data-level="7.0.4" data-path="multiple-regression.html"><a href="multiple-regression.html#stepwise-regression"><i class="fa fa-check"></i><b>7.0.4</b> 7.4 Stepwise regression</a></li>
-<li class="chapter" data-level="7.1" data-path="multiple-regression.html"><a href="multiple-regression.html#going-further-variance-partitioning"><i class="fa fa-check"></i><b>7.1</b> Going further: Variance partitioning</a></li>
+<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple linear regression</a><ul>
+<li class="chapter" data-level="7.0.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#model-formulation-1"><i class="fa fa-check"></i><b>7.0.1</b> Model formulation</a></li>
+<li class="chapter" data-level="7.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.1</b> Assumptions</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#if-variables-are-collinear"><i class="fa fa-check"></i><b>7.1.1</b> If variables are collinear</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multiple-linear-regression-in-r"><i class="fa fa-check"></i><b>7.2</b> Multiple linear regression in R</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#the-data"><i class="fa fa-check"></i><b>7.2.1</b> The data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#verify-assumptions"><i class="fa fa-check"></i><b>7.2.2</b> Verify assumptions</a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.2.3</b> Linear regression</a></li>
+<li class="chapter" data-level="7.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#find-the-best-fit-model"><i class="fa fa-check"></i><b>7.2.4</b> Find the best-fit model</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#polynomial-regression-additional-material"><i class="fa fa-check"></i><b>7.3</b> Polynomial regression (additional material)</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#variation-partitioning-additional-material"><i class="fa fa-check"></i><b>7.4</b> Variation Partitioning (additional material)</a></li>
 </ul></li>
 <li class="part"><span><b>Final considerations</b></span></li>
 <li class="chapter" data-level="8" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8</b> Summary</a></li>
@@ -238,490 +266,450 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 --!>
 <div id="linear-regression-in-r" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Linear regression in R</h1>
-<div id="simple-linear-regression" class="section level2">
-<h2><span class="header-section-number">4.1</span> Simple linear regression</h2>
-<p>Simple linear regression is a type of linear model which contains a
-single, continuous explanatory variable. The regression tests whether
-there is a significant correlation between the two variables.</p>
-<p>Simple linear regression involves two parameters which must be
-estimated: an intercept (<span class="math inline">\({β_0}\&lt;/m\&gt;) and a coefficient of correlation (\)</span>{β_1}&lt;/m&gt;). Ordinary least squares is the most
-widely used estimation method, and also corresponds to the default
-method of the <code>lm</code> function in R. Ordinary least squares fits a line
-such that the sum of the squared vertical distances between the observed
-data and the linear regression model (i.e. the residuals) is minimized.</p>
-<p>Click below to see the math in more detail. Using ordinary
-least squares, the intercept β<sub>0</sub> and the slope β<sub>1</sub> of the linear
-regression can be calculated as:</p>
-<p>$β_{1}={sum{i}{}{(x_{i}y_{i})}-overline{x}overline{y}}/sum{i}{}{(x_{i}-overline{x})}^2
-= {Cov(x,y)}/{Var(x)}&lt;/m&gt;</p>
-<p><span class="math inline">\(β\_{0}=overline{y}-β\_{1}overline{x}\)</span></p>
+<p>In the following example, we will take the bird abundance and mass data and run a linear regression in R. Based on the hypothesis, we will formulate an equation that allows us to run the model and then check the assumptions under which the model can be run. We will also see how to interpret the output of the model and how to represent it graphically.</p>
+<div id="model-formulation" class="section level2">
+<h2><span class="header-section-number">4.1</span> Model formulation</h2>
+<hr />
+<p>The data are composed of the average mass of individuals of a species and the abundance of those species. We are interested in quantifying the relationship between the mass of an individual and the abundance of the species (or the effect of mass on abundance).</p>
+<p>We hypothesized that for different bird species, the <strong>average mass of an individual has an effect on the maximum abundance</strong> of the species, due to ecological constraints (food sources, habitat availability, etc.).</p>
+<div id="model-equation" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Model equation</h3>
+<p>In mathematical notation, a linear model takes the form of the equation of a line for which the predicted variable is the maximum abundance “MaxAbund” and the predictor variable is the mass of individuals “Mass”.</p>
+<p><span class="math display">\[\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)\]</span></p>
+<blockquote>
+<p>Note that the linear model has three variables: <span class="math inline">\(\beta_0\)</span> , <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\sigma^1\)</span>. <span class="math inline">\(\sigma^1\)</span> defines the variance of the data around the model and is a variable of the normal distribution that describes the distribution of the data around the model (on either side of our line).</p>
+</blockquote>
+<p><strong>Model formula in R</strong></p>
+<p>In the R programming language, the equation is translated as :</p>
+<pre><code>MaxAbund ~ Mass</code></pre>
+<p>where the predicted variable is placed on the left of the tilde and the predictor variable is on the right.</p>
 </div>
-<div id="work-flow" class="section level2">
-<h2><span class="header-section-number">4.2</span> Work flow</h2>
-<p>Below we will explore several kinds of linear models. The way you create
-and interpret each model will differ in the specifics, but the
-principles behind them and the general work flow will remain the same.
-For each model we will work through the following steps:</p>
+</div>
+<div id="linear-regression-in-r-1" class="section level2">
+<h2><span class="header-section-number">4.2</span> Linear regression in R</h2>
+<hr />
+<p>Performing a linear regression with R is divided into three steps:</p>
 <ol style="list-style-type: decimal">
-<li>Visualize the data (data visualization could also come later in your
-work flow)</li>
-<li>Create a model</li>
-<li>Test the model assumptions</li>
-<li>Adjust the model if assumptions are violated</li>
-<li>Interpret the model results</li>
+<li>Formulate and run a linear model based on a hypothesis</li>
+<li>Check the conditions for the linear model</li>
+<li>Examine the output of the model and whether the conditions are met
+<ul>
+<li>Analyze the regression parameters</li>
+<li>Plot the model</li>
+<li>Perform significance tests on the parameter estimates (if necessary)</li>
+</ul></li>
 </ol>
-<div id="running-a-linear-model" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> 2.1 Running a linear model</h3>
-<p>Using the bird dataset, we will first examine the linear regression of
-maximum abundance as a function of mass.</p>
-<p>In R, linear regression is implemented using the lm function from the
-stats package:</p>
-<p><code>lm (y ~ x)</code></p>
-<table>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="ul"><strong>Note</strong></span>: before using a new function in R, users should refer to its help documentation (<code>?functionname</code>) to find out how to use the function as well as its preset default methods.</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="linear-regression-in-r.html#cb1-1"></a><span class="co"># Loading libraries and bird dataset</span></span>
-<span id="cb1-2"><a href="linear-regression-in-r.html#cb1-2"></a><span class="kw">library</span>(e1071)</span>
-<span id="cb1-3"><a href="linear-regression-in-r.html#cb1-3"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb1-4"><a href="linear-regression-in-r.html#cb1-4"></a><span class="kw">setwd</span>(<span class="st">&quot;~/Desktop/...&quot;</span>)  <span class="co"># Don&#39;t forget to set your working directory (note: your directory will be different)</span></span>
-<span id="cb1-5"><a href="linear-regression-in-r.html#cb1-5"></a>bird &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;birdsdiet.csv&quot;</span>)</span>
-<span id="cb1-6"><a href="linear-regression-in-r.html#cb1-6"></a></span>
-<span id="cb1-7"><a href="linear-regression-in-r.html#cb1-7"></a><span class="co"># Visualize the dataframe</span></span>
-<span id="cb1-8"><a href="linear-regression-in-r.html#cb1-8"></a><span class="kw">names</span>(bird)</span>
-<span id="cb1-9"><a href="linear-regression-in-r.html#cb1-9"></a><span class="kw">str</span>(bird)</span>
-<span id="cb1-10"><a href="linear-regression-in-r.html#cb1-10"></a><span class="kw">head</span>(bird)</span>
-<span id="cb1-11"><a href="linear-regression-in-r.html#cb1-11"></a><span class="kw">summary</span>(bird)</span>
-<span id="cb1-12"><a href="linear-regression-in-r.html#cb1-12"></a><span class="kw">plot</span>(bird)</span></code></pre></div>
-<p>The bird dataset contains 7 variables:</p>
-<table style="width:98%;">
-<colgroup>
-<col width="12%" />
-<col width="49%" />
-<col width="36%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Variable Name</th>
-<th align="left">Description</th>
-<th align="left">Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Family</td>
-<td align="left">Common name of family</td>
-<td align="left">String</td>
-</tr>
-<tr class="even">
-<td align="left">MaxAbund</td>
-<td align="left">The highest observed abundance at any site<br />
-in North America</td>
-<td align="left">Continuous/ numeric</td>
-</tr>
-<tr class="odd">
-<td align="left">AvgAbund</td>
-<td align="left">The average abundance across all sites<br />
-where found in NA</td>
-<td align="left">Continuous/ numeric</td>
-</tr>
-<tr class="even">
-<td align="left">Mass</td>
-<td align="left">The body size in grams</td>
-<td align="left">Continuous/ numeric</td>
-</tr>
-<tr class="odd">
-<td align="left">Diet</td>
-<td align="left">Type of food consumed</td>
-<td align="left">Discrete – 5 levels (Plant; PlantInsect;<br />
-Insect; InsectVert; Vertebrate)</td>
-</tr>
-<tr class="even">
-<td align="left">Passerine</td>
-<td align="left">Is it a songbird/ perching bird</td>
-<td align="left">Boolean (0/1)</td>
-</tr>
-<tr class="odd">
-<td align="left">Aquatic</td>
-<td align="left">Is it a bird that primarily lives in/ on/ next to the water</td>
-<td align="left">Boolean (0/1)</td>
-</tr>
-</tbody>
-</table>
-<p>Note that Family, Diet, Passerine, and Aquatic are all categorical
-variables although they are encoded in different ways (string, discrete,
-boolean).</p>
-<p>We are now ready to run our linear model:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="linear-regression-in-r.html#cb2-1"></a>lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(bird<span class="op">$</span>MaxAbund <span class="op">~</span><span class="st"> </span>bird<span class="op">$</span>Mass)  <span class="co"># where Y ~ X means Y &#39;as a function of&#39; X&gt;</span></span></code></pre></div>
+<p>We will explore each step in the following sections.</p>
+<p>Also, in the case where the conditions are not met, we will see that it is possible to consider the use of a <em>Generalized Linear Model</em> (GLM) or the transformation of the data.</p>
+<div id="step-1-formulate-and-run-a-linear-model" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Step 1: Formulate and run a linear model</h3>
+<p>The <code>lm()</code> command is used to fit a linear model where the first argument is the model formula:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="linear-regression-in-r.html#cb18-1"></a><span class="co"># Linear regression of maximum abundance against mass</span></span>
+<span id="cb18-2"><a href="linear-regression-in-r.html#cb18-2"></a>lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(MaxAbund <span class="op">~</span><span class="st"> </span>Mass, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>With this line of code, we define a new <code>lm1</code> object that contains the linear model. We also specify two arguments to the function. The first <code>MaxAbund ~ Mass</code> is the model formula and the second <code>bird</code> defines the object that contains the variables.</p>
+<blockquote>
+<p>Before using a new function in R, you should refer to its help page (<code>?functionname</code>) to understand how to use the function and the default parameters.</p>
+</blockquote>
+<p>Let’s look at the parameter estimates:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="linear-regression-in-r.html#cb19-1"></a><span class="co"># Examination of the regression output</span></span>
+<span id="cb19-2"><a href="linear-regression-in-r.html#cb19-2"></a>lm1</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = MaxAbund ~ Mass, data = bird)
+## 
+## Coefficients:
+## (Intercept)         Mass  
+##    38.16646      0.01439</code></pre>
+<p>How do the parameters compare to our predictions? You will notice that the parameter for mass is positive while we predicted a negative relationship (<em>Species characterized by larger individuals have lower maximum abundance</em>).</p>
+<p>However, can we trust the estimates? To be sure, we need to check the application conditions!</p>
 </div>
-<div id="verifying-assumptions" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> Verifying assumptions</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="linear-regression-in-r.html#cb3-1"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))  <span class="co"># draws subsequent figures in a 2-by-2 panel</span></span>
-<span id="cb3-2"><a href="linear-regression-in-r.html#cb3-2"></a><span class="kw">plot</span>(lm1)</span>
-<span id="cb3-3"><a href="linear-regression-in-r.html#cb3-3"></a><span class="kw">par</span>(opar)  <span class="co"># resets to 1-by-1 plot</span></span></code></pre></div>
-<div id="verifying-independence" class="section level4">
-<h4><span class="header-section-number">4.2.2.1</span> Verifying independence</h4>
-<p>Linear models can only be applied to independent data. This means that
-the yi at a given xi value must not be influenced by other xi values.
-Violation of independence can happen if your data represent some form of
-dependence structure, such as spatial or temporal correlation.</p>
-<p>There is no simple diagnostic plot for independence, unfortunately.
-Instead, you must consider your data carefully. Is there some underlying
-structure in your data that makes your data points dependent on each
-other? If you collect data from the same sites over time (ie, a time
-series) or if you collect multiple data points from the same organism,
-your data violates the assumption of independence. You will need to use
-a different type of model instead.</p>
+<div id="step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Step 2: Verify assumptions using diagnostic plots of the residuals</h3>
+<p>An effective method of verifying that the model’s assumptions are met is to conduct a visual examination. Four diagnostic plots can be produced from an <code>lm</code> object. To do this, we use these commands:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="linear-regression-in-r.html#cb21-1"></a><span class="co"># Plot the four diagnostic plots</span></span>
+<span id="cb21-2"><a href="linear-regression-in-r.html#cb21-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb21-3"><a href="linear-regression-in-r.html#cb21-3"></a><span class="kw">plot</span>(lm1)</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-16-1.png" width="528" /></p>
+<p><code>par()</code> is a function that allows you to define the parameters of the graph. Here we specify <code>mfrow=c(2,2)</code> which displays a grid of 2 x 2 graphs at a time. Finally, <code>plot()</code> produces the graphics.</p>
+<blockquote>
+<p>To display only one plot at a time, we can specify <code>par(mfrow=1)</code>.</p>
+</blockquote>
+<div id="diagnostic-plot-1---residuals-vs-fitted" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> Diagnostic plot # 1 - Residuals vs Fitted</h4>
+<p>The first plot informs us of the distribution of the residuals according to the values predicted by the linear regression model. Each point represents the distance between the response variable and the model prediction. It informs us about the <em>independence</em> of the residuals and their <em>distribution</em>. Remember that with linear regression, we need a uniform distribution of the residuals (the <em>homoscedasticity</em> condition).</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-17-1.png" width="624" /></p>
+<p>On the <strong>y</strong> axis we find the residuals <span class="math inline">\(\epsilon_i\)</span> and on the <strong>x</strong> axis the predicted values <span class="math inline">\(\hat{y_i} = \beta_0 + \beta_1 \times x_i\)</span>.</p>
+<p>In an ideal situation, there is no pattern to the dispersion of the points.</p>
+<ul>
+<li>If the residuals are scattered <strong>randomly around the line of 0</strong>, the relationship is linear and the mean of the residuals is 0.</li>
+<li>If the residuals form an approximate <strong>horizontal band</strong> around the 0 line, the variance of the residuals is homogeneous (i.e. they are homoscedastic).</li>
+<li>If the residuals are organized in a <strong>funnel shape</strong>, the residuals are not homoscedastic.</li>
+</ul>
+<hr />
+<p><strong>Warning!</strong> You should be alerted if the distribution of the points is non-linear as in these two examples:</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-18-1.png" width="816" /></p>
+<p>These examples present a non-linear relationship and an example of heteroscedasticity which is the opposite of homoscedasticity, meaning that the normality condition is not met.</p>
+<p>In this situation, one should rather use a <strong>generalized linear model</strong> (GLM) that allows for other distributions (Poisson, binomial, negative binomial, etc.) or try to <strong>transform</strong> the response variable and/or the predictors.</p>
+<hr />
 </div>
-<div id="verifying-residual-variance-is-constant-and-residual-mean-is-0" class="section level4">
-<h4><span class="header-section-number">4.2.2.2</span> Verifying residual variance is constant and residual mean is 0</h4>
-<p><em>Residual vs Fitted plot</em> - The first graph of the diagnostic plots is
-called by <code>plot(lm1)</code>. This plot illustrates the spread of the residuals
-between each fitted values. Each point represents the distance of the
-response variable from the model prediction of the response variable. If
-the residuals spread randomly around the 0 line, this indicates that the
-relationship is linear and that the mean of the residuals is 0. If the
-residuals form an approximate horizontal band around the 0 line, this
-indicates homogeneity of error variance (ie, it is homoskedastic). If
-the residuals form a funnel shape, this indicates the residuals are not
-homoskedastic.</p>
-<p><img src="images/workshop_3_lm1_residuals_vs_fitted.png" width="300" /></p>
-<p><em>Scale-location plot</em> - The third graph of the diagnostic plots enables
-one to verify whether the residual spread increases with a given fitted
-values (i.e. identifies whether the spread in the residuals is due to
-the selected explanatory variable). If the spread increases, the
-homoscedasticity assumption is not respected.</p>
-<p><img src="images/workshop_3_lm1_scale-location.png" width="300" /></p>
+<div id="diagnostic-plot-2---scale-location" class="section level4">
+<h4><span class="header-section-number">4.2.2.2</span> Diagnostic plot # 2 - Scale Location</h4>
+<p>The second diagnostic graph allows us to check if the <em>dispersion of the residuals</em> is increasing for a given predicted value (i.e. if the dispersion of the residuals is caused by the explanatory variable). If the dispersion increases, the basic condition of homoscedasticity is not respected.</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-19-1.png" width="576" /></p>
+<p>On the <strong>y</strong> axis we find the square root of the standardized residuals <span class="math inline">\(\sqrt{\frac{\epsilon_i}{\sigma}}\)</span> and on the <strong>x</strong> axis the predicted values <span class="math inline">\(\hat{y_i} = \beta_0 + \beta_1 \times x_i\)</span>.</p>
+<p>Here we are also looking for a dispersion of the points without a pattern, thus an evenly distributed predictor.</p>
+<hr />
+<p><strong>Caution!</strong> Be careful if the distribution of the points shows a marked trend:</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-20-1.png" width="576" /></p>
+<p>In a situation like this, we cannot rely on model results and should instead try to use a <strong>generalized linear model</strong> (GLM) that allows for other distributions (Poisson, binomial, negative binomial, etc.) or <strong>transform</strong> the response variable and/or the predictors.</p>
+<hr />
 </div>
-<div id="verifying-that-residuals-are-normally-distributed" class="section level4">
-<h4><span class="header-section-number">4.2.2.3</span> Verifying that residuals are normally distributed</h4>
-<p><em>QQ plot</em> - Normality can be assessed from the QQplot of the diagnostic
-plots. This graph compares the probability distribution of the model
-residuals to the probability distribution of normal data series. If the
-standardized residuals lie linearly on the 1:1 line of the QQplot, the
-residuals can be considered normally distributed.</p>
-<p><img src="images/workshop_3_lm1_qq.png" width="300" /></p>
-<p>The points of the QQplot are nonlinear, which suggests that the
-residuals are not normally distributed.</p>
+<div id="diagnostic-plot-3---normal-qq" class="section level4">
+<h4><span class="header-section-number">4.2.2.3</span> Diagnostic plot # 3 - Normal QQ</h4>
+<p>The third plot shows the distribution of the residuals. With this quantile-quantile plot, we can evaluate the normality of the residuals. This plot compares the probability distribution of the residuals of the model to a probability distribution of normal data.</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-21-1.png" width="576" /></p>
+<p>On the <strong>y</strong> axis we find the standardized residuals <span class="math inline">\(\frac{epsilon_i}{\sigma}\)</span> and on the <strong>x</strong> axis the quantiles of a standard normal distribution <span class="math inline">\(\mathcal{N}(0, \sigma^2)\)</span>.</p>
+<p>We want to see the standardized residuals are near the 1:1 line. Thus, the residuals can be considered normally distributed.</p>
+<hr />
+<p><strong>Caution!</strong> Be suspicious if the distribution of the points does not follow the 1:1 line:</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-22-1.png" width="576" /></p>
+<p>In this case, the points are not well aligned on the line, suggesting that the residuals are not normally distributed. Instead, try using a <strong>generalized linear model</strong> (GLM) that allows for other distributions (Poisson, binomial, negative binomial, etc.) or <strong>transform</strong> the response variable and/or the predictors.</p>
+<hr />
 </div>
-<div id="checking-for-high-leverage" class="section level4">
-<h4><span class="header-section-number">4.2.2.4</span> Checking for high leverage</h4>
-<p>In addition to the assumption testing above, we are also interested in
-whether any of our data points have high leverage. This is not
-assumption testing <em>per se</em>, but it will affect our interpretation of
-the data. If some of the observations in a dataset possess strongly
-different values from others, a model fitting problem can arise such
-that these high leverage data influence the model calculation.</p>
-<p><em>Residuals vs Leverage plot</em> - High leverage data can be visualised on
-the fourth diagnostic plots (i.e. residuals vs leverage), which
-identifies the observation numbers of the high leverage data point(s).
-If (and only if!) these observations correspond to mis-measurements or
-represent exceptions, they can be removed from the original dataset.<br />
-<img src="images/workshop_3_lm1_leverage.png" width="300" /></p>
+<div id="diagnostic-plot-4---residuals-vs-leverage" class="section level4">
+<h4><span class="header-section-number">4.2.2.4</span> Diagnostic plot # 4 - Residuals vs Leverage</h4>
+<p>This last diagnostic plot shows the residuals and their influence. It allows us to determine if certain observations have a strong influence. Although we are not testing for a baseline condition, the presence of points with a strong influence can influence our interpretation of the data. If one or more observations are outliers (i.e., if they have very different values from the others), the model may be misfitted because of their exaggerated influence on the model estimate.</p>
+<p>The residuals vs. leverage plot shows the <em>leverage points</em> which are extreme observations of the predictor and their influence on the regression. The influence is quantified by the <em>Cook distance</em>. <strong>A distance greater than 0.5 is problematic</strong>.</p>
+<p><strong>Example of leverage and influence</strong>.</p>
+<p>These are not diagnostic plots, but figures that illustrate the concepts of leverage and influence.</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-23-1.png" width="720" /></p>
+<p>We want to observe residuals that fall within the dotted lines marking the Cook distance of 0.5.</p>
+<hr />
+<p><strong>Caution!</strong> Beware if a point or points lie outside the dotted line:</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
+<p>The 29 has leverage and a Cook’s distance of more than 0.5. It corresponds to an outlier. However, outliers should never be removed without good reason to do so! If (and only if!) these observations are measurement errors or exceptions, they can be removed from the data set.</p>
+<hr />
 </div>
 </div>
-<div id="normalizing-data" class="section level3">
-<h3><span class="header-section-number">4.2.3</span> Normalizing data</h3>
-<p>In the example provided above, the model residuals were not normally
-distributed and therefore the assumption of residual normality is
-violated. We may still be able to use a linear regression model if we
-can address this violation. The next step is to try to normalize the
-variables using transformations. Often if we can make the explanatory
-and/or response variables normally distributed then the model residuals
-will become normally distributed. In addition to QQ-plots we can assess
-the normality of a variable by drawing a histogram using the function
-<code>hist</code>, and check visually whether the data series appears to follow a
-normal distribution. For example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="linear-regression-in-r.html#cb4-1"></a><span class="co"># Plot Y ~ X and the regression line</span></span>
-<span id="cb4-2"><a href="linear-regression-in-r.html#cb4-2"></a><span class="kw">plot</span>(bird<span class="op">$</span>MaxAbund <span class="op">~</span><span class="st"> </span>bird<span class="op">$</span>Mass, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;coral&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Maximum Abundance&quot;</span>,</span>
-<span id="cb4-3"><a href="linear-regression-in-r.html#cb4-3"></a>    <span class="dt">xlab =</span> <span class="st">&quot;Mass&quot;</span>)</span>
-<span id="cb4-4"><a href="linear-regression-in-r.html#cb4-4"></a><span class="kw">abline</span>(lm1, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb4-5"><a href="linear-regression-in-r.html#cb4-5"></a><span class="st">`</span><span class="dt">?</span><span class="st">`</span>(plot  <span class="co"># For further details on plot() arguments</span></span>
-<span id="cb4-6"><a href="linear-regression-in-r.html#cb4-6"></a>)</span>
-<span id="cb4-7"><a href="linear-regression-in-r.html#cb4-7"></a><span class="co"># see colours() for list of colours</span></span>
-<span id="cb4-8"><a href="linear-regression-in-r.html#cb4-8"></a></span>
-<span id="cb4-9"><a href="linear-regression-in-r.html#cb4-9"></a><span class="co"># Is the data normally distributed?</span></span>
-<span id="cb4-10"><a href="linear-regression-in-r.html#cb4-10"></a><span class="kw">hist</span>(bird<span class="op">$</span>MaxAbund, <span class="dt">col =</span> <span class="st">&quot;coral&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Untransformed data&quot;</span>,</span>
-<span id="cb4-11"><a href="linear-regression-in-r.html#cb4-11"></a>    <span class="dt">xlab =</span> <span class="st">&quot;Maximum Abundance&quot;</span>)</span>
-<span id="cb4-12"><a href="linear-regression-in-r.html#cb4-12"></a><span class="kw">hist</span>(bird<span class="op">$</span>Mass, <span class="dt">col =</span> <span class="st">&quot;coral&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Untransformed data&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Mass&quot;</span>)</span></code></pre></div>
-<p><img src="images/lm1_yvsx.png" width="300" /> <img src="images/maxabund_hist.png" width="300" />
-<img src="images/mass_hist.png" width="300" /></p>
-<p>A third way to assess normality is to use the Shapiro-Wilk normality
-test that compares the distribution of the observed data series to a
-normal distribution using the function <code>shapiro.test</code>.</p>
-<p>The null and alternate hypotheses of this test are:</p>
-<p>H<sub>0</sub>: the observed data series is normally distributed,<br />
-H<sub>1</sub>: the observed data series is not normally distributed,</p>
-<p>The observed data series can be considered normally distributed when the
-p-value calculated by the Shapiro-Wilk normality test is greater than or
-equal to α, typically set to 0.05.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="linear-regression-in-r.html#cb5-1"></a><span class="co"># Test null hypothesis that the sample came from a normally</span></span>
-<span id="cb5-2"><a href="linear-regression-in-r.html#cb5-2"></a><span class="co"># distributed population</span></span>
-<span id="cb5-3"><a href="linear-regression-in-r.html#cb5-3"></a><span class="kw">shapiro.test</span>(bird<span class="op">$</span>MaxAbund)</span>
-<span id="cb5-4"><a href="linear-regression-in-r.html#cb5-4"></a><span class="kw">shapiro.test</span>(bird<span class="op">$</span>Mass)</span>
-<span id="cb5-5"><a href="linear-regression-in-r.html#cb5-5"></a><span class="co"># If p &lt; 0.05, then distribution is not-normal if p &gt; 0.05,</span></span>
-<span id="cb5-6"><a href="linear-regression-in-r.html#cb5-6"></a><span class="co"># then distribution is normal</span></span></code></pre></div>
-<p>We can also evaluate the skewness of each distribution using the
-<code>Skewness</code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="linear-regression-in-r.html#cb6-1"></a><span class="kw">skewness</span>(bird<span class="op">$</span>MaxAbund)</span>
-<span id="cb6-2"><a href="linear-regression-in-r.html#cb6-2"></a><span class="kw">skewness</span>(bird<span class="op">$</span>Mass)</span>
-<span id="cb6-3"><a href="linear-regression-in-r.html#cb6-3"></a><span class="co"># where positive values indicate a left-skewed</span></span>
-<span id="cb6-4"><a href="linear-regression-in-r.html#cb6-4"></a><span class="co"># distribution, and negative value a right skew.</span></span></code></pre></div>
-<p>The histograms, Shapiro tests and Skewness all indicate that the
-variables need to be transformed to normalize (e.g. a log<sub>10</sub>
-transformation).</p>
+<div id="step-2.-verify-assumptions-of-lm1" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code></h3>
+<p>Does <code>lm1</code> violate any assumptions of the linear model?</p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-25-1.png" width="720" /></p>
+<p>Based on the insights gained in the previous sections, there are serious problems with these diagnostic plots.
+* Plots 1 and 2 shows strong trends,
+* Plot 3 shows that the residuals do not follow a normal distribution,
+* Plot 4 highlights the leverage of point 32 and its very high influence.</p>
+<hr />
 </div>
-<div id="data-transformation" class="section level3">
-<h3><span class="header-section-number">4.2.4</span> Data transformation</h3>
-<p>In case of non-normality, response and explanatory variables can be
-transformed to enhance their normality following these rules:</p>
-<table style="width:98%;">
-<colgroup>
-<col width="33%" />
-<col width="26%" />
-<col width="37%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Type of distribution</th>
-<th align="left">Transformation</th>
-<th align="left">R function</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Moderately positive skewness</td>
-<td align="left"><span class="math inline">\(sqrt{x}\)</span> sqrt(x)</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">Substantially positive skewness</td>
-<td align="left"><span class="math inline">\(log_10{(x)}\)</span> log10(x)</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">Substantially positive skewness</td>
-<td align="left"><span class="math inline">\(log_10{(x+C)}\)</span> log10(x +</td>
-<td align="left">C) where C is a constant<br />
-added to each value of x so that<br />
-the smallest score is 1</td>
-</tr>
-<tr class="even">
-<td align="left">Moderately negative skewness</td>
-<td align="left"><span class="math inline">\(sqrt{(K-x)}\)</span> sqrt(K - x</td>
-<td align="left">) where K is a constant<br />
-subtracted from each value of x<br />
-so that the smallest score is 1</td>
-</tr>
-<tr class="odd">
-<td align="left">Substantially negative skewness</td>
-<td align="left"><span class="math inline">\(log_10{(K-x)}\)</span> log10(K -</td>
-<td align="left">x)</td>
-</tr>
-</tbody>
-</table>
-<p>Thus, log<sub>10</sub> transformations should be applied and saved in the bird
-data frame. The model can then be re-run, verified and interpreted.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="linear-regression-in-r.html#cb7-1"></a><span class="co"># Add log10() transformed variables to your dataframe</span></span>
-<span id="cb7-2"><a href="linear-regression-in-r.html#cb7-2"></a>bird<span class="op">$</span>logMaxAbund &lt;-<span class="st"> </span><span class="kw">log10</span>(bird<span class="op">$</span>MaxAbund)</span>
-<span id="cb7-3"><a href="linear-regression-in-r.html#cb7-3"></a>bird<span class="op">$</span>logMass &lt;-<span class="st"> </span><span class="kw">log10</span>(bird<span class="op">$</span>Mass)</span>
-<span id="cb7-4"><a href="linear-regression-in-r.html#cb7-4"></a><span class="kw">names</span>(bird)  <span class="co"># to view the dataframe + new transformed variables</span></span>
-<span id="cb7-5"><a href="linear-regression-in-r.html#cb7-5"></a></span>
-<span id="cb7-6"><a href="linear-regression-in-r.html#cb7-6"></a><span class="kw">hist</span>(bird<span class="op">$</span>logMaxAbund, <span class="dt">col =</span> <span class="st">&quot;yellowgreen&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Log transformed&quot;</span>,</span>
-<span id="cb7-7"><a href="linear-regression-in-r.html#cb7-7"></a>    <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>))</span>
-<span id="cb7-8"><a href="linear-regression-in-r.html#cb7-8"></a><span class="kw">hist</span>(bird<span class="op">$</span>logMass, <span class="dt">col =</span> <span class="st">&quot;yellowgreen&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Log transformed&quot;</span>,</span>
-<span id="cb7-9"><a href="linear-regression-in-r.html#cb7-9"></a>    <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Mass)&quot;</span>))</span>
-<span id="cb7-10"><a href="linear-regression-in-r.html#cb7-10"></a><span class="kw">shapiro.test</span>(bird<span class="op">$</span>logMaxAbund)</span>
-<span id="cb7-11"><a href="linear-regression-in-r.html#cb7-11"></a><span class="kw">skewness</span>(bird<span class="op">$</span>logMaxAbund)</span>
-<span id="cb7-12"><a href="linear-regression-in-r.html#cb7-12"></a><span class="kw">shapiro.test</span>(bird<span class="op">$</span>logMass)</span>
-<span id="cb7-13"><a href="linear-regression-in-r.html#cb7-13"></a><span class="kw">skewness</span>(bird<span class="op">$</span>logMass)</span>
-<span id="cb7-14"><a href="linear-regression-in-r.html#cb7-14"></a></span>
-<span id="cb7-15"><a href="linear-regression-in-r.html#cb7-15"></a><span class="co"># Re-run your analysis with the appropriate transformations</span></span>
-<span id="cb7-16"><a href="linear-regression-in-r.html#cb7-16"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(bird<span class="op">$</span>logMaxAbund <span class="op">~</span><span class="st"> </span>bird<span class="op">$</span>logMass)</span>
-<span id="cb7-17"><a href="linear-regression-in-r.html#cb7-17"></a></span>
-<span id="cb7-18"><a href="linear-regression-in-r.html#cb7-18"></a><span class="co"># Are there remaining problems with the diagnostics</span></span>
-<span id="cb7-19"><a href="linear-regression-in-r.html#cb7-19"></a><span class="co"># (heteroscedasticity, non-independence, high leverage)?</span></span>
-<span id="cb7-20"><a href="linear-regression-in-r.html#cb7-20"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb7-21"><a href="linear-regression-in-r.html#cb7-21"></a><span class="kw">plot</span>(lm2, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb7-22"><a href="linear-regression-in-r.html#cb7-22"></a><span class="kw">par</span>(opar)</span></code></pre></div>
-<p><img src="images/hist_logmaxabund.png" width="300" />
-<img src="images/hist_logmass.png" width="300" /> <img src="images/plot_lm2_.png" width="550" /></p>
+<div id="assumptions-not-met---what-is-wrong" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> Assumptions not met - what is wrong?</h3>
+<p>To understand the source of the problems with the linear model, let’s plot the model with the observations:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="linear-regression-in-r.html#cb22-1"></a><span class="co"># Plot linear model and observations</span></span>
+<span id="cb22-2"><a href="linear-regression-in-r.html#cb22-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb22-3"><a href="linear-regression-in-r.html#cb22-3"></a><span class="kw">coef</span>(lm1)  <span class="co"># constant and slope</span></span></code></pre></div>
+<pre><code>## (Intercept)        Mass 
+## 38.16645523  0.01438562</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="linear-regression-in-r.html#cb24-1"></a><span class="kw">plot</span>(MaxAbund <span class="op">~</span><span class="st"> </span>Mass, <span class="dt">data =</span> bird)  <span class="co"># left plot</span></span>
+<span id="cb24-2"><a href="linear-regression-in-r.html#cb24-2"></a><span class="kw">abline</span>(lm1)  <span class="co"># line defined by the model parameters</span></span>
+<span id="cb24-3"><a href="linear-regression-in-r.html#cb24-3"></a><span class="kw">hist</span>(<span class="kw">residuals</span>(lm1))  <span class="co"># plot on the right : distribution of residuals</span></span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-26-1.png" width="1056" /></p>
+<p>On the left we have the data as well as the line representing the model estimation (<code>MaxAbund ~ Mass</code>). On the left, the distribution of the residuals.</p>
+<p>We can check if the residuals follow a normal distribution using a <em>Shapiro-Wilk</em> test and a skewness test (<em>skewness</em>):</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="linear-regression-in-r.html#cb25-1"></a><span class="co"># Test the normality of residuals</span></span>
+<span id="cb25-2"><a href="linear-regression-in-r.html#cb25-2"></a><span class="kw">shapiro.test</span>(<span class="kw">residuals</span>(lm1))</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(lm1)
+## W = 0.64158, p-value = 3.172e-10</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="linear-regression-in-r.html#cb27-1"></a><span class="co"># Skewness test</span></span>
+<span id="cb27-2"><a href="linear-regression-in-r.html#cb27-2"></a><span class="kw">library</span>(e1071)</span>
+<span id="cb27-3"><a href="linear-regression-in-r.html#cb27-3"></a><span class="kw">skewness</span>(<span class="kw">residuals</span>(lm1))</span></code></pre></div>
+<pre><code>## [1] 3.154719</code></pre>
+<p>The Shapiro-Wilk test compares the distribution of the observed data to a normal distribution. The observed data can be considered normally distributed when the p-value calculated by the Shapiro-Wilk test is greater than the α significance level (usually 0.05). Here, the p-value (<code>p-value</code>) returned indicates a distribution that is significantly different from normal.</p>
+<p>The skewness test measures the shift of the residuals. A positive value represents a leftward shift and a negative value a rightward shift. Here, the positive skewness value indicates that the distribution is left-shifted.</p>
+<hr />
 </div>
-<div id="model-output" class="section level3">
-<h3><span class="header-section-number">4.2.5</span> Model output</h3>
-<p>Once all these assumptions have been verified, the model results can be
-interpreted. These results are called in R using the function <code>summary</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="linear-regression-in-r.html#cb8-1"></a><span class="co"># Now we can look at the model coefficients and p-values</span></span>
-<span id="cb8-2"><a href="linear-regression-in-r.html#cb8-2"></a><span class="kw">summary</span>(lm2)</span>
-<span id="cb8-3"><a href="linear-regression-in-r.html#cb8-3"></a></span>
-<span id="cb8-4"><a href="linear-regression-in-r.html#cb8-4"></a><span class="co"># You can also just call up the coefficients of the model</span></span>
-<span id="cb8-5"><a href="linear-regression-in-r.html#cb8-5"></a>lm2<span class="op">$</span>coef</span>
-<span id="cb8-6"><a href="linear-regression-in-r.html#cb8-6"></a></span>
-<span id="cb8-7"><a href="linear-regression-in-r.html#cb8-7"></a><span class="co"># What else?</span></span>
-<span id="cb8-8"><a href="linear-regression-in-r.html#cb8-8"></a><span class="kw">str</span>(<span class="kw">summary</span>(lm2))</span>
-<span id="cb8-9"><a href="linear-regression-in-r.html#cb8-9"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>coefficients  <span class="co"># where Std. Error is the standard error of each estimate</span></span>
-<span id="cb8-10"><a href="linear-regression-in-r.html#cb8-10"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>r.squared  <span class="co"># Coefficient of determination</span></span>
-<span id="cb8-11"><a href="linear-regression-in-r.html#cb8-11"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>adj.r.squared  <span class="co"># Adjusted coefficient of determination</span></span>
-<span id="cb8-12"><a href="linear-regression-in-r.html#cb8-12"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>sigma  <span class="co"># Residual standard error (square root of Error Mean Square)</span></span>
-<span id="cb8-13"><a href="linear-regression-in-r.html#cb8-13"></a><span class="co"># etc…</span></span>
-<span id="cb8-14"><a href="linear-regression-in-r.html#cb8-14"></a></span>
-<span id="cb8-15"><a href="linear-regression-in-r.html#cb8-15"></a><span class="co"># You can also check for yourself the equation for R2:</span></span>
-<span id="cb8-16"><a href="linear-regression-in-r.html#cb8-16"></a>SSE =<span class="st"> </span><span class="kw">sum</span>(<span class="kw">resid</span>(lm2)<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb8-17"><a href="linear-regression-in-r.html#cb8-17"></a>SST =<span class="st"> </span><span class="kw">sum</span>((bird<span class="op">$</span>logMaxAbund <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(bird<span class="op">$</span>logMaxAbund))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb8-18"><a href="linear-regression-in-r.html#cb8-18"></a>R2 =<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>((SSE)<span class="op">/</span>SST)</span>
-<span id="cb8-19"><a href="linear-regression-in-r.html#cb8-19"></a>R2</span></code></pre></div>
-<p>The output of this function presents all the results of your validated
-model:</p>
-<pre><code>lm(formula = logMaxAbund ~ logMass, data = bird)
+<div id="assumptions-not-met---how-to-proceed" class="section level3">
+<h3><span class="header-section-number">4.2.5</span> Assumptions not met - how to proceed?</h3>
+<p>Clearly, the assumptions of the linear model <code>lm1</code> are violated. Therefore, we cannot rely on the results of the model. We must turn to another alternative and there are two options when the assumptions of the linear model are violated.</p>
+<p>**Use a different type of model</p>
+<p>QCBS R Workshops 6-8 explore other models that may be a better fit for the hypothesis and data.</p>
+<p><strong>Transform the data</strong></p>
+<p>It is also possible to modify one’s data, whether it be the response variable or the predictors. Several types of transformations are possible and their usefulness depends on the distribution of the variable and the type of model. However, <strong>modifying variables is often tricky in practice</strong>. The transformation may <strong>solve some</strong> problems, but may <strong>create other</strong>.</p>
+<blockquote>
+<p>Note that <strong>results of statistical tests</strong> on transformed data <strong>do not automatically hold</strong> for the untransformed data.</p>
+</blockquote>
+<hr />
+<div id="challenge-1-a-model-on-transformed-variables" class="section level4">
+<h4><span class="header-section-number">4.2.5.1</span> Challenge 1: A model on transformed variables</h4>
+<p>Our model has some serious problems. Let’s try a logarithmic transformation to see if it can correct the situation.</p>
+<p>First, transform the data and run a new linear regression on it. Then, verify the assumptions of model using diagnostic plots.</p>
+<p><strong>Step 1</strong></p>
+<p>Let’s start by transforming the data in our dataset:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="linear-regression-in-r.html#cb29-1"></a><span class="co"># log-transform the variables</span></span>
+<span id="cb29-2"><a href="linear-regression-in-r.html#cb29-2"></a>bird<span class="op">$</span>logMaxAbund &lt;-<span class="st"> </span><span class="kw">log10</span>(bird<span class="op">$</span>MaxAbund)</span>
+<span id="cb29-3"><a href="linear-regression-in-r.html#cb29-3"></a>bird<span class="op">$</span>logMass &lt;-<span class="st"> </span><span class="kw">log10</span>(bird<span class="op">$</span>Mass)</span></code></pre></div>
+<p>With these <code>logMaxAbund</code> and <code>logMass</code> data transformed, we run a new linear regression and save the model object as <code>lm2</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="linear-regression-in-r.html#cb30-1"></a><span class="co"># Linear model with transformed data</span></span>
+<span id="cb30-2"><a href="linear-regression-in-r.html#cb30-2"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span></code></pre></div>
+<p>We can observe that the parameters align with our prediction. That is, the <code>logMass</code> coefficient is negative and therefore the abundance decreases with the mass of the species. However, we still need to check the assumptions of the model to ensure the validity of the results.</p>
+<p><strong>Step 2</strong></p>
+<p>Let’s check the assumptions for <code>lm2</code> using the diagnostic plots.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="linear-regression-in-r.html#cb31-1"></a><span class="co"># Diagnostic plots</span></span>
+<span id="cb31-2"><a href="linear-regression-in-r.html#cb31-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="fl">1.15</span>, <span class="fl">1.2</span>))</span>
+<span id="cb31-3"><a href="linear-regression-in-r.html#cb31-3"></a><span class="kw">plot</span>(lm2)</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-30-1.png" width="720" /></p>
+<p>The diagnostic plots look much better, but there are still problems. Some plots still show strong trends. Let’s plot the model with the observations:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="linear-regression-in-r.html#cb32-1"></a><span class="co"># Plot linear model and observations</span></span>
+<span id="cb32-2"><a href="linear-regression-in-r.html#cb32-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb32-3"><a href="linear-regression-in-r.html#cb32-3"></a><span class="kw">coef</span>(lm2)</span></code></pre></div>
+<pre><code>## (Intercept)     logMass 
+##   1.6723673  -0.2361498</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="linear-regression-in-r.html#cb34-1"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span>
+<span id="cb34-2"><a href="linear-regression-in-r.html#cb34-2"></a><span class="kw">abline</span>(lm2)</span>
+<span id="cb34-3"><a href="linear-regression-in-r.html#cb34-3"></a><span class="kw">hist</span>(<span class="kw">residuals</span>(lm2))</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-31-1.png" width="1056" /></p>
+<p>The model appears to explain the data better and the distribution of residuals has moved much closer to the normal distribution.</p>
+<hr />
+</div>
+</div>
+<div id="step-3.-analyze-parameter-estimates" class="section level3">
+<h3><span class="header-section-number">4.2.6</span> <strong>Step 3.</strong> Analyze parameter estimates</h3>
+<p>The last step in a linear regression with R is to check the model parameters. We then use the <code>summary()</code> command to get more information about the fitted model.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="linear-regression-in-r.html#cb35-1"></a><span class="co"># Print fitted model parameters</span></span>
+<span id="cb35-2"><a href="linear-regression-in-r.html#cb35-2"></a><span class="kw">summary</span>(lm2)</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = logMaxAbund ~ logMass, data = bird)
+
 Residuals:
-          Min         1Q          Median          3Q          Max
-               -1.93562   -0.39982    0.05487     0.40625     1.61469
-              Estimate    Std. Error  t value     Pr(&gt;|t|)
-(Intercept)     1.6724        0.2472      6.767       1.17e-08 ***
-logMass          -0.2361          0.1170      -2.019      0.0487 *
+     Min       1Q   Median       3Q      Max 
+-1.93562 -0.39982  0.05487  0.40625  1.61469 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.6724     0.2472   6.767 1.17e-08 ***
+logMass      -0.2361     0.1170  -2.019   0.0487 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
 Residual standard error: 0.6959 on 52 degrees of freedom
-Multiple R-squared:  0.07267,   Adjusted R-squared:  0.05484
+Multiple R-squared:  0.07267,   Adjusted R-squared:  0.05484 
 F-statistic: 4.075 on 1 and 52 DF,  p-value: 0.04869</code></pre>
-<p>The coefficients of the regression model and their associated standard
-error appear in the second and third columns of the regression table,
-respectively. Thus,<br />
-β<sub>0</sub> = 1.6724 ± 0.2472 is the intercept (± se) of the regression model,<br />
-β<sub>1</sub> = -0.2361 ± 0.1170 is the slope (± se) of the regression model.</p>
-<p>and finally: $ $<em>logMaxAbund</em> = 1.6724 (± 0.2472) - 0.2361 (±
-0.1170) x <em>logMass</em></p>
-<p>The t-value and their associated p-value (in the fourth and fifth
-columns of the regression table, respectively) test for a significant
-difference between the calculated coefficients and zero. In this case,
-we can see that <em>logMass</em> has a significant influence on <em>logMaxAbund</em>
-because the p-value associated with the slope of the regression model is
-inferior to 0.05. Moreover, these two variables are negatively related
-as the slope of the regression model is negative.<br />
-Users must, however, be aware that significant relationship between two
-variables does not always imply causality. Conversely, the absence of
-significant linear regression between y and x does not always imply an
-absence of relationship between these two variables; this is for example
-the case when a relationship is not linear.</p>
-<p>The goodness of fit of the linear regression model is assessed from the
-<strong>adjusted-R<sup>2</sup></strong> (here, 0.05484). This value is a measure of the
-proportion of variation explained by the model.</p>
-<p>Click below to see the math in more detail. $
-overline{R}^2=1-(1-R^2){n-1}/{n-p-1} &lt;/m&gt;</p>
-<p>where<br />
-p is the total number of regressors and n is the sample size,<br />
-$ R^2={SS_reg}/{SS_tot} &lt;/m&gt;<br />
-$ {SS_tot}=sum{i}{}{({y_i}-overline{y})}^2 <span class="math inline">\(is the total sums of squares,\
-\)</span> {SS_reg}=sum{i}{}{(hat{y_i}-overline{y})}^2 $is the
-regression sums of squares - also called the explained sums of squares.</p>
-<p>The higher the adjusted-R<sup>2</sup> is, the better the data fit the statistical
-model, knowing that this coefficient varies between 0 and 1. In this
-case, the relationship between <em>logMaxAbund</em> and <em>logMass</em> is quite
-weak.<br />
-The last line of the R output represents the F-statistic of the model
-and its associated p-value. If this p-value is inferior to 0.05, the
-model explains the data relationship better than a null model.<br />
-==== 2.6 Plotting ====</p>
-<p>Linear regression results are generally represented by a plot of the
-response variable as a function of the explanatory variable on which the
-regression line is added (and if needed the confidence intervals), using
-the R code:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="linear-regression-in-r.html#cb10-1"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;yellowgreen&quot;</span>,</span>
-<span id="cb10-2"><a href="linear-regression-in-r.html#cb10-2"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb10-3"><a href="linear-regression-in-r.html#cb10-3"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
-<span id="cb10-4"><a href="linear-regression-in-r.html#cb10-4"></a><span class="kw">abline</span>(lm2, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb10-5"><a href="linear-regression-in-r.html#cb10-5"></a></span>
-<span id="cb10-6"><a href="linear-regression-in-r.html#cb10-6"></a><span class="co"># You may also flag the previously identified</span></span>
-<span id="cb10-7"><a href="linear-regression-in-r.html#cb10-7"></a><span class="co"># high-leveraged points</span></span>
-<span id="cb10-8"><a href="linear-regression-in-r.html#cb10-8"></a><span class="kw">points</span>(bird<span class="op">$</span>logMass[<span class="dv">32</span>], bird<span class="op">$</span>logMaxAbund[<span class="dv">32</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;violet&quot;</span>)</span>
-<span id="cb10-9"><a href="linear-regression-in-r.html#cb10-9"></a><span class="kw">points</span>(bird<span class="op">$</span>logMass[<span class="dv">21</span>], bird<span class="op">$</span>logMaxAbund[<span class="dv">21</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;violet&quot;</span>)</span>
-<span id="cb10-10"><a href="linear-regression-in-r.html#cb10-10"></a><span class="kw">points</span>(bird<span class="op">$</span>logMass[<span class="dv">50</span>], bird<span class="op">$</span>logMaxAbund[<span class="dv">50</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;violet&quot;</span>)</span>
-<span id="cb10-11"><a href="linear-regression-in-r.html#cb10-11"></a></span>
-<span id="cb10-12"><a href="linear-regression-in-r.html#cb10-12"></a><span class="co"># We can also plot the confidence intervals</span></span>
-<span id="cb10-13"><a href="linear-regression-in-r.html#cb10-13"></a>confit &lt;-<span class="st"> </span><span class="kw">predict</span>(lm2, <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span>
-<span id="cb10-14"><a href="linear-regression-in-r.html#cb10-14"></a><span class="kw">points</span>(bird<span class="op">$</span>logMass, confit[, <span class="dv">2</span>])</span>
-<span id="cb10-15"><a href="linear-regression-in-r.html#cb10-15"></a><span class="kw">points</span>(bird<span class="op">$</span>logMass, confit[, <span class="dv">3</span>])</span></code></pre></div>
-<p><img src="images/yvxx_lm2.png" width="400" /></p>
-</div>
-<div id="subsetting" class="section level3">
-<h3><span class="header-section-number">4.2.6</span> Subsetting</h3>
-<p>We may also run the analysis on a subset of observations, for example,
-on terrestrial birds only.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="linear-regression-in-r.html#cb11-1"></a><span class="co"># Recall that you can exclude objects using &#39;!&#39;  We can</span></span>
-<span id="cb11-2"><a href="linear-regression-in-r.html#cb11-2"></a><span class="co"># analyze a subset of this data using this subset command</span></span>
-<span id="cb11-3"><a href="linear-regression-in-r.html#cb11-3"></a><span class="co"># in lm()</span></span>
-<span id="cb11-4"><a href="linear-regression-in-r.html#cb11-4"></a>lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> <span class="op">!</span>bird<span class="op">$</span>Aquatic)  <span class="co"># removing the Aquatic birds</span></span>
-<span id="cb11-5"><a href="linear-regression-in-r.html#cb11-5"></a></span>
-<span id="cb11-6"><a href="linear-regression-in-r.html#cb11-6"></a><span class="co"># or equivalently</span></span>
-<span id="cb11-7"><a href="linear-regression-in-r.html#cb11-7"></a>lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> bird<span class="op">$</span>Aquatic <span class="op">==</span></span>
-<span id="cb11-8"><a href="linear-regression-in-r.html#cb11-8"></a><span class="st">    </span><span class="dv">0</span>)</span>
-<span id="cb11-9"><a href="linear-regression-in-r.html#cb11-9"></a></span>
-<span id="cb11-10"><a href="linear-regression-in-r.html#cb11-10"></a><span class="co"># Examine the model</span></span>
-<span id="cb11-11"><a href="linear-regression-in-r.html#cb11-11"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb11-12"><a href="linear-regression-in-r.html#cb11-12"></a><span class="kw">plot</span>(lm3, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="kw">rgb</span>(<span class="dv">33</span>, <span class="dv">33</span>, <span class="dv">33</span>, <span class="dv">100</span>, <span class="dt">maxColorValue =</span> <span class="dv">225</span>))</span>
-<span id="cb11-13"><a href="linear-regression-in-r.html#cb11-13"></a><span class="kw">summary</span>(lm3)</span>
-<span id="cb11-14"><a href="linear-regression-in-r.html#cb11-14"></a><span class="kw">par</span>(opar)</span>
-<span id="cb11-15"><a href="linear-regression-in-r.html#cb11-15"></a></span>
-<span id="cb11-16"><a href="linear-regression-in-r.html#cb11-16"></a><span class="co"># Compare the two datasets</span></span>
-<span id="cb11-17"><a href="linear-regression-in-r.html#cb11-17"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb11-18"><a href="linear-regression-in-r.html#cb11-18"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">main =</span> <span class="st">&quot;All birds&quot;</span>,</span>
-<span id="cb11-19"><a href="linear-regression-in-r.html#cb11-19"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb11-20"><a href="linear-regression-in-r.html#cb11-20"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
-<span id="cb11-21"><a href="linear-regression-in-r.html#cb11-21"></a><span class="kw">abline</span>(lm2, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb11-22"><a href="linear-regression-in-r.html#cb11-22"></a></span>
-<span id="cb11-23"><a href="linear-regression-in-r.html#cb11-23"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> <span class="op">!</span>bird<span class="op">$</span>Aquatic,</span>
-<span id="cb11-24"><a href="linear-regression-in-r.html#cb11-24"></a>    <span class="dt">main =</span> <span class="st">&quot;Terrestrial birds&quot;</span>, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb11-25"><a href="linear-regression-in-r.html#cb11-25"></a><span class="st">        &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb11-26"><a href="linear-regression-in-r.html#cb11-26"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
-<span id="cb11-27"><a href="linear-regression-in-r.html#cb11-27"></a><span class="kw">abline</span>(lm3, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb11-28"><a href="linear-regression-in-r.html#cb11-28"></a><span class="kw">opar</span>(par)</span></code></pre></div>
+<p>The output of <code>summary()</code> contains several values:
+1. <code>Coefficients</code>: Estimates of the parameters and their standard deviation
+2. <code>Pr(&gt;|t|)</code>: Results of a t-test to determine if the parameters are different from 0
+3. <code>Adjusted R squared</code>: How well does the model explain the data?
+4. <code>F-statistic</code>(ANOVA): Is the model significantly different from a model with no predictor (null model)?</p>
+<p>We will discuss T-tests and ANOVA in the next section. However, we can already see that our model is only marginally better than the null model.</p>
+<p>With the <code>lm2</code> object, we can also extract the parameters of the model and the other results:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="linear-regression-in-r.html#cb37-1"></a><span class="co"># Vectors of residuals and predicted values</span></span>
+<span id="cb37-2"><a href="linear-regression-in-r.html#cb37-2"></a>e &lt;-<span class="st"> </span><span class="kw">residuals</span>(lm2)</span>
+<span id="cb37-3"><a href="linear-regression-in-r.html#cb37-3"></a>y &lt;-<span class="st"> </span><span class="kw">fitted</span>(lm2)</span>
+<span id="cb37-4"><a href="linear-regression-in-r.html#cb37-4"></a><span class="kw">coefficients</span>(lm2)  <span class="co"># coefficients</span></span></code></pre></div>
+<pre><code>## (Intercept)     logMass 
+##   1.6723673  -0.2361498</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="linear-regression-in-r.html#cb39-1"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>coefficients  <span class="co"># coefficients and T-tests</span></span></code></pre></div>
+<pre><code>##               Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)  1.6723673  0.2471519  6.766557 1.166186e-08
+## logMass     -0.2361498  0.1169836 -2.018658 4.869342e-02</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="linear-regression-in-r.html#cb41-1"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>adj.r.squared  <span class="co"># adjusted R squared</span></span></code></pre></div>
+<pre><code>## [1] 0.05483696</code></pre>
 </div>
 </div>
-<div id="challenge-1" class="section level2">
-<h2><span class="header-section-number">4.3</span> CHALLENGE 1</h2>
-<p>Examine the relationship between <em>log<sub>10</sub>(MaxAbund)</em> and <em>log<sub>10</sub>(Mass)</em>
-for passerine birds.<br />
-<code>HINT:</code> Passerine is coded 0 and 1 just like Aquatic. You can verify
-this by viewing the structure <code>str(bird)</code>.</p>
-<p>++++ Challenge 1: Solution |</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="linear-regression-in-r.html#cb12-1"></a>lm4 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> bird<span class="op">$</span>Passerine <span class="op">==</span></span>
-<span id="cb12-2"><a href="linear-regression-in-r.html#cb12-2"></a><span class="st">    </span><span class="dv">1</span>)</span>
-<span id="cb12-3"><a href="linear-regression-in-r.html#cb12-3"></a></span>
-<span id="cb12-4"><a href="linear-regression-in-r.html#cb12-4"></a><span class="co"># Examine the diagnostic plots</span></span>
-<span id="cb12-5"><a href="linear-regression-in-r.html#cb12-5"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb12-6"><a href="linear-regression-in-r.html#cb12-6"></a><span class="kw">plot</span>(lm4)</span>
-<span id="cb12-7"><a href="linear-regression-in-r.html#cb12-7"></a><span class="kw">summary</span>(lm4)</span>
-<span id="cb12-8"><a href="linear-regression-in-r.html#cb12-8"></a><span class="kw">par</span>(opar)</span>
-<span id="cb12-9"><a href="linear-regression-in-r.html#cb12-9"></a></span>
-<span id="cb12-10"><a href="linear-regression-in-r.html#cb12-10"></a><span class="co"># Compare variance explained by lm2, lm3 and lm4</span></span>
-<span id="cb12-11"><a href="linear-regression-in-r.html#cb12-11"></a><span class="kw">str</span>(<span class="kw">summary</span>(lm4))  <span class="co"># Recall: we want adj.r.squared</span></span>
-<span id="cb12-12"><a href="linear-regression-in-r.html#cb12-12"></a><span class="kw">summary</span>(lm4)<span class="op">$</span>adj.r.squared  <span class="co"># R2-adj = -0.02</span></span>
-<span id="cb12-13"><a href="linear-regression-in-r.html#cb12-13"></a><span class="kw">summary</span>(lm2)<span class="op">$</span>adj.r.squared  <span class="co"># R2-adj = 0.05</span></span>
-<span id="cb12-14"><a href="linear-regression-in-r.html#cb12-14"></a><span class="kw">summary</span>(lm3)<span class="op">$</span>adj.r.squared  <span class="co"># R2-adj = 0.25</span></span>
-<span id="cb12-15"><a href="linear-regression-in-r.html#cb12-15"></a></span>
-<span id="cb12-16"><a href="linear-regression-in-r.html#cb12-16"></a><span class="co"># Visually compare the three models</span></span>
-<span id="cb12-17"><a href="linear-regression-in-r.html#cb12-17"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb12-18"><a href="linear-regression-in-r.html#cb12-18"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">main =</span> <span class="st">&quot;All birds&quot;</span>,</span>
-<span id="cb12-19"><a href="linear-regression-in-r.html#cb12-19"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb12-20"><a href="linear-regression-in-r.html#cb12-20"></a><span class="st">        &quot;(Mass)&quot;</span>), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;yellowgreen&quot;</span>)</span>
-<span id="cb12-21"><a href="linear-regression-in-r.html#cb12-21"></a><span class="kw">abline</span>(lm2, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb12-22"><a href="linear-regression-in-r.html#cb12-22"></a></span>
-<span id="cb12-23"><a href="linear-regression-in-r.html#cb12-23"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">subset =</span> Passerine <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> bird,</span>
-<span id="cb12-24"><a href="linear-regression-in-r.html#cb12-24"></a>    <span class="dt">main =</span> <span class="st">&quot;Passerine birds&quot;</span>, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>),</span>
-<span id="cb12-25"><a href="linear-regression-in-r.html#cb12-25"></a>    <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Mass)&quot;</span>), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;violet&quot;</span>)</span>
-<span id="cb12-26"><a href="linear-regression-in-r.html#cb12-26"></a><span class="kw">abline</span>(lm4, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb12-27"><a href="linear-regression-in-r.html#cb12-27"></a></span>
-<span id="cb12-28"><a href="linear-regression-in-r.html#cb12-28"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> <span class="op">!</span>bird<span class="op">$</span>Aquatic,</span>
-<span id="cb12-29"><a href="linear-regression-in-r.html#cb12-29"></a>    <span class="dt">main =</span> <span class="st">&quot;Terrestrial birds&quot;</span>, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb12-30"><a href="linear-regression-in-r.html#cb12-30"></a><span class="st">        &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb12-31"><a href="linear-regression-in-r.html#cb12-31"></a><span class="st">        &quot;(Mass)&quot;</span>), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;skyblue&quot;</span>)</span>
-<span id="cb12-32"><a href="linear-regression-in-r.html#cb12-32"></a><span class="kw">abline</span>(lm3, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb12-33"><a href="linear-regression-in-r.html#cb12-33"></a><span class="kw">par</span>(opar)</span></code></pre></div>
-<p><strong>Conclusion:</strong> The best model among the three is lm3 (only terrestrial
-birds) <img src="images/lm2_lm3_lm4.png" width="850" /> ++++</p>
+<div id="model-interpretation" class="section level2">
+<h2><span class="header-section-number">4.3</span> Model interpretation</h2>
+<hr />
+<p>Model interpretation is the final step when we obtain a model that meets the assumptions. Interpretation is the evaluation of the model’s support for the hypothesis. In short, we answer the question: <em>To what extent does the model support our hypothesis?</em></p>
+<p><strong>Hypothesis</strong></p>
+<blockquote>
+<p>For different bird species, the <strong>average mass of an individual affects the maximum abundance</strong> of the species, due to ecological constraints (food sources, habitat availability, etc.).</p>
+</blockquote>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="linear-regression-in-r.html#cb43-1"></a><span class="co"># Summary of the linear model with log-transformed data</span></span>
+<span id="cb43-2"><a href="linear-regression-in-r.html#cb43-2"></a><span class="kw">summary</span>(lm2)</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = logMaxAbund ~ logMass, data = bird)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.93562 -0.39982  0.05487  0.40625  1.61469 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.6724     0.2472   6.767 1.17e-08 ***
+logMass      -0.2361     0.1170  -2.019   0.0487 *  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.6959 on 52 degrees of freedom
+Multiple R-squared:  0.07267,   Adjusted R-squared:  0.05484 
+F-statistic: 4.075 on 1 and 52 DF,  p-value: 0.04869</code></pre>
+<p>The <code>lm2</code> model has very <strong>little evidence to support</strong> the hypothesis. Looking at the parameters of the model as discussed above, we observe that the model explains little of the response.</p>
+<p>The low <code>Adjusted R squared</code> indicates that little of the variance in the response variable is explained by the model. Mass explains only a small fraction of the species abundance.</p>
+<p>The <code>F-test</code> is barely significant indicating that the model is only slightly better than a model without predictor variables.</p>
+<p>Finally, the estimated effect size (the coefficient) of the parameter <code>logMass</code> is very close to zero and is only marginally significant, i.e. an increase or decrease in species mass causes almost no change in their abundance.</p>
+<p>The results are not as good as we would like, perhaps we should formulate a more precise hypothesis?</p>
+<div id="finding-a-better-model-terrestrial-birds" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Finding a better model: terrestrial birds</h3>
+<p>Let us formulate a new and more precise hypothesis. This time let’s focus only on land birds. Waterfowl abundance may not respond to mass in the same way as land birds.</p>
+<p><strong>New hypothesis</strong></p>
+<blockquote>
+<p>For different bird species <span style="color:green"><strong>terrestrial</strong></span>, the <strong>average mass of an individual has an effect on the maximum abundance</strong> of the species, due to ecological constraints (food sources, habitat availability, etc.).</p>
+</blockquote>
+<p>We can now fit the linear model to exclude waterfowl:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="linear-regression-in-r.html#cb45-1"></a><span class="co"># Linear model with terrestrial birds</span></span>
+<span id="cb45-2"><a href="linear-regression-in-r.html#cb45-2"></a>lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> <span class="op">!</span>bird<span class="op">$</span>Aquatic)</span>
+<span id="cb45-3"><a href="linear-regression-in-r.html#cb45-3"></a><span class="co"># excludes waterfowls (!birdsAquatic == TRUE) or in an</span></span>
+<span id="cb45-4"><a href="linear-regression-in-r.html#cb45-4"></a><span class="co"># equivalent way: lm3 &lt;- lm(logMaxAbund~logMass, data=bird,</span></span>
+<span id="cb45-5"><a href="linear-regression-in-r.html#cb45-5"></a><span class="co"># subset=bird$Aquatic == 0)</span></span>
+<span id="cb45-6"><a href="linear-regression-in-r.html#cb45-6"></a></span>
+<span id="cb45-7"><a href="linear-regression-in-r.html#cb45-7"></a><span class="co"># Model output</span></span>
+<span id="cb45-8"><a href="linear-regression-in-r.html#cb45-8"></a>lm3</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logMaxAbund ~ logMass, data = bird, subset = !bird$Aquatic)
+## 
+## Coefficients:
+## (Intercept)      logMass  
+##      2.2701      -0.6429</code></pre>
+<p><img src="book-en_files/figure-html/unnamed-chunk-36-1.png" width="720" /></p>
+<p>From the diagnostic plots, we can conclude that the application conditions are met!</p>
+<p>Finally, the model provides <strong>evidence to support</strong> our hypothesis:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="linear-regression-in-r.html#cb47-1"></a><span class="kw">summary</span>(lm3)</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = logMaxAbund ~ logMass, data = bird, subset = !bird$Aquatic)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.78289 -0.23135  0.04031  0.22932  1.68109 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   2.2701     0.2931   7.744 2.96e-09 ***
+logMass      -0.6429     0.1746  -3.683 0.000733 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.6094 on 37 degrees of freedom
+Multiple R-squared:  0.2682,    Adjusted R-squared:  0.2485 
+F-statistic: 13.56 on 1 and 37 DF,  p-value: 0.000733</code></pre>
+<p>The <code>Adjusted R-squared</code> is 0.25, indicating that the model is a reasonably good fit to the data. The model is much better than a model without predictor variables. The <code>F-test</code> is significant (&lt; 0.05). The <code>T-test</code> shows that the estimate of the parameter “logMass” is clearly different from 0 and that mass has an effect on species abundance.</p>
+<hr />
+</div>
+</div>
+<div id="challenge-2" class="section level2">
+<h2><span class="header-section-number">4.4</span> Challenge 2</h2>
+<p>For the second challenge, let’s put all the steps together and try with new data:</p>
+<ol style="list-style-type: decimal">
+<li>Formulate another similar hypothesis about the maximum abundance and average mass of an individual, this time for passerine birds.</li>
+<li>Fit a <strong>model</strong> to evaluate this hypothesis, using the transformed variables (i.e. <code>logMaxAbund</code> and <code>logMass</code>). Save the model as <code>lm4</code>.</li>
+<li><strong>Verify assumptions</strong> of the linear model using the diagnostic plots.</li>
+<li>Interpret the results: Does the model provide <strong>evidence to support the hypothesis</strong>?</li>
+</ol>
+<blockquote>
+<p>Hint: Like aquatic species, passerines (variable <code>Passerine</code>) are coded 0/1 (check with <code>str(bird)</code>)</p>
+</blockquote>
+<div id="solutions" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Solutions</h3>
+<p><strong>Hypothesis</strong></p>
+<blockquote>
+<p>For different species of <span style="color:green"><strong>passers</strong></span>, the <strong>average mass of an individual affects the maximum abundance</strong> of the species, due to ecological constraints (food sources, habitat availability, etc.).</p>
+</blockquote>
+<p><strong>Fitting the model</strong></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="linear-regression-in-r.html#cb49-1"></a><span class="co"># Fitting a linear model on passerine birds</span></span>
+<span id="cb49-2"><a href="linear-regression-in-r.html#cb49-2"></a>lm4 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">subset =</span> bird<span class="op">$</span>Passerine <span class="op">==</span></span>
+<span id="cb49-3"><a href="linear-regression-in-r.html#cb49-3"></a><span class="st">    </span><span class="dv">1</span>)</span>
+<span id="cb49-4"><a href="linear-regression-in-r.html#cb49-4"></a>lm4</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logMaxAbund ~ logMass, data = bird, subset = bird$Passerine == 
+##     1)
+## 
+## Coefficients:
+## (Intercept)      logMass  
+##      1.2429       0.2107</code></pre>
+<p><strong>Verify assumptions of the linear model</strong></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="linear-regression-in-r.html#cb51-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb51-2"><a href="linear-regression-in-r.html#cb51-2"></a><span class="kw">plot</span>(lm4)</span></code></pre></div>
+<p><img src="book-en_files/figure-html/unnamed-chunk-40-1.png" width="768" /></p>
+<p><strong>Is it worth interpreting the results?</strong></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="linear-regression-in-r.html#cb52-1"></a><span class="kw">summary</span>(lm4)</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = logMaxAbund ~ logMass, data = bird, subset = bird$Passerine == 
+    1)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.24644 -0.20937  0.02494  0.25192  0.93624 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)   1.2429     0.4163   2.985  0.00661 **
+logMass       0.2107     0.3076   0.685  0.50010   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.5151 on 23 degrees of freedom
+Multiple R-squared:   0.02, Adjusted R-squared:  -0.02261 
+F-statistic: 0.4694 on 1 and 23 DF,  p-value: 0.5001</code></pre>
+<p>The results of the model should not be interpreted, because the assumptions of the linear model are not met!</p>
+</div>
+</div>
+<div id="linear-regression-in-r-2" class="section level2">
+<h2><span class="header-section-number">4.5</span> Linear regression in R</h2>
+<hr />
+<p>Performing a linear regression with R is divided into three steps:</p>
+<ol style="list-style-type: decimal">
+<li>Formulate and run a linear model based on a hypothesis</li>
+<li>Check the assumptions for the linear model</li>
+<li>Examine the output of the model and whether the conditions are met
+<ul>
+<li>Analyze the regression parameters</li>
+<li>Plot the model</li>
+<li>Perform significance tests on the parameter estimates (if necessary)</li>
+</ul></li>
+</ol>
+<p>We will explore each step in the following sections.</p>
+<p>Also, in the case where the assumptions are not met, we will see that it is possible to consider the use of a <em>Generalized Linear Model</em> (GLM) or data transformation.</p>
+</div>
+<div id="variable-names" class="section level2">
+<h2><span class="header-section-number">4.6</span> Variable names</h2>
+<hr />
+<p>Different terms are used for the <em>response</em> and the <em>predictor</em>, depending on the context and the scientific field. The terms are not always synonymous. Here are two tables to help you understand the jargon you will encounter.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">response</th>
+<th align="left">predictor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">explanatory var.</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">covariate</td>
+</tr>
+<tr class="odd">
+<td align="left">outcome</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">output var.</td>
+<td align="left">input var.</td>
+</tr>
+<tr class="odd">
+<td align="left">dependent var.</td>
+<td align="left">independent var.</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
@@ -736,7 +724,7 @@ birds) <img src="images/lm2_lm3_lm4.png" width="850" /> ++++</p>
           </div>
         </div>
       </div>
-<a href="linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-linear-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="t-test-and-anova.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

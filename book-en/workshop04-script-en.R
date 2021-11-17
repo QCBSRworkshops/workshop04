@@ -1,196 +1,271 @@
 ##Section: 01-preparing-for-the-workshop.R 
 
+# Install the required packages
+install.packages("dplyr")
+install.packages("vegan")
+install.packages("e1071")
+install.packages("MASS")
+install.packages("car")
+install.packages("effects")
 
+# Load the required packages
+library(dplyr)
+library(vegan)
+library(e1071)
+library(MASS)
+library(car)
+library(effects)
 
 
 ##Section: 02-introduction.R 
 
+# Import the "bidsdiet" dataset and save it in the "bird" object
+bird <- read.csv("data/birdsdiet.csv", stringsAsFactors = TRUE)
 
+# Explore the variables in the "bird" dataset
+str(bird)
+
+# Average maximum observed abundance
+mean(bird$MaxAbund)
+
+# Median of maximum observed abundance
+median(bird$MaxAbund)
+
+# Variance of the maximum observed abundance
+var(bird$MaxAbund)
+
+# Standard deviation of the maximum observed abundance
+sd(bird$MaxAbund)
+
+# plot the response in relation to the predictor
+plot(bird$Mass, bird$MaxAbund)
+
+plot(bird$Mass, bird$MaxAbund)
+abline(coef = c(70, -.03),  lwd = 1.5, lty = 2, col = palette()[2])
+abline(coef = c(20, -.005), lwd = 1.5, lty = 2, col = palette()[4])
+abline(coef = c(200, -.1),  lwd = 1.5, lty = 2, col = palette()[6])
 
 
 ##Section: 03-linear-models.R 
 
-# Loading libraries and bird dataset
-library(e1071)
-library(MASS)
-setwd("~/Desktop/...") # Don't forget to set your working directory (note: your directory will be different)
-bird<-read.csv("birdsdiet.csv")
+# Linear regression of maximum abundance against mass
+lm1 <- lm(MaxAbund ~ Mass, data = bird)
 
-# Visualize the dataframe
-names(bird)
-str(bird)
-head(bird)
-summary(bird)
-plot(bird)
+# Examination of the regression output
+lm1
 
-lm1 <- lm(bird$MaxAbund ~ bird$Mass) # where Y ~ X means Y "as a function of" X>
-
-opar <- par(mfrow=c(2,2)) # draws subsequent figures in a 2-by-2 panel
+# Plot the four diagnostic plots
+par(mfrow=c(2,2))
 plot(lm1)
-par(opar) # resets to 1-by-1 plot
 
-# Plot Y ~ X and the regression line
-plot(bird$MaxAbund ~ bird$Mass, pch=19, col="coral", ylab="Maximum Abundance",
-     xlab="Mass")
-abline(lm1, lwd=2)
-?plot # For further details on plot() arguments
-# see colours() for list of colours
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
 
-# Is the data normally distributed?
-hist(bird$MaxAbund,col="coral", main="Untransformed data",
-     xlab="Maximum Abundance")
-hist(bird$Mass, col="coral", main="Untransformed data", xlab="Mass")
+Diagnostic plot # 1 - Residuals vs Fitted
+  set.seed(1234564)
+  x <- rnorm(100,10,10)
+  y <- 2*x+0 + rnorm(100)
+  lm <- lm(y~x)
+  plot(lm, which = 1)
 
-# Test null hypothesis that the sample came from a normally distributed population
-shapiro.test(bird$MaxAbund)
-shapiro.test(bird$Mass)
-# If p < 0.05, then distribution is not-normal
-# if p > 0.05, then distribution is normal
+Example of non-independence of residuals
+par(mfrow=c(1,2))
+set.seed(1234564)
+x = rnorm(100,10,10)
+y = (x)^2 + rnorm(length(x),0,30)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Nonlinear", col.main="red")
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 
-skewness(bird$MaxAbund)
-skewness(bird$Mass)
-# where positive values indicate a left-skewed distribution, and negative value a right skew.
+Diagnostic plot # 2 - Scale Location
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm,which = 3)
 
-# Add log10() transformed variables to your dataframe
+Example of non-equal dispersion of the residuals
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm,which = 3)
+
+Diagnostic plot # 3 - Normal QQ
+set.seed(1234564)
+x <- 1:100
+y <- x + rnorm(100,sd=5)
+lm=lm(y~x)
+plot(lm, which = 2)
+
+Example of non-normal distribution of the residuals
+set.seed(2)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+lm=lm(y~scale(x))
+plot(lm, which = 2)
+
+Diagnostic plot # 4 - Residuals vs Leverage
+par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
+set.seed(1234564)
+x <- 1:20
+y <- rnorm(x, x, 2)
+lm0 <- lm(y ~ x)
+# plot 1
+plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 11); yy <- c(y, -3)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-18, 10, srt=0, adj = 0, labels = '* No leverage \n* Low influence', xpd = TRUE, cex = 1.5)
+# plot 2
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 30)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* No influence', xpd = TRUE, cex = 1.5)
+
+# plot 3
+plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 15, pch = 15)
+# add 20, 10 point to the new lm
+xx <- c(x, 30); yy <- c(y, 15)
+abline(lm(yy ~ xx), col = 2, lty = 3)
+text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* High influence', xpd = TRUE, cex = 1.5)
+
+Example of leverage
+set.seed(1234564)
+x = abs(rnorm(100,10,10))
+y = (x) + rnorm(length(x), 0, x)
+y[29] <- 100
+lm=lm(y~scale(x))
+plot(lm, which = 5, main = "High leverage and high influence")
+
+Verify assumptions of `lm1`
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm1)
+
+# Plot linear model and observations
+par(mfrow = c(1,2))
+coef(lm1) # constant and slope
+plot(MaxAbund ~ Mass, data=bird) # left plot
+abline(lm1) # line defined by the model parameters
+hist(residuals(lm1)) # plot on the right : distribution of residuals
+
+# Test the normality of residuals
+shapiro.test(residuals(lm1))
+
+# Skewness test
+library(e1071)
+skewness(residuals(lm1))
+
+# log-transform the variables
 bird$logMaxAbund <- log10(bird$MaxAbund)
 bird$logMass <- log10(bird$Mass)
-names(bird) # to view the dataframe + new transformed variables
 
-hist(bird$logMaxAbund,col="yellowgreen", main="Log transformed",
-     xlab=expression("log"[10]*"(Maximum Abundance)"))
-hist(bird$logMass,col="yellowgreen", main="Log transformed",
-     xlab=expression("log"[10]*"(Mass)"))
-shapiro.test(bird$logMaxAbund); skewness(bird$logMaxAbund)
-shapiro.test(bird$logMass); skewness(bird$logMass)
+# Linear model with transformed data
+lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 
-# Re-run your analysis with the appropriate transformations
-lm2 <- lm(bird$logMaxAbund ~ bird$logMass)
+# Diagnostic plots
+par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
+plot(lm2)
 
-# Are there remaining problems with the diagnostics (heteroscedasticity, non-independence, high leverage)?
-opar <- par(mfrow=c(2,2))
-plot(lm2, pch=19, col="gray")
-par(opar)
+# Plot linear model and observations
+par(mfrow = c(1,2))
+coef(lm2) 
+plot(logMaxAbund ~ logMass, data=bird)
+abline(lm2) 
+hist(residuals(lm2)) 
 
-# Now we can look at the model coefficients and p-values
+# Print fitted model parameters
 summary(lm2)
 
-# You can also just call up the coefficients of the model
-lm2$coef
+# Vectors of residuals and predicted values
+e <- residuals(lm2)
+y <- fitted(lm2)
+coefficients(lm2) # coefficients
+summary(lm2)$coefficients # coefficients and T-tests
+summary(lm2)$adj.r.squared # adjusted R squared
 
-# What else?
-str(summary(lm2))
-summary(lm2)$coefficients # where Std. Error is the standard error of each estimate
-summary(lm2)$r.squared # Coefficient of determination
-summary(lm2)$adj.r.squared # Adjusted coefficient of determination
-summary(lm2)$sigma # Residual standard error (square root of Error Mean Square)
-# etc…
+# Summary of the linear model with log-transformed data
+summary(lm2)
 
-# You can also check for yourself the equation for R2:
-SSE = sum(resid(lm2)^2)
-SST = sum((bird$logMaxAbund - mean(bird$logMaxAbund))^2)
-R2 = 1 - ((SSE)/SST)
-R2
+# Linear model with terrestrial birds
+lm3 <- lm(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
+# excludes waterfowls (!birdsAquatic == TRUE)
+# or in an equivalent way:
+# lm3 <- lm(logMaxAbund~logMass, data=bird, subset=bird$Aquatic == 0)
 
-plot(logMaxAbund ~ logMass, data=bird, pch=19, col="yellowgreen",
-                   ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = expression("log"[10]*"(Mass)"))
-abline(lm2, lwd=2)
+# Model output
+lm3
 
-# You may also flag the previously identified high-leveraged points
-points(bird$logMass[32], bird$logMaxAbund[32], pch=19, col="violet")
-points(bird$logMass[21], bird$logMaxAbund[21], pch=19, col="violet")
-points(bird$logMass[50], bird$logMaxAbund[50], pch=19, col="violet")
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm3)
 
-# We can also plot the confidence intervals
-confit<-predict(lm2,interval="confidence")
-points(bird$logMass,confit[,2])
-points(bird$logMass,confit[,3])
-
-# Recall that you can exclude objects using "!"
-# We can analyze a subset of this data using this subset command in lm()
-lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset =! bird$Aquatic) # removing the Aquatic birds
-
-# or equivalently
-lm3 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Aquatic == 0)
-
-# Examine the model
-opar <- par(mfrow=c(2,2))
-plot(lm3, pch=19, col=rgb(33,33,33,100,maxColorValue=225))
 summary(lm3)
-par(opar)
 
-# Compare the two datasets
-opar <- par(mfrow=c(1,2))
-plot(logMaxAbund ~ logMass, data=bird, main="All birds", ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"))
-abline(lm2,lwd=2)
-
-plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"), xlab = expression("log"[10]*"(Mass)"))
-abline(lm3,lwd=2)
-opar(par)
-
+# Fitting a linear model on passerine birds
 lm4 <- lm(logMaxAbund ~ logMass, data=bird, subset=bird$Passerine == 1)
+lm4
 
-# Examine the diagnostic plots
-opar <- par(mfrow=c(2,2))
+par(mfrow=c(2,2))
 plot(lm4)
+
+# Model assumptions
+par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
+plot(lm4)
+
 summary(lm4)
-par(opar)
-
-# Compare variance explained by lm2, lm3 and lm4
-str(summary(lm4)) # Recall: we want adj.r.squared
-summary(lm4)$adj.r.squared # R2-adj = -0.02
-summary(lm2)$adj.r.squared # R2-adj = 0.05
-summary(lm3)$adj.r.squared # R2-adj = 0.25
-
-# Visually compare the three models
-opar <- par(mfrow=c(1,3))
-plot(logMaxAbund ~ logMass, data=bird, main="All birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"), pch=19, col="yellowgreen")
-abline(lm2,lwd=2)
-
-plot(logMaxAbund ~ logMass, subset=Passerine == 1, data=bird, main="Passerine birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"), pch=19, col="violet")
-abline(lm4,lwd=2)
-
-plot(logMaxAbund ~ logMass, data=bird, subset=!bird$Aquatic, main="Terrestrial birds",
-     ylab = expression("log"[10]*"(Maximum Abundance)"),
-     xlab = expression("log"[10]*"(Mass)"), pch=19, col="skyblue")
-abline(lm3,lwd=2)
-par(opar)
 
 
 ##Section: 04-t-test-anova.R 
 
-# T-test
+# data and all requirements
+library(car)
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+bird$logMaxAbund <- log(bird$MaxAbund)
+bird$Diet <- as.factor(bird$Diet)
+
+source('images/figAnova.R')
+
+t.test(Y ~ X2, data= data, alternative = "two.sided",var.equal=TRUE)
+
 boxplot(logMass ~ Aquatic, data=bird, ylab=expression("log"[10]*"(Bird Mass)"),
         names=c("Non-Aquatic","Aquatic"),
         col=c("yellowgreen","skyblue"))
 
-# First, let's test the assumption of equal variance
-# Note: we do not need to test the assumption of normally distributed data since
-# we already log transformed the data above
-tapply(bird$logMass,bird$Aquatic,var)
+
+# Assumption of equal variance
 var.test(logMass~Aquatic,data=bird)
 
 # We are now ready to run the t-test
-ttest1 <- t.test(Mass~Aquatic, var.equal=TRUE, data=bird)
+ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
 
 # or equivalently
-ttest1 <- t.test(x=bird$logMass[bird$Aquatic==0], y=bird$logMass[bird$Aquatic==1], var.equal=TRUE)
+ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird)
 ttest1
 
-# Alternative T-test
+
+lm.t <- lm(logMass~Aquatic, data = bird)
+anova(lm.t)
+
+
+ttest1$statistic^2
+anova(lm.t)$F
+
+# Unilateral T-test
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="less")
+
+# Test de t en spécifiant l'argument "alternative"
 uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="less")
 uni.ttest1
 
-ttest.lm1 <- lm(logMass ~ Aquatic, data=bird)
-anova(ttest.lm1)
-
-ttest1$statistic^2
-anova(ttest.lm1)$F
+# Test de t en spécifiant l'argument "alternative"
+uni.ttest1 <- t.test(logMass~Aquatic, var.equal=TRUE, data=bird, alternative="greater")
+uni.ttest1
 
 # Default alphabetical order
 boxplot(logMaxAbund ~ Diet, data=bird)
@@ -202,6 +277,28 @@ boxplot(logMaxAbund ~ factor(Diet, levels=names(med)), data=bird, col=c("white",
 
 plot.design(logMaxAbund ~ Diet, data=bird, ylab = expression("log"[10]*"(Maximum Abundance)"))
 
+# Plot for diagnostics
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(aov1)
+par(opar)
+# Plot for diagnostics
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(aov1)
+par(opar)
+
+# Test assumption of normality of residuals
+shapiro.test(resid(aov1))
+
+# Test assumption of homogeneity of variance
+#Bartlett's test
+bartlett.test(logMaxAbund ~ Diet, data=bird)
+
+#Levene's test
+library(car)
+leveneTest(logMaxAbund ~ Diet, data = bird)
+
 # Using aov()
 aov1 <- aov(logMaxAbund ~ Diet, data=bird)
 summary(aov1)
@@ -210,17 +307,6 @@ summary(aov1)
 anov1 <- lm(logMaxAbund ~ Diet, data=bird)
 anova(anov1)
 
-# Plot for diagnostics
-opar <- par(mfrow=c(2,2))
-plot(anov1)
-par(opar)
-
-# Test assumption of normality of residuals
-shapiro.test(resid(anov1))
-
-# Test assumption of homogeneity of variance
-bartlett.test(logMaxAbund ~ Diet, data=bird)
-
 aov1 <- aov(logMaxAbund ~ Diet, data=bird)
 
 summary(aov1)
@@ -229,10 +315,17 @@ anov1 <- lm(logMaxAbund ~ Diet, data=bird)
 
 anova(anov1)
 
+aov1 <- aov(logMaxAbund ~ Diet, data=bird)
+anov1 <- lm(logMaxAbund ~ Diet, data=bird)
+summary(aov1)
+
 # Where does the Diet difference lie?
 TukeyHSD(aov(anov1),ordered=T)
 
 # or equivalently
+TukeyHSD(aov1,ordered=T)
+
+# Cette commande est équivalente à la précédente :
 TukeyHSD(aov1,ordered=T)
 
 # Graphical illustration of ANOVA model using barplot()
@@ -243,71 +336,151 @@ n <- length(bird$logMaxAbund)
 se <- 1.96*sd/sqrt(n)
 
 bp <- barplot(means, col=c("white","lightblue1","skyblue1","skyblue3","skyblue4"),
-       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,1.8))
+       ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet", ylim=c(0,5))
 
 # Add vertical se bars
 segments(bp, means - se, bp, means + se, lwd=2)
 # and horizontal lines
 segments(bp - 0.1, means - se, bp + 0.1, means - se, lwd=2)
 segments(bp - 0.1, means + se, bp + 0.1, means + se, lwd=2)
+#add a line at 0
+abline(h=0)
+
+
+tapply(bird$logMaxAbund, bird$Diet, mean)
+coef(anov1)
+coef(anov1)[1] + coef(anov1)[2] # InsectVert
+coef(anov1)[1] + coef(anov1)[3] # Plant
+
+
+summary(anov1)
 
 bird$Diet2 <- relevel(bird$Diet, ref="Plant")
 anov_rl <- lm(logMaxAbund ~ Diet2, data=bird)
 summary(anov_rl)
 anova(anov_rl)
 
-contrasts(bird$Diet2)
-
-contrasts(bird$Diet2) <- cbind(c(4,-1,-1,-1,-1), c(0,1,1,-1,-1), c(0,0,0,1,-1), c(0,1,-1,0,0))
-
-sum(contrasts(bird$Diet)[,1]) # first condition for column 1
-sum(contrasts(bird$Diet)[,1]*contrasts(bird$Diet)[,2]) # second condition for column 1 and 2
-
-anov2 <- lm(logMaxAbund ~ Diet*Aquatic, data=bird)
-opar <- par(mfrow=c(2,2))
-plot(anova2)
-par(opar)
+med <- sort(tapply(bird$logMaxAbund, bird$Diet, median))
+bird$Diet2 <- factor(bird$Diet, levels=names(med))
+anov2 <- lm(logMaxAbund ~ Diet2,data = bird)
 summary(anov2)
 anova(anov2)
 
-anov3 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
-anova(anov3, anov2)
+bird$Diet2 <- relevel(bird$Diet, ref="Plant")
+contrasts(bird$Diet2)
+
+sum(contrasts(bird$Diet2)[,1]) # first condition for column 1
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # second condition for column 1 and 2
+
+options(contrasts=c("contr.helmert", "contr.poly"))
+sum(contrasts(bird$Diet2)[,1]) 
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) 
+
+anov3 <- lm(logMaxAbund ~ Diet, data = bird)
+summary(anov3)
+
+contrasts(bird$Diet2) <- cbind(c(4,-1,-1,-1,-1), c(0,1,1,-1,-1), c(0,0,0,1,-1), c(0,1,-1,0,0))
+contrasts(bird$Diet2)
+
+sum(contrasts(bird$Diet2)[,1]) # first condition for column 1
+sum(contrasts(bird$Diet2)[,1]*contrasts(bird$Diet2)[,2]) # second condition for column 1 and 2
+
+aov <- lm(Y ~ X, data)
+
+aov <- lm(Y ~ X1 * X2 * ..., data)
+
+aov <- lm(Y ~ X1 + X2 + ..., data)
+
+anov4 <- lm(logMaxAbund ~ Diet*Aquatic, data=bird)
+opar <- par(mfrow=c(2,2))
+plot(anov4)
+par(opar)
+
+anova(anov4)
+
+anov5 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
+anova(anov5, anov4)
 
 interaction.plot(bird$Diet, bird$Aquatic, bird$logMaxAbund, col="black",
                  ylab = expression("log"[10]*"(Maximum Abundance)"), xlab="Diet")
 
 table(bird$Diet, bird$Aquatic)
 
-anova(anov1,anov3) # Recall: anov1 is model with only Diet as a factor
+anova(anov1,anov5) # Recall: anov1 is model with only Diet as a factor
+
+table(bird$Aquatic)
 
 unb_anov1 <- lm(logMaxAbund ~ Aquatic + Diet, data=bird)
 unb_anov2 <- lm(logMaxAbund ~ Diet + Aquatic, data=bird)
 anova(unb_anov1)
 anova(unb_anov2)
 
+library(car)
 Anova(unb_anov1,type="III")
+Anova(unb_anov2,type="III")
 
 
 ##Section: 05-ancova.R 
+
+# data and all requirements
+library(car)
+library(effects)
+bird <- read.csv('data/birdsdiet.csv')
+
+bird$logMass <- log(bird$Mass)
+bird$logMaxAbund <- log(bird$MaxAbund)
+bird$Diet <- as.factor(bird$Diet)
+
+functions
+f1 <- function(x, a, b) {
+  return(x*a+b)
+}
+# conf for plot
+col = rgb(118, 143, 175, maxColorValue = 255)
+x <- 1:20
+par(mfrow = c(1, 3), mar = c(1, 1, 6.5, 4))
+# plot 1
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=0.6,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('One level of the factor\n has a different slope', side = 3, line = 2, cex = 1.5)
+# plot 2
+plot(x, f1(x, a=.5,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=0.01,b=40), lwd = 2.5, col = col)
+mtext('Many levels have\n different slopes', side = 3, line = 2, cex = 1.5)
+# plot 3
+plot(x, f1(x, a=1.1,b=2), ylim = c(0, 60), type = 'l', lwd = 2.5, xaxt = "n", yaxt = "n", xlab = "", ylab = "", bty='l', col = col)
+lines(f1(x, a=1.1,b=17), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=22), lwd = 2.5, col = col)
+lines(f1(x, a=1.1,b=40), lwd = 2.5, col = col)
+mtext('No interaction', side = 3, line = 2, cex = 1.5)
 
 ancova.example <- lm(uptake ~ conc*Treatment, data=CO2)
 anova(ancova.example)
 
 install.packages("effects")
 library(effects)
-adj.means <- effect('Treatment', ancova.example)
-plot(adj.means)
 
-adj.means <- effect('conc*Treatment', ancova.example)
-plot(adj.means)
+
+adj.means.ex <- effect('Treatment', ancova.example)
+plot(adj.means.ex)
+
+str(bird)
 
 # If you did the section on Contrasts above, you will need to reset the contrast to Treatment for ease of
 # comparison using the ''options()'' function
 # Otherwise, skip the first line of code below
 options(contrasts=c("contr.treatment", "contr.poly"))
+
+#solution
 ancov1 <- lm(logMaxAbund ~ logMass*Diet, data=bird)
-summary(ancov1)
 anova(ancov1)
+
+summary(ancov1)
+
 
 ancov2 <- lm(logMaxAbund ~ logMass + Diet, data=bird)
 
@@ -328,60 +501,92 @@ abline(a=sum(coef(ancov1)[1]+coef(ancov1)[6]),b=sum(coef(ancov1)[2]+coef(ancov1)
 
 ##Section: 06-multiple-regression.R 
 
-vif(clDD ~ clFD + clTmi + clTma + clP + grass, data=Dickcissel)
+Dickcissel = read.csv("data/dickcissel.csv")
+str(Dickcissel)
 
-hist(Dickcissel$abund, main="", xlab="Dickcissel abundance")
-shapiro.test(Dickcissel$abund)
-skewness(Dickcissel$abund)
-summary(Dickcissel$abund)
-
-hist(log10(Dickcissel$abund+0.1), main="", xlab=expression("log"[10]*"(Dickcissel Abundance + 0.1)"))
-shapiro.test(log10(Dickcissel$abund+0.1))
-skewness(log10(Dickcissel$abund+0.1))
-
-lm.mult <- lm(abund ~ clTma + NDVI + grass, data=Dickcissel)
+# Multiple regression
+lm.mult <- lm(abund ~ clTma + NDVI + grass, data = Dickcissel)
 summary(lm.mult)
 
-plot(abund ~ clTma, data=Dickcissel, pch=19, col="orange")
-plot(abund ~ NDVI, data=Dickcissel, pch=19, col="skyblue")
-plot(abund ~ grass, data=Dickcissel, pch=19, col="green")
+# Assumptions
+par(mfrow = c(2, 2))
+par(mfrow=c(2,2), mar = c(3.9,4,1.2,1.1), oma =c(0,0,0,0))
+plot(lm.mult)
 
-lm.linear <- lm(abund ~ clDD, data=Dickcissel)
-lm.quad <- lm(abund ~ clDD + I(clDD^2), data=Dickcissel)
-lm.cubic <- lm(abund ~ clDD + I(clDD^2) + I(clDD^3), data=Dickcissel)
+summary(lm.mult)$coefficients
 
-anova(lm.linear,lm.quad,lm.cubic) # list models in increasing complexity
-# We should take the lowest line that has a significant p-value
+# Plot the response vs predictor variables
+par(mfrow=c(1,3), mar=c(4, 4, 0.5, 0.5), cex = 1)
+plot(abund ~ clTma, data = Dickcissel)
+plot(abund ~ NDVI,  data = Dickcissel)
+plot(abund ~ grass, data = Dickcissel)
 
-# Examine the summary
+
+poly.reg=data.frame(Degree = 0:5,
+                    Name = c("Constant","Linear","Quadratic",
+                             "Cubic","Quartic","Quintic"),
+                    Example = c("\\(3\\)",
+                                "\\(x+9\\)",
+                                "\\(x^2-x+4\\)",
+                                "\\(x^3-x^2+5\\)",
+                                "\\(6x^4-x^3+x-2\\)",
+                                "\\(x^5-3x^3+x^2+8\\)"))
+knitr::kable(poly.reg, format = "html", escape=FALSE)
+
+lm.linear <- lm(abund ~ clDD, data = Dickcissel)
+lm.quad   <- lm(abund ~ clDD + I(clDD^2), data = Dickcissel)
+lm.cubic  <- lm(abund ~ clDD + I(clDD^2) + I(clDD^3), data = Dickcissel)
+
+
+summary(lm.linear)
 summary(lm.quad)
-# Regression coefficients
-summary(lm.quad)$coefficients[,1]
-# Estimate p-values
-summary(lm.quad)$coefficients[,4]
-# R2-adj
-summary(lm.quad)$adj.r.squared
+summary(lm.cubic)
 
-lm.full <- lm(abund ~ . - Present, data=Dickcissel)
-lm.step <- step(lm.full)
-summary(lm.step)
+mod <- lm(clDD ~ clFD + clTmi + clTma + clP + grass, data = Dickcissel)
+car::vif(mod)
 
-part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")],
-                  Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
+library(vegan)
+part.lm = varpart(Dickcissel$abund, Dickcissel[,c("clDD","clFD","clTmi","clTma","clP")],
+Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
 part.lm
 
-# Climate set
-out.1 = rda(Dickcissel$abund, Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")],
-            Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")])
-anova(out.1, step=1000, perm.max=1000)
-
-# Land cover set
-out.2 = rda(Dickcissel$abund, Dickcissel[,c("broadleaf", "conif", "grass", "crop", "urban", "wetland")],
-        Dickcissel[,c("clDD", "clFD", "clTmi", "clTma", "clP")])
-anova(out.2, step=1000, perm.max=1000)
-
+par(mar=rep(0.5,4))
 showvarparts(2)
-plot(part.lm,digits=2, bg=rgb(48,225,210,80,maxColorValue=225), col="turquoise4")
+
+?showvarparts
+# With two explanatory tables, the fractions
+# explained uniquely by each of the two tables
+# are ‘[a]’ and ‘[c]’, and their joint effect
+# is ‘[b]’ following Borcard et al. (1992).
+
+par(mar=rep(0.5,4))
+plot(part.lm,
+     digits = 2,
+     bg = rgb(48,225,210,80,
+              maxColorValue=225),
+     col = "turquoise4")
+
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
+
+out.1 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("clDD", "clFD","clTmi","clTma","clP")],
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban","wetland")])
+out.2 = rda(Dickcissel$abund,
+            Dickcissel[ ,c("broadleaf","conif","grass","crop", "urban", "wetland")],
+            Dickcissel[ ,c("clDD","clFD","clTmi", "clTma","clP")])
+
+# Climate
+anova(out.1, step = 1000, perm.max = 1000)
+
+# Land cover
+anova(out.2, step = 1000, perm.max = 1000)
 
 
 ##Section: 07-final-considerations.R 
