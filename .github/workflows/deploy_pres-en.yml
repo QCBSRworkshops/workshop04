@@ -29,6 +29,8 @@ jobs:
           
   presentation-en-job:
     name: Render the presentation for this workshop
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}    
     runs-on: ubuntu-latest
     defaults:
       run:
