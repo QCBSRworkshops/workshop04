@@ -1610,11 +1610,11 @@ Here, the ratio of variances is not statistically different from `1`.
 
 Next, we must meet the assumption of homogeneity of variances.
 
-**Option 2.** Use `leveneTest()` to computes Levene's test for homogeneity of variance across groups.
+**Option 2.** Use `car::leveneTest()` to computes Levene's test for homogeneity of variance across groups.
 
 ```{r}
-leveneTest(logMass ~ as.factor(Aquatic), 
-           data = bird)
+car::leveneTest(logMass ~ as.factor(Aquatic), 
+                data = bird)
 ```
 
 The null hypothesis for Levene's test is that all groups have equal population variances.
