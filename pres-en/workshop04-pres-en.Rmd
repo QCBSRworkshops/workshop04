@@ -1288,9 +1288,9 @@ summary(lm3)
 .center[*How well does the model support our hypothesis?*]
 
 .pull-left[
-The model provides evidence in support of the hypothesis, because:
+The model provides evidence to reject the null hypothesis, and:
 
-- The model is clearly better than a model without any predictor variables (*F-test*).
+- It is clearly better than a model without any predictor variables (*F-test*).
 - The parameter estimate for `logMass` is clearly different from `0` (*t-test*).
 - The model fits the data reasonably well (*adjusted R-squared*).
 
@@ -1305,10 +1305,10 @@ The model provides evidence in support of the hypothesis, because:
 .pull-right[
 
 ![Frequency distribution of a r2 from meta-analyses in biology for studies with the effect size Pearson’s r (n=93) and b Hedges’ d (n=136)](images/r_squared_ecology.png)
-.xsmall[Frequency distribution of a $R^2$ from meta-analyses in biology for studies with the effect size Pearson’s $r$ (n=93).]
-]
 
-.xsmall[Møller & Jennions. _How much variance can be explained by ecologists and evolutionary biologists?_ Oecologia 132, 492–500. [2002](https://doi.org/10.1007/s00442-002-0952-2.]
+.xsmall[Frequency distribution of R-squared from meta-analyses in biology for studies with the effect size Pearson’s r (n=93) ([Møller & Jennions, 2002 Oecologia](https://doi.org/10.1007/s00442-002-0952-2.)).]
+
+]
 
 ---
 # Challenge 2 ![:cube]()
