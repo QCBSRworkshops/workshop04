@@ -31,7 +31,20 @@ options(repos=structure(c(CRAN="http://cran.r-project.org")))
 class: inverse, center, middle
 
 ```{r install_pkgs, message=FALSE, warning=FALSE, include=FALSE, results=0}
+
 # Standard procedure to check and install packages and their dependencies, if needed.
+
+# Install xaringanExtra and countdown
+if(nzchar(system.file(package = "xaringanExtra")) == FALSE) {
+  remotes::install_github("gadenbuie/xaringanExtra", 
+                          upgrade = "always", 
+                          quiet = TRUE)
+  }
+if(nzchar(system.file(package = "countdown")) == FALSE) {
+  remotes::install_github("gadenbuie/countdown", 
+                          upgrade = "always", 
+                          quiet = TRUE)
+  }
 
 list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effects')
 
@@ -54,7 +67,72 @@ if(length(new.packages) > 0) {
 
 ---
 
-# Required packages & data
+<p style="font-size:60%">
+
+.center[
+**Contributors to the development of this workshop**
+
+by modifying and improving its content as part of the <br> *Le*arning *a*nd *D*evelopment *A*ward
+]
+
+.pull-left[
+.right[
+ **2022** - **2021** - **2020**
+
+[Victor Cameron]()
+
+[Laurie Maynard]()
+
+[Daniel Schoenig]()
+
+<br>
+
+**2019** - **2018** - **2017**
+
+[Willian Vieira]()
+
+[Shaun Turney]()
+
+[Marie-Hélène Brice]()
+
+[Katherine Hébert]()
+
+]
+]
+
+.pull-right[
+.left[
+
+**2016** - **2015** - **2014**
+
+[Catherine Baltazar]()
+
+[Bérenger Bourgeois]()
+
+[Zofia Taranu]()
+
+[Shaun Turney]()
+
+[Maxwell Farrell]()
+
+[Emmanuelle Chrétien]()
+
+[Vincent Fugère]()
+
+]
+]
+
+</p>
+
+---
+
+# Required material
+
+To follow this workshop, you are required to have downloaded and installed the latest [RStudio](https://rstudio.com/products/rstudio/download/#download) and [R](https://cran.rstudio.com/) versions.
+
+.pull-left3[
+You must also use these packages:
+
 
 * [dplyr](https://cran.r-project.org/package=dplyr)
 * [vegan](https://cran.r-project.org/package=vegan)
@@ -65,16 +143,31 @@ if(length(new.packages) > 0) {
 
 <br>
 
-```R
-install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effects'))
+All workshop materials are found at [r.qcbs.ca/workshops/r-workshop-04/](https://r.qcbs.ca/workshops/r-workshop-04/).
+
+]
+
+.pull-right3[
+
+To install them from CRAN, run:
+
+```{r, echo = TRUE, eval = FALSE}
+install.packages(
+  c('dplyr', 
+    'vegan', 
+    'e1071', 
+    'MASS', 
+    'car', 
+    'effects')
+)
 ```
-<br><br>
-Download the datasets and additional R scripts for this workshop on [r.qcbs.ca](https://r.qcbs.ca/workshops/r-workshop-04/).
+
+]
 
 ---
-# Linear models
+# Learning objectives
 
-.large[-Learn the structure of a linear models and its *different variants*]
+.large[Learn the structure of a linear models and its *different variants*]
 
 --
 
@@ -89,13 +182,13 @@ Presenter notes: This flow chats represents all the variants of a linear modal t
 ---
 # Learning objectives
 
-.large[-Learn the structure of a linear models and its different variants]
+.large[Learn the structure of a linear models and its different variants]
 <br>
 <br>
-.large[-Learn how to perform a linear model with R with `lm()` and `anova()`]
+.large[Learn how to perform a linear model with R with `lm()` and `anova()`]
 <br>
 <br>
-.large[-Learn how to identify when assumptions are not met and ways to fix it]
+.large[Learn how to identify when assumptions are not met and ways to fix it]
 
 ---
 
@@ -150,7 +243,7 @@ Presenter notes: This flow chats represents all the variants of a linear modal t
 
 # Example: Abundance and mass of bird species
 
-#### Let's have a look at the data ...
+#### Let us have a look at the data...
 
 Import the `birdsdiet` dataset:
 
@@ -178,7 +271,7 @@ str(bird)
 
 # Example: Abundance and mass of bird species
 
-#### Let's have a look at the data ...
+#### Let us have a look at the data...
 
 .pull-left[
 Common **measures of location** (central tendency):
@@ -216,7 +309,7 @@ sd(bird$MaxAbund)
 
 - This is only meant to recall the basics. 
 - Participants who are struggling with these measures may have a hard time understanding the other concepts presented in the course.
-- Yes, there are other types of means taht we usually don't need for linear models: geometric, harmonic, ...
+- Yes, there are other types of means that we usually don't need for linear models: geometric, harmonic, ...
 - The definition for the median is omitted because it can be confusing to some participants: $\mathrm {median} (x)={\frac {1}{2}}(x_{\lfloor (n+1)/2\rfloor }+x_{\lceil (n+1)/2\rceil })$
 
 ---
@@ -230,7 +323,7 @@ plot(bird$Mass, bird$MaxAbund)
 ```
 
 ???
-- Make sure participantes understand how the plot is related to the hypothesis!
+- Make sure participants understand how the plot is related to the hypothesis!
 
 ---
 
@@ -262,10 +355,11 @@ abline(coef = c(200, -.1),  lwd = 1.5, lty = 2, col = palette()[6])
 #### Variables
 
 - $y_i$ is an observation of the **response** $y$  
-  (e.g. maximum abundance of species $i$)
+  (*e.g.* maximum abundance of species $i$)
 
 - $x_i$ is a corresponding observation of the **predictor** $x$  
-  (e.g. average weight of an individual of species $i$)
+  (*e.g.* average weight of an individual of species $i$)
+<br>
 
 #### Assumed relationship
 
@@ -364,36 +458,43 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 # Notation for linear models
 
-#### Mathematical notation (for manuscripts)
+##### Mathematical notation (for manuscripts)
 
 - Individual observations:  
   $y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$
-
 <br>
 
 - All observations (matrix notation, intercept included in $\mathbf{X}$ and $\boldsymbol{\beta}$):   
   $\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$  
 
-<br>
+--
 
-#### R notation
+##### `R` notation: compact symbolic form
 
 .pull-left[
-- Model formula:  
-  ```{r, eval=FALSE}
-  y ~ 1 + x
-  ```  
+Model formula:  
+```{r, eval=FALSE}
+y ~ 1 + x
+```  
 ]
 
 .pull-right[
-- Or even simpler: 
-  ```{r, eval=FALSE}
-  y ~ x
-  ```  
-  (also includes intercept)
+Or, even simpler: 
+```{r, eval=FALSE}
+y ~ x
+```  
+(also includes intercept)
 ]
-  
-.alert[Never mix different kinds of notation!]
+
+--
+
+Which are the same as defining the `x` and `y` arguments:
+```{r, eval=FALSE}
+y = variable_name, x = variable_name, ...
+```  
+
+
+.center[.alert[Never mix different kinds of notation!]]
 
 
 ???
@@ -427,13 +528,13 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 ---
 class: inverse, center, middle
 
-# Linear regression in R
+# Linear regression in `R`
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
-Back to the birds ...
+Back to the birds...
 
 ```{r}
 plot(bird$Mass, bird$MaxAbund)
@@ -441,27 +542,35 @@ plot(bird$Mass, bird$MaxAbund)
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### Model formulation
 
-> *Hypothesis*: For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
+> *Hypothesis*: For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (*e.g.*, food sources, habitat availability).
 
 --
 
 **Model equation**
 
-$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$
+$$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$$
 
 <br>
 
 --
 
-**Model formula in R**:
+**Model formula in `R`**:
 
+.pull-left[
+Compact symbolic form
 ```{r, eval=FALSE}
 MaxAbund ~ Mass
 ```
+]
+
+.pull-right[
+
+]
+
 
 ???
 - Model formulation can be posed as a question to the participants
@@ -469,7 +578,7 @@ MaxAbund ~ Mass
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 .center[.small[
 **Step 1**   
@@ -508,7 +617,7 @@ Go back to Step 1 with transformed variables
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 1.** Fit a linear model
 
@@ -526,7 +635,7 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 1.** Fit a linear model
 
@@ -554,7 +663,7 @@ lm1
 - We don't know if can trust the estimates -- for that we need step 2
 
 ---
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 2.** Verify assumptions using diagnostic plots of the residuals
 
@@ -575,7 +684,7 @@ plot(lm1)
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 2.** Verify assumptions using diagnostic plots of the residuals
 
@@ -615,9 +724,9 @@ plot(lm1)
 - The random scatter is sometimes described as "stars in the night sky"
 
 ---
-# Diagnostic plot # 1 - Residuals vs Fitted
+# Diagnostic plot # 1 - Residuals vs. Fitted
 
-.alert[What should make use suspicious:]
+.alert[What should make you suspicious:]
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
@@ -634,18 +743,18 @@ plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 ```
 
 **What to do:**
-- Use a **generalized linear model** (GLM) instead that allows for other distributions: Poisson, binomial, negative binomial, etc.)
-- Attempt **transformation** of the response and/or predictor variables
+- Use a **generalized linear model** (GLM) instead that allows for other error distributions, such as Poisson, binomial, negative binomial.
+- Attempt **transforming** the response and/or predictor variables
 
 ???
 - Explain that "heteroscedastic" is the opposite of "homoscedastic", meaning that the normality assumption is violated.
 
 ---
 
-# Diagnostic plot # 2 - Scale Location
+# Diagnostic plot # 2 - Scale-Location
 
 **What we see:**  
-* **Y**-axis: Square root of standardized residuals $\sqrt{\frac{\epsilon_i}{\sigma}}$
+* **Y**-axis: Square-root of standardized residuals $\sqrt{\frac{\epsilon_i}{\sigma}}$
 * **X**-axis: Fitted values $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
 
 <span style="color:green">**What we hope to see:**</span> Random scatter, no pattern 
@@ -660,11 +769,18 @@ lm=lm(y~x)
 plot(lm,which = 3)
 ```
 
+
+???
+
+We want the red line to be approximately horizontal, so that the average magnitude of the standardized residuals does not change much as a function of the fitted values.
+
+We also want  the spread around the red line to not vary  vary with the fitted values.
+
 ---
 
-# Diagnostic plot # 2 - Scale Location
+# Diagnostic plot # 2 - Scale-Location
 
-.alert[What should make use suspicious:]
+.alert[What should make you suspicious:]
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(2)
@@ -677,11 +793,12 @@ plot(lm,which = 3)
 .center[*Strong pattern in the residuals*]
 
 ???
-- What to do? Same as plot #1
+
+- What to do? Same as plot #1.
 
 ---
 
-# Diagnostic plot # 3 - Normal QQ
+# Diagnostic plot # 3 - Normal Quantile-Quantile
 
 **What we see:**  
 * **Y**-axis: Standardized residuals $\frac{\epsilon_i}{\sigma}$
@@ -703,7 +820,7 @@ plot(lm, which = 2)
 
 ---
 
-# Diagnostic plot # 3 - Normal QQ
+# Diagnostic plot # 3 - Normal Quantile-Quantile
 
 .alert[What should make use suspicious:]
 
@@ -720,7 +837,7 @@ plot(lm, which = 2)
 
 ---
 
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs. Leverage
 
 **Why:**
 
@@ -732,19 +849,24 @@ plot(lm, which = 2)
 
 ---
 
-# Examples: Leverage and influence
+### Examples: Leverage and influence
 
 .center[.small[
-These plots show the response vs. the predictor.  
+These plots show the response _versus_ the predictor.  
 *They are* **not** *the diagnostic plots*. 
 ]]
 
-```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
-par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
+```{r, echo=FALSE, fig.height=7.8, fig.width=7.5, warning=FALSE}
+par(mfrow=c(3, 1), 
+    mar = c(4, 15, 1, 3), 
+    cex = 1.2)
+
 set.seed(1234564)
+
 x <- 1:20
 y <- rnorm(x, x, 2)
 lm0 <- lm(y ~ x)
+
 # plot 1
 plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
 # add 20, 10 point to the new lm
@@ -752,7 +874,8 @@ xx <- c(x, 11); yy <- c(y, -3)
 abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-18, 10, srt=0, adj = 0, labels = '* No leverage \n* Low influence', xpd = TRUE, cex = 1.5)
 # plot 2
-plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
+plot(x, y, ylim = c(-4, 32), 
+     xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 30)
 abline(lm(yy ~ xx), col = 2, lty = 3)
@@ -771,12 +894,12 @@ text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* High influence', xpd
 - To avoid confusion: These are not diagnostic plots!
 
 ---
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs. Leverage
 
 **What we see:**  
 * **Y**-axis: Standardized residuals $\frac{\epsilon_i}{\sigma}$
 * **X**-axis: Leverage
-* Dashed red line: Cook's distance of 0.5
+* Dashed red line: Cook's distance of 0.5 units
 
 <span style="color:green">**What we hope to see:**</span> No leverage points with high influence
 
@@ -797,13 +920,11 @@ plot(lm, which = 5, main = "Leverage point with low influence",  col.main=palett
 
 ---
 
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs. Leverage
 
-.alert[What should make use suspicious:]
+.alert[What should make you suspicious:]
 
-<br />
-
-```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
+```{r, echo=FALSE, fig.height=6, fig.width=7, warning=FALSE}
 set.seed(1234564)
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
@@ -813,8 +934,7 @@ plot(lm, which = 5, main = "High leverage and high influence")
 ```
 
 <br>
-
-.alert[You should never remove outliers unless you have very good reasons to do so]
+.alert[You should never remove outliers unless you have exceptional reasons to do it.]
 
 ???
 - Point 29 has high leverage and a Cook's distance of > 0.5
@@ -824,17 +944,17 @@ plot(lm, which = 5, main = "High leverage and high influence")
 
 # **Step 2**. Verify assumptions of `lm1`
 
-```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
+```{r, eval=FALSE, fig.height=6, fig.width=7.5}
 par(mfrow=c(2,2))
 plot(lm1)
 ```
 
-```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+```{r, echo=FALSE, fig.height=6, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
 
-**Group discussion:** Does `lm1` violate any assumptions of the linear model?
+**Group discussion:** Does `lm1` violate any of the assumptions from linear models?
 
 ???
 
@@ -843,9 +963,9 @@ plot(lm1)
 - Plot 4: point 32 has high leverage and (very) high influence
 
 ---
-# Assumptions not met - what is wrong?
+# Some assumptions are not met: what is wrong?
 
-Let's plot our model on top of the observations
+Let us plot our model on top of the observations:
 
 ```{r, fig.height=4, fig.width=11}
 par(mfrow = c(1,2))
@@ -856,7 +976,7 @@ hist(residuals(lm1)) # right plot: distribution of residuals
 ```
 
 ---
-# Assumptions not met - what is wrong?
+# Some assumptions are not met: what is wrong?
 
 To see if the residuals follow a normal distribution, we can also use the *Shapiro-Wilk* and *Skewness* tests:
 
@@ -866,32 +986,46 @@ shapiro.test(residuals(lm1))
 library(e1071)
 skewness(residuals(lm1))
 ```
-.comment[Distribution is significantly different from a normal distribution, and left-skewed (positive skewness)]
+
+.comment[The distribution is significantly different from a normal distribution, and is left-skewed (positive skewness).]
 
 
 ---
-# Assumptions not met - how to proceed?
+# Some assumptions are not met: what now?
 
 *There are two options when assumptions of the linear model are not satisfied:*
 
 <br>
 
-1. Use a **different type of model** better suited to the hypothesis and data (QCBS R workshops 6 - 8).
-2. Attempt **transformation** of the predictor and / or response variables
+1. Use a **different type of model** better suited to the hypothesis and data (QCBS R Workshops 6, 7 and 8).
+2. Attempt perfoming the **transformation** of the predictor and / or response variables:
   - **Several types of transformations exist**. Their usefulness depends on the distribution of the variable and the type of model.
   - Transformation can **fix some** problems but might **create others**.
   - The **results of statistical tests** on transformed data **do not automatically hold** for the untransformed data.
 
 ???
+
 - Transformation of variables can be useful, but is often tricky in practice
 
 ---
 
 # Challenge 1: A model on transformed variables ![:cube]
 
-*Lets try fixing our problems with  a log-transformation.*
+*Let us try fixing our problems with a log-log transformation.*
 
-Add the log-transformed variables to our data frame :
+.pull-left[
+.center[Linear model]
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+]
+
+.pull-right[
+.center[Log-log model]
+$$\log{y_i} = \beta_0 + \beta_1 \times \log{x_i} + \epsilon_i$$
+]
+
+
+Log-transform both variables and add them to our data frame :
 
 ```{r}
 bird$logMaxAbund <- log10(bird$MaxAbund)
