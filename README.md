@@ -44,7 +44,7 @@ Since 2014, several QCBS members contributed to consistently and collaboratively
 | Victor Cameron  | Willian Vieira | Catherine Baltazar |
 | Laurie Maynard  | Shaun Turney  | Bérenger Bourgeois |
 | Daniel Schoenig  | Marie-Hélène Brice | Zofia Taranu |
-|   | Katherine Hébert | Shaun Turney |
+| Pedro Henrique P. Braga | Katherine Hébert | Shaun Turney |
 |   |  | Emmanuelle Chrétien |
 |   |  | Maxwell Farrell |
 |   |  | Vincent Fugère |
