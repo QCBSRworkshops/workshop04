@@ -31,7 +31,20 @@ options(repos=structure(c(CRAN="http://cran.r-project.org")))
 class: inverse, center, middle
 
 ```{r install_pkgs, message=FALSE, warning=FALSE, include=FALSE, results=0}
+
 # Standard procedure to check and install packages and their dependencies, if needed.
+
+# Install xaringanExtra and countdown
+if(nzchar(system.file(package = "xaringanExtra")) == FALSE) {
+  remotes::install_github("gadenbuie/xaringanExtra", 
+                          upgrade = "always", 
+                          quiet = TRUE)
+  }
+if(nzchar(system.file(package = "countdown")) == FALSE) {
+  remotes::install_github("gadenbuie/countdown", 
+                          upgrade = "always", 
+                          quiet = TRUE)
+  }
 
 list.of.packages <- c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effects')
 
@@ -54,7 +67,73 @@ if(length(new.packages) > 0) {
 
 ---
 
-# Required packages & data
+<p style="font-size:60%">
+
+.center[
+**Contributors to the development of this workshop**
+
+by modifying and improving its content as part of the <br> *Le*arning *a*nd *D*evelopment *A*ward
+]
+
+.pull-left[
+.right[
+ **2022** - **2021** - **2020**
+
+[Victor Cameron]()
+
+[Laurie Maynard]()
+
+[Daniel Schoenig]()
+
+[Pedro Henrique P. Braga]()
+<br>
+
+**2019** - **2018** - **2017**
+
+[Willian Vieira]()
+
+[Shaun Turney]()
+
+[Marie-Hélène Brice]()
+
+[Katherine Hébert]()
+
+]
+]
+
+.pull-right[
+.left[
+
+**2016** - **2015** - **2014**
+
+[Catherine Baltazar]()
+
+[Bérenger Bourgeois]()
+
+[Zofia Taranu]()
+
+[Shaun Turney]()
+
+[Maxwell Farrell]()
+
+[Emmanuelle Chrétien]()
+
+[Vincent Fugère]()
+
+]
+]
+
+</p>
+
+---
+
+# Required material
+
+To follow this workshop, you are required to have downloaded and installed the latest [RStudio](https://rstudio.com/products/rstudio/download/#download) and [R](https://cran.rstudio.com/) versions.
+
+.pull-left3[
+You must also use these packages:
+
 
 * [dplyr](https://cran.r-project.org/package=dplyr)
 * [vegan](https://cran.r-project.org/package=vegan)
@@ -65,16 +144,31 @@ if(length(new.packages) > 0) {
 
 <br>
 
-```R
-install.packages(c('dplyr', 'vegan', 'e1071', 'MASS', 'car', 'effects'))
+All workshop materials are found at [r.qcbs.ca/workshops/r-workshop-04/](https://r.qcbs.ca/workshops/r-workshop-04/).
+
+]
+
+.pull-right3[
+
+To install them from CRAN, run:
+
+```{r, echo = TRUE, eval = FALSE}
+install.packages(
+  c('dplyr', 
+    'vegan', 
+    'e1071', 
+    'MASS', 
+    'car', 
+    'effects')
+)
 ```
-<br><br>
-Download the datasets and additional R scripts for this workshop on [r.qcbs.ca](https://r.qcbs.ca/workshops/r-workshop-04/).
+
+]
 
 ---
-# Linear models
+# Learning objectives
 
-.large[-Learn the structure of a linear models and its *different variants*]
+.large[Learn the structure of a linear models and its *different variants*]
 
 --
 
@@ -89,13 +183,13 @@ Presenter notes: This flow chats represents all the variants of a linear modal t
 ---
 # Learning objectives
 
-.large[-Learn the structure of a linear models and its different variants]
+.large[Learn the structure of a linear models and its different variants]
 <br>
 <br>
-.large[-Learn how to perform a linear model with R with `lm()` and `anova()`]
+.large[Learn how to perform a linear model with R with `lm()` and `anova()`]
 <br>
 <br>
-.large[-Learn how to identify when assumptions are not met and ways to fix it]
+.large[Learn how to identify when assumptions are not met and ways to fix it]
 
 ---
 
@@ -150,7 +244,7 @@ Presenter notes: This flow chats represents all the variants of a linear modal t
 
 # Example: Abundance and mass of bird species
 
-#### Let's have a look at the data ...
+#### Let us have a look at the data...
 
 Import the `birdsdiet` dataset:
 
@@ -178,7 +272,7 @@ str(bird)
 
 # Example: Abundance and mass of bird species
 
-#### Let's have a look at the data ...
+#### Let us have a look at the data...
 
 .pull-left[
 Common **measures of location** (central tendency):
@@ -216,7 +310,7 @@ sd(bird$MaxAbund)
 
 - This is only meant to recall the basics. 
 - Participants who are struggling with these measures may have a hard time understanding the other concepts presented in the course.
-- Yes, there are other types of means taht we usually don't need for linear models: geometric, harmonic, ...
+- Yes, there are other types of means that we usually don't need for linear models: geometric, harmonic, ...
 - The definition for the median is omitted because it can be confusing to some participants: $\mathrm {median} (x)={\frac {1}{2}}(x_{\lfloor (n+1)/2\rfloor }+x_{\lceil (n+1)/2\rceil })$
 
 ---
@@ -230,7 +324,7 @@ plot(bird$Mass, bird$MaxAbund)
 ```
 
 ???
-- Make sure participantes understand how the plot is related to the hypothesis!
+- Make sure participants understand how the plot is related to the hypothesis!
 
 ---
 
@@ -262,10 +356,11 @@ abline(coef = c(200, -.1),  lwd = 1.5, lty = 2, col = palette()[6])
 #### Variables
 
 - $y_i$ is an observation of the **response** $y$  
-  (e.g. maximum abundance of species $i$)
+  (*e.g.* maximum abundance of species $i$)
 
 - $x_i$ is a corresponding observation of the **predictor** $x$  
-  (e.g. average weight of an individual of species $i$)
+  (*e.g.* average weight of an individual of species $i$)
+<br>
 
 #### Assumed relationship
 
@@ -364,36 +459,43 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 
 # Notation for linear models
 
-#### Mathematical notation (for manuscripts)
+##### Mathematical notation (for manuscripts)
 
 - Individual observations:  
   $y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$
-
 <br>
 
 - All observations (matrix notation, intercept included in $\mathbf{X}$ and $\boldsymbol{\beta}$):   
   $\mathbf{y}= \mathbf{X}\boldsymbol{\beta} + \mathbf{\epsilon} \quad \textrm{with} \quad \epsilon_i \sim \mathcal{N}(0,\,I_n\sigma^2)$  
 
-<br>
+--
 
-#### R notation
+##### `R` notation: compact symbolic form
 
 .pull-left[
-- Model formula:  
-  ```{r, eval=FALSE}
-  y ~ 1 + x
-  ```  
+Model formula:  
+```{r, eval=FALSE}
+y ~ 1 + x
+```  
 ]
 
 .pull-right[
-- Or even simpler: 
-  ```{r, eval=FALSE}
-  y ~ x
-  ```  
-  (also includes intercept)
+Or, even simpler: 
+```{r, eval=FALSE}
+y ~ x
+```  
+(also includes intercept)
 ]
-  
-.alert[Never mix different kinds of notation!]
+
+--
+
+Which are the same as defining the `x` and `y` arguments:
+```{r, eval=FALSE}
+y = variable_name, x = variable_name, ...
+```  
+
+
+.center[.alert[Never mix different kinds of notation!]]
 
 
 ???
@@ -427,13 +529,13 @@ $$\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)$$
 ---
 class: inverse, center, middle
 
-# Linear regression in R
+# Linear regression in `R`
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
-Back to the birds ...
+Back to the birds...
 
 ```{r}
 plot(bird$Mass, bird$MaxAbund)
@@ -441,27 +543,35 @@ plot(bird$Mass, bird$MaxAbund)
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### Model formulation
 
-> *Hypothesis*: For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
+> *Hypothesis*: For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (*e.g.*, food sources, habitat availability).
 
 --
 
 **Model equation**
 
-$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$
+$$\textrm{MaxAbund}_i = \beta_0 + \beta_1 \times \textrm{Mass}_i + \epsilon_i \;, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)$$
 
 <br>
 
 --
 
-**Model formula in R**:
+**Model formula in `R`**:
 
+.pull-left[
+Compact symbolic form
 ```{r, eval=FALSE}
 MaxAbund ~ Mass
 ```
+]
+
+.pull-right[
+
+]
+
 
 ???
 - Model formulation can be posed as a question to the participants
@@ -469,7 +579,7 @@ MaxAbund ~ Mass
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 .center[.small[
 **Step 1**   
@@ -508,7 +618,7 @@ Go back to Step 1 with transformed variables
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 1.** Fit a linear model
 
@@ -526,7 +636,7 @@ lm1 <- lm(MaxAbund ~ Mass, data = bird)
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 1.** Fit a linear model
 
@@ -554,7 +664,7 @@ lm1
 - We don't know if can trust the estimates -- for that we need step 2
 
 ---
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 2.** Verify assumptions using diagnostic plots of the residuals
 
@@ -575,7 +685,7 @@ plot(lm1)
 
 ---
 
-# Linear regression in R
+# Linear regression in `R`
 
 #### **Step 2.** Verify assumptions using diagnostic plots of the residuals
 
@@ -615,9 +725,9 @@ plot(lm1)
 - The random scatter is sometimes described as "stars in the night sky"
 
 ---
-# Diagnostic plot # 1 - Residuals vs Fitted
+# Diagnostic plot # 1 - Residuals vs. Fitted
 
-.alert[What should make use suspicious:]
+.alert[What should make you suspicious:]
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=8.5, warning=FALSE}
 par(mfrow=c(1,2))
@@ -634,18 +744,18 @@ plot(lm,which = 1, main = "Heteroscedastic", col.main="red")
 ```
 
 **What to do:**
-- Use a **generalized linear model** (GLM) instead that allows for other distributions: Poisson, binomial, negative binomial, etc.)
-- Attempt **transformation** of the response and/or predictor variables
+- Use a **generalized linear model** (GLM) instead that allows for other error distributions, such as Poisson, binomial, negative binomial.
+- Attempt **transforming** the response and/or predictor variables
 
 ???
 - Explain that "heteroscedastic" is the opposite of "homoscedastic", meaning that the normality assumption is violated.
 
 ---
 
-# Diagnostic plot # 2 - Scale Location
+# Diagnostic plot # 2 - Scale-Location
 
 **What we see:**  
-* **Y**-axis: Square root of standardized residuals $\sqrt{\frac{\epsilon_i}{\sigma}}$
+* **Y**-axis: Square-root of standardized residuals $\sqrt{\frac{\epsilon_i}{\sigma}}$
 * **X**-axis: Fitted values $\hat{y_i} = \beta_0 + \beta_1 \times x_i$
 
 <span style="color:green">**What we hope to see:**</span> Random scatter, no pattern 
@@ -660,11 +770,18 @@ lm=lm(y~x)
 plot(lm,which = 3)
 ```
 
+
+???
+
+We want the red line to be approximately horizontal, so that the average magnitude of the standardized residuals does not change much as a function of the fitted values.
+
+We also want  the spread around the red line to not vary  vary with the fitted values.
+
 ---
 
-# Diagnostic plot # 2 - Scale Location
+# Diagnostic plot # 2 - Scale-Location
 
-.alert[What should make use suspicious:]
+.alert[What should make you suspicious:]
 
 ```{r, echo=FALSE, fig.height=4.5, fig.width=6, warning=FALSE}
 set.seed(2)
@@ -677,11 +794,12 @@ plot(lm,which = 3)
 .center[*Strong pattern in the residuals*]
 
 ???
-- What to do? Same as plot #1
+
+- What to do? Same as plot #1.
 
 ---
 
-# Diagnostic plot # 3 - Normal QQ
+# Diagnostic plot # 3 - Normal Quantile-Quantile
 
 **What we see:**  
 * **Y**-axis: Standardized residuals $\frac{\epsilon_i}{\sigma}$
@@ -703,7 +821,7 @@ plot(lm, which = 2)
 
 ---
 
-# Diagnostic plot # 3 - Normal QQ
+# Diagnostic plot # 3 - Normal Quantile-Quantile
 
 .alert[What should make use suspicious:]
 
@@ -720,7 +838,7 @@ plot(lm, which = 2)
 
 ---
 
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs. Leverage
 
 **Why:**
 
@@ -732,19 +850,24 @@ plot(lm, which = 2)
 
 ---
 
-# Examples: Leverage and influence
+### Examples: Leverage and influence
 
 .center[.small[
-These plots show the response vs. the predictor.  
+These plots show the response _versus_ the predictor.  
 *They are* **not** *the diagnostic plots*. 
 ]]
 
-```{r, echo=FALSE, fig.height=8, fig.width=7.5, warning=FALSE}
-par(mfrow=c(3, 1), mar = c(4, 15, 1, 3), cex = 1.2)
+```{r, echo=FALSE, fig.height=7.8, fig.width=7.5, warning=FALSE}
+par(mfrow=c(3, 1), 
+    mar = c(4, 15, 1, 3), 
+    cex = 1.2)
+
 set.seed(1234564)
+
 x <- 1:20
 y <- rnorm(x, x, 2)
 lm0 <- lm(y ~ x)
+
 # plot 1
 plot(x, y, ylim = c(-4, 22), xlab = '', ylab = ''); abline(lm0, col = 2); points(11, -3, pch = 15)
 # add 20, 10 point to the new lm
@@ -752,7 +875,8 @@ xx <- c(x, 11); yy <- c(y, -3)
 abline(lm(yy ~ xx), col = 2, lty = 3)
 text(-18, 10, srt=0, adj = 0, labels = '* No leverage \n* Low influence', xpd = TRUE, cex = 1.5)
 # plot 2
-plot(x, y, ylim = c(-4, 32), xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
+plot(x, y, ylim = c(-4, 32), 
+     xlim = c(0, 31), xlab = '', ylab = ''); abline(lm0, col = 2); points(30, 30, pch = 15)
 # add 20, 10 point to the new lm
 xx <- c(x, 30); yy <- c(y, 30)
 abline(lm(yy ~ xx), col = 2, lty = 3)
@@ -771,12 +895,12 @@ text(-31, 15, srt=0, adj = 0, labels = '* High leverage \n* High influence', xpd
 - To avoid confusion: These are not diagnostic plots!
 
 ---
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs. Leverage
 
 **What we see:**  
 * **Y**-axis: Standardized residuals $\frac{\epsilon_i}{\sigma}$
 * **X**-axis: Leverage
-* Dashed red line: Cook's distance of 0.5
+* Dashed red line: Cook's distance of 0.5 units
 
 <span style="color:green">**What we hope to see:**</span> No leverage points with high influence
 
@@ -797,13 +921,11 @@ plot(lm, which = 5, main = "Leverage point with low influence",  col.main=palett
 
 ---
 
-# Diagnostic plot # 4 - Residuals vs Leverage
+# Diagnostic plot # 4 - Residuals vs. Leverage
 
-.alert[What should make use suspicious:]
+.alert[What should make you suspicious:]
 
-<br />
-
-```{r, echo=FALSE, fig.height=5, fig.width=8, warning=FALSE}
+```{r, echo=FALSE, fig.height=6, fig.width=7, warning=FALSE}
 set.seed(1234564)
 x = abs(rnorm(100,10,10))
 y = (x) + rnorm(length(x), 0, x)
@@ -813,8 +935,7 @@ plot(lm, which = 5, main = "High leverage and high influence")
 ```
 
 <br>
-
-.alert[You should never remove outliers unless you have very good reasons to do so]
+.alert[You should never remove outliers unless you have exceptional reasons to do it.]
 
 ???
 - Point 29 has high leverage and a Cook's distance of > 0.5
@@ -824,17 +945,17 @@ plot(lm, which = 5, main = "High leverage and high influence")
 
 # **Step 2**. Verify assumptions of `lm1`
 
-```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
+```{r, eval=FALSE, fig.height=6, fig.width=7.5}
 par(mfrow=c(2,2))
 plot(lm1)
 ```
 
-```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
+```{r, echo=FALSE, fig.height=6, fig.width=7.5}
 par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm1)
 ```
 
-**Group discussion:** Does `lm1` violate any assumptions of the linear model?
+**Group discussion:** Does `lm1` violate any of the assumptions from linear models?
 
 ???
 
@@ -843,9 +964,9 @@ plot(lm1)
 - Plot 4: point 32 has high leverage and (very) high influence
 
 ---
-# Assumptions not met - what is wrong?
+# Some assumptions are not met: what is wrong?
 
-Let's plot our model on top of the observations
+Let us plot our model on top of the observations:
 
 ```{r, fig.height=4, fig.width=11}
 par(mfrow = c(1,2))
@@ -856,7 +977,7 @@ hist(residuals(lm1)) # right plot: distribution of residuals
 ```
 
 ---
-# Assumptions not met - what is wrong?
+# Some assumptions are not met: what is wrong?
 
 To see if the residuals follow a normal distribution, we can also use the *Shapiro-Wilk* and *Skewness* tests:
 
@@ -866,32 +987,57 @@ shapiro.test(residuals(lm1))
 library(e1071)
 skewness(residuals(lm1))
 ```
-.comment[Distribution is significantly different from a normal distribution, and left-skewed (positive skewness)]
+
+.comment[The distribution is significantly different from a normal distribution, and is left-skewed (positive skewness).]
 
 
 ---
-# Assumptions not met - how to proceed?
+# Some assumptions are not met: what now?
 
 *There are two options when assumptions of the linear model are not satisfied:*
 
 <br>
 
-1. Use a **different type of model** better suited to the hypothesis and data (QCBS R workshops 6 - 8).
-2. Attempt **transformation** of the predictor and / or response variables
+1. Use a **different type of model** better suited to the hypothesis and data (QCBS R Workshops 6, 7 and 8).
+2. Attempt perfoming the **transformation** of the predictor and / or response variables:
   - **Several types of transformations exist**. Their usefulness depends on the distribution of the variable and the type of model.
   - Transformation can **fix some** problems but might **create others**.
   - The **results of statistical tests** on transformed data **do not automatically hold** for the untransformed data.
 
 ???
+
 - Transformation of variables can be useful, but is often tricky in practice
 
 ---
 
 # Challenge 1: A model on transformed variables ![:cube]
 
-*Lets try fixing our problems with  a log-transformation.*
+*Let us try fixing our problems with a log-log transformation.*
 
-Add the log-transformed variables to our data frame :
+.pull-left[
+.center[Linear model]
+$$y_i = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+]
+
+.pull-right[
+.center[Linear-log model]
+$$y_i = \beta_0 + \beta_1 \times \log{x_i} + \epsilon_i$$
+]
+
+.pull-left[
+.center[Log-Linear model]
+$$\log{y_i} = \beta_0 + \beta_1 \times x_i + \epsilon_i$$
+
+]
+
+.pull-right[
+.center[**Log-log model**]
+$$\log{y_i} = \beta_0 + \beta_1 \times \log{x_i} + \epsilon_i$$
+]
+
+
+Log-transform both variables and add them to our data frame :
 
 ```{r}
 bird$logMaxAbund <- log10(bird$MaxAbund)
@@ -899,19 +1045,25 @@ bird$logMass <- log10(bird$Mass)
 ```
 
 --
-#### Challenge
 
 **Step 1.** Re-run the analysis with the log-transformed variables `logMaxAbund` and `logMass`.
-Save the model as `lm2`
+Save the model as `lm2`.
 
 **Step 2**: Verify assumptions of model `lm2` using diagnostic plots.
 
+.pull-left2[
 ```{r}
 lm2 <- lm(logMaxAbund ~ logMass, data = bird)
 ```
-
+]
+.pull-right2[
+```{r, eval = FALSE}
+plot(lm2)
+```
+]
 ???
-- Break down in small groups. Then discuss results with the entire group.
+
+- You may do it together with them, but request participants to participate. 
 
 ---
 
@@ -928,13 +1080,15 @@ lm2
 *How do the parameters compare to our prediction?*
 ]
 
+<br>
+
 .center[
 **Can we trust these estimates?**
 ]
 
 ???
 - This time the parameters align with our prediction
-- BUT: Of course we still have to check the assumptions!
+- BUT, we cannot believe them before checking the assumptions!
 
 ---
 
@@ -943,18 +1097,18 @@ lm2
 **Step 2.** Verify assumptions of model `lm2`
 
 ```{r, eval=FALSE, fig.height=5.5, fig.width=7.5}
-par(mfrow=c(2,2))
+par(mfrow = c(2, 2)) # this divides our graphics in 2 by 2
 plot(lm2)
 ```
 
 ```{r, echo=FALSE, fig.height=5.5, fig.width=7.5}
-par(mfrow=c(2,2), mar=c(3,4,1.15,1.2))
+par(mfrow = c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
 
 --
 
-.comment[.center[Much improved, but still some problems]]
+.comment[.center[It has improved, but there are still some problems.]]
 
 ???
 - There are still visible patterns in the residual plots
@@ -963,9 +1117,12 @@ plot(lm2)
 # **Step 2.** Verify assumptions of model `lm2`
 
 ```{r, fig.height=4, fig.width=11,}
-par(mfrow = c(1,2))
 coef(lm2) # intercept and slope
-plot(logMaxAbund ~ logMass, data=bird) # left plot
+```
+
+```{r, fig.height=5, fig.width=11,}
+par(mfrow = c(1, 2))
+plot(logMaxAbund ~ logMass, data = bird) # left plot
 abline(lm2) # line described by model parameters
 hist(residuals(lm2)) # right plot: distribution of residuals
 ```
@@ -977,7 +1134,11 @@ hist(residuals(lm2)) # right plot: distribution of residuals
 The `summary()` function provides more information on the fitted model.
 
 .small[
-```{r, comment=""}
+```{r, eval = FALSE, comment=""}
+summary(lm2)
+```
+
+```{r, eval = TRUE, echo = FALSE, comment=""}
 summary(lm2)
 ```
 ]
@@ -991,22 +1152,32 @@ summary(lm2)
   4. F-statistic (ANOVA): Is the model significantly different from an intercept-only model?
 - Mention that t-tests and ANOVA will be discussed later
 - In this case: our model is *barely* better than an intercept-only model
+- Interpretation of coefficients is tricky because of log-log. One unit increase in log(Mass) decreases -0.22*log(MaxAbund). If ln, then the proportional percentage change.
 
 ---
-# **Step 3**
+# **Step 3.** Analyze parameter estimates
 
-We can also extract specific parameters and results from the model and summary:
+We can also extract specific parameters and results from the `lm()` model and its `summary()`:
 
 ```{r}
 # Vectors of residuals and fitted values:
 e <- residuals(lm2)
 y <- fitted(lm2)
+```
 
+```{r}
 coefficients(lm2) # coefficients
-summary(lm2)$coefficients # coefficients with t-tests
+```
 
+```{r}
+summary(lm2)$coefficients # coefficients with t-tests
+```
+
+```{r}
 summary(lm2)$adj.r.squared # Adjusted R squared
 ```
+
+You can see what exists inside `summary(lm2)` by running `str(summary(lm2))`.
 
 ---
 
@@ -1016,7 +1187,7 @@ summary(lm2)$adj.r.squared # Adjusted R squared
 
 #### Hypothesis
 
-> For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
+> For bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (_e.g._, food sources, habitat availability).
 
 ---
 
@@ -1024,10 +1195,15 @@ summary(lm2)$adj.r.squared # Adjusted R squared
 
 .center[*How well does the model support our hypothesis?*]
 
-```{r, comment=""}
+.small[
+```{r, eval = FALSE, comment=""}
 summary(lm2)
 ```
 
+```{r, eval = TRUE, echo = FALSE, comment=""}
+summary(lm2)
+```
+]
 
 ---
 
@@ -1037,38 +1213,43 @@ summary(lm2)
 
 There is only **very little evidence** in support of the hypothesis because:
 
-- The model does not explain the response well (*low adjusted R-squared*)
-- The model is only slightly better than a model without any predictor variables (*F-test barely significant*)
-- The parameter estimate for `logMass` is barely dfferent from 0 (*t-test barely significant*)
+- The model does not explain the response well (*low adjusted R-squared*).
+- The model is only slightly better than a model without any predictor variables (*F-test barely significant*).
+- The parameter estimate for `logMass` is barely different from `0` (*t-test barely significant*).
 
 ???
-- In this case, the F-test and t-test are equivalent because there is only one predictor variable)
+
+- In this case, the F-test and t-test are equivalent because there is only one predictor variable).
 
 ---
 
 # Finding a better model: terrestrial birds
 
-*Maybe we should formulate a more specific hypothesis?*
+*Maybe we should reformulate the hypothesis with a less extended group?*
 
 --
 
 #### Hypothesis
 
-> For <span style="color:green">**terrestrial**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (food sources, habitat availability, etc.).
+> For <span style="color:green">**terrestrial**</span> bird species, the **average size of an individual has an effect on the maximum abundance** of the species, due to ecological constraints (_e.g._, food sources, habitat availability).
 
 
 ---
 
 # Finding a better model: terrestrial birds
 
-Exclude all aquatic birds (using `!`) and fit a linear model:
+Exclude all aquatic birds (using the operator `!`, which means "different") and fit a linear model:
 
 ```{r}
-lm3 <- lm(logMaxAbund~logMass, data=bird, subset=!bird$Aquatic)
-# removes aquatic birds (i.e. !birdsAquatic == TRUE)
-# or equivalently
-# lm3 <- lm(logMaxAbund~logMass, data=bird, subset=bird$Aquatic == 0)
+lm3 <- lm(logMaxAbund~logMass, data = bird, subset = !bird$Aquatic)
 
+# The above line removes aquatic birds from the data (i.e. !birdsAquatic == TRUE)
+
+# Equivalently, we could also have done as follows:
+# lm3 <- lm(logMaxAbund ~ logMass, data = bird, subset = bird$Aquatic == 0)
+```
+
+```{r}
 lm3
 ```
 
@@ -1086,7 +1267,9 @@ par(mfrow=c(2,2), mar = c(4,4,2,1.1), oma =c(0,0,0,0))
 plot(lm3)
 ```
 
-.comment[.center[No violation of assumptions]]
+<br>
+
+.comment[.center[No clear violation of assumptions.]]
 
 ---
 
@@ -1104,26 +1287,44 @@ summary(lm3)
 
 .center[*How well does the model support our hypothesis?*]
 
+.pull-left[
 The model provides evidence in support of the hypothesis, because:
 
-- The model fits the data reasonably well (*adjusted R-squared*)
-- The model is clearly better than a model without any predictor variables (*F-test*)
-- The parameter estimate for `logMass` is clearly dfferent from 0 (*t-test*)
+- The model is clearly better than a model without any predictor variables (*F-test*).
+- The parameter estimate for `logMass` is clearly different from `0` (*t-test*).
+- The model fits the data reasonably well (*adjusted R-squared*).
 
+<br>
+
+**What is a reasonable $R^2$ in ecology?**
+
+]
+
+--
+
+.pull-right[
+
+![Frequency distribution of a r2 from meta-analyses in biology for studies with the effect size Pearson’s r (n=93) and b Hedges’ d (n=136)](images/r_squared_ecology.png)
+.xsmall[Frequency distribution of a $R^2$ from meta-analyses in biology for studies with the effect size Pearson’s $r$ (n=93).]
+]
+
+.xsmall[Møller & Jennions. _How much variance can be explained by ecologists and evolutionary biologists?_ Oecologia 132, 492–500. [2002](https://doi.org/10.1007/s00442-002-0952-2.]
 
 ---
 # Challenge 2 ![:cube]()
 
-Let's put everything together!
+Let us put everything together!
 
 <br>
 
-1. Formulate a similar **hypothesis** about maximum abundance and average mass of an indidvidual for **passerine birds**.
-2. Fit a **model** to assess this hypothesis, using log-transformed variables (i.e. `logMaxAbund` and `logMass`). Save the model as `lm4`.
-3. **Verify assumptions** of the linear model using residual plots.
-4. Interpret the results: Does the model provide **evidence for the hypothesis?**
+1. Formulate a similar **hypothesis** about **maximum abundance** and **average mass of an individual** for **passerine birds**.
+2. Fit a **model** to assess this hypothesis, using log-transformed variables (_i.e._ a log-log model with `logMaxAbund` and `logMass`), and assign it to an object called `lm4`.
+4. **Verify assumptions** of the linear model using diagnostic plots.
+5. Interpret the results: _Does the model provide **evidence for the hypothesis?**_
 
-.comment[HINT: `Passerine` is also coded 0 and 1 (look at `str(bird)`)]
+<br>
+
+.comment[HINT: `Passerine` is a Boolean variable, _i.e._ `0` and `1` (look at `str(bird)`).]
 
 ---
 # Challenge 2 - Solution ![:cube]()
@@ -1169,7 +1370,7 @@ summary(lm4)
 
 ---
 
-# Linear regression in R
+# Review: Linear regression in `R`
 
 .center[.small[
 **Step 1**   
@@ -1203,7 +1404,7 @@ Use a GLM that is better suited for the data
 ]
 
 .pull-right[
-Go back to Step 1 with transformed variables
+Go back to **Step 1** with transformed variables
 ]]]
 
 ---
@@ -1225,6 +1426,8 @@ Different terms are used for *response* and *predictor* variables, depending on 
 ]
 
 <br>
+
+--
 
 .center[
 |réponse           | prédicteur       |
@@ -1251,146 +1454,221 @@ class: inverse, center, middle
 ## *t*-test, One-way ANOVA, Two-way ANOVA
 
 ---
-# Analysis of Variance (ANOVA)
+# Analysis of Variance (ANOVA) and t-test
 
-$Y$: Response variable is **continuous**
+$Y$: Response variable is **continuous**.
 
-$X$: Explanatory variable(s) is **categorical**, and usually have  **two or more levels** (or groups)
+$X$: Explanatory variable(s) is **categorical** and have **two** (*t*-test) or more levels (ANOVA).
 
+--
 
-.large[.center[ANOVA tests whether the means of the response variable differs between the levels]]
+.pull-left[
+.large[***t*-test** tests whether the means of the groups (or populations) are different So that:]
+
+**H0**: $\mu_1 = \mu_2$
+
+**H1**: $\mu_1 \neq \mu_2$
+
+]
+
+.pull-right[
+.large[**ANOVA** tests whether two or more means of the groups (or populations) are equal. So that:]
+
+**H0**: $\mu_1 = \mu_2 = \ldots = \mu_n$
+
+**H1**: At least one of the group means is different across the groups.
+]
+
+--
+
+<br>
+
+We will cover today:
+
+.pull-left[
+**Multiple-sample, independent t-test**.
+]
+
+.pull-right[
+**One-way ANOVA**: one predictor
+
+**Two-way ANOVA**: two or more predictors
+]
+
+*Dependent (or repeated measures) variables will not be covered today.*
 
 ---
+exclude: true
+
 # ANOVA
 
-.center[ANOVA tests whether the means of the response variable differs between the levels]
+.large[ANOVA tests whether two or more means of the groups (or populations) are equal. So that:]
 
 ```{r, echo = FALSE, fig.height=3.7, fig.width=6.5}
 source('script/figAnova.R')
 ```
 
-Sum of squares: within-treatment variance *vs* between-treatment variance
+Sum-of-squares: within-treatment variance *versus* between-treatment variance
 
 If between-treatment variance $>$ within-treatment variance:
-  - The treatments affect the explanatory variable more than the random error
-  - The explanatory variable is likely to be significantly influenced by the treatments
-
----
-# Types of ANOVA
-
-1. One-way ANOVA
-  - One factor with 2 or more levels
-  - If there are 2 levels a **t-test** can be used alternatively
-
-2. Two-way ANOVA
-  - 2 factors or more
-  - Each factor can have multiple levels
-  - The interactions between each factor must be tested
-
---
-
-Repeated measures?
-
-  - ANOVA can be used for repeated measures, but we won't cover this today
-  - Linear Mixed-effect Models can also be used for this kind of data (you'll see it on Workshop 6)
+  - The treatments affect the explanatory variable more than the random error;
+  - The explanatory variable is likely to be significantly influenced by the treatments.
 
 ---
 class: inverse, center, middle
 
-# T-test
+# Student's *t*-test
 
 ---
-# T-test
+# Student's *t*-test
 
 - **Response variable** ![:faic](arrow-right) Continuous
 - **Explanatory variable** ![:faic](arrow-right) Categorical with **2 levels**
 
-**Assumptions**
-- Data follow a normal distribution
-- Equality of variance between groups (Homoscedasticity)
+<br>
 
-.comment[robustness of this test increases with sample size and is higher when groups have equal sizes]
+**Assumptions**
+- Data follow a normal distribution;
+- Homoscedasticity, *i.e.* equality of variances between groups.
+
+<br>
+
+.comment[The robustness of *t*-tests increases with sample size and is higher when groups have equal sizes.]
 
 ---
-# Running a T-test in R
+# Running a *t*-test in `R`
 
 Use the function `t.test()`
 
 ```r
-t.test(Y~X2, data= data, alternative = "two.sided")
+t.test(Y ~ X2, data = data, alternative = "two.sided")
 ```
 
   - `Y`: response variable
-  - `X2`: factor (2 levels)
-  - `data`: name of dataframe
-  - `alternative` hypothesis: `"two.sided"` (default), `"less"`, or `"greater"`
+  - `X2`: predictive variable (`factor`, with two levels)
+  - `data`: `data.frame` or `matrix`
+  - `alternative` hypothesis testing: `"two.sided"` (default), `"less"`, or `"greater"`
 
-The t-test is still a linear model and a specific case of ANOVA with one factor with 2 levels
+The *t*-test is still a linear model and a specific case of ANOVA with one factor with two levels.
 
-Thus the function `lm()` can also be used
+Thus, the function `lm()` can also be used:
 
 ```r
-lm.t <-lm(Y~X2, data = data)
+lm.t <-lm(Y ~ X2, data = data)
 anova(lm.t)
 ```
 
 ---
-# Running a T-test in R
+# Running a *t*-test in `R`
 
 .large[Are aquatic birds heavier than non-aquatic birds?]
 
-- Response variable: `Bird mass` ![:faic](arrow-right) num: Continuous
-- Explanatory variable: `Aquatic` ![:faic](arrow-right) 2 levels: 1 or 0 (yes or no)
+- Response variable: `bird$Birdmass` ![:faic](arrow-right) `num` or continuous
+- Explanatory variable: `bird$Aquatic` ![:faic](arrow-right) factor with two levels: `1` or `0` (*i.e.* `TRUE` or `FALSE`)
 
----
-# Running a T-test in R
+<br>
+First, let us visualize the data using the `boxplot()`  function:
 
-First, lets visualize the data using the function `boxplot()`
-
-```{r eval=TRUE,fig.height=5.2, fig.width=6.5}
+.pull-left[
+```{r eval=FALSE,fig.height=5.2, fig.width=5.5}
 boxplot(logMass ~ Aquatic,
-        data = bird, names = c("Non-Aquatic", "Aquatic"))
+        data = bird, 
+        names = c("Non-Aquatic", 
+                  "Aquatic")
+        )
 ```
+]
+
+.pull-right[
+```{r eval=TRUE, echo = FALSE,fig.height=5.2, fig.width=5.5}
+boxplot(logMass ~ Aquatic,
+        data = bird, 
+        names = c("Non-Aquatic", 
+                  "Aquatic")
+        )
+```
+]
 
 ---
-# Running a T-test in R
+# Running a *t*-test in `R`: assumption testing
 
-Next, test the assumption of equality of variance using `var.test()`
+Next, we must meet the assumption of homogeneity of variances.
+
+**Option 1.** Use `var.test()` to perform an F-test to compare the variances of two samples from normal populations.
 
 ```{r}
-var.test(logMass ~ Aquatic, data = bird)
+var.test(logMass ~ Aquatic, 
+         data = bird)
 ```
 
-.comment[The ratio of variances is not statistically different from 1, therefore variances are equal]
+The null hypothesis is that the ratio of the variances of the populations from which `x` and `y` were drawn is equal to zero.
 
-.comment[We may now proceed with the t-test!]
+Here, the ratio of variances is not statistically different from `1`.
 
 ---
-# Running a T-test in R
+# Running a *t*-test in `R`: assumption testing
+
+Next, we must meet the assumption of homogeneity of variances.
+
+**Option 2.** Use `car::leveneTest()` to computes Levene's test for homogeneity of variance across groups.
 
 ```{r}
-ttest1 <- t.test(logMass ~ Aquatic, var.equal = TRUE, data = bird)
+car::leveneTest(logMass ~ as.factor(Aquatic), 
+                data = bird)
+```
+
+The null hypothesis for Levene's test is that all groups have equal population variances.
+
+Here, we do not reject this null hypothesis.
+
+---
+class: middle
+
+## What should I do if assumptions are not met?
+
+- If variances between groups are not equal, we can use corrections, such as the Welch-correction (default).
+- If assumptions cannot be met, the **non-parametric** equivalent of *t*-test is the Mann-Whitney test.
+- If two groups **are not independent** (*e.g.* measurements on the same individual at 2 different years), you should use a **paired *t*-test**.
+
+
+---
+# Running a *t*-test in `R`
+
+We may proceed with our *t*-test:
+
+.pull-left[
+```{r}
+ttest1 <- t.test(logMass ~ Aquatic, 
+                 var.equal = TRUE, 
+                 data = bird)
 
 # Or use lm()
-ttest.lm1 <- lm(logMass ~ Aquatic, data=bird)
+ttest.lm1 <- lm(logMass ~ Aquatic, 
+                data = bird)
 ```
+]
 
-.comment[Indicates that homogeneity of variance was respected (as we just tested)]
+--
 
-You can verify that `t.test()` and `lm()` provide the same model:
+.pull-right[
+`var.equal = TRUE` indicates that the homogeneity of variance are equal (as we just tested). When the default `var.equal = FALSE` is run, the variance is estimated separately for both groups and the Welch modification to the degrees of freedom is used.
+]
+
+--
+
+You can verify that `t.test()` and `lm()` provide the same results:
 
 ```{r}
 ttest1$statistic^2
 anova(ttest.lm1)$`F value`
-# answer: F=60.3845 in both cases
 ```
 
-.comment[When the assumption of equal variance is met $t^2$ follows an F distribution]
+.comment[When the assumption of equal variances is met $t^2$ follows an F-distribution.]
 
 ---
-# Running a T-test in R
+# Running a *t*-test in `R`
 
-If $p<0.01$ (or $0.05$ ), the null hypothesis of no difference between the two groups (*H0*) can be rejected, with a risk of $0.01$ (or $0.05$ ) that we made a mistake in this conclusion
+If $p < \alpha$ (typically, with $\alpha$ being $0.01$ or $0.05$) the null hypothesis of no difference between the two groups (*H0*) can be rejected, so that as there is less than a $\alpha$% probability the null hypothesis is correct.
 
 .small[
 ```{r}
@@ -1398,16 +1676,8 @@ ttest1
 ```
 ]
 
-.small[.comment[There exists a difference in mass between the aquatic and terrestrial birds - `p-value`]]
-
-.small[.comment[Look at the mean of the two groups]]
-
----
-# Violation of Assumptions
-
-- If variances between groups are not equal, can use corrections like the Welch correction (DEFAULT in R!)
-- If assumptions cannot be respected, the **non-parametric** equivalent of t-test is the Mann-Whitney test
-- If two groups **are not independent** (e.g. measurements on the same individual at 2 different years), you should use a paired t-test
+1. First, the `p-value` is very low, so that there is a mathematical probabilistic difference in mass between the aquatic and terrestrial birds.
+2. Then, the mean body mass of non-Aquatic birds is `1.583437`, and of Aquatic birds is `2.908289`.
 
 ---
 exclude:true
@@ -1436,21 +1706,41 @@ uni.ttest1
 Yes, aquatic birds are heavier than terrestrial birds: p-value = `r format(uni.ttest1$p.value, scientific=FALSE)`
 
 ---
-# Poll
+# Quick poll
 
-.large[With T-test we can be more specific and give a direction to our hypothesis with  `alternative`.] 
-<br>
-<br>
-<br>
-We want to test whether **aquatic birds are heavier than terrestrial birds**. 
+.pull-left[
+*t*-tests allows us to test specific predictions (or the direction) of our hypothesis. So that:
 
-Which one should we use? `alternative = "???"`
+H0: $\mu_1 = \mu_2$
+H1: $\mu_1 > \mu_2$
+H2: $\mu_1 < \mu_2$
 
-1.`"two.sided"`
+```{r echo=FALSE}
+set.seed(2021)
+x = rnorm(25, 104, 15)
+curve(dt(x, 24), -4, 4, lwd=2, ylab="PDF", xlab="t", main = "")
+abline(h = 0, col="green2")
+abline(v = 0, col="green2")
+abline(v = c(-2.064, 2.064), lwd=2, col="red")
+abline(v = 2.1025, col="blue", lwd = 2)
+abline(v = -2.1025, col="blue", lwd=2, lty="dotted")
+```
+]
 
-2.`"less"`
+.pull-right[
 
-3.`"greater"`
+
+
+
+We would like to test whether **aquatic birds are _heavier_ than terrestrial birds**. Which one should we use? 
+
+`alternative = "???"`
+
+1.`"two.sided"`;
+
+2.`"less"`;
+
+3.`"greater"`.
 
 ```{r,eval=F, echo=T}
 # Unilateral t-test
@@ -1460,11 +1750,15 @@ uni.ttest1 <- t.test(logMass ~ Aquatic,
                      alternative = "???")
 ```
 
+]
+
+
 ???
+
 Presenter note: a poll is already set up on zoom for this slide. The host simply need to activate it for it to work. Otherwise tou can always ask the students to answer in the chat.
 
 ---
-#Answer
+# Answer
 
 .xsmall[
 ```{r}
@@ -1478,14 +1772,13 @@ uni.ttest1
 ```
 ]
 
-Why would `"greater"` not have work?
+Why would `"greater"` have not worked?
 
-.comment[Hint: check the dataset. What is the nature of the variable Aquatic?]
+.comment[Hint: check the dataset. What is the nature of the variable `Aquatic`?]
 
 ???
 
-Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, R will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
-
+Presenter notes: To understand this answer, we have to understand the dataset. Aquatic is binary variable, i.e. that 0 = terrestrial birds, and 1 = aquatic birds. By default, `R` will always test in this order. So, we are actually testing whether terrestrial birds are lighter than aquatic birds. This is also points out the importance to understand your dataset.
 
 ---
 class: inverse, center, middle
