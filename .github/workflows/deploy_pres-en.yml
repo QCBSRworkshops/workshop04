@@ -42,8 +42,12 @@ jobs:
         uses: r-lib/actions/setup-r@v1
 
       - name: 💻 Install cURL
-        run: sudo apt-get install libcurl4-openssl-dev
-        
+        run: sudo apt-get install -y libcurl4-openssl-dev libmagick++-dev snapd
+
+      - name: 💻 Snap install gifski
+        run: |
+          sudo snap install gifski
+
       - name: 💾 Cache R packages
         uses: actions/cache@v2 # Must be v2 so it accepts the GITHUB_REF from the repository_dispatch
         with:
