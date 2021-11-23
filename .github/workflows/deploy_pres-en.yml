@@ -4,6 +4,7 @@ on:
        - main
      paths:
        - pres-en/**
+       - .github/workflows/deploy_pres-en.yml
   repository_dispatch: 
     types: [pong_presentation]
   
@@ -54,7 +55,7 @@ jobs:
     
       - name: 💻 Install R packages and dependencies if needed
         run: |
-          Rscript -e 'list.of.packages <- c("rmarkdown", "xaringan"); 
+          Rscript -e 'list.of.packages <- c("rmarkdown", "xaringan", "remotes"); 
           new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]; 
           if(length(new.packages) > 0) {  
           install.packages(new.packages, dependencies = TRUE)   
