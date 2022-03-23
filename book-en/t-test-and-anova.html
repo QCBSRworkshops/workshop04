@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 t-test and ANOVA | Workshop 4: Linear models</title>
   <meta name="description" content="Linear models" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 t-test and ANOVA | Workshop 4: Linear models" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://github.com/qcbsRworkshops/" />
   <meta property="og:image" content="https://github.com/qcbsRworkshops//assets/images/logo/csbq_logo_accueil.png" />
   <meta property="og:description" content="Linear models" />
   <meta name="github-repo" content="qcbsRworkshops/workshop04" />
@@ -50,8 +49,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -136,99 +136,99 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <link rel="icon" type="image/png" href="assets/images/favicon.ico"/>
 
 <li class="divider"></li>
-<li class="part"><span><b>QCBS R Workshop Series</b></span></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#code-of-conduct"><i class="fa fa-check"></i><b>0.1</b> Code of conduct</a><ul>
-<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#expected-behaviour"><i class="fa fa-check"></i><b>0.1.1</b> Expected behaviour</a></li>
-<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#unacceptable-behaviour"><i class="fa fa-check"></i><b>0.1.2</b> Unacceptable behaviour</a></li>
+<li class="part"><span><b>QCBS R Workshop Series<span></span></b></span></li>
+<li><a href="index.html#preface">Preface<span></span></a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>0.1</b> Code of conduct<span></span></a><ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#expected-behaviour"><i class="fa fa-check"></i><b>0.1.1</b> Expected behaviour<span></span></a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#unacceptable-behaviour"><i class="fa fa-check"></i><b>0.1.2</b> Unacceptable behaviour<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>0.2</b> Contributors</a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i><b>0.3</b> Contributing</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>0.2</b> Contributors<span></span></a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i><b>0.3</b> Contributing<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>Linear models in <code>R</code></b></span></li>
-<li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning objectives</a></li>
-<li class="chapter" data-level="2" data-path="preparing-for-the-workshop.html"><a href="preparing-for-the-workshop.html"><i class="fa fa-check"></i><b>2</b> Preparing for the workshop</a></li>
-<li class="chapter" data-level="3" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>3</b> The linear model</a><ul>
-<li class="chapter" data-level="3.1" data-path="the-linear-model.html"><a href="the-linear-model.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="the-linear-model.html"><a href="the-linear-model.html#example-abundance-and-mass-of-bird-species"><i class="fa fa-check"></i><b>3.1.1</b> Example: Abundance and mass of bird species</a></li>
+<li class="part"><span><b>Linear models in <code>R</code><span></span></b></span></li>
+<li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning objectives<span></span></a></li>
+<li class="chapter" data-level="2" data-path="preparing-for-the-workshop.html"><a href="preparing-for-the-workshop.html"><i class="fa fa-check"></i><b>2</b> Preparing for the workshop<span></span></a></li>
+<li class="chapter" data-level="3" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>3</b> The linear model<span></span></a><ul>
+<li class="chapter" data-level="3.1" data-path="the-linear-model.html"><a href="the-linear-model.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?<span></span></a><ul>
+<li class="chapter" data-level="3.1.1" data-path="the-linear-model.html"><a href="the-linear-model.html#example-abundance-and-mass-of-bird-species"><i class="fa fa-check"></i><b>3.1.1</b> Example: Abundance and mass of bird species<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="the-linear-model.html"><a href="the-linear-model.html#formulation-of-a-linear-model"><i class="fa fa-check"></i><b>3.2</b> Formulation of a linear model</a></li>
-<li class="chapter" data-level="3.3" data-path="the-linear-model.html"><a href="the-linear-model.html#evaluation-of-the-linear-model"><i class="fa fa-check"></i><b>3.3</b> Evaluation of the linear model</a></li>
-<li class="chapter" data-level="3.4" data-path="the-linear-model.html"><a href="the-linear-model.html#assumptions-of-the-linear-model"><i class="fa fa-check"></i><b>3.4</b> Assumptions of the linear model</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#normal-distribution-of-the-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Normal distribution of the residuals</a></li>
-<li class="chapter" data-level="3.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#homoskedasticity"><i class="fa fa-check"></i><b>3.4.2</b> Homoskedasticity</a></li>
-<li class="chapter" data-level="3.4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#independence-of-the-residuals"><i class="fa fa-check"></i><b>3.4.3</b> Independence of the residuals</a></li>
+<li class="chapter" data-level="3.2" data-path="the-linear-model.html"><a href="the-linear-model.html#formulation-of-a-linear-model"><i class="fa fa-check"></i><b>3.2</b> Formulation of a linear model<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="the-linear-model.html"><a href="the-linear-model.html#evaluation-of-the-linear-model"><i class="fa fa-check"></i><b>3.3</b> Evaluation of the linear model<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="the-linear-model.html"><a href="the-linear-model.html#assumptions-of-the-linear-model"><i class="fa fa-check"></i><b>3.4</b> Assumptions of the linear model<span></span></a><ul>
+<li class="chapter" data-level="3.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#normal-distribution-of-the-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Normal distribution of the residuals<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#homoskedasticity"><i class="fa fa-check"></i><b>3.4.2</b> Homoskedasticity<span></span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#independence-of-the-residuals"><i class="fa fa-check"></i><b>3.4.3</b> Independence of the residuals<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="the-linear-model.html"><a href="the-linear-model.html#notation-for-linear-models"><i class="fa fa-check"></i><b>3.5</b> Notation for linear models</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5.1</b> Mathematical notation</a></li>
-<li class="chapter" data-level="3.5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#r-notation"><i class="fa fa-check"></i><b>3.5.2</b> R notation</a></li>
+<li class="chapter" data-level="3.5" data-path="the-linear-model.html"><a href="the-linear-model.html#notation-for-linear-models"><i class="fa fa-check"></i><b>3.5</b> Notation for linear models<span></span></a><ul>
+<li class="chapter" data-level="3.5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5.1</b> Mathematical notation<span></span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#r-notation"><i class="fa fa-check"></i><b>3.5.2</b> R notation<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="the-linear-model.html"><a href="the-linear-model.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>3.6</b> Fitting a linear model</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="the-linear-model.html"><a href="the-linear-model.html#model-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Model estimation</a></li>
+<li class="chapter" data-level="3.6" data-path="the-linear-model.html"><a href="the-linear-model.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>3.6</b> Fitting a linear model<span></span></a><ul>
+<li class="chapter" data-level="3.6.1" data-path="the-linear-model.html"><a href="the-linear-model.html#model-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Model estimation<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="the-linear-model.html"><a href="the-linear-model.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.7</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.7" data-path="the-linear-model.html"><a href="the-linear-model.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.7</b> Learning objectives<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html"><i class="fa fa-check"></i><b>4</b> Linear regression in R</a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-formulation"><i class="fa fa-check"></i><b>4.1</b> Model formulation</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-equation"><i class="fa fa-check"></i><b>4.1.1</b> Model equation</a></li>
+<li class="chapter" data-level="4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html"><i class="fa fa-check"></i><b>4</b> Linear regression in R<span></span></a><ul>
+<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-formulation"><i class="fa fa-check"></i><b>4.1</b> Model formulation<span></span></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-equation"><i class="fa fa-check"></i><b>4.1.1</b> Model equation<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-1"><i class="fa fa-check"></i><b>4.2</b> Linear regression in R</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-1-formulate-and-run-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Formulate and run a linear model</a></li>
-<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Verify assumptions using diagnostic plots of the residuals</a></li>
-<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2.-verify-assumptions-of-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code></a></li>
-<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---what-is-wrong"><i class="fa fa-check"></i><b>4.2.4</b> Assumptions not met - what is wrong?</a></li>
-<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---how-to-proceed"><i class="fa fa-check"></i><b>4.2.5</b> Assumptions not met - how to proceed?</a></li>
-<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-3.-analyze-parameter-estimates"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Step 3.</strong> Analyze parameter estimates</a></li>
+<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-1"><i class="fa fa-check"></i><b>4.2</b> Linear regression in R<span></span></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-1-formulate-and-run-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Formulate and run a linear model<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Verify assumptions using diagnostic plots of the residuals<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2.-verify-assumptions-of-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code><span></span></a></li>
+<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---what-is-wrong"><i class="fa fa-check"></i><b>4.2.4</b> Assumptions not met - what is wrong?<span></span></a></li>
+<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---how-to-proceed"><i class="fa fa-check"></i><b>4.2.5</b> Assumptions not met - how to proceed?<span></span></a></li>
+<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-3.-analyze-parameter-estimates"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Step 3.</strong> Analyze parameter estimates<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-interpretation"><i class="fa fa-check"></i><b>4.3</b> Model interpretation</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#finding-a-better-model-terrestrial-birds"><i class="fa fa-check"></i><b>4.3.1</b> Finding a better model: terrestrial birds</a></li>
+<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-interpretation"><i class="fa fa-check"></i><b>4.3</b> Model interpretation<span></span></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#finding-a-better-model-terrestrial-birds"><i class="fa fa-check"></i><b>4.3.1</b> Finding a better model: terrestrial birds<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-2"><i class="fa fa-check"></i><b>4.4</b> Challenge 2</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-2"><i class="fa fa-check"></i><b>4.4</b> Challenge 2<span></span></a><ul>
+<li class="chapter" data-level="4.4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-2"><i class="fa fa-check"></i><b>4.5</b> Linear regression in R</a></li>
-<li class="chapter" data-level="4.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#variable-names"><i class="fa fa-check"></i><b>4.6</b> Variable names</a></li>
+<li class="chapter" data-level="4.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-2"><i class="fa fa-check"></i><b>4.5</b> Linear regression in R<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#variable-names"><i class="fa fa-check"></i><b>4.6</b> Variable names<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html"><i class="fa fa-check"></i><b>5</b> t-test and ANOVA</a><ul>
-<li class="chapter" data-level="5.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.1</b> Analysis of Variance (ANOVA)</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> Types of ANOVA</a></li>
-<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> T-test</a></li>
-<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> Running an ANOVA</a></li>
-<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions"><i class="fa fa-check"></i><b>5.1.4</b> Verifying assumptions</a></li>
-<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output"><i class="fa fa-check"></i><b>5.1.5</b> Model output</a></li>
-<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> Complementary test</a></li>
-<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> Plotting</a></li>
-<li class="chapter" data-level="5.1.8" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#going-further-contrasts"><i class="fa fa-check"></i><b>5.1.8</b> Going further: Contrasts</a></li>
+<li class="chapter" data-level="5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html"><i class="fa fa-check"></i><b>5</b> t-test and ANOVA<span></span></a><ul>
+<li class="chapter" data-level="5.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.1</b> Analysis of Variance (ANOVA)<span></span></a><ul>
+<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> Types of ANOVA<span></span></a></li>
+<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> T-test<span></span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> Running an ANOVA<span></span></a></li>
+<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions"><i class="fa fa-check"></i><b>5.1.4</b> Verifying assumptions<span></span></a></li>
+<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output"><i class="fa fa-check"></i><b>5.1.5</b> Model output<span></span></a></li>
+<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> Complementary test<span></span></a></li>
+<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> Plotting<span></span></a></li>
+<li class="chapter" data-level="5.1.8" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#going-further-contrasts"><i class="fa fa-check"></i><b>5.1.8</b> Going further: Contrasts<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> Two-way ANOVA</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-a-two-way-anova"><i class="fa fa-check"></i><b>5.2.1</b> 4.1 Running a two-way ANOVA</a></li>
-<li class="chapter" data-level="5.2.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#interaction-plot"><i class="fa fa-check"></i><b>5.2.2</b> 4.2 Interaction plot</a></li>
+<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> Two-way ANOVA<span></span></a><ul>
+<li class="chapter" data-level="5.2.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-a-two-way-anova"><i class="fa fa-check"></i><b>5.2.1</b> 4.1 Running a two-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="5.2.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#interaction-plot"><i class="fa fa-check"></i><b>5.2.2</b> 4.2 Interaction plot<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> Unbalanced ANOVA (advanced section/ optional)</a></li>
+<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> Unbalanced ANOVA (advanced section/ optional)<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html"><i class="fa fa-check"></i><b>6</b> Analysis of covariance (ANCOVA)</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#assumptions-1"><i class="fa fa-check"></i><b>6.0.1</b> 6.1 Assumptions</a></li>
-<li class="chapter" data-level="6.0.2" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#types-of-ancova"><i class="fa fa-check"></i><b>6.0.2</b> 6.2 Types of ANCOVA</a></li>
-<li class="chapter" data-level="6.0.3" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#running-an-ancova"><i class="fa fa-check"></i><b>6.0.3</b> 6.3 Running an ANCOVA</a></li>
+<li class="chapter" data-level="6" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html"><i class="fa fa-check"></i><b>6</b> Analysis of covariance (ANCOVA)<span></span></a><ul>
+<li class="chapter" data-level="6.0.1" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#assumptions-1"><i class="fa fa-check"></i><b>6.0.1</b> 6.1 Assumptions<span></span></a></li>
+<li class="chapter" data-level="6.0.2" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#types-of-ancova"><i class="fa fa-check"></i><b>6.0.2</b> 6.2 Types of ANCOVA<span></span></a></li>
+<li class="chapter" data-level="6.0.3" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#running-an-ancova"><i class="fa fa-check"></i><b>6.0.3</b> 6.3 Running an ANCOVA<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple linear regression</a><ul>
-<li class="chapter" data-level="7.0.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#model-formulation-1"><i class="fa fa-check"></i><b>7.0.1</b> Model formulation</a></li>
-<li class="chapter" data-level="7.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.1</b> Assumptions</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#if-variables-are-collinear"><i class="fa fa-check"></i><b>7.1.1</b> If variables are collinear</a></li>
+<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple linear regression<span></span></a><ul>
+<li class="chapter" data-level="7.0.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#model-formulation-1"><i class="fa fa-check"></i><b>7.0.1</b> Model formulation<span></span></a></li>
+<li class="chapter" data-level="7.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.1</b> Assumptions<span></span></a><ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#if-variables-are-collinear"><i class="fa fa-check"></i><b>7.1.1</b> If variables are collinear<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multiple-linear-regression-in-r"><i class="fa fa-check"></i><b>7.2</b> Multiple linear regression in R</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#the-data"><i class="fa fa-check"></i><b>7.2.1</b> The data</a></li>
-<li class="chapter" data-level="7.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#verify-assumptions"><i class="fa fa-check"></i><b>7.2.2</b> Verify assumptions</a></li>
-<li class="chapter" data-level="7.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.2.3</b> Linear regression</a></li>
-<li class="chapter" data-level="7.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#find-the-best-fit-model"><i class="fa fa-check"></i><b>7.2.4</b> Find the best-fit model</a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multiple-linear-regression-in-r"><i class="fa fa-check"></i><b>7.2</b> Multiple linear regression in R<span></span></a><ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#the-data"><i class="fa fa-check"></i><b>7.2.1</b> The data<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#verify-assumptions"><i class="fa fa-check"></i><b>7.2.2</b> Verify assumptions<span></span></a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.2.3</b> Linear regression<span></span></a></li>
+<li class="chapter" data-level="7.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#find-the-best-fit-model"><i class="fa fa-check"></i><b>7.2.4</b> Find the best-fit model<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#polynomial-regression-additional-material"><i class="fa fa-check"></i><b>7.3</b> Polynomial regression (additional material)</a></li>
-<li class="chapter" data-level="7.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#variation-partitioning-additional-material"><i class="fa fa-check"></i><b>7.4</b> Variation Partitioning (additional material)</a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#polynomial-regression-additional-material"><i class="fa fa-check"></i><b>7.3</b> Polynomial regression (additional material)<span></span></a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#variation-partitioning-additional-material"><i class="fa fa-check"></i><b>7.4</b> Variation Partitioning (additional material)<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>Final considerations</b></span></li>
-<li class="chapter" data-level="8" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8</b> Summary</a></li>
-<li class="chapter" data-level="9" data-path="additional-resources.html"><a href="additional-resources.html"><i class="fa fa-check"></i><b>9</b> Additional resources</a></li>
-<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References</a></li>
+<li class="part"><span><b>Final considerations<span></span></b></span></li>
+<li class="chapter" data-level="8" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8</b> Summary<span></span></a></li>
+<li class="chapter" data-level="9" data-path="additional-resources.html"><a href="additional-resources.html"><i class="fa fa-check"></i><b>9</b> Additional resources<span></span></a></li>
+<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References<span></span></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/qcbsRworkshops" target="blank">QCBS R Workshop Series</a></li>
 
@@ -264,11 +264,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
 --!>
-<div id="t-test-and-anova" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> t-test and ANOVA</h1>
+<div id="t-test-and-anova" class="section level1 hasAnchor">
+<h1><span class="header-section-number">Chapter 5</span> t-test and ANOVA<a href="t-test-and-anova.html#t-test-and-anova" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="images/schema_ttest.png" /></p>
-<div id="analysis-of-variance-anova" class="section level2">
-<h2><span class="header-section-number">5.1</span> Analysis of Variance (ANOVA)</h2>
+<div id="analysis-of-variance-anova" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.1</span> Analysis of Variance (ANOVA)<a href="t-test-and-anova.html#analysis-of-variance-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Analysis of Variance (ANOVA) is a type of linear model for a continuous
 response variable and one or more categorical explanatory variables. The
 categorical explanatory variables can have any number of levels
@@ -284,7 +284,7 @@ within-level variance, this means that the levels affect the
 explanatory variable more than the random error (corresponding to the
 within-level variance), and that the explanatory variable is likely
 to be significantly influenced by the levels.</p>
-<p><img src="book-en_files/figure-html/unnamed-chunk-43-1.png" width="624" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-44-1.png" width="624" /></p>
 <p>In the ANOVA, the comparison of the between-level variance to the
 within-level variance is made through the calculation of the
 F-statistic that correspond to the ratio of the mean sum of squares of
@@ -345,8 +345,8 @@ freedom (df)</th>
 <p><span class="math inline">\(r\)</span>: number of replicates per level</p>
 <p><span class="math inline">\(\overline{y}\)</span>: general mean of the explanatory variable</p>
 <p><span class="math inline">\(\hat{y_{i}}\)</span> : mean of the explanatory variable for all the replicates of the level i.</p>
-<div id="types-of-anova" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Types of ANOVA</h3>
+<div id="types-of-anova" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.1</span> Types of ANOVA<a href="t-test-and-anova.html#types-of-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><strong>One-way ANOVA</strong><br />
 One categorical explanatory variable with 2 or more levels. If there
@@ -368,8 +368,8 @@ today. <strong>Linear Mixed-effect Models</strong> can also be used for this kin
 of data <em><a href="https://r.qcbs.ca/workshops/r-workshop-06/">(see Workshop 6)</a></em>.</li>
 </ol>
 </div>
-<div id="t-test" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> T-test</h3>
+<div id="t-test" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.2</span> T-test<a href="t-test-and-anova.html#t-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When you have a single explanatory variable which is qualitative and only have <strong>two levels</strong>, you
 can run a <em>student’s T-test</em> to test for a difference in the mean of the
 two levels. If appropriate for your data, you can choose to test a
@@ -384,8 +384,8 @@ that they simply have different means.Note that robustness of this test increase
 <span class="math inline">\(n_{1}\)</span> and <span class="math inline">\(n_{2}\)</span> are the sample sizes of groups 1 and 2, respectively.</p>
 <p>Note that the t-test is mathematically equivalent to a one-way ANOVA
 with 2 levels.</p>
-<div id="assumptions" class="section level4">
-<h4><span class="header-section-number">5.1.2.1</span> Assumptions</h4>
+<div id="assumptions" class="section level4 hasAnchor">
+<h4><span class="header-section-number">5.1.2.1</span> Assumptions<a href="t-test-and-anova.html#assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If the assumptions of the t-test are not met, the test can give
 misleading results. Here are some important things to note when testing
 the assumptions of a t-test.</p>
@@ -415,8 +415,8 @@ variances be as different as are <span class="math inline">\(s_{1}^2\)</span> an
 To do so, we must do the variance ratio test (i.e. an F-test).</li>
 </ol>
 </div>
-<div id="violation-of-assumptions" class="section level4">
-<h4><span class="header-section-number">5.1.2.2</span> Violation of assumptions</h4>
+<div id="violation-of-assumptions" class="section level4 hasAnchor">
+<h4><span class="header-section-number">5.1.2.2</span> Violation of assumptions<a href="t-test-and-anova.html#violation-of-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If variances between groups are not equal, it is possible to use
 corrections, like the <a href="http://en.wikipedia.org/wiki/Welch&#39;s_t_test">Welch
 correction</a>. If assumptions
@@ -426,8 +426,8 @@ Finally, if the two groups are not independent (e.g. measurements on the
 same individual at 2 different years), you should use a <a href="http://en.wikipedia.org/wiki/Student&#39;s_t-test#Paired_samples">Paired
 t-test</a>.</p>
 </div>
-<div id="running-a-t-test" class="section level4">
-<h4><span class="header-section-number">5.1.2.3</span> Running a t-test</h4>
+<div id="running-a-t-test" class="section level4 hasAnchor">
+<h4><span class="header-section-number">5.1.2.3</span> Running a t-test<a href="t-test-and-anova.html#running-a-t-test" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>In R, t-tests are implemented using the function <code>t.test</code>.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="t-test-and-anova.html#cb54-1"></a><span class="kw">t.test</span>(Y <span class="op">~</span><span class="st"> </span>X2, <span class="dt">data =</span> data, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>where:<br />
@@ -439,7 +439,7 @@ t-test</a>.</p>
 <p>Let’s look at an exemple with bird diet data.
 For example, let’s test the mass difference between aquatic and non-aquatic birds qith the column <code>Aquatic</code>.
 First, we can start with visualizing the data:</p>
-<p><img src="book-en_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <p>There seem to be a difference just by looking at the boxplot. Let’s make sure are assumptions are met before doing the test.<br />
 <strong>Note</strong>: we do not need to test the assumption of normally distributed data since we already log transformed the data above</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="t-test-and-anova.html#cb55-1"></a><span class="co"># Assumption of equal variance</span></span>
@@ -478,8 +478,8 @@ from 1, therefore variances are equal, and we proceeded with our t-test.</p>
 <p>Since <em>p</em> &lt; 0.05, the hypothesis of no difference between the two bird
 types (Aquatic vs. terrestrial) was rejected.</p>
 </div>
-<div id="running-a-t-test-with-lm" class="section level4">
-<h4><span class="header-section-number">5.1.2.4</span> Running a t-test with lm()</h4>
+<div id="running-a-t-test-with-lm" class="section level4 hasAnchor">
+<h4><span class="header-section-number">5.1.2.4</span> Running a t-test with lm()<a href="t-test-and-anova.html#running-a-t-test-with-lm" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Do not forget that a t test is simply a linear model or an ANOVA for a factor with two levels.
 You can reach the same results with :</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="t-test-and-anova.html#cb59-1"></a>lm.t &lt;-<span class="st"> </span><span class="kw">lm</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
@@ -500,8 +500,8 @@ t<sup>2</sup> = F:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="t-test-and-anova.html#cb63-1"></a><span class="kw">anova</span>(lm.t)<span class="op">$</span>F</span></code></pre></div>
 <pre><code>## [1] 60.3845      NA</code></pre>
 </div>
-<div id="unilateral-t-test" class="section level4">
-<h4><span class="header-section-number">5.1.2.5</span> Unilateral t-test</h4>
+<div id="unilateral-t-test" class="section level4 hasAnchor">
+<h4><span class="header-section-number">5.1.2.5</span> Unilateral t-test<a href="t-test-and-anova.html#unilateral-t-test" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The <em>alternative</em> option of the <code>t.test</code> function allows for the use of
 unilateral t-test. By default, <code>t.test()</code> use <code>'two-sided'</code>, which tests whether the means are different from each other. If you want to test whether one mean is higher than the other one, you can use <code>'less'</code> (<span class="math inline">\(\overline{y_{1}}\)</span> &lt; <span class="math inline">\(\overline{y_{2}}\)</span>) or <code>'greater'</code> (<span class="math inline">\(\overline{y_{1}}\)</span> &gt; <span class="math inline">\(\overline{y_{2}}\)</span>). For example, if users want to test if non-aquatic birds are less heavy than aquatic birds, the function can be written:</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="t-test-and-anova.html#cb65-1"></a><span class="co"># Unilateral T-test</span></span>
@@ -542,15 +542,15 @@ Thus, aquatic birds are significantly heavier than non-aquatic birds.</p>
 ##        3.645998        6.696582</code></pre>
 </div>
 </div>
-<div id="running-an-anova" class="section level3">
-<h3><span class="header-section-number">5.1.3</span> Running an ANOVA</h3>
+<div id="running-an-anova" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.3</span> Running an ANOVA<a href="t-test-and-anova.html#running-an-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The t-test is only for a single categorical explanatory variable with 2
 levels. For all other linear models with categorical explanatory
 variables we use ANOVA.</p>
 <p>When the ANOVA detects a significant difference between groups, it does not tell you which group (or groups) differs from the others.A commonly used <em>post-hoc</em> test to answer this question is the <a href="t-test-and-anova.html#complementary-test">Tukey’s test</a>. You may also compare between groups using planned comparisons or <a href="##going-further-contrasts">contrasts</a>. This is more elegant, because it expects that you have an <em>a priori</em> expectation for the differences between groups.</p>
 </div>
-<div id="verifying-assumptions" class="section level3">
-<h3><span class="header-section-number">5.1.4</span> Verifying assumptions</h3>
+<div id="verifying-assumptions" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.4</span> Verifying assumptions<a href="t-test-and-anova.html#verifying-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As with the simple linear regression and t-test, ANOVA must meet the
 four assumptions of linear models. Below are some tips in how to test
 these assumptions for an ANOVA.</p>
@@ -588,8 +588,8 @@ convert a multiplicative effect into an additive effect. Or, if you
 can’t (or don’t want to) transform your data, the non-parametric
 equivalent of ANOVA is <a href="http://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance">Kruskal-Wallis
 test</a>.</p>
-<div id="example-with-bird-data" class="section level4">
-<h4><span class="header-section-number">5.1.4.1</span> Example with <code>bird</code> data</h4>
+<div id="example-with-bird-data" class="section level4 hasAnchor">
+<h4><span class="header-section-number">5.1.4.1</span> Example with <code>bird</code> data<a href="t-test-and-anova.html#example-with-bird-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We are interested to test if maximal abundance of birds depend on the diet.</p>
 <p>First, let’s visualize the data using <code>boxplot()</code>. Recall that by default, R will order you groups in
 alphabetical order. We can reorder the groups according to the median of
@@ -597,16 +597,16 @@ each Diet level.<br />
 </p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="t-test-and-anova.html#cb69-1"></a><span class="co"># Default alphabetical order</span></span>
 <span id="cb69-2"><a href="t-test-and-anova.html#cb69-2"></a><span class="kw">boxplot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
-<p><img src="book-en_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="t-test-and-anova.html#cb70-1"></a><span class="co"># Relevel factors</span></span>
 <span id="cb70-2"><a href="t-test-and-anova.html#cb70-2"></a>med &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, bird<span class="op">$</span>Diet, median))</span>
 <span id="cb70-3"><a href="t-test-and-anova.html#cb70-3"></a><span class="kw">boxplot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span><span class="kw">factor</span>(Diet, <span class="dt">levels =</span> <span class="kw">names</span>(med)), <span class="dt">data =</span> bird,</span>
 <span id="cb70-4"><a href="t-test-and-anova.html#cb70-4"></a>    <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>, <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>))</span></code></pre></div>
-<p><img src="book-en_files/figure-html/unnamed-chunk-53-2.png" width="672" />
+<p><img src="book-en_files/figure-html/unnamed-chunk-54-2.png" width="672" />
 Another way to graphically view the effect sizes is to use <code>plot.design()</code>. This function will illustrate the levels of a particular factor along a vertical line, and the overall value of the response is drawn as a horizontal line.</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="t-test-and-anova.html#cb71-1"></a><span class="kw">plot.design</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
 <span id="cb71-2"><a href="t-test-and-anova.html#cb71-2"></a><span class="st">    &quot;(Maximum Abundance)&quot;</span>))</span></code></pre></div>
-<p><img src="book-en_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <p>There seem to be some differences. We now need to check the assumption to our model.
 <strong>Note</strong>: We need to perform the ANOVA to look at the residuals, however, results are not to be interpreted until we have verified the assumptions.</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="t-test-and-anova.html#cb72-1"></a><span class="co"># Plot for diagnostics</span></span>
@@ -614,7 +614,7 @@ Another way to graphically view the effect sizes is to use <code>plot.design()</
 <span id="cb72-3"><a href="t-test-and-anova.html#cb72-3"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb72-4"><a href="t-test-and-anova.html#cb72-4"></a><span class="kw">plot</span>(aov1)</span>
 <span id="cb72-5"><a href="t-test-and-anova.html#cb72-5"></a><span class="kw">par</span>(opar)</span></code></pre></div>
-<p><img src="book-en_files/figure-html/unnamed-chunk-56-1.png" width="672" />
+<p><img src="book-en_files/figure-html/unnamed-chunk-57-1.png" width="672" />
 Ideally the first diagnostic plot should show similar scatter for each Diet level. We can use only these graph to verify our assumptions, however, we can also use the Shapiro’s, Bartlett’s tests or Levene’s test. <strong>Note</strong>:Levene’s test performs better, but has a slightly higher Type II error.</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="t-test-and-anova.html#cb73-1"></a><span class="co"># Test assumption of normality of residuals</span></span>
 <span id="cb73-2"><a href="t-test-and-anova.html#cb73-2"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov1))</span></code></pre></div>
@@ -652,8 +652,8 @@ are assumed to be equal.</p>
 <span id="cb79-7"><a href="t-test-and-anova.html#cb79-7"></a><span class="kw">anova</span>(anov1)</span></code></pre></div>
 </div>
 </div>
-<div id="model-output" class="section level3">
-<h3><span class="header-section-number">5.1.5</span> Model output</h3>
+<div id="model-output" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.5</span> Model output<a href="t-test-and-anova.html#model-output" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Once your ANOVA model has been validated, its results can be
 interpreted. The R output of ANOVA model depends of the function that
 has been used to implement the ANOVA. If the <code>aov</code> function is used to
@@ -679,8 +679,8 @@ is inferior to 0.05. The null hypothesis can then be rejected meaning
 that at least one of the diet treatments influenced the abundance
 differently than the other treatments.</p>
 </div>
-<div id="complementary-test" class="section level3">
-<h3><span class="header-section-number">5.1.6</span> Complementary test</h3>
+<div id="complementary-test" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.6</span> Complementary test<a href="t-test-and-anova.html#complementary-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Importantly, ANOVA cannot identify which treatment is different from the
 others in terms of response variable. It can only identify that a
 difference is present. To determine the location of the difference(s),
@@ -720,8 +720,8 @@ treatment differ from the others:<br />
 <p>In this case, the only significant difference in abundance occurs
 between the PlantInsect diet and the Vertebrate diet.</p>
 </div>
-<div id="plotting" class="section level3">
-<h3><span class="header-section-number">5.1.7</span> Plotting</h3>
+<div id="plotting" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.7</span> Plotting<a href="t-test-and-anova.html#plotting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>After having verified the assumptions of your ANOVA model, interpreted
 the ANOVA table and differentiated the effect of the treatments using
 post-hoc tests or contrasts, the ANOVA results can be graphically
@@ -747,10 +747,10 @@ representing the treatment group (according to the post-hoc test).</p>
 <span id="cb87-16"><a href="t-test-and-anova.html#cb87-16"></a><span class="kw">segments</span>(bp <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">+</span><span class="st"> </span>se, bp <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">+</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
 <span id="cb87-17"><a href="t-test-and-anova.html#cb87-17"></a><span class="co"># add a line at 0</span></span>
 <span id="cb87-18"><a href="t-test-and-anova.html#cb87-18"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>)</span></code></pre></div>
-<p><img src="book-en_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 </div>
-<div id="going-further-contrasts" class="section level3">
-<h3><span class="header-section-number">5.1.8</span> Going further: Contrasts</h3>
+<div id="going-further-contrasts" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.1.8</span> Going further: Contrasts<a href="t-test-and-anova.html#going-further-contrasts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Contrasts compare each level of a factor to a baseline level and therefore, we can determine if each level of a factor are significantly different from each other.</p>
 <p>Contrasts are based on an <em>a priori</em> hypothesis, which makes them much more robust than <em>a posteriori</em> comparison like Tukey’s test. With contrasts, groups can be compounded of one or many levels of a factor, and we can test basic hypothesis (ex: μ<sub>1</sub> = μ<sub>2</sub>) or more complex hypothesis (ex: (μ<sub>1</sub> + μ<sub>2</sub>)/3 == μ<sub>3</sub>).</p>
 <p><em>Important requirement</em>
@@ -993,8 +993,8 @@ corresponding to the treatment with a different coefficient, here the
 <code>help(contrasts)</code></p>
 </div>
 </div>
-<div id="two-way-anova" class="section level2">
-<h2><span class="header-section-number">5.2</span> Two-way ANOVA</h2>
+<div id="two-way-anova" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.2</span> Two-way ANOVA<a href="t-test-and-anova.html#two-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the above section, the ANOVA models had a single categorical
 variable. We can create ANOVA models with multiple categorical
 explanatory variables. When there are two categorical explanatory
@@ -1080,8 +1080,8 @@ AB</td>
 <code>r</code>: number of replicates per treatment<br />
 <span class="math inline">\(\epsilon\)</span> : error<br />
 </p>
-<div id="running-a-two-way-anova" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> 4.1 Running a two-way ANOVA</h3>
+<div id="running-a-two-way-anova" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.2.1</span> 4.1 Running a two-way ANOVA<a href="t-test-and-anova.html#running-a-two-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In R, a two-way ANOVA model is implemented in the same fashion as a
 one-way ANOVA using the function <code>lm</code>.</p>
 <ul>
@@ -1119,7 +1119,7 @@ previously explained for one-way ANOVA.<br />
 <span id="cb126-3"><a href="t-test-and-anova.html#cb126-3"></a><span class="kw">plot</span>(anov4)</span></code></pre></div>
 <pre><code>## Warning: not plotting observations with leverage one:
 ##   5, 6, 26</code></pre>
-<p><img src="book-en_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="t-test-and-anova.html#cb128-1"></a><span class="kw">par</span>(opar)</span></code></pre></div>
 <p>Assumptions are met so we use the <code>anova</code> command to visualize the ANOVA table of the
 model:<br />
@@ -1173,13 +1173,13 @@ below for further details.</p>
 </details>
 <hr />
 </div>
-<div id="interaction-plot" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> 4.2 Interaction plot</h3>
+<div id="interaction-plot" class="section level3 hasAnchor">
+<h3><span class="header-section-number">5.2.2</span> 4.2 Interaction plot<a href="t-test-and-anova.html#interaction-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Interactions can also be viewed graphically using the function
 <code>interaction.plot</code> as:</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="t-test-and-anova.html#cb133-1"></a><span class="kw">interaction.plot</span>(bird<span class="op">$</span>Diet, bird<span class="op">$</span>Aquatic, bird<span class="op">$</span>logMaxAbund, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,</span>
 <span id="cb133-2"><a href="t-test-and-anova.html#cb133-2"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="st">&quot;Diet&quot;</span>)</span></code></pre></div>
-<p><img src="book-en_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="book-en_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 <p>What do the gaps in the line for the Aquatic group mean?</p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="t-test-and-anova.html#cb134-1"></a><span class="kw">table</span>(bird<span class="op">$</span>Diet, bird<span class="op">$</span>Aquatic)</span></code></pre></div>
 <pre><code>##              
@@ -1210,8 +1210,8 @@ with and without this categorical variable.</p>
 <hr />
 </div>
 </div>
-<div id="unbalanced-anova-advanced-section-optional" class="section level2">
-<h2><span class="header-section-number">5.3</span> Unbalanced ANOVA (advanced section/ optional)</h2>
+<div id="unbalanced-anova-advanced-section-optional" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.3</span> Unbalanced ANOVA (advanced section/ optional)<a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One-way and two-way ANOVA enabled us to determine the effect
 of categorical explanatory variables on a continuous response variable
 for the case of balanced experimental designs (i.e. when all levels of
