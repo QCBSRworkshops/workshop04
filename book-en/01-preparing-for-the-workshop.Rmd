@@ -6,6 +6,23 @@
 
 # Preparing for the workshop
 
+```{r eval=FALSE, echo=FALSE, purl=TRUE}
+##### Notice ###
+###                                                                             #
+### This is an automatically generated script based on the code chunks from the #
+### book for this workshop.                                                     #
+###                                                                             #
+### It is minimally annotated to allow participants to provide their comments:  # 
+### a practice that we highly encourage.                                        #
+###                                                                             #
+### Note that the solutions to the challenges are also included in this script. #
+### When solving the challenges by yourself, attempt to not scroll and peek at  #
+### the solutions.                                                              #
+###                                                                             #
+### Happy coding!                                                               #
+
+```
+
 All workshop materials are found at [github.com/QCBSRworkshops/workshop04](https://github.com/QCBSRworkshops/workshop04). This includes an [R script](https://r.qcbs.ca/workshop04/book-en/workshop04-script-en.R) which contains all code chunks shown in this book.
 
 For this workshop, we will be working with the following datasets:

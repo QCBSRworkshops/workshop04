@@ -6,6 +6,23 @@
 
 # Préparez-vous pour cet atelier
 
+```{r eval=FALSE, echo=FALSE, purl=TRUE}
+##### Avis ###
+###                                                                             #
+### Ceci est un script généré automatiquement basé sur les morceaux de code du  #
+### livre pour cet atelier.                                                     #
+###                                                                             #
+### Il est minimalement annoté pour permettre aux participants de fournir leurs #
+### commentaires : une pratique que nous encourageons vivement.                 #
+###                                                                             #
+### Notez que les solutions aux défis sont également incluses dans ce script.   #
+### Lorsque vous résolvez les défis par vous-méme, essayez de ne pas parcourir  #
+### le code et de regarder les solutions.                                       #
+###                                                                             # 
+### Bon codage !                                                               #
+
+```
+
 Tout le matériel de l'atelier se trouve sur [github.com/QCBSRworkshops/workshop04](https://github.com/QCBSRworkshops/workshop04). Cela inclut un [script R](https://r.qcbs.ca/workshop04/book-fr/workshop04-script-fr.R) qui rassemble tous les morceaux de code présentés dans ce livre.
 
 Pour cet atelier, nous travaillerons avec les jeux de données suivants :
