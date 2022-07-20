@@ -14,9 +14,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Workshop 4: Linear models
+]
+.subtitle[
 ## QCBS R Workshop Series
+]
+.author[
 ### Québec Centre for Biodiversity Science
+]
 
 ---
 
@@ -777,7 +783,6 @@ We also want  the spread around the red line to not vary  vary with the fitted v
 
 &lt;img src="workshop04-pres-en_files/figure-html/unnamed-chunk-27-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
-
 ---
 
 # Diagnostic plot # 3 - Normal Quantile-Quantile
@@ -1027,6 +1032,14 @@ plot(lm2)
 
 &lt;img src="workshop04-pres-en_files/figure-html/unnamed-chunk-41-1.png" width="540" style="display: block; margin: auto;" /&gt;
 
+???
+
+A little reminder:
+- Residuals versus fitted provide information on non-linear patterns
+- Q-Q shows whether the residuals are normally distributed across all portions of the data
+- Scale-Location describes whether the residuals are spread eually along the ranges of predictors
+- Residuals versus Leverage provides information on how influential points are in driving the regression.
+
 --
 
 .comment[.center[It has improved, but there are still some problems.]]
@@ -1093,12 +1106,19 @@ F-statistic: 4.075 on 1 and 52 DF,  p-value: 0.04869
 
 - Take time to explain the summary:
   1. Parameter estimates and their standard deviation
-  2. Results of a t-test whether the parameters are different from 0
+  2. t-value: how many standard deviations our coefficient estimate is far away from 0.
   3. Adjusted R-squared: How well does the model explain the data?
   4. F-statistic (ANOVA): Is the model significantly different from an intercept-only model?
 - Mention that t-tests and ANOVA will be discussed later
 - In this case: our model is *barely* better than an intercept-only model
 - Interpretation of coefficients is tricky because of log-log. One unit increase in log(Mass) decreases -0.22*log(MaxAbund). If ln, then the proportional percentage change.
+- Formula Call
+- Residuals: Residuals are essentially the difference between the actual observed response values (distance to stop dist in our case) and the response values that the model predicted. When assessing how well the model fit the data, you should look for a symmetrical distribution across these points on the mean value zero (0)
+- Coefficients: intercept and slope terms in the linear model
+- Residual Standard Error: measures the quality of a linear regression fit.
+- Multiple R-squared, Adjusted R-squared: how well the model is fitting the actual data,
+
+- 
 
 ---
 # **Step 3.** Analyze parameter estimates
@@ -3560,6 +3580,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
