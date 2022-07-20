@@ -818,7 +818,6 @@ plot(lm, which = 2)
 
 ```
 
-
 ---
 
 # Diagnostic plot # 3 - Normal Quantile-Quantile
@@ -1106,6 +1105,14 @@ par(mfrow = c(2,2), mar=c(3,4,1.15,1.2))
 plot(lm2)
 ```
 
+???
+
+A little reminder:
+- Residuals versus fitted provide information on non-linear patterns
+- Q-Q shows whether the residuals are normally distributed across all portions of the data
+- Scale-Location describes whether the residuals are spread eually along the ranges of predictors
+- Residuals versus Leverage provides information on how influential points are in driving the regression.
+
 --
 
 .comment[.center[It has improved, but there are still some problems.]]
@@ -1147,12 +1154,19 @@ summary(lm2)
 
 - Take time to explain the summary:
   1. Parameter estimates and their standard deviation
-  2. Results of a t-test whether the parameters are different from 0
+  2. t-value: how many standard deviations our coefficient estimate is far away from 0.
   3. Adjusted R-squared: How well does the model explain the data?
   4. F-statistic (ANOVA): Is the model significantly different from an intercept-only model?
 - Mention that t-tests and ANOVA will be discussed later
 - In this case: our model is *barely* better than an intercept-only model
 - Interpretation of coefficients is tricky because of log-log. One unit increase in log(Mass) decreases -0.22*log(MaxAbund). If ln, then the proportional percentage change.
+- Formula Call
+- Residuals: Residuals are essentially the difference between the actual observed response values (distance to stop dist in our case) and the response values that the model predicted. When assessing how well the model fit the data, you should look for a symmetrical distribution across these points on the mean value zero (0)
+- Coefficients: intercept and slope terms in the linear model
+- Residual Standard Error: measures the quality of a linear regression fit.
+- Multiple R-squared, Adjusted R-squared: how well the model is fitting the actual data,
+
+- 
 
 ---
 # **Step 3.** Analyze parameter estimates
