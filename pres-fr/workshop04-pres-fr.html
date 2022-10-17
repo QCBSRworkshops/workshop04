@@ -14,9 +14,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Atelier 4: Modèles linéaires
+]
+.subtitle[
 ## Série d’ateliers R du CSBQ
+]
+.author[
 ### Centre de la Science de la Biodiversité du Québec
+]
 
 ---
 
@@ -3137,13 +3143,13 @@ part.lm
 # 
 # Partition table:
 #                      Df R.squared Adj.R.squared Testable
-# [a+b] = X1            5   0.31414       0.30878     TRUE
+# [a+c] = X1            5   0.31414       0.30878     TRUE
 # [b+c] = X2            6   0.03654       0.02749     TRUE
 # [a+b+c] = X1+X2      11   0.32378       0.31205     TRUE
 # Individual fractions                                    
 # [a] = X1|X2           5                 0.28456     TRUE
-# [b]                   0                 0.02423    FALSE
-# [c] = X2|X1           6                 0.00327     TRUE
+# [b] = X2|X1           6                 0.00327     TRUE
+# [c]                   0                 0.02423    FALSE
 # [d] = Residuals                         0.68795    FALSE
 # ---
 # Use function 'rda' to test significance of fractions of interest
@@ -3309,6 +3315,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
