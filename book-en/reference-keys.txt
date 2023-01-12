@@ -12,7 +12,7 @@ formulation-of-a-linear-model
 evaluation-of-the-linear-model
 assumptions-of-the-linear-model
 normal-distribution-of-the-residuals
-homoskedasticity
+homoscedasticity
 independence-of-the-residuals
 notation-for-linear-models
 mathematical-notation

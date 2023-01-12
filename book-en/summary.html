@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Summary | Workshop 4: Linear models</title>
   <meta name="description" content="Linear models" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Summary | Workshop 4: Linear models" />
   <meta property="og:type" content="book" />
@@ -48,25 +48,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,99 +135,118 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <link rel="icon" type="image/png" href="assets/images/favicon.ico"/>
 
 <li class="divider"></li>
-<li class="part"><span><b>QCBS R Workshop Series<span></span></b></span></li>
-<li><a href="index.html#preface">Preface<span></span></a><ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>0.1</b> Code of conduct<span></span></a><ul>
-<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#expected-behaviour"><i class="fa fa-check"></i><b>0.1.1</b> Expected behaviour<span></span></a></li>
-<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#unacceptable-behaviour"><i class="fa fa-check"></i><b>0.1.2</b> Unacceptable behaviour<span></span></a></li>
+<li class="part"><span><b>QCBS R Workshop Series</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#code-of-conduct"><i class="fa fa-check"></i><b>0.1</b> Code of conduct</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#expected-behaviour"><i class="fa fa-check"></i><b>0.1.1</b> Expected behaviour</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#unacceptable-behaviour"><i class="fa fa-check"></i><b>0.1.2</b> Unacceptable behaviour</a></li>
 </ul></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>0.2</b> Contributors<span></span></a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i><b>0.3</b> Contributing<span></span></a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>0.2</b> Contributors</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contributing"><i class="fa fa-check"></i><b>0.3</b> Contributing</a></li>
 </ul></li>
-<li class="part"><span><b>Linear models in <code>R</code><span></span></b></span></li>
-<li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning objectives<span></span></a></li>
-<li class="chapter" data-level="2" data-path="preparing-for-the-workshop.html"><a href="preparing-for-the-workshop.html"><i class="fa fa-check"></i><b>2</b> Preparing for the workshop<span></span></a></li>
-<li class="chapter" data-level="3" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>3</b> The linear model<span></span></a><ul>
-<li class="chapter" data-level="3.1" data-path="the-linear-model.html"><a href="the-linear-model.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?<span></span></a><ul>
-<li class="chapter" data-level="3.1.1" data-path="the-linear-model.html"><a href="the-linear-model.html#example-abundance-and-mass-of-bird-species"><i class="fa fa-check"></i><b>3.1.1</b> Example: Abundance and mass of bird species<span></span></a></li>
+<li class="part"><span><b>Linear models in <code>R</code></b></span></li>
+<li class="chapter" data-level="1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2" data-path="preparing-for-the-workshop.html"><a href="preparing-for-the-workshop.html"><i class="fa fa-check"></i><b>2</b> Preparing for the workshop</a></li>
+<li class="chapter" data-level="3" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>3</b> The linear model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="the-linear-model.html"><a href="the-linear-model.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>3.1</b> What is a linear model?</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="the-linear-model.html"><a href="the-linear-model.html#example-abundance-and-mass-of-bird-species"><i class="fa fa-check"></i><b>3.1.1</b> Example: Abundance and mass of bird species</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="the-linear-model.html"><a href="the-linear-model.html#formulation-of-a-linear-model"><i class="fa fa-check"></i><b>3.2</b> Formulation of a linear model<span></span></a></li>
-<li class="chapter" data-level="3.3" data-path="the-linear-model.html"><a href="the-linear-model.html#evaluation-of-the-linear-model"><i class="fa fa-check"></i><b>3.3</b> Evaluation of the linear model<span></span></a></li>
-<li class="chapter" data-level="3.4" data-path="the-linear-model.html"><a href="the-linear-model.html#assumptions-of-the-linear-model"><i class="fa fa-check"></i><b>3.4</b> Assumptions of the linear model<span></span></a><ul>
-<li class="chapter" data-level="3.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#normal-distribution-of-the-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Normal distribution of the residuals<span></span></a></li>
-<li class="chapter" data-level="3.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#homoskedasticity"><i class="fa fa-check"></i><b>3.4.2</b> Homoskedasticity<span></span></a></li>
-<li class="chapter" data-level="3.4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#independence-of-the-residuals"><i class="fa fa-check"></i><b>3.4.3</b> Independence of the residuals<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="the-linear-model.html"><a href="the-linear-model.html#formulation-of-a-linear-model"><i class="fa fa-check"></i><b>3.2</b> Formulation of a linear model</a></li>
+<li class="chapter" data-level="3.3" data-path="the-linear-model.html"><a href="the-linear-model.html#evaluation-of-the-linear-model"><i class="fa fa-check"></i><b>3.3</b> Evaluation of the linear model</a></li>
+<li class="chapter" data-level="3.4" data-path="the-linear-model.html"><a href="the-linear-model.html#assumptions-of-the-linear-model"><i class="fa fa-check"></i><b>3.4</b> Assumptions of the linear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#normal-distribution-of-the-residuals"><i class="fa fa-check"></i><b>3.4.1</b> Normal distribution of the residuals</a></li>
+<li class="chapter" data-level="3.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#homoscedasticity"><i class="fa fa-check"></i><b>3.4.2</b> Homoscedasticity</a></li>
+<li class="chapter" data-level="3.4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#independence-of-the-residuals"><i class="fa fa-check"></i><b>3.4.3</b> Independence of the residuals</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="the-linear-model.html"><a href="the-linear-model.html#notation-for-linear-models"><i class="fa fa-check"></i><b>3.5</b> Notation for linear models<span></span></a><ul>
-<li class="chapter" data-level="3.5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5.1</b> Mathematical notation<span></span></a></li>
-<li class="chapter" data-level="3.5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#r-notation"><i class="fa fa-check"></i><b>3.5.2</b> R notation<span></span></a></li>
+<li class="chapter" data-level="3.5" data-path="the-linear-model.html"><a href="the-linear-model.html#notation-for-linear-models"><i class="fa fa-check"></i><b>3.5</b> Notation for linear models</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5.1</b> Mathematical notation</a></li>
+<li class="chapter" data-level="3.5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#r-notation"><i class="fa fa-check"></i><b>3.5.2</b> R notation</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="the-linear-model.html"><a href="the-linear-model.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>3.6</b> Fitting a linear model<span></span></a><ul>
-<li class="chapter" data-level="3.6.1" data-path="the-linear-model.html"><a href="the-linear-model.html#model-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Model estimation<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="the-linear-model.html"><a href="the-linear-model.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>3.6</b> Fitting a linear model</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="the-linear-model.html"><a href="the-linear-model.html#model-estimation"><i class="fa fa-check"></i><b>3.6.1</b> Model estimation</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="the-linear-model.html"><a href="the-linear-model.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.7</b> Learning objectives<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="the-linear-model.html"><a href="the-linear-model.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.7</b> Learning objectives</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html"><i class="fa fa-check"></i><b>4</b> Linear regression in R<span></span></a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-formulation"><i class="fa fa-check"></i><b>4.1</b> Model formulation<span></span></a><ul>
-<li class="chapter" data-level="4.1.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-equation"><i class="fa fa-check"></i><b>4.1.1</b> Model equation<span></span></a></li>
+<li class="chapter" data-level="4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html"><i class="fa fa-check"></i><b>4</b> Linear regression in R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-formulation"><i class="fa fa-check"></i><b>4.1</b> Model formulation</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-equation"><i class="fa fa-check"></i><b>4.1.1</b> Model equation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-1"><i class="fa fa-check"></i><b>4.2</b> Linear regression in R<span></span></a><ul>
-<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-1-formulate-and-run-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Formulate and run a linear model<span></span></a></li>
-<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Verify assumptions using diagnostic plots of the residuals<span></span></a></li>
-<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2.-verify-assumptions-of-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code><span></span></a></li>
-<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---what-is-wrong"><i class="fa fa-check"></i><b>4.2.4</b> Assumptions not met - what is wrong?<span></span></a></li>
-<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---how-to-proceed"><i class="fa fa-check"></i><b>4.2.5</b> Assumptions not met - how to proceed?<span></span></a></li>
-<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-3.-analyze-parameter-estimates"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Step 3.</strong> Analyze parameter estimates<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-1"><i class="fa fa-check"></i><b>4.2</b> Linear regression in R</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-1-formulate-and-run-a-linear-model"><i class="fa fa-check"></i><b>4.2.1</b> Step 1: Formulate and run a linear model</a></li>
+<li class="chapter" data-level="4.2.2" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2-verify-assumptions-using-diagnostic-plots-of-the-residuals"><i class="fa fa-check"></i><b>4.2.2</b> Step 2: Verify assumptions using diagnostic plots of the residuals</a></li>
+<li class="chapter" data-level="4.2.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-2.-verify-assumptions-of-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Step 2</strong>. Verify assumptions of <code>lm1</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---what-is-wrong"><i class="fa fa-check"></i><b>4.2.4</b> Assumptions not met - what is wrong?</a></li>
+<li class="chapter" data-level="4.2.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#assumptions-not-met---how-to-proceed"><i class="fa fa-check"></i><b>4.2.5</b> Assumptions not met - how to proceed?</a></li>
+<li class="chapter" data-level="4.2.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#step-3.-analyze-parameter-estimates"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Step 3.</strong> Analyze parameter estimates</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-interpretation"><i class="fa fa-check"></i><b>4.3</b> Model interpretation<span></span></a><ul>
-<li class="chapter" data-level="4.3.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#finding-a-better-model-terrestrial-birds"><i class="fa fa-check"></i><b>4.3.1</b> Finding a better model: terrestrial birds<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#model-interpretation"><i class="fa fa-check"></i><b>4.3</b> Model interpretation</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#finding-a-better-model-terrestrial-birds"><i class="fa fa-check"></i><b>4.3.1</b> Finding a better model: terrestrial birds</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-2"><i class="fa fa-check"></i><b>4.4</b> Challenge 2<span></span></a><ul>
-<li class="chapter" data-level="4.4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#challenge-2"><i class="fa fa-check"></i><b>4.4</b> Challenge 2</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-2"><i class="fa fa-check"></i><b>4.5</b> Linear regression in R<span></span></a></li>
-<li class="chapter" data-level="4.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#variable-names"><i class="fa fa-check"></i><b>4.6</b> Variable names<span></span></a></li>
+<li class="chapter" data-level="4.5" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#linear-regression-in-r-2"><i class="fa fa-check"></i><b>4.5</b> Linear regression in R</a></li>
+<li class="chapter" data-level="4.6" data-path="linear-regression-in-r.html"><a href="linear-regression-in-r.html#variable-names"><i class="fa fa-check"></i><b>4.6</b> Variable names</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html"><i class="fa fa-check"></i><b>5</b> t-test and ANOVA<span></span></a><ul>
-<li class="chapter" data-level="5.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.1</b> Analysis of Variance (ANOVA)<span></span></a><ul>
-<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> Types of ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> T-test<span></span></a></li>
-<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> Running an ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions"><i class="fa fa-check"></i><b>5.1.4</b> Verifying assumptions<span></span></a></li>
-<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output"><i class="fa fa-check"></i><b>5.1.5</b> Model output<span></span></a></li>
-<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> Complementary test<span></span></a></li>
-<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> Plotting<span></span></a></li>
-<li class="chapter" data-level="5.1.8" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#going-further-contrasts"><i class="fa fa-check"></i><b>5.1.8</b> Going further: Contrasts<span></span></a></li>
+<li class="chapter" data-level="5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html"><i class="fa fa-check"></i><b>5</b> t-test and ANOVA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#analysis-of-variance-anova"><i class="fa fa-check"></i><b>5.1</b> Analysis of Variance (ANOVA)</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#types-of-anova"><i class="fa fa-check"></i><b>5.1.1</b> Types of ANOVA</a></li>
+<li class="chapter" data-level="5.1.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#t-test"><i class="fa fa-check"></i><b>5.1.2</b> T-test</a></li>
+<li class="chapter" data-level="5.1.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-an-anova"><i class="fa fa-check"></i><b>5.1.3</b> Running an ANOVA</a></li>
+<li class="chapter" data-level="5.1.4" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#verifying-assumptions"><i class="fa fa-check"></i><b>5.1.4</b> Verifying assumptions</a></li>
+<li class="chapter" data-level="5.1.5" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#model-output"><i class="fa fa-check"></i><b>5.1.5</b> Model output</a></li>
+<li class="chapter" data-level="5.1.6" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#complementary-test"><i class="fa fa-check"></i><b>5.1.6</b> Complementary test</a></li>
+<li class="chapter" data-level="5.1.7" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#plotting"><i class="fa fa-check"></i><b>5.1.7</b> Plotting</a></li>
+<li class="chapter" data-level="5.1.8" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#going-further-contrasts"><i class="fa fa-check"></i><b>5.1.8</b> Going further: Contrasts</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> Two-way ANOVA<span></span></a><ul>
-<li class="chapter" data-level="5.2.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-a-two-way-anova"><i class="fa fa-check"></i><b>5.2.1</b> 4.1 Running a two-way ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.2.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#interaction-plot"><i class="fa fa-check"></i><b>5.2.2</b> 4.2 Interaction plot<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#two-way-anova"><i class="fa fa-check"></i><b>5.2</b> Two-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#running-a-two-way-anova"><i class="fa fa-check"></i><b>5.2.1</b> 4.1 Running a two-way ANOVA</a></li>
+<li class="chapter" data-level="5.2.2" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#interaction-plot"><i class="fa fa-check"></i><b>5.2.2</b> 4.2 Interaction plot</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> Unbalanced ANOVA (advanced section/ optional)<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="t-test-and-anova.html"><a href="t-test-and-anova.html#unbalanced-anova-advanced-section-optional"><i class="fa fa-check"></i><b>5.3</b> Unbalanced ANOVA (advanced section/ optional)</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html"><i class="fa fa-check"></i><b>6</b> Analysis of covariance (ANCOVA)<span></span></a><ul>
-<li class="chapter" data-level="6.0.1" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#assumptions-1"><i class="fa fa-check"></i><b>6.0.1</b> 6.1 Assumptions<span></span></a></li>
-<li class="chapter" data-level="6.0.2" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#types-of-ancova"><i class="fa fa-check"></i><b>6.0.2</b> 6.2 Types of ANCOVA<span></span></a></li>
-<li class="chapter" data-level="6.0.3" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#running-an-ancova"><i class="fa fa-check"></i><b>6.0.3</b> 6.3 Running an ANCOVA<span></span></a></li>
+<li class="chapter" data-level="6" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html"><i class="fa fa-check"></i><b>6</b> Analysis of covariance (ANCOVA)</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#assumptions-1"><i class="fa fa-check"></i><b>6.0.1</b> 6.1 Assumptions</a></li>
+<li class="chapter" data-level="6.0.2" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#types-of-ancova"><i class="fa fa-check"></i><b>6.0.2</b> 6.2 Types of ANCOVA</a></li>
+<li class="chapter" data-level="6.0.3" data-path="analysis-of-covariance-ancova.html"><a href="analysis-of-covariance-ancova.html#running-an-ancova"><i class="fa fa-check"></i><b>6.0.3</b> 6.3 Running an ANCOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple linear regression<span></span></a><ul>
-<li class="chapter" data-level="7.0.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#model-formulation-1"><i class="fa fa-check"></i><b>7.0.1</b> Model formulation<span></span></a></li>
-<li class="chapter" data-level="7.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.1</b> Assumptions<span></span></a><ul>
-<li class="chapter" data-level="7.1.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#if-variables-are-collinear"><i class="fa fa-check"></i><b>7.1.1</b> If variables are collinear<span></span></a></li>
+<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple linear regression</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#model-formulation-1"><i class="fa fa-check"></i><b>7.0.1</b> Model formulation</a></li>
+<li class="chapter" data-level="7.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#assumptions-2"><i class="fa fa-check"></i><b>7.1</b> Assumptions</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#if-variables-are-collinear"><i class="fa fa-check"></i><b>7.1.1</b> If variables are collinear</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multiple-linear-regression-in-r"><i class="fa fa-check"></i><b>7.2</b> Multiple linear regression in R<span></span></a><ul>
-<li class="chapter" data-level="7.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#the-data"><i class="fa fa-check"></i><b>7.2.1</b> The data<span></span></a></li>
-<li class="chapter" data-level="7.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#verify-assumptions"><i class="fa fa-check"></i><b>7.2.2</b> Verify assumptions<span></span></a></li>
-<li class="chapter" data-level="7.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.2.3</b> Linear regression<span></span></a></li>
-<li class="chapter" data-level="7.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#find-the-best-fit-model"><i class="fa fa-check"></i><b>7.2.4</b> Find the best-fit model<span></span></a></li>
+<li class="chapter" data-level="7.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multiple-linear-regression-in-r"><i class="fa fa-check"></i><b>7.2</b> Multiple linear regression in R</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#the-data"><i class="fa fa-check"></i><b>7.2.1</b> The data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#verify-assumptions"><i class="fa fa-check"></i><b>7.2.2</b> Verify assumptions</a></li>
+<li class="chapter" data-level="7.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.2.3</b> Linear regression</a></li>
+<li class="chapter" data-level="7.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#find-the-best-fit-model"><i class="fa fa-check"></i><b>7.2.4</b> Find the best-fit model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#polynomial-regression-additional-material"><i class="fa fa-check"></i><b>7.3</b> Polynomial regression (additional material)<span></span></a></li>
-<li class="chapter" data-level="7.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#variation-partitioning-additional-material"><i class="fa fa-check"></i><b>7.4</b> Variation Partitioning (additional material)<span></span></a></li>
+<li class="chapter" data-level="7.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#polynomial-regression-additional-material"><i class="fa fa-check"></i><b>7.3</b> Polynomial regression (additional material)</a></li>
+<li class="chapter" data-level="7.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#variation-partitioning-additional-material"><i class="fa fa-check"></i><b>7.4</b> Variation Partitioning (additional material)</a></li>
 </ul></li>
-<li class="part"><span><b>Final considerations<span></span></b></span></li>
-<li class="chapter" data-level="8" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8</b> Summary<span></span></a></li>
-<li class="chapter" data-level="9" data-path="additional-resources.html"><a href="additional-resources.html"><i class="fa fa-check"></i><b>9</b> Additional resources<span></span></a></li>
-<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References<span></span></a></li>
+<li class="part"><span><b>Final considerations</b></span></li>
+<li class="chapter" data-level="8" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8</b> Summary</a></li>
+<li class="chapter" data-level="9" data-path="additional-resources.html"><a href="additional-resources.html"><i class="fa fa-check"></i><b>9</b> Additional resources</a></li>
+<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/qcbsRworkshops" target="blank">QCBS R Workshop Series</a></li>
 
@@ -264,7 +282,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
 --!>
-<div id="summary" class="section level1 hasAnchor">
+<div id="summary" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Summary<a href="summary.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The linear model describes the relationship between a <strong>response</strong> variable and one or more other <strong>predictor</strong> variables. It is used to analyze a well-formulated <strong>hypothesis</strong>, often associated with a more general research question. Regression determines whether variables are correlated by inferring the <strong>direction</strong> and <strong>strength</strong> of a relationship, and our <strong>confidence</strong> in the effect estimates.</p>
 <p>In the next workshop, you will learn how to program in R. You will learn how to use control structures (<code>for</code>, <code>if</code>, <code>while</code> loops) to avoid repeating code, to make organization easier, and to perform simulations. You will also learn how to write your own functions and some tricks to program more efficiently.</p>
@@ -341,7 +359,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
