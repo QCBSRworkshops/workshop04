@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapitre 5 Test de t et ANOVA | Atelier 4: Modèles linéaires</title>
   <meta name="description" content="Modèles linéaires" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapitre 5 Test de t et ANOVA | Atelier 4: Modèles linéaires" />
   <meta property="og:type" content="book" />
@@ -48,25 +48,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,100 +135,119 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <link rel="icon" type="image/png" href="assets/images/favicon.ico"/>
 
 <li class="divider"></li>
-<li class="part"><span><b>Série d’ateliers R du CSBQ<span></span></b></span></li>
-<li><a href="index.html#préface">Préface<span></span></a><ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>0.1</b> Code de conduite<span></span></a><ul>
-<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#comportement-attendu"><i class="fa fa-check"></i><b>0.1.1</b> Comportement attendu<span></span></a></li>
-<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#comportements-inacceptables"><i class="fa fa-check"></i><b>0.1.2</b> Comportements inacceptables<span></span></a></li>
+<li class="part"><span><b>Série d’ateliers R du CSBQ</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Préface</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#code-de-conduite"><i class="fa fa-check"></i><b>0.1</b> Code de conduite</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#comportement-attendu"><i class="fa fa-check"></i><b>0.1.1</b> Comportement attendu</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#comportements-inacceptables"><i class="fa fa-check"></i><b>0.1.2</b> Comportements inacceptables</a></li>
 </ul></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributeurs-et-contributrices"><i class="fa fa-check"></i><b>0.2</b> Contributeurs et contributrices<span></span></a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contribuez-à-la-série"><i class="fa fa-check"></i><b>0.3</b> Contribuez à la série!<span></span></a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributeurs-et-contributrices"><i class="fa fa-check"></i><b>0.2</b> Contributeurs et contributrices</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contribuez-à-la-série"><i class="fa fa-check"></i><b>0.3</b> Contribuez à la série!</a></li>
 </ul></li>
-<li class="part"><span><b>Modèles linéaires en <code>R</code><span></span></b></span></li>
-<li class="chapter" data-level="1" data-path="objectifs-dapprentissage.html"><a href="objectifs-dapprentissage.html"><i class="fa fa-check"></i><b>1</b> Objectifs d’apprentissage<span></span></a></li>
-<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier<span></span></a></li>
-<li class="chapter" data-level="3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html"><i class="fa fa-check"></i><b>3</b> Le modèle linéaire<span></span></a><ul>
-<li class="chapter" data-level="3.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#quest-ce-quun-modèle-linéaire"><i class="fa fa-check"></i><b>3.1</b> Qu’est-ce qu’un modèle linéaire ?<span></span></a><ul>
-<li class="chapter" data-level="3.1.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#exemple-abondance-et-masse-des-espèces-doiseaux"><i class="fa fa-check"></i><b>3.1.1</b> Exemple : Abondance et masse des espèces d’oiseaux<span></span></a></li>
+<li class="part"><span><b>Modèles linéaires en <code>R</code></b></span></li>
+<li class="chapter" data-level="1" data-path="objectifs-dapprentissage.html"><a href="objectifs-dapprentissage.html"><i class="fa fa-check"></i><b>1</b> Objectifs d’apprentissage</a></li>
+<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier</a></li>
+<li class="chapter" data-level="3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html"><i class="fa fa-check"></i><b>3</b> Le modèle linéaire</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#quest-ce-quun-modèle-linéaire"><i class="fa fa-check"></i><b>3.1</b> Qu’est-ce qu’un modèle linéaire ?</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#exemple-abondance-et-masse-des-espèces-doiseaux"><i class="fa fa-check"></i><b>3.1.1</b> Exemple : Abondance et masse des espèces d’oiseaux</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#formulation-dun-modèle-linéaire"><i class="fa fa-check"></i><b>3.2</b> Formulation d’un modèle linéaire<span></span></a></li>
-<li class="chapter" data-level="3.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#évaluation-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.3</b> Évaluation du modèle linéaire<span></span></a></li>
-<li class="chapter" data-level="3.4" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#conditions-dapplication-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.4</b> Conditions d’application du modèle linéaire<span></span></a><ul>
-<li class="chapter" data-level="3.4.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#normalité-des-résidus"><i class="fa fa-check"></i><b>3.4.1</b> Normalité des résidus<span></span></a></li>
-<li class="chapter" data-level="3.4.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#homoscédasticité"><i class="fa fa-check"></i><b>3.4.2</b> Homoscédasticité<span></span></a></li>
-<li class="chapter" data-level="3.4.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#indépendance-des-résidus"><i class="fa fa-check"></i><b>3.4.3</b> Indépendance des résidus<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#formulation-dun-modèle-linéaire"><i class="fa fa-check"></i><b>3.2</b> Formulation d’un modèle linéaire</a></li>
+<li class="chapter" data-level="3.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#évaluation-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.3</b> Évaluation du modèle linéaire</a></li>
+<li class="chapter" data-level="3.4" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#conditions-dapplication-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.4</b> Conditions d’application du modèle linéaire</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#normalité-des-résidus"><i class="fa fa-check"></i><b>3.4.1</b> Normalité des résidus</a></li>
+<li class="chapter" data-level="3.4.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#homoscédasticité"><i class="fa fa-check"></i><b>3.4.2</b> Homoscédasticité</a></li>
+<li class="chapter" data-level="3.4.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#indépendance-des-résidus"><i class="fa fa-check"></i><b>3.4.3</b> Indépendance des résidus</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-des-modèles-linéaires"><i class="fa fa-check"></i><b>3.5</b> Notation des modèles linéaires<span></span></a><ul>
-<li class="chapter" data-level="3.5.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-mathématique"><i class="fa fa-check"></i><b>3.5.1</b> Notation mathématique<span></span></a></li>
-<li class="chapter" data-level="3.5.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-en-r"><i class="fa fa-check"></i><b>3.5.2</b> Notation en R<span></span></a></li>
+<li class="chapter" data-level="3.5" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-des-modèles-linéaires"><i class="fa fa-check"></i><b>3.5</b> Notation des modèles linéaires</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-mathématique"><i class="fa fa-check"></i><b>3.5.1</b> Notation mathématique</a></li>
+<li class="chapter" data-level="3.5.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-en-r"><i class="fa fa-check"></i><b>3.5.2</b> Notation en R</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>3.6</b> Effectuer un modèle linéaire<span></span></a><ul>
-<li class="chapter" data-level="3.6.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#estimation-du-modèle"><i class="fa fa-check"></i><b>3.6.1</b> Estimation du modèle<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>3.6</b> Effectuer un modèle linéaire</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#estimation-du-modèle"><i class="fa fa-check"></i><b>3.6.1</b> Estimation du modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#modèles-linéaires"><i class="fa fa-check"></i><b>3.7</b> Modèles linéaires<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#modèles-linéaires"><i class="fa fa-check"></i><b>3.7</b> Modèles linéaires</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html"><i class="fa fa-check"></i><b>4</b> Régression linéaire avec R<span></span></a><ul>
-<li class="chapter" data-level="4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#formulation-du-modèle"><i class="fa fa-check"></i><b>4.1</b> Formulation du modèle<span></span></a><ul>
-<li class="chapter" data-level="4.1.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#équation-du-modèle"><i class="fa fa-check"></i><b>4.1.1</b> Équation du modèle<span></span></a></li>
+<li class="chapter" data-level="4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html"><i class="fa fa-check"></i><b>4</b> Régression linéaire avec R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#formulation-du-modèle"><i class="fa fa-check"></i><b>4.1</b> Formulation du modèle</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#équation-du-modèle"><i class="fa fa-check"></i><b>4.1.1</b> Équation du modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-1"><i class="fa fa-check"></i><b>4.2</b> Régression linéaire avec R<span></span></a><ul>
-<li class="chapter" data-level="4.2.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-1.-formuler-et-exécuter-un-modèle-linéaire"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Étape 1.</strong> Formuler et exécuter un modèle linéaire<span></span></a></li>
-<li class="chapter" data-level="4.2.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-avec-les-graphiques-diagnostics"><i class="fa fa-check"></i><b>4.2.2</b> <strong>Étape 2.</strong> Vérifier les conditions d’application avec les graphiques diagnostics<span></span></a></li>
-<li class="chapter" data-level="4.2.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-pour-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Étape 2</strong>. Vérifier les conditions d’application pour <code>lm1</code><span></span></a></li>
-<li class="chapter" data-level="4.2.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---quelle-est-la-cause"><i class="fa fa-check"></i><b>4.2.4</b> Conditions non respectées - Quelle est la cause ?<span></span></a></li>
-<li class="chapter" data-level="4.2.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---comment-procéder"><i class="fa fa-check"></i><b>4.2.5</b> Conditions non respectées - Comment procéder ?<span></span></a></li>
-<li class="chapter" data-level="4.2.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-3.-analyser-les-paramètres"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Étape 3.</strong> Analyser les paramètres<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-1"><i class="fa fa-check"></i><b>4.2</b> Régression linéaire avec R</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-1.-formuler-et-exécuter-un-modèle-linéaire"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Étape 1.</strong> Formuler et exécuter un modèle linéaire</a></li>
+<li class="chapter" data-level="4.2.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-avec-les-graphiques-diagnostics"><i class="fa fa-check"></i><b>4.2.2</b> <strong>Étape 2.</strong> Vérifier les conditions d’application avec les graphiques diagnostics</a></li>
+<li class="chapter" data-level="4.2.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-pour-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Étape 2</strong>. Vérifier les conditions d’application pour <code>lm1</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---quelle-est-la-cause"><i class="fa fa-check"></i><b>4.2.4</b> Conditions non respectées - Quelle est la cause ?</a></li>
+<li class="chapter" data-level="4.2.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---comment-procéder"><i class="fa fa-check"></i><b>4.2.5</b> Conditions non respectées - Comment procéder ?</a></li>
+<li class="chapter" data-level="4.2.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-3.-analyser-les-paramètres"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Étape 3.</strong> Analyser les paramètres</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#interprétation-du-modèle"><i class="fa fa-check"></i><b>4.3</b> Interprétation du modèle<span></span></a><ul>
-<li class="chapter" data-level="4.3.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#trouver-un-meilleur-modèle-oiseaux-terrestres"><i class="fa fa-check"></i><b>4.3.1</b> Trouver un meilleur modèle: oiseaux terrestres<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#interprétation-du-modèle"><i class="fa fa-check"></i><b>4.3</b> Interprétation du modèle</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#trouver-un-meilleur-modèle-oiseaux-terrestres"><i class="fa fa-check"></i><b>4.3.1</b> Trouver un meilleur modèle: oiseaux terrestres</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#défi-2"><i class="fa fa-check"></i><b>4.4</b> Défi 2<span></span></a><ul>
-<li class="chapter" data-level="4.4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#défi-2"><i class="fa fa-check"></i><b>4.4</b> Défi 2</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-2"><i class="fa fa-check"></i><b>4.5</b> Régression linéaire avec R<span></span></a></li>
-<li class="chapter" data-level="4.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#noms-de-variables"><i class="fa fa-check"></i><b>4.6</b> Noms de variables<span></span></a></li>
+<li class="chapter" data-level="4.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-2"><i class="fa fa-check"></i><b>4.5</b> Régression linéaire avec R</a></li>
+<li class="chapter" data-level="4.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#noms-de-variables"><i class="fa fa-check"></i><b>4.6</b> Noms de variables</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>5</b> Test de t et ANOVA<span></span></a><ul>
-<li class="chapter" data-level="5.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>5.1</b> ANOVA<span></span></a><ul>
-<li class="chapter" data-level="5.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>5.1.1</b> Types d’ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>5.1.2</b> Test de t<span></span></a></li>
-<li class="chapter" data-level="5.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>5.1.3</b> Effectuer une ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-dapplication"><i class="fa fa-check"></i><b>5.1.4</b> Vérification des conditions d’application<span></span></a></li>
-<li class="chapter" data-level="5.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#exemple-avec-le-jeu-de-données-bird"><i class="fa fa-check"></i><b>5.1.5</b> Exemple avec le jeu de données <code>bird</code><span></span></a></li>
-<li class="chapter" data-level="5.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle"><i class="fa fa-check"></i><b>5.1.6</b> Sortie du modèle<span></span></a></li>
-<li class="chapter" data-level="5.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#tests-complémentaires"><i class="fa fa-check"></i><b>5.1.7</b> Tests complémentaires<span></span></a></li>
-<li class="chapter" data-level="5.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>5.1.8</b> Visualisation des résultats<span></span></a></li>
-<li class="chapter" data-level="5.1.9" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>5.1.9</b> Allons plus loin: Contrastes<span></span></a></li>
+<li class="chapter" data-level="5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>5</b> Test de t et ANOVA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>5.1</b> ANOVA</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>5.1.1</b> Types d’ANOVA</a></li>
+<li class="chapter" data-level="5.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>5.1.2</b> Test de t</a></li>
+<li class="chapter" data-level="5.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>5.1.3</b> Effectuer une ANOVA</a></li>
+<li class="chapter" data-level="5.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-dapplication"><i class="fa fa-check"></i><b>5.1.4</b> Vérification des conditions d’application</a></li>
+<li class="chapter" data-level="5.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#exemple-avec-le-jeu-de-données-bird"><i class="fa fa-check"></i><b>5.1.5</b> Exemple avec le jeu de données <code>bird</code></a></li>
+<li class="chapter" data-level="5.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle"><i class="fa fa-check"></i><b>5.1.6</b> Sortie du modèle</a></li>
+<li class="chapter" data-level="5.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#tests-complémentaires"><i class="fa fa-check"></i><b>5.1.7</b> Tests complémentaires</a></li>
+<li class="chapter" data-level="5.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>5.1.8</b> Visualisation des résultats</a></li>
+<li class="chapter" data-level="5.1.9" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>5.1.9</b> Allons plus loin: Contrastes</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2</b> ANOVA à deux critères de classification<span></span></a><ul>
-<li class="chapter" data-level="5.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2.1</b> Effectuer une ANOVA à deux critères de classification<span></span></a></li>
-<li class="chapter" data-level="5.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>5.2.2</b> Diagramme d’interaction<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2</b> ANOVA à deux critères de classification</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2.1</b> Effectuer une ANOVA à deux critères de classification</a></li>
+<li class="chapter" data-level="5.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>5.2.2</b> Diagramme d’interaction</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>5.3</b> ANOVA non-équilibrée (section avancée/facultative)<span></span></a></li>
-<li class="chapter" data-level="5.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>5.4</b> 6. ANCOVA<span></span></a><ul>
-<li class="chapter" data-level="5.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>5.4.1</b> 6.1 Conditions de base<span></span></a></li>
-<li class="chapter" data-level="5.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>5.4.2</b> 6.2 Types d’ANCOVA<span></span></a></li>
-<li class="chapter" data-level="5.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>5.4.3</b> 6.3 Effectuer une ANCOVA<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>5.3</b> ANOVA non-équilibrée (section avancée/facultative)</a></li>
+<li class="chapter" data-level="5.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>5.4</b> 6. ANCOVA</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>5.4.1</b> 6.1 Conditions de base</a></li>
+<li class="chapter" data-level="5.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>5.4.2</b> 6.2 Types d’ANCOVA</a></li>
+<li class="chapter" data-level="5.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>5.4.3</b> 6.3 Effectuer une ANCOVA</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>6</b> Régression multiple<span></span></a><ul>
-<li class="chapter" data-level="6.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#formulation-du-modèle-1"><i class="fa fa-check"></i><b>6.0.1</b> Formulation du modèle<span></span></a></li>
-<li class="chapter" data-level="6.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-dapplication"><i class="fa fa-check"></i><b>6.1</b> Conditions d’application<span></span></a><ul>
-<li class="chapter" data-level="6.1.1" data-path="régression-multiple.html"><a href="régression-multiple.html#en-cas-de-colinéarité"><i class="fa fa-check"></i><b>6.1.1</b> En cas de colinéarité<span></span></a></li>
+<li class="chapter" data-level="6" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>6</b> Régression multiple</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#formulation-du-modèle-1"><i class="fa fa-check"></i><b>6.0.1</b> Formulation du modèle</a></li>
+<li class="chapter" data-level="6.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-dapplication"><i class="fa fa-check"></i><b>6.1</b> Conditions d’application</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="régression-multiple.html"><a href="régression-multiple.html#en-cas-de-colinéarité"><i class="fa fa-check"></i><b>6.1.1</b> En cas de colinéarité</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire-multiple-dans-r"><i class="fa fa-check"></i><b>6.2</b> Régression linéaire multiple dans R<span></span></a><ul>
-<li class="chapter" data-level="6.2.1" data-path="régression-multiple.html"><a href="régression-multiple.html#les-données"><i class="fa fa-check"></i><b>6.2.1</b> Les données<span></span></a></li>
-<li class="chapter" data-level="6.2.2" data-path="régression-multiple.html"><a href="régression-multiple.html#vérification-des-conditions-dapplication-1"><i class="fa fa-check"></i><b>6.2.2</b> Vérification des conditions d’application<span></span></a></li>
-<li class="chapter" data-level="6.2.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire"><i class="fa fa-check"></i><b>6.2.3</b> Régression linéaire<span></span></a></li>
-<li class="chapter" data-level="6.2.4" data-path="régression-multiple.html"><a href="régression-multiple.html#définir-le-meilleur-modèle"><i class="fa fa-check"></i><b>6.2.4</b> Définir le meilleur modèle<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire-multiple-dans-r"><i class="fa fa-check"></i><b>6.2</b> Régression linéaire multiple dans R</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="régression-multiple.html"><a href="régression-multiple.html#les-données"><i class="fa fa-check"></i><b>6.2.1</b> Les données</a></li>
+<li class="chapter" data-level="6.2.2" data-path="régression-multiple.html"><a href="régression-multiple.html#vérification-des-conditions-dapplication-1"><i class="fa fa-check"></i><b>6.2.2</b> Vérification des conditions d’application</a></li>
+<li class="chapter" data-level="6.2.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire"><i class="fa fa-check"></i><b>6.2.3</b> Régression linéaire</a></li>
+<li class="chapter" data-level="6.2.4" data-path="régression-multiple.html"><a href="régression-multiple.html#définir-le-meilleur-modèle"><i class="fa fa-check"></i><b>6.2.4</b> Définir le meilleur modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-polynomiale-matériel-facultatif"><i class="fa fa-check"></i><b>6.3</b> Régression polynomiale (matériel facultatif)<span></span></a></li>
-<li class="chapter" data-level="6.4" data-path="régression-multiple.html"><a href="régression-multiple.html#partitionnement-de-la-variation-matériel-facultatif"><i class="fa fa-check"></i><b>6.4</b> Partitionnement de la variation (matériel facultatif)<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-polynomiale-matériel-facultatif"><i class="fa fa-check"></i><b>6.3</b> Régression polynomiale (matériel facultatif)</a></li>
+<li class="chapter" data-level="6.4" data-path="régression-multiple.html"><a href="régression-multiple.html#partitionnement-de-la-variation-matériel-facultatif"><i class="fa fa-check"></i><b>6.4</b> Partitionnement de la variation (matériel facultatif)</a></li>
 </ul></li>
-<li class="part"><span><b>Considérations finales<span></span></b></span></li>
-<li class="chapter" data-level="7" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>7</b> Résumé<span></span></a></li>
-<li class="chapter" data-level="8" data-path="ressources-additionnelles.html"><a href="ressources-additionnelles.html"><i class="fa fa-check"></i><b>8</b> Ressources additionnelles<span></span></a></li>
-<li class="chapter" data-level="9" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>9</b> Réferences<span></span></a></li>
+<li class="part"><span><b>Considérations finales</b></span></li>
+<li class="chapter" data-level="7" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>7</b> Résumé</a></li>
+<li class="chapter" data-level="8" data-path="ressources-additionnelles.html"><a href="ressources-additionnelles.html"><i class="fa fa-check"></i><b>8</b> Ressources additionnelles</a></li>
+<li class="chapter" data-level="9" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>9</b> Réferences</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/qcbsRworkshops" target="blank">QCBS R Workshop Series</a></li>
 
@@ -265,10 +283,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
 --!>
-<div id="test-de-t-et-anova" class="section level1 hasAnchor">
+<div id="test-de-t-et-anova" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapitre 5</span> Test de t et ANOVA<a href="test-de-t-et-anova.html#test-de-t-et-anova" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="images/schema_ttest.png" /></p>
-<div id="anova" class="section level2 hasAnchor">
+<div id="anova" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> ANOVA<a href="test-de-t-et-anova.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>L’analyse de la variance (ANOVA) est un type de modèle linéaire pour
 <strong>une variable réponse continue</strong>, et <strong>une ou plusieurs variables
@@ -347,7 +365,7 @@ des écarts à la moyenne</th>
 <p><span class="math inline">\(r\)</span>: nombre de répétitions par groupe</p>
 <p><span class="math inline">\(\overline{y}\)</span>: moyenne globale de la variable réponse</p>
 <p><span class="math inline">\(\hat{y_{i}}\)</span> : moyenne de la variable réponse du groupe i.</p>
-<div id="types-danova" class="section level3 hasAnchor">
+<div id="types-danova" class="section level3 hasAnchor" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> Types d’ANOVA<a href="test-de-t-et-anova.html#types-danova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><strong>ANOVA à un critère de classification</strong><br />
@@ -370,7 +388,7 @@ peut également être utilisé pour ce type de données <a href="https://r.qcbs.
 l’atelier 6)</a>.</li>
 </ol>
 </div>
-<div id="test-de-t" class="section level3 hasAnchor">
+<div id="test-de-t" class="section level3 hasAnchor" number="5.1.2">
 <h3><span class="header-section-number">5.1.2</span> Test de t<a href="test-de-t-et-anova.html#test-de-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Si on a une variable explicative est qualitative et n’a que <strong>2 niveaux</strong>, on peut
 utiliser un test de <em>t de Student</em> pour déterminer s’il y a une
@@ -392,7 +410,7 @@ respectivement.</p>
 <p>Notez que le test de t est mathématiquement équivalent à une ANOVA à un
 critère de classification ayant deux niveaux.<br />
 </p>
-<div id="conditions-de-base" class="section level4 hasAnchor">
+<div id="conditions-de-base" class="section level4 hasAnchor" number="5.1.2.1">
 <h4><span class="header-section-number">5.1.2.1</span> Conditions de base<a href="test-de-t-et-anova.html#conditions-de-base" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Si les conditions de base du test de t ne sont pas respectées, les
 résultats du test peuvent être erronés. Voici quelques notes à propos de
@@ -427,7 +445,7 @@ Pour ce faire, il faut effectuer un test de ratio des variances
 (i.e. un test de F).</li>
 </ol>
 </div>
-<div id="non-respect-des-conditions-dapplication" class="section level4 hasAnchor">
+<div id="non-respect-des-conditions-dapplication" class="section level4 hasAnchor" number="5.1.2.2">
 <h4><span class="header-section-number">5.1.2.2</span> Non-respect des conditions d’application<a href="test-de-t-et-anova.html#non-respect-des-conditions-dapplication" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Si les variances entre les groupes ne sont pas égales, il est possible
 de corriger la situation avec la <a href="http://fr.wikipedia.org/wiki/Test_t_de_Welch">correction de
@@ -439,10 +457,10 @@ prises sur un même individu à deux périodes différentes), il faut
 utiliser un <a href="http://en.wikipedia.org/wiki/Student&#39;s_t-test#Paired_samples">test de t
 apparié</a>.</p>
 </div>
-<div id="effectuer-un-test-de-t" class="section level4 hasAnchor">
+<div id="effectuer-un-test-de-t" class="section level4 hasAnchor" number="5.1.2.3">
 <h4><span class="header-section-number">5.1.2.3</span> Effectuer un test de t<a href="test-de-t-et-anova.html#effectuer-un-test-de-t" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Dans R, le test de t est exécutés avec la fonction <code>t.test</code>.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="test-de-t-et-anova.html#cb55-1"></a><span class="kw">t.test</span>(Y <span class="op">~</span><span class="st"> </span>X2, <span class="dt">data =</span> data, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="test-de-t-et-anova.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Y <span class="sc">~</span> X2, <span class="at">data =</span> data, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <p>où:<br />
 -<code>Y</code> est la variable réponse<br />
 -<code>X2</code> est la variable quantitative à deux niveaux<br />
@@ -457,8 +475,8 @@ Commençons par visualizer les données:<br />
 <p>Il semble avoir une différence simplement en regardant le graphique.<br />
 Il faut maintenant tester les conditions d’application pour s’assurer que le test sera valide.
 <strong>Note</strong>: Nous n’avons pas besoin de tester la normalité puisque nous avons transfomé en log plus tôt.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="test-de-t-et-anova.html#cb56-1"></a><span class="co"># Homogénéité de la variance</span></span>
-<span id="cb56-2"><a href="test-de-t-et-anova.html#cb56-2"></a><span class="kw">var.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="test-de-t-et-anova.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homogénéité de la variance</span></span>
+<span id="cb56-2"><a href="test-de-t-et-anova.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(logMass <span class="sc">~</span> Aquatic, <span class="at">data =</span> bird)</span></code></pre></div>
 <pre><code>## 
 ##  F test to compare two variances
 ## 
@@ -471,12 +489,12 @@ Il faut maintenant tester les conditions d’application pour s’assurer que le
 ## ratio of variances 
 ##           1.072452</code></pre>
 <p>Ici, on voit que le test de ratio des variances n’est pas statistiquement différent de 1, ce qui signifie que les variances entre les groupes sont égales.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="test-de-t-et-anova.html#cb58-1"></a>ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(<span class="dt">x =</span> bird<span class="op">$</span>logMass[bird<span class="op">$</span>Aquatic <span class="op">==</span><span class="st"> </span><span class="dv">0</span>], <span class="dt">y =</span> bird<span class="op">$</span>logMass[bird<span class="op">$</span>Aquatic <span class="op">==</span></span>
-<span id="cb58-2"><a href="test-de-t-et-anova.html#cb58-2"></a><span class="st">    </span><span class="dv">1</span>], <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb58-3"><a href="test-de-t-et-anova.html#cb58-3"></a></span>
-<span id="cb58-4"><a href="test-de-t-et-anova.html#cb58-4"></a><span class="co"># ou l&#39;équivalent</span></span>
-<span id="cb58-5"><a href="test-de-t-et-anova.html#cb58-5"></a>ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> bird)</span>
-<span id="cb58-6"><a href="test-de-t-et-anova.html#cb58-6"></a>ttest1</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="test-de-t-et-anova.html#cb58-1" aria-hidden="true" tabindex="-1"></a>ttest1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">x =</span> bird<span class="sc">$</span>logMass[bird<span class="sc">$</span>Aquatic <span class="sc">==</span> <span class="dv">0</span>], <span class="at">y =</span> bird<span class="sc">$</span>logMass[bird<span class="sc">$</span>Aquatic <span class="sc">==</span></span>
+<span id="cb58-2"><a href="test-de-t-et-anova.html#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>], <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-3"><a href="test-de-t-et-anova.html#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="test-de-t-et-anova.html#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ou l&#39;équivalent</span></span>
+<span id="cb58-5"><a href="test-de-t-et-anova.html#cb58-5" aria-hidden="true" tabindex="-1"></a>ttest1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(logMass <span class="sc">~</span> Aquatic, <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> bird)</span>
+<span id="cb58-6"><a href="test-de-t-et-anova.html#cb58-6" aria-hidden="true" tabindex="-1"></a>ttest1</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -490,12 +508,12 @@ Il faut maintenant tester les conditions d’application pour s’assurer que le
 ##        3.645998        6.696582</code></pre>
 <p>Étant donné que notre valeur de <em>p</em> est inférieure à 0.05, l’hypothèse nulle (i.e. l’absence de différence de masse entre les deux groupes) est rejetée.</p>
 </div>
-<div id="effectuer-un-test-de-t-avec-lm" class="section level4 hasAnchor">
+<div id="effectuer-un-test-de-t-avec-lm" class="section level4 hasAnchor" number="5.1.2.4">
 <h4><span class="header-section-number">5.1.2.4</span> Effectuer un test de t avec lm()<a href="test-de-t-et-anova.html#effectuer-un-test-de-t-avec-lm" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Le test de t est un modèle linéaire et un cas spécifique de l’ANOVA avec un facteur à 2 niveaux.
 Vous pouvez donc arriver aux mêmes résultats avec:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="test-de-t-et-anova.html#cb60-1"></a>lm.t &lt;-<span class="st"> </span><span class="kw">lm</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
-<span id="cb60-2"><a href="test-de-t-et-anova.html#cb60-2"></a><span class="kw">anova</span>(lm.t)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="test-de-t-et-anova.html#cb60-1" aria-hidden="true" tabindex="-1"></a>lm.t <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMass <span class="sc">~</span> Aquatic, <span class="at">data =</span> bird)</span>
+<span id="cb60-2"><a href="test-de-t-et-anova.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm.t)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMass
@@ -505,20 +523,20 @@ Vous pouvez donc arriver aux mêmes résultats avec:</p>
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Quand les variances sont équivalents, on peut montrer que t<sup>2</sup> = F:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="test-de-t-et-anova.html#cb62-1"></a>ttest1<span class="op">$</span>statistic<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="test-de-t-et-anova.html#cb62-1" aria-hidden="true" tabindex="-1"></a>ttest1<span class="sc">$</span>statistic<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>##       t 
 ## 60.3845</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="test-de-t-et-anova.html#cb64-1"></a><span class="kw">anova</span>(lm.t)<span class="op">$</span>F</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="test-de-t-et-anova.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm.t)<span class="sc">$</span>F</span></code></pre></div>
 <pre><code>## [1] 60.3845      NA</code></pre>
 </div>
-<div id="test-de-t-unilatéral" class="section level4 hasAnchor">
+<div id="test-de-t-unilatéral" class="section level4 hasAnchor" number="5.1.2.5">
 <h4><span class="header-section-number">5.1.2.5</span> Test de t unilatéral<a href="test-de-t-et-anova.html#test-de-t-unilatéral" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>L’argument <em>"alternative"</em> de la fonction <code>t.test()</code> permet
 d’effectuer un test de t unilatéral, c’est-à-dire dans une seule direction. Par défault, la fonction <code>t.test()</code> utilise <code>'two-sided'</code>, qui permet seulement de tester si les moyennes diffère l’une de l’autre. Si l’on cherche à déterminer si une moyenne est plus élevée que l’autre, nous pouvons utiliser <code>'less'</code> (<span class="math inline">\(\overline{y_{1}}\)</span> &lt; <span class="math inline">\(\overline{y_{2}}\)</span>) ou <code>'greater'</code> (<span class="math inline">\(\overline{y_{1}}\)</span> &gt; <span class="math inline">\(\overline{y_{2}}\)</span>). Par exemple, si on veut tester l’hypothèse que les oiseaux terrestres sont plus légers que les oiseaux aquatiques, on peut écrire la commande de la façon suivante :</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="test-de-t-et-anova.html#cb66-1"></a><span class="co"># Test de t en spécifiant l&#39;argument &#39;alternative&#39;</span></span>
-<span id="cb66-2"><a href="test-de-t-et-anova.html#cb66-2"></a>uni.ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> bird,</span>
-<span id="cb66-3"><a href="test-de-t-et-anova.html#cb66-3"></a>    <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
-<span id="cb66-4"><a href="test-de-t-et-anova.html#cb66-4"></a>uni.ttest1</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="test-de-t-et-anova.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de t en spécifiant l&#39;argument &#39;alternative&#39;</span></span>
+<span id="cb66-2"><a href="test-de-t-et-anova.html#cb66-2" aria-hidden="true" tabindex="-1"></a>uni.ttest1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(logMass <span class="sc">~</span> Aquatic, <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> bird,</span>
+<span id="cb66-3"><a href="test-de-t-et-anova.html#cb66-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
+<span id="cb66-4"><a href="test-de-t-et-anova.html#cb66-4" aria-hidden="true" tabindex="-1"></a>uni.ttest1</span></code></pre></div>
 <p>Dans la sortie R obtenue par <code>uni.ttest1</code>, les résultats du test sont
 indiqués à la troisième ligne :</p>
 <pre><code>## 
@@ -537,10 +555,10 @@ degrés de liberté, ce qui donne une valeur de p = 1.468e-10. On rejette
 donc l’hypothèse nulle. On peut conclure que les oiseaux aquatiques
 sont significativement plus lourds que les oiseaux terrestres.</p>
 <p>Nous aurions pu tester l’invers: si les oiseaux terrestres sont plus lourds que les oiseaux aquatique. Dece test, nous obtenons une même valeur de t (mais négative) et une valeur de <em>p</em> qui reflète ces résultats. Nous pouvons en conclure que les oiseaux terrestres ne sont pas significativement plus lourds que les oiseaux aquatiques.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="test-de-t-et-anova.html#cb68-1"></a><span class="co"># Test de t en spécifiant l&#39;argument &#39;alternative&#39;</span></span>
-<span id="cb68-2"><a href="test-de-t-et-anova.html#cb68-2"></a>uni.ttest1 &lt;-<span class="st"> </span><span class="kw">t.test</span>(logMass <span class="op">~</span><span class="st"> </span>Aquatic, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>, <span class="dt">data =</span> bird,</span>
-<span id="cb68-3"><a href="test-de-t-et-anova.html#cb68-3"></a>    <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
-<span id="cb68-4"><a href="test-de-t-et-anova.html#cb68-4"></a>uni.ttest1</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="test-de-t-et-anova.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de t en spécifiant l&#39;argument &#39;alternative&#39;</span></span>
+<span id="cb68-2"><a href="test-de-t-et-anova.html#cb68-2" aria-hidden="true" tabindex="-1"></a>uni.ttest1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(logMass <span class="sc">~</span> Aquatic, <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">data =</span> bird,</span>
+<span id="cb68-3"><a href="test-de-t-et-anova.html#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
+<span id="cb68-4"><a href="test-de-t-et-anova.html#cb68-4" aria-hidden="true" tabindex="-1"></a>uni.ttest1</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -554,7 +572,7 @@ sont significativement plus lourds que les oiseaux terrestres.</p>
 ##        3.645998        6.696582</code></pre>
 </div>
 </div>
-<div id="effectuer-une-anova" class="section level3 hasAnchor">
+<div id="effectuer-une-anova" class="section level3 hasAnchor" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> Effectuer une ANOVA<a href="test-de-t-et-anova.html#effectuer-une-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Le test de t s’applique seulement quand on a une seule variable
 explicative catégorique, qui comprend 2 niveaux. Pour tous les autres
@@ -562,7 +580,7 @@ modèles linéaires avec des variables explicatives catégoriques avec &gt; 2 ni
 utilise une ANOVA.</p>
 <p>Lorsque l’ANOVA détecte une différence significative entre les groupes, l’analyse n’indique pas quel(s) groupe(s) diffère(nt) de(s) l’autre(s). Un test couramment utilisé <em>a posteriori</em> pour répondre à cette question est le <a href="test-de-t-et-anova.html#tests-complémentaires">test de Tukey</a>. Vous voudrez peut-être comparer vos groupes avec des comparaison planifiées ou <a href="test-de-t-et-anova.html#allons-plus-loin-contrastes">contrastes</a>. Ceci est souvent plus robust et élégant puisque les différences attendues sont établies <em>a priori</em>.</p>
 </div>
-<div id="vérification-des-conditions-dapplication" class="section level3 hasAnchor">
+<div id="vérification-des-conditions-dapplication" class="section level3 hasAnchor" number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> Vérification des conditions d’application<a href="test-de-t-et-anova.html#vérification-des-conditions-dapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Comme la régression linéaire simple et le test de t, l’ANOVA doit
 respecter 4 conditions statistiques pour que les résultats soient
@@ -604,7 +622,7 @@ transformer vos données, vous pouvez utiliser l’équivalent
 non-paramétrique de l’ANOVA : le <a href="http://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance">test de
 Kruskal-Wallis</a>.</p>
 </div>
-<div id="exemple-avec-le-jeu-de-données-bird" class="section level3 hasAnchor">
+<div id="exemple-avec-le-jeu-de-données-bird" class="section level3 hasAnchor" number="5.1.5">
 <h3><span class="header-section-number">5.1.5</span> Exemple avec le jeu de données <code>bird</code><a href="test-de-t-et-anova.html#exemple-avec-le-jeu-de-données-bird" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Commençons tout d’abord par visualiser les données avec la fonction
 <code>boxplot()</code>. Rappelez-vous que, dans R, les groupes sont ordonnés par
@@ -612,46 +630,46 @@ ordre alphabétique par défaut. Il est possible de réorganiser les
 groupes autrement. Par exemple, on peut les ordonner par ordre croissant
 de la médiane de chaque diète.<br />
 </p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="test-de-t-et-anova.html#cb70-1"></a><span class="co"># Ordre alphabétique par défaut</span></span>
-<span id="cb70-2"><a href="test-de-t-et-anova.html#cb70-2"></a><span class="kw">boxplot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="test-de-t-et-anova.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordre alphabétique par défaut</span></span>
+<span id="cb70-2"><a href="test-de-t-et-anova.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="test-de-t-et-anova.html#cb71-1"></a><span class="co"># Réorganiser l&#39;ordre des facteurs</span></span>
-<span id="cb71-2"><a href="test-de-t-et-anova.html#cb71-2"></a>med &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, bird<span class="op">$</span>Diet, median))</span>
-<span id="cb71-3"><a href="test-de-t-et-anova.html#cb71-3"></a><span class="kw">boxplot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span><span class="kw">factor</span>(Diet, <span class="dt">levels =</span> <span class="kw">names</span>(med)), <span class="dt">data =</span> bird,</span>
-<span id="cb71-4"><a href="test-de-t-et-anova.html#cb71-4"></a>    <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>, <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="test-de-t-et-anova.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réorganiser l&#39;ordre des facteurs</span></span>
+<span id="cb71-2"><a href="test-de-t-et-anova.html#cb71-2" aria-hidden="true" tabindex="-1"></a>med <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">tapply</span>(bird<span class="sc">$</span>logMaxAbund, bird<span class="sc">$</span>Diet, median))</span>
+<span id="cb71-3"><a href="test-de-t-et-anova.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(logMaxAbund <span class="sc">~</span> <span class="fu">factor</span>(Diet, <span class="at">levels =</span> <span class="fu">names</span>(med)), <span class="at">data =</span> bird,</span>
+<span id="cb71-4"><a href="test-de-t-et-anova.html#cb71-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>, <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>))</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-56-2.png" width="672" /></p>
 <p>Une autre façon de visualiser les effets des facteurs est d’utiliser la fonction <code>plot.design()</code>. Cette fonction permet de représenter les valeurs moyennes des niveaux d’un facteur (par une ligne verticale) et
 la moyenne globale de la variable réponse (par une ligne horizontale).</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="test-de-t-et-anova.html#cb72-1"></a><span class="kw">plot.design</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird, <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb72-2"><a href="test-de-t-et-anova.html#cb72-2"></a><span class="st">    &quot;(Maximum Abundance)&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="test-de-t-et-anova.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.design</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird, <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="sc">*</span></span>
+<span id="cb72-2"><a href="test-de-t-et-anova.html#cb72-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;(Maximum Abundance)&quot;</span>))</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p>Par la suite, nous devons vérifier les conditions d’applications.
 <strong>Note</strong>: nous devons performer l’ANOVA poour pouvoir utiliser les résidus, cependant, tant que nous ne vérifions pas les conditions d’application, les résultats ne peuvent être interprétés.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="test-de-t-et-anova.html#cb73-1"></a><span class="co"># Graphiques pour conditions d&#39;application</span></span>
-<span id="cb73-2"><a href="test-de-t-et-anova.html#cb73-2"></a>aov1 &lt;-<span class="st"> </span><span class="kw">aov</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb73-3"><a href="test-de-t-et-anova.html#cb73-3"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb73-4"><a href="test-de-t-et-anova.html#cb73-4"></a><span class="kw">plot</span>(aov1)</span>
-<span id="cb73-5"><a href="test-de-t-et-anova.html#cb73-5"></a><span class="kw">par</span>(opar)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="test-de-t-et-anova.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphiques pour conditions d&#39;application</span></span>
+<span id="cb73-2"><a href="test-de-t-et-anova.html#cb73-2" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb73-3"><a href="test-de-t-et-anova.html#cb73-3" aria-hidden="true" tabindex="-1"></a>opar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb73-4"><a href="test-de-t-et-anova.html#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aov1)</span>
+<span id="cb73-5"><a href="test-de-t-et-anova.html#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(opar)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-59-1.png" width="672" />
 Idéalement, le premier graphique devrait montrer une dispersion similaire pour chaque niveau de diète. Nous pouvons utiliser tous ces graphiques pour évaluer les conditions d’application, mais nous pouvons aussi utiliser les test de Shapiro, de Bartlett ou de Levene en supplément. <strong>Note</strong>:Le test de Levene performe mieux, mais a une erreur de Type II un peu plus élevée.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="test-de-t-et-anova.html#cb74-1"></a><span class="co"># Test de la supposition de la normalité des résidus</span></span>
-<span id="cb74-2"><a href="test-de-t-et-anova.html#cb74-2"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov1))</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="test-de-t-et-anova.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de la supposition de la normalité des résidus</span></span>
+<span id="cb74-2"><a href="test-de-t-et-anova.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(aov1))</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  resid(aov1)
 ## W = 0.97995, p-value = 0.4982</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="test-de-t-et-anova.html#cb76-1"></a><span class="co"># Test de la supposition de l&#39;homogénéité de la variance</span></span>
-<span id="cb76-2"><a href="test-de-t-et-anova.html#cb76-2"></a><span class="co"># Bartlett</span></span>
-<span id="cb76-3"><a href="test-de-t-et-anova.html#cb76-3"></a><span class="kw">bartlett.test</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="test-de-t-et-anova.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de la supposition de l&#39;homogénéité de la variance</span></span>
+<span id="cb76-2"><a href="test-de-t-et-anova.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Bartlett</span></span>
+<span id="cb76-3"><a href="test-de-t-et-anova.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span></code></pre></div>
 <pre><code>## 
 ##  Bartlett test of homogeneity of variances
 ## 
 ## data:  logMaxAbund by Diet
 ## Bartlett&#39;s K-squared = 7.4728, df = 4, p-value = 0.1129</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="test-de-t-et-anova.html#cb78-1"></a><span class="co"># Levene</span></span>
-<span id="cb78-2"><a href="test-de-t-et-anova.html#cb78-2"></a><span class="kw">library</span>(car)</span>
-<span id="cb78-3"><a href="test-de-t-et-anova.html#cb78-3"></a><span class="kw">leveneTest</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="test-de-t-et-anova.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Levene</span></span>
+<span id="cb78-2"><a href="test-de-t-et-anova.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb78-3"><a href="test-de-t-et-anova.html#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span></code></pre></div>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
 ##       Df F value  Pr(&gt;F)  
 ## group  4  2.3493 0.06717 .
@@ -664,28 +682,28 @@ résidus sont distribués normalement et que les variances sont égales.</p>
 <code>aov()</code> permet d’effectuer une ANOVA directement. Il est également
 possible d’effectuer une ANOVA avec la fonction <code>anova()</code> qui exécute
 l’ANOVA comme un modèle linéaire :</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="test-de-t-et-anova.html#cb80-1"></a><span class="co"># En utilisant aov()</span></span>
-<span id="cb80-2"><a href="test-de-t-et-anova.html#cb80-2"></a>aov1 &lt;-<span class="st"> </span><span class="kw">aov</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb80-3"><a href="test-de-t-et-anova.html#cb80-3"></a><span class="kw">summary</span>(aov1)</span>
-<span id="cb80-4"><a href="test-de-t-et-anova.html#cb80-4"></a></span>
-<span id="cb80-5"><a href="test-de-t-et-anova.html#cb80-5"></a><span class="co"># En utilisant lm()</span></span>
-<span id="cb80-6"><a href="test-de-t-et-anova.html#cb80-6"></a>anov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb80-7"><a href="test-de-t-et-anova.html#cb80-7"></a><span class="kw">anova</span>(anov1)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="test-de-t-et-anova.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En utilisant aov()</span></span>
+<span id="cb80-2"><a href="test-de-t-et-anova.html#cb80-2" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb80-3"><a href="test-de-t-et-anova.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
+<span id="cb80-4"><a href="test-de-t-et-anova.html#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="test-de-t-et-anova.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="co"># En utilisant lm()</span></span>
+<span id="cb80-6"><a href="test-de-t-et-anova.html#cb80-6" aria-hidden="true" tabindex="-1"></a>anov1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb80-7"><a href="test-de-t-et-anova.html#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov1)</span></code></pre></div>
 </div>
-<div id="sortie-du-modèle" class="section level3 hasAnchor">
+<div id="sortie-du-modèle" class="section level3 hasAnchor" number="5.1.6">
 <h3><span class="header-section-number">5.1.6</span> Sortie du modèle<a href="test-de-t-et-anova.html#sortie-du-modèle" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Lorsque le modèle d’ANOVA a été validé et les conditions d’applications rencontrées, on peut interpréter les résultats correctement. La sortie du modèle fournie par R dépend de la
 fonction qui a été utilisée pour effectuer l’ANOVA. Si la fonction
 <code>aov()</code> a été utilisée :</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="test-de-t-et-anova.html#cb81-1"></a>aov1 &lt;-<span class="st"> </span><span class="kw">aov</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="test-de-t-et-anova.html#cb81-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span></code></pre></div>
 <p>Les résultats de l’ANOVA peuvent être visualisés avec la fonction
 <code>summary()</code> :</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="test-de-t-et-anova.html#cb82-1"></a><span class="kw">summary</span>(aov1)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="test-de-t-et-anova.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span></code></pre></div>
 <p>Si la fonction <code>lm()</code> a été utilisée :</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="test-de-t-et-anova.html#cb83-1"></a>anov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="test-de-t-et-anova.html#cb83-1" aria-hidden="true" tabindex="-1"></a>anov1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span></code></pre></div>
 <p>les résultats de l’ANOVA peuvent être visualisés avec la fonction
 <code>anova()</code> :</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="test-de-t-et-anova.html#cb84-1"></a><span class="kw">anova</span>(anov1)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="test-de-t-et-anova.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov1)</span></code></pre></div>
 <p>Dans les deux cas, la sortie dans R sera la même :</p>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
 ## Diet         4  27.07   6.768   2.836 0.0341 *
@@ -700,7 +718,7 @@ l’abondance des oiseaux car la valeur de p est inférieure à 0.05.
 L’hypothèse nulle est rejetée, ce qui signifie qu’au moins une des
 diètes influence l’abondance différemment des autres diètes.</p>
 </div>
-<div id="tests-complémentaires" class="section level3 hasAnchor">
+<div id="tests-complémentaires" class="section level3 hasAnchor" number="5.1.7">
 <h3><span class="header-section-number">5.1.7</span> Tests complémentaires<a href="test-de-t-et-anova.html#tests-complémentaires" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Il est impossible d’identifier quel groupe diffère des autres avec
 une ANOVA. Elle ne permet que de déterminer s’il existe une différence
@@ -711,11 +729,11 @@ tests post-hoc comparent les combinaisons de variables explicatives
 range test, Newman-Keuls method, Dunnett’s test, etc.), mais le test de
 Tukey est le plus couramment utilisé. Dans R, on utilise la fonction
 <code>TukeyHSD()</code> pour effectuer ce test :</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="test-de-t-et-anova.html#cb86-1"></a><span class="co"># À quel niveau se situe la différence de diète ?</span></span>
-<span id="cb86-2"><a href="test-de-t-et-anova.html#cb86-2"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(anov1), <span class="dt">ordered =</span> T)</span>
-<span id="cb86-3"><a href="test-de-t-et-anova.html#cb86-3"></a></span>
-<span id="cb86-4"><a href="test-de-t-et-anova.html#cb86-4"></a><span class="co"># Cette commande est équivalente à la précédente :</span></span>
-<span id="cb86-5"><a href="test-de-t-et-anova.html#cb86-5"></a><span class="kw">TukeyHSD</span>(aov1, <span class="dt">ordered =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="test-de-t-et-anova.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># À quel niveau se situe la différence de diète ?</span></span>
+<span id="cb86-2"><a href="test-de-t-et-anova.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(anov1), <span class="at">ordered =</span> T)</span>
+<span id="cb86-3"><a href="test-de-t-et-anova.html#cb86-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-4"><a href="test-de-t-et-anova.html#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cette commande est équivalente à la précédente :</span></span>
+<span id="cb86-5"><a href="test-de-t-et-anova.html#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1, <span class="at">ordered =</span> T)</span></code></pre></div>
 <p>La sortie de R inclut un tableau qui liste toutes les combinaisons des
 niveaux de la variable explicative et qui identifie quel(s)
 groupe(s) diffère(ent) des autres :<br />
@@ -741,7 +759,7 @@ groupe(s) diffère(ent) des autres :<br />
 <p>Dans ce cas-ci, la seule différence significative d’abondance se
 retrouve entre les diètes "PlantInsect" et "Vertebrate".</p>
 </div>
-<div id="visualisation-des-résultats" class="section level3 hasAnchor">
+<div id="visualisation-des-résultats" class="section level3 hasAnchor" number="5.1.8">
 <h3><span class="header-section-number">5.1.8</span> Visualisation des résultats<a href="test-de-t-et-anova.html#visualisation-des-résultats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Après avoir vérifié les conditions de base, interprété les résultats, et
 identifié les niveaux significatifs à l’aide de tests post-hoc ou de
@@ -750,30 +768,30 @@ graphiquement à l’aide de la fonction <code>barplot()</code>. R produit donc 
 graphique de la variable réponse en fonction des niveaux de groupe,
 ou les erreurs types et le nom des niveaux du groupe (représentant
 le résultat d’un test post hoc) peuvent y être apposées.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="test-de-t-et-anova.html#cb88-1"></a><span class="co"># Visualisation d&#39;un modèle d&#39;ANOVA à l&#39;aide de la fonction</span></span>
-<span id="cb88-2"><a href="test-de-t-et-anova.html#cb88-2"></a><span class="co"># barplot()</span></span>
-<span id="cb88-3"><a href="test-de-t-et-anova.html#cb88-3"></a></span>
-<span id="cb88-4"><a href="test-de-t-et-anova.html#cb88-4"></a>sd &lt;-<span class="st"> </span><span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, <span class="kw">list</span>(bird<span class="op">$</span>Diet), sd)</span>
-<span id="cb88-5"><a href="test-de-t-et-anova.html#cb88-5"></a>means &lt;-<span class="st"> </span><span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, <span class="kw">list</span>(bird<span class="op">$</span>Diet), mean)</span>
-<span id="cb88-6"><a href="test-de-t-et-anova.html#cb88-6"></a>n &lt;-<span class="st"> </span><span class="kw">length</span>(bird<span class="op">$</span>logMaxAbund)</span>
-<span id="cb88-7"><a href="test-de-t-et-anova.html#cb88-7"></a>se &lt;-<span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>sd<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb88-8"><a href="test-de-t-et-anova.html#cb88-8"></a></span>
-<span id="cb88-9"><a href="test-de-t-et-anova.html#cb88-9"></a>bp &lt;-<span class="st"> </span><span class="kw">barplot</span>(means, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>,</span>
-<span id="cb88-10"><a href="test-de-t-et-anova.html#cb88-10"></a>    <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>), <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>),</span>
-<span id="cb88-11"><a href="test-de-t-et-anova.html#cb88-11"></a>    <span class="dt">xlab =</span> <span class="st">&quot;Diet&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>))</span>
-<span id="cb88-12"><a href="test-de-t-et-anova.html#cb88-12"></a></span>
-<span id="cb88-13"><a href="test-de-t-et-anova.html#cb88-13"></a></span>
-<span id="cb88-14"><a href="test-de-t-et-anova.html#cb88-14"></a><span class="co"># Ajout des lignes verticales représentant les erreurs</span></span>
-<span id="cb88-15"><a href="test-de-t-et-anova.html#cb88-15"></a><span class="co"># types</span></span>
-<span id="cb88-16"><a href="test-de-t-et-anova.html#cb88-16"></a><span class="kw">segments</span>(bp, means <span class="op">-</span><span class="st"> </span>se, bp, means <span class="op">+</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb88-17"><a href="test-de-t-et-anova.html#cb88-17"></a><span class="co"># et des lignes horizontales</span></span>
-<span id="cb88-18"><a href="test-de-t-et-anova.html#cb88-18"></a><span class="kw">segments</span>(bp <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">-</span><span class="st"> </span>se, bp <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">-</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb88-19"><a href="test-de-t-et-anova.html#cb88-19"></a><span class="kw">segments</span>(bp <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">+</span><span class="st"> </span>se, bp <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, means <span class="op">+</span><span class="st"> </span>se, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb88-20"><a href="test-de-t-et-anova.html#cb88-20"></a><span class="co"># ajout d&#39;une ligne à 0</span></span>
-<span id="cb88-21"><a href="test-de-t-et-anova.html#cb88-21"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="test-de-t-et-anova.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisation d&#39;un modèle d&#39;ANOVA à l&#39;aide de la fonction</span></span>
+<span id="cb88-2"><a href="test-de-t-et-anova.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="co"># barplot()</span></span>
+<span id="cb88-3"><a href="test-de-t-et-anova.html#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="test-de-t-et-anova.html#cb88-4" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">tapply</span>(bird<span class="sc">$</span>logMaxAbund, <span class="fu">list</span>(bird<span class="sc">$</span>Diet), sd)</span>
+<span id="cb88-5"><a href="test-de-t-et-anova.html#cb88-5" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">tapply</span>(bird<span class="sc">$</span>logMaxAbund, <span class="fu">list</span>(bird<span class="sc">$</span>Diet), mean)</span>
+<span id="cb88-6"><a href="test-de-t-et-anova.html#cb88-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(bird<span class="sc">$</span>logMaxAbund)</span>
+<span id="cb88-7"><a href="test-de-t-et-anova.html#cb88-7" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> sd<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb88-8"><a href="test-de-t-et-anova.html#cb88-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-9"><a href="test-de-t-et-anova.html#cb88-9" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">barplot</span>(means, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;skyblue1&quot;</span>,</span>
+<span id="cb88-10"><a href="test-de-t-et-anova.html#cb88-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;skyblue3&quot;</span>, <span class="st">&quot;skyblue4&quot;</span>), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="sc">*</span> <span class="st">&quot;(Maximum Abundance)&quot;</span>),</span>
+<span id="cb88-11"><a href="test-de-t-et-anova.html#cb88-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Diet&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb88-12"><a href="test-de-t-et-anova.html#cb88-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-13"><a href="test-de-t-et-anova.html#cb88-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-14"><a href="test-de-t-et-anova.html#cb88-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajout des lignes verticales représentant les erreurs</span></span>
+<span id="cb88-15"><a href="test-de-t-et-anova.html#cb88-15" aria-hidden="true" tabindex="-1"></a><span class="co"># types</span></span>
+<span id="cb88-16"><a href="test-de-t-et-anova.html#cb88-16" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(bp, means <span class="sc">-</span> se, bp, means <span class="sc">+</span> se, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb88-17"><a href="test-de-t-et-anova.html#cb88-17" aria-hidden="true" tabindex="-1"></a><span class="co"># et des lignes horizontales</span></span>
+<span id="cb88-18"><a href="test-de-t-et-anova.html#cb88-18" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(bp <span class="sc">-</span> <span class="fl">0.1</span>, means <span class="sc">-</span> se, bp <span class="sc">+</span> <span class="fl">0.1</span>, means <span class="sc">-</span> se, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb88-19"><a href="test-de-t-et-anova.html#cb88-19" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(bp <span class="sc">-</span> <span class="fl">0.1</span>, means <span class="sc">+</span> se, bp <span class="sc">+</span> <span class="fl">0.1</span>, means <span class="sc">+</span> se, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb88-20"><a href="test-de-t-et-anova.html#cb88-20" aria-hidden="true" tabindex="-1"></a><span class="co"># ajout d&#39;une ligne à 0</span></span>
+<span id="cb88-21"><a href="test-de-t-et-anova.html#cb88-21" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 </div>
-<div id="allons-plus-loin-contrastes" class="section level3 hasAnchor">
+<div id="allons-plus-loin-contrastes" class="section level3 hasAnchor" number="5.1.9">
 <h3><span class="header-section-number">5.1.9</span> Allons plus loin: Contrastes<a href="test-de-t-et-anova.html#allons-plus-loin-contrastes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Les constrastes servent à comparer chaque niveau du facteur à un niveau de référence, et de détecter des différences significatives entre chaque niveau.</p>
 <p>Les contrastes sont dbasées sur des hypothèses <em>a priori</em>, ce qui les rend beaucoup plus robustes que les test <em>a posteriori</em> comme le test de Tukey. Avec les contrastes, les groupes peuvent être composés d’un ou plusieurs niveaux d’un facteur et on peut tester une hypothèse simple (e.g. μ<sub>1</sub> = μ<sub>2</sub>) ou des hypothèses plus complexes (e.g. (μ<sub>1</sub> + μ<sub>2</sub>)/3 == μ<sub>3</sub>).</p>
@@ -781,16 +799,16 @@ le résultat d’un test post hoc) peuvent y être apposées.</p>
 Le nombre de comparaisons doit être plus petit ou égal au nombre de
 degrés de liberté de l’ANOVA. Ces comparaisons doivent être indépendantes l’une de l’autre.</p>
 <p>Pour une ANOVA où la variable prédictrice est catégorique, l’estimation de l’ordonnée à l’origine est le niveau de référence et correspond à la moyenne du premier niveau (en ordre alphabétique) du facteur.En calculant l’ordonnée à l’origine de référence et l’ordonnée à l’origine de chaque niveau de <code>Diet</code>, <em>que remarquez-vous</em>?</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="test-de-t-et-anova.html#cb89-1"></a><span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, bird<span class="op">$</span>Diet, mean)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="test-de-t-et-anova.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(bird<span class="sc">$</span>logMaxAbund, bird<span class="sc">$</span>Diet, mean)</span></code></pre></div>
 <pre><code>##      Insect  InsectVert       Plant PlantInsect  Vertebrate 
 ##    2.656938    1.175378    3.211862    3.629321    1.950036</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="test-de-t-et-anova.html#cb91-1"></a><span class="kw">coef</span>(anov1)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="test-de-t-et-anova.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(anov1)</span></code></pre></div>
 <pre><code>##     (Intercept)  DietInsectVert       DietPlant DietPlantInsect  DietVertebrate 
 ##       2.6569384      -1.4815601       0.5549239       0.9723823      -0.7069025</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="test-de-t-et-anova.html#cb93-1"></a><span class="kw">coef</span>(anov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(anov1)[<span class="dv">2</span>]  <span class="co"># InsectVert</span></span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="test-de-t-et-anova.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(anov1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(anov1)[<span class="dv">2</span>]  <span class="co"># InsectVert</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    1.175378</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="test-de-t-et-anova.html#cb95-1"></a><span class="kw">coef</span>(anov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(anov1)[<span class="dv">3</span>]  <span class="co"># Plant</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="test-de-t-et-anova.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(anov1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(anov1)[<span class="dv">3</span>]  <span class="co"># Plant</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    3.211862</code></pre>
 <p>La moyenne de la variable <code>Insect</code> correspond à l’ordonnée à l’origine de notre de notre ANOVA <code>anov1</code>.</p>
@@ -855,9 +873,9 @@ un niveau de référence. Dans R, ceci correspond à la fonction
 <code>lm()</code>.</p>
 <p>Le niveau de référence peut être changé en utilisant la fonction
 <code>relevel()</code>. Par exemple,les lignes suivantes comparent chaque diète à la diète <code>Plant</code> maintenant définie comme le niveau de référence.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="test-de-t-et-anova.html#cb98-1"></a>bird<span class="op">$</span>Diet2 &lt;-<span class="st"> </span><span class="kw">relevel</span>(bird<span class="op">$</span>Diet, <span class="dt">ref =</span> <span class="st">&quot;Plant&quot;</span>)</span>
-<span id="cb98-2"><a href="test-de-t-et-anova.html#cb98-2"></a>anov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet2, <span class="dt">data =</span> bird)</span>
-<span id="cb98-3"><a href="test-de-t-et-anova.html#cb98-3"></a><span class="kw">summary</span>(anov2)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="test-de-t-et-anova.html#cb98-1" aria-hidden="true" tabindex="-1"></a>bird<span class="sc">$</span>Diet2 <span class="ot">&lt;-</span> <span class="fu">relevel</span>(bird<span class="sc">$</span>Diet, <span class="at">ref =</span> <span class="st">&quot;Plant&quot;</span>)</span>
+<span id="cb98-2"><a href="test-de-t-et-anova.html#cb98-2" aria-hidden="true" tabindex="-1"></a>anov2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet2, <span class="at">data =</span> bird)</span>
+<span id="cb98-3"><a href="test-de-t-et-anova.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anov2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logMaxAbund ~ Diet2, data = bird)
@@ -879,7 +897,7 @@ un niveau de référence. Dans R, ceci correspond à la fonction
 ## Residual standard error: 1.545 on 49 degrees of freedom
 ## Multiple R-squared:  0.188,  Adjusted R-squared:  0.1217 
 ## F-statistic: 2.836 on 4 and 49 DF,  p-value: 0.0341</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="test-de-t-et-anova.html#cb100-1"></a><span class="kw">anova</span>(anov2)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="test-de-t-et-anova.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -889,10 +907,10 @@ un niveau de référence. Dans R, ceci correspond à la fonction
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Il est aussi possible de réordonné les niveaux selon leur médiane, plutôt que par ordre alphabétique:</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="test-de-t-et-anova.html#cb102-1"></a>med &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">tapply</span>(bird<span class="op">$</span>logMaxAbund, bird<span class="op">$</span>Diet, median))</span>
-<span id="cb102-2"><a href="test-de-t-et-anova.html#cb102-2"></a>bird<span class="op">$</span>Diet2 &lt;-<span class="st"> </span><span class="kw">factor</span>(bird<span class="op">$</span>Diet, <span class="dt">levels =</span> <span class="kw">names</span>(med))</span>
-<span id="cb102-3"><a href="test-de-t-et-anova.html#cb102-3"></a>anov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet2, <span class="dt">data =</span> bird)</span>
-<span id="cb102-4"><a href="test-de-t-et-anova.html#cb102-4"></a><span class="kw">summary</span>(anov2)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="test-de-t-et-anova.html#cb102-1" aria-hidden="true" tabindex="-1"></a>med <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">tapply</span>(bird<span class="sc">$</span>logMaxAbund, bird<span class="sc">$</span>Diet, median))</span>
+<span id="cb102-2"><a href="test-de-t-et-anova.html#cb102-2" aria-hidden="true" tabindex="-1"></a>bird<span class="sc">$</span>Diet2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(bird<span class="sc">$</span>Diet, <span class="at">levels =</span> <span class="fu">names</span>(med))</span>
+<span id="cb102-3"><a href="test-de-t-et-anova.html#cb102-3" aria-hidden="true" tabindex="-1"></a>anov2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet2, <span class="at">data =</span> bird)</span>
+<span id="cb102-4"><a href="test-de-t-et-anova.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anov2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logMaxAbund ~ Diet2, data = bird)
@@ -914,7 +932,7 @@ un niveau de référence. Dans R, ceci correspond à la fonction
 ## Residual standard error: 1.545 on 49 degrees of freedom
 ## Multiple R-squared:  0.188,  Adjusted R-squared:  0.1217 
 ## F-statistic: 2.836 on 4 and 49 DF,  p-value: 0.0341</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="test-de-t-et-anova.html#cb104-1"></a><span class="kw">anova</span>(anov2)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="test-de-t-et-anova.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -925,8 +943,8 @@ un niveau de référence. Dans R, ceci correspond à la fonction
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>La matrice de coefficients de contrastes peut être affichée par la
 commande suivante :</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="test-de-t-et-anova.html#cb106-1"></a>bird<span class="op">$</span>Diet2 &lt;-<span class="st"> </span><span class="kw">relevel</span>(bird<span class="op">$</span>Diet, <span class="dt">ref =</span> <span class="st">&quot;Plant&quot;</span>)</span>
-<span id="cb106-2"><a href="test-de-t-et-anova.html#cb106-2"></a><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="test-de-t-et-anova.html#cb106-1" aria-hidden="true" tabindex="-1"></a>bird<span class="sc">$</span>Diet2 <span class="ot">&lt;-</span> <span class="fu">relevel</span>(bird<span class="sc">$</span>Diet, <span class="at">ref =</span> <span class="st">&quot;Plant&quot;</span>)</span>
+<span id="cb106-2"><a href="test-de-t-et-anova.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)</span></code></pre></div>
 <pre><code>##             Insect InsectVert PlantInsect Vertebrate
 ## Plant            0          0           0          0
 ## Insect           1          0           0          0
@@ -940,21 +958,21 @@ La seconde comparaison est effectuée entre <code>Plant</code> et <code>InsectVe
 <p>Un point important à remarquer à propos du contraste par défaut dans R <code>contr.treatment</code> est qu’il n’est <strong>PAS</strong> orthogonal, c’est-à-dire que la somme des produits de leurs coefficients n’est <strong>PAS</strong> nulle. Nou pouvons vérifier que les contrastes sont orthogonaux en s’assurant que:
 - La somme des coefficients doit être égale à 0
 - La somme du produit de deux colonnes égale 0</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="test-de-t-et-anova.html#cb108-1"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">1</span>])  <span class="co"># condition 1 pour colonne 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="test-de-t-et-anova.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">1</span>])  <span class="co"># condition 1 pour colonne 1</span></span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="test-de-t-et-anova.html#cb110-1"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">2</span>])  <span class="co"># condition 2 pour colonne 1 et 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="test-de-t-et-anova.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">2</span>])  <span class="co"># condition 2 pour colonne 1 et 2</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>La première colonne éagle à 1, signifiant que les contrastes ne sont pas orthogonaux.<br />
 </p>
 <p>L’orthogonalité est importante pour s’assurer que nos contrastes sont <strong>indépendants</strong>. Nous pouvons utiliser des contrastes de Helmert ou des contrastes polynomiaux pour remédier à ce problème. Les contrastes Helmert vont contraster le deuxième niveau avec le premier, le troisième avec la moyenne des deux premiers niveaux, etc.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="test-de-t-et-anova.html#cb112-1"></a><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="st">&quot;contr.helmert&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
-<span id="cb112-2"><a href="test-de-t-et-anova.html#cb112-2"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="test-de-t-et-anova.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.helmert&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb112-2"><a href="test-de-t-et-anova.html#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="test-de-t-et-anova.html#cb114-1"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="test-de-t-et-anova.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Nos conditions sont mainteant nulles et nos contrastes orthogonaux.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="test-de-t-et-anova.html#cb116-1"></a>anov3 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb116-2"><a href="test-de-t-et-anova.html#cb116-2"></a><span class="kw">summary</span>(anov3)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="test-de-t-et-anova.html#cb116-1" aria-hidden="true" tabindex="-1"></a>anov3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb116-2"><a href="test-de-t-et-anova.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anov3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logMaxAbund ~ Diet, data = bird)
@@ -979,9 +997,9 @@ La seconde comparaison est effectuée entre <code>Plant</code> et <code>InsectVe
 <p>Il est aussi possible de créer sa propre matrice de coefficients de contrastes afin
 d’effectuer certaines comparaisons bien précises à l’aide de la
 fonction <code>contrasts()</code>. Par exemple, les lignes suivantes créent la matrice de coefficients de contrastes suivante :</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="test-de-t-et-anova.html#cb118-1"></a><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2) &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb118-2"><a href="test-de-t-et-anova.html#cb118-2"></a>    <span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">-1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">-1</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb118-3"><a href="test-de-t-et-anova.html#cb118-3"></a><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="test-de-t-et-anova.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb118-2"><a href="test-de-t-et-anova.html#cb118-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb118-3"><a href="test-de-t-et-anova.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)</span></code></pre></div>
 <pre><code>##             [,1] [,2] [,3] [,4]
 ## Plant          4    0    0    0
 ## Insect        -1    1    0    1
@@ -1012,9 +1030,9 @@ comparaison possible à l’aide d’une matrice de coefficients de
 contrastes.<br />
 </p>
 <p>Vérifions l’orhtogonalité :</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="test-de-t-et-anova.html#cb120-1"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">1</span>])  <span class="co"># première condition pour la colonne 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="test-de-t-et-anova.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">1</span>])  <span class="co"># première condition pour la colonne 1</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="test-de-t-et-anova.html#cb122-1"></a><span class="kw">sum</span>(<span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span><span class="kw">contrasts</span>(bird<span class="op">$</span>Diet2)[, <span class="dv">2</span>])  <span class="co"># deuxième condition pour les colonnes 1 et 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="test-de-t-et-anova.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">contrasts</span>(bird<span class="sc">$</span>Diet2)[, <span class="dv">2</span>])  <span class="co"># deuxième condition pour les colonnes 1 et 2</span></span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Ces contrastes suivent l’orthogonalité et pourrait donc être utilisés.</p>
 <p>D’autres types de contrastes utilisés fréquemment sont déjà programmés dans R
@@ -1022,7 +1040,7 @@ contrastes.<br />
 <hr />
 </div>
 </div>
-<div id="anova-à-deux-critères-de-classification" class="section level2 hasAnchor">
+<div id="anova-à-deux-critères-de-classification" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> ANOVA à deux critères de classification<a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Jusqu’ici, les modèles ANOVA que nous avons explorés n’ont eu qu’une
 seule variable catégorique, mais on peut aussi créer des modèles ANOVA
@@ -1112,7 +1130,7 @@ AB</td>
 <code>r</code>: nombre de répétitions par groupe<br />
 <span class="math inline">\(\epsilon\)</span> : erreur<br />
 </p>
-<div id="effectuer-une-anova-à-deux-critères-de-classification" class="section level3 hasAnchor">
+<div id="effectuer-une-anova-à-deux-critères-de-classification" class="section level3 hasAnchor" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> Effectuer une ANOVA à deux critères de classification<a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Dans R, une ANOVA à deux critères de classification est effectuée de la
 même manière qu’une ANOVA à un critère de classification avec la
@@ -1120,16 +1138,16 @@ fonction <code>lm()</code>.</p>
 <ul>
 <li>ANOVA à un facteur</li>
 </ul>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="test-de-t-et-anova.html#cb124-1"></a>aov &lt;-<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X, data)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="test-de-t-et-anova.html#cb124-1" aria-hidden="true" tabindex="-1"></a>aov <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X, data)</span></code></pre></div>
 <ul>
 <li>ANOVA à deux facteurs ou plus</li>
 </ul>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="test-de-t-et-anova.html#cb125-1"></a>aov &lt;-<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">*</span><span class="st"> </span>X2 <span class="op">*</span><span class="st"> </span>..., data)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="test-de-t-et-anova.html#cb125-1" aria-hidden="true" tabindex="-1"></a>aov <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1 <span class="sc">*</span> X2 <span class="sc">*</span> ..., data)</span></code></pre></div>
 <p>Lorsque vous utilisez le symbole * avec <code>lm()</code>, le modèle inclut les effets de chaque facteur séparément, ainsi que leur <strong>interaction</strong>.</p>
 <p>Selon le principe de parcimonie, vous voulez que votre modèle explique le plus possible de la variance observée dans les données, avec le moins de termes possible</p>
 <p>Enlever le terme d’interaction s’il n’est pas significatif, et ré-exécuter le modèle.</p>
 <p>Lorsque vous utilisez le symbole + avec <code>lm()</code>, le modèle inclut les effets de chaque facteur séparément (<strong>pas</strong> d’interaction)</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="test-de-t-et-anova.html#cb126-1"></a>aov &lt;-<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>..., data)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="test-de-t-et-anova.html#cb126-1" aria-hidden="true" tabindex="-1"></a>aov <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> ..., data)</span></code></pre></div>
 <hr />
 <p><strong>DÉFI 2</strong></p>
 <p>Examinez les effets des facteurs "Diet", "Aquatic" et de leur
@@ -1144,19 +1162,21 @@ base avant d’interpréter les résultats d’une ANOVA, soit :<br />
 diagnostic expliqués dans la section précédente.<br />
 </p>
 <details>
-<p><summary><strong>Cliquez pour voir la solution au Défi 2!</strong></summary></p>
+<summary>
+<strong>Cliquez pour voir la solution au Défi 2!</strong>
+</summary>
 <p>Conditions d’applications</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="test-de-t-et-anova.html#cb127-1"></a>anov4 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet <span class="op">*</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
-<span id="cb127-2"><a href="test-de-t-et-anova.html#cb127-2"></a>opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb127-3"><a href="test-de-t-et-anova.html#cb127-3"></a><span class="kw">plot</span>(anov4)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="test-de-t-et-anova.html#cb127-1" aria-hidden="true" tabindex="-1"></a>anov4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet <span class="sc">*</span> Aquatic, <span class="at">data =</span> bird)</span>
+<span id="cb127-2"><a href="test-de-t-et-anova.html#cb127-2" aria-hidden="true" tabindex="-1"></a>opar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb127-3"><a href="test-de-t-et-anova.html#cb127-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(anov4)</span></code></pre></div>
 <pre><code>## Warning: not plotting observations with leverage one:
 ##   5, 6, 26</code></pre>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="test-de-t-et-anova.html#cb129-1"></a><span class="kw">par</span>(opar)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="test-de-t-et-anova.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(opar)</span></code></pre></div>
 <p>La fonction <code>anova()</code> permet de visualiser le tableau d’ANOVA du modèle
 :<br />
 </p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="test-de-t-et-anova.html#cb130-1"></a><span class="kw">anova</span>(anov4)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="test-de-t-et-anova.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov4)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -1174,8 +1194,8 @@ ou non. Le seuil de signification peut aussi être testé en comparant
 deux modèles nichés, i.e. en incluant un premier modèle avec une
 interaction et un deuxième modèle avec sans l’interaction. La fonction
 <code>anova()</code> est utilisée :</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="test-de-t-et-anova.html#cb132-1"></a>anov5 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
-<span id="cb132-2"><a href="test-de-t-et-anova.html#cb132-2"></a><span class="kw">anova</span>(anov5, anov4)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="test-de-t-et-anova.html#cb132-1" aria-hidden="true" tabindex="-1"></a>anov5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet <span class="sc">+</span> Aquatic, <span class="at">data =</span> bird)</span>
+<span id="cb132-2"><a href="test-de-t-et-anova.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov5, anov4)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: logMaxAbund ~ Diet + Aquatic
@@ -1192,7 +1212,7 @@ n’est pas significative et peut donc être retirée du modèle.<br />
 Lorsque l’interaction est significative, rappelez-vous que chaque
 facteur ne peut pas être interprété séparément. Seule l’interaction
 peut l’être.</p>
-<p><span class="ul"><strong>Note :</strong></span> Le tableau d’ANOVA indique que le nombre de degrés de
+<p><u><strong>Note :</strong></u> Le tableau d’ANOVA indique que le nombre de degrés de
 liberté pour l’interaction entre la diète et le type d’oiseau
 (aquatique ou non) est de 3. Selon la notation mathématique du tableau
 de l’ANOVA à deux critères de classification (pour les plans
@@ -1206,15 +1226,15 @@ summary(anov4)). Consultez la section sur les <a href="test-de-t-et-anova.html#a
 </details>
 <hr />
 </div>
-<div id="diagramme-dinteraction" class="section level3 hasAnchor">
+<div id="diagramme-dinteraction" class="section level3 hasAnchor" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Diagramme d’interaction<a href="test-de-t-et-anova.html#diagramme-dinteraction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Les interactions peuvent être visualisées à l’aide de la fonction
 <code>interaction.plot()</code> :</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="test-de-t-et-anova.html#cb134-1"></a><span class="kw">interaction.plot</span>(bird<span class="op">$</span>Diet, bird<span class="op">$</span>Aquatic, bird<span class="op">$</span>logMaxAbund, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,</span>
-<span id="cb134-2"><a href="test-de-t-et-anova.html#cb134-2"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="st">&quot;Diet&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="test-de-t-et-anova.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(bird<span class="sc">$</span>Diet, bird<span class="sc">$</span>Aquatic, bird<span class="sc">$</span>logMaxAbund, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb134-2"><a href="test-de-t-et-anova.html#cb134-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="sc">*</span> <span class="st">&quot;(Maximum Abundance)&quot;</span>), <span class="at">xlab =</span> <span class="st">&quot;Diet&quot;</span>)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <p>Que signifie le trou sur la ligne des oiseaux aquatiques?</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="test-de-t-et-anova.html#cb135-1"></a><span class="kw">table</span>(bird<span class="op">$</span>Diet, bird<span class="op">$</span>Aquatic)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="test-de-t-et-anova.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(bird<span class="sc">$</span>Diet, bird<span class="sc">$</span>Aquatic)</span></code></pre></div>
 <pre><code>##              
 ##                0  1
 ##   Insect      14  6
@@ -1232,8 +1252,10 @@ non-équilibré.</p>
 <p>Tester le seuil de signification du facteur "Aquatic" en comparant
 deux modèles nichés (i.e. avec et sans ce facteur).</p>
 <details>
-<p><summary><strong>Cliquez pour voir la solution au Défi 3!</strong></summary></p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="test-de-t-et-anova.html#cb137-1"></a><span class="kw">anova</span>(anov1, anov5)  <span class="co"># Rappel que anov3 est le modèle avec le facteur &#39;Diet&#39; seulement.</span></span></code></pre></div>
+<summary>
+<strong>Cliquez pour voir la solution au Défi 3!</strong>
+</summary>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="test-de-t-et-anova.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anov1, anov5)  <span class="co"># Rappel que anov3 est le modèle avec le facteur &#39;Diet&#39; seulement.</span></span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: logMaxAbund ~ Diet
@@ -1245,7 +1267,7 @@ deux modèles nichés (i.e. avec et sans ce facteur).</p>
 <hr />
 </div>
 </div>
-<div id="anova-non-équilibrée-section-avancéefacultative" class="section level2 hasAnchor">
+<div id="anova-non-équilibrée-section-avancéefacultative" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> ANOVA non-équilibrée (section avancée/facultative)<a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Les ANOVA à un et à deux critères de classification nous
 permettent de déterminer les effets de variables catégoriques sur une
@@ -1261,7 +1283,7 @@ modifiée pour prendre en compte les données manquantes de la variable
 réponse.</p>
 <p><strong>Un jeu de données est considéré non équilibré lorsque le nombre d’échantillons entre deux niveaux n’est pas égal.</strong></p>
 <p>Le jeu de données <code>bird</code> est en réalité non équilibré (le nombre d’espèces aquatiques n’égale pas le nombre d’espèces non-aquatiques).</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="test-de-t-et-anova.html#cb139-1"></a><span class="kw">table</span>(bird<span class="op">$</span>Aquatic)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="test-de-t-et-anova.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(bird<span class="sc">$</span>Aquatic)</span></code></pre></div>
 <pre><code>## 
 ##  0  1 
 ## 39 15</code></pre>
@@ -1290,9 +1312,9 @@ après avoir retiré l’effet du facteur précédent.</p>
 d’ANOVA dépendent de l’ordre dans lequel chaque variable apparaît dans
 le modèle. Voyez comment les résultats diffèrent en comparant les deux
 modèles suivants :</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="test-de-t-et-anova.html#cb141-1"></a>unb_anov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Aquatic <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb141-2"><a href="test-de-t-et-anova.html#cb141-2"></a>unb_anov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>Aquatic, <span class="dt">data =</span> bird)</span>
-<span id="cb141-3"><a href="test-de-t-et-anova.html#cb141-3"></a><span class="kw">anova</span>(unb_anov1)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="test-de-t-et-anova.html#cb141-1" aria-hidden="true" tabindex="-1"></a>unb_anov1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Aquatic <span class="sc">+</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb141-2"><a href="test-de-t-et-anova.html#cb141-2" aria-hidden="true" tabindex="-1"></a>unb_anov2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> Diet <span class="sc">+</span> Aquatic, <span class="at">data =</span> bird)</span>
+<span id="cb141-3"><a href="test-de-t-et-anova.html#cb141-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(unb_anov1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -1302,7 +1324,7 @@ modèles suivants :</p>
 ## Residuals 48 115.230  2.4006                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="test-de-t-et-anova.html#cb143-1"></a><span class="kw">anova</span>(unb_anov2)</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="test-de-t-et-anova.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(unb_anov2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -1329,8 +1351,8 @@ de la taille des échantillons.</p>
 Dans R, une ANOVA avec somme des carrés de <strong>type III</strong> peut être effectuée
 avec la fonction <code>Anova()</code> du paquet <a href="https://cran.r-project.org/web/packages/car/car.pdf">car</a> et en spécifiant
 l’argument <code>type="III"</code> :</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="test-de-t-et-anova.html#cb145-1"></a><span class="kw">library</span>(car)</span>
-<span id="cb145-2"><a href="test-de-t-et-anova.html#cb145-2"></a><span class="kw">Anova</span>(unb_anov1, <span class="dt">type =</span> <span class="st">&quot;III&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="test-de-t-et-anova.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb145-2"><a href="test-de-t-et-anova.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(unb_anov1, <span class="at">type =</span> <span class="st">&quot;III&quot;</span>)</span></code></pre></div>
 <pre><code>## Anova Table (Type III tests)
 ## 
 ## Response: logMaxAbund
@@ -1341,7 +1363,7 @@ l’argument <code>type="III"</code> :</p>
 ## Residuals   115.230 48                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="test-de-t-et-anova.html#cb147-1"></a><span class="kw">Anova</span>(unb_anov2, <span class="dt">type =</span> <span class="st">&quot;III&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="test-de-t-et-anova.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(unb_anov2, <span class="at">type =</span> <span class="st">&quot;III&quot;</span>)</span></code></pre></div>
 <pre><code>## Anova Table (Type III tests)
 ## 
 ## Response: logMaxAbund
@@ -1360,7 +1382,7 @@ ANOVA qui est indépendante de la tailles des échantillons.</p>
 finalement être interprétés correctement.</p>
 
 </div>
-<div id="ancova" class="section level2 hasAnchor">
+<div id="ancova" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> 6. ANCOVA<a href="test-de-t-et-anova.html#ancova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><img src="images/schema_ancova.png" /></p>
 <p>L’analyse de covariance (ANCOVA) est un modèle linéaire qui teste
@@ -1384,7 +1406,7 @@ continues.</p>
 <span class="math inline">\(X\)</span>: Varaible prédictrice est catégorique (facteur)
 <span class="math inline">\(Z\)</span>: Varaible prédictrice est continue</p>
 <p><span class="math display">\[Y = \mu + Effets Principaux Facteurs + Intéraction entre Facteurs + Effets Principaux Covariables + Intéractions entre Covariables Facteurs + \epsilon\]</span></p>
-<div id="conditions-de-base-1" class="section level3 hasAnchor">
+<div id="conditions-de-base-1" class="section level3 hasAnchor" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> 6.1 Conditions de base<a href="test-de-t-et-anova.html#conditions-de-base-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En plus des conditions d’application des modèles linéaires, les modèles ANCOVA doivent respecter :</p>
 <ol style="list-style-type: decimal">
@@ -1392,14 +1414,14 @@ continues.</p>
 <li>Les variables sont <strong><em>fixes</em></strong></li>
 <li>Les variables catégoriques et continues sont <strong>indépendantes</strong></li>
 </ol>
-<p><strong><span class="ul">Note :</span></strong> Un variable <em>fixe</em> est une variable d’intérêt pour
+<p><strong><u>Note :</u></strong> Un variable <em>fixe</em> est une variable d’intérêt pour
 une étude (e.g. la masse des oiseaux). En comparaison, une variable
 aléatoire représente surtout une source de bruit qu’on veut contrôler
 (i.e. le site où les oiseaux ont été échantillonnés). Si votre modèle
 comporte des effets aléatoires, consultez l’atelier 7 sur les <a href="https://r.qcbs.ca/fr/workshops/r-workshop-07/">modèles linéaires et
 généralisés linéaires mixtes</a>!</p>
 </div>
-<div id="types-dancova" class="section level3 hasAnchor">
+<div id="types-dancova" class="section level3 hasAnchor" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> 6.2 Types d’ANCOVA<a href="test-de-t-et-anova.html#types-dancova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Il est possible d’avoir plusieurs facteurs (i.e. variables explicatives
 catégoriques) et covariables (i.e. variables explicatives continues) au
@@ -1430,7 +1452,7 @@ ci-dessous dans les deux derniers graphiques:</p>
 covariables.<br />
 </p>
 </div>
-<div id="effectuer-une-ancova" class="section level3 hasAnchor">
+<div id="effectuer-une-ancova" class="section level3 hasAnchor" number="5.4.3">
 <h3><span class="header-section-number">5.4.3</span> 6.3 Effectuer une ANCOVA<a href="test-de-t-et-anova.html#effectuer-une-ancova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Effectuer une ANCOVA dans R ressemble à une ANOVA à deux critères de
 classification : on utilise la fonction <code>lm()</code>. Toutefois, au lieu
@@ -1439,8 +1461,8 @@ utilise maintenant une variable catégorique et une variable continue.</p>
 <p>Par exemple, en utilisant le jeu de données CO2 (déjà inclus dans R) où
 la variable réponse est <em>uptake</em>, on peut effectuer une ANCOVA avec la
 variable continue <em>conc</em> et le facteur <em>Treatment</em> :</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="test-de-t-et-anova.html#cb149-1"></a>ancova.example &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>conc <span class="op">*</span><span class="st"> </span>Treatment, <span class="dt">data =</span> CO2)</span>
-<span id="cb149-2"><a href="test-de-t-et-anova.html#cb149-2"></a><span class="kw">anova</span>(ancova.example)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="test-de-t-et-anova.html#cb149-1" aria-hidden="true" tabindex="-1"></a>ancova.example <span class="ot">&lt;-</span> <span class="fu">lm</span>(uptake <span class="sc">~</span> conc <span class="sc">*</span> Treatment, <span class="at">data =</span> CO2)</span>
+<span id="cb149-2"><a href="test-de-t-et-anova.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova.example)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: uptake
@@ -1467,12 +1489,12 @@ devient significative.</p>
 facteurs, vous pouvez utiliser les moyennes ajustées qui sont calculées
 comme dans l’équation de l’ANCOVA et en tenant compte de l’effet de
 la covariable :</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="test-de-t-et-anova.html#cb151-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
-<span id="cb151-2"><a href="test-de-t-et-anova.html#cb151-2"></a><span class="kw">library</span>(effects)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="test-de-t-et-anova.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
+<span id="cb151-2"><a href="test-de-t-et-anova.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects)</span></code></pre></div>
 <p>Si vous voulez comparer les moyennes des différents facteurs, vous pouvez utiliser les moyennes ajustées. La fonction <code>effect()</code> utilise les équations données par l’ANCOVA pour estimer les moyennes de chaque niveau, corrigées pour l’effet de la covariable.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="test-de-t-et-anova.html#cb152-1"></a>adj.means.ex &lt;-<span class="st"> </span><span class="kw">effect</span>(<span class="st">&quot;Treatment&quot;</span>, ancova.example)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="test-de-t-et-anova.html#cb152-1" aria-hidden="true" tabindex="-1"></a>adj.means.ex <span class="ot">&lt;-</span> <span class="fu">effect</span>(<span class="st">&quot;Treatment&quot;</span>, ancova.example)</span></code></pre></div>
 <pre><code>## NOTE: Treatment is not a high-order term in the model</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="test-de-t-et-anova.html#cb154-1"></a><span class="kw">plot</span>(adj.means.ex)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="test-de-t-et-anova.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(adj.means.ex)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
 <hr />
 <p><strong>DÉFI 4</strong></p>
@@ -1484,7 +1506,7 @@ covariable <code>Mass</code>, et de leur interaction sur la variable réponse
 Variables prédictrices:
 -<code>Diet</code> (facteur avec 5 groupes)
 -<code>Mass</code> (numérique, continuous)</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="test-de-t-et-anova.html#cb155-1"></a><span class="kw">str</span>(bird)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="test-de-t-et-anova.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(bird)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    54 obs. of  9 variables:
 ##  $ Family     : chr  &quot;Hawks&amp;Eagles&amp;Kites&quot; &quot;Long-tailed tits&quot; &quot;Larks&quot; &quot;Kingfishers&quot; ...
 ##  $ MaxAbund   : num  2.99 37.8 241.4 4.4 4.53 ...
@@ -1496,17 +1518,19 @@ Variables prédictrices:
 ##  $ logMass    : num  6.57 1.67 3.58 4.78 5.75 ...
 ##  $ logMaxAbund: num  1.09 3.63 5.49 1.48 1.51 ...</code></pre>
 <details>
-<p><summary><strong>Cliquez pour voir la solution au Défi 3!</strong></summary></p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="test-de-t-et-anova.html#cb157-1"></a><span class="co"># Si vous avez complété la section avancée sur les</span></span>
-<span id="cb157-2"><a href="test-de-t-et-anova.html#cb157-2"></a><span class="co"># contrastes, vous devrez réinitialiser les contrastes à</span></span>
-<span id="cb157-3"><a href="test-de-t-et-anova.html#cb157-3"></a><span class="co"># l&#39;aide de la fonction &#39;&#39;options()&#39;&#39; Si vous n&#39;avez pas</span></span>
-<span id="cb157-4"><a href="test-de-t-et-anova.html#cb157-4"></a><span class="co"># complété la section avancée sur les contrastes, ignorez</span></span>
-<span id="cb157-5"><a href="test-de-t-et-anova.html#cb157-5"></a><span class="co"># la première ligne du script.</span></span>
-<span id="cb157-6"><a href="test-de-t-et-anova.html#cb157-6"></a><span class="kw">options</span>(<span class="dt">contrasts =</span> <span class="kw">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
-<span id="cb157-7"><a href="test-de-t-et-anova.html#cb157-7"></a></span>
-<span id="cb157-8"><a href="test-de-t-et-anova.html#cb157-8"></a><span class="co"># solution</span></span>
-<span id="cb157-9"><a href="test-de-t-et-anova.html#cb157-9"></a>ancov1 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb157-10"><a href="test-de-t-et-anova.html#cb157-10"></a><span class="kw">anova</span>(ancov1)</span></code></pre></div>
+<summary>
+<strong>Cliquez pour voir la solution au Défi 3!</strong>
+</summary>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="test-de-t-et-anova.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Si vous avez complété la section avancée sur les</span></span>
+<span id="cb157-2"><a href="test-de-t-et-anova.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="co"># contrastes, vous devrez réinitialiser les contrastes à</span></span>
+<span id="cb157-3"><a href="test-de-t-et-anova.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="co"># l&#39;aide de la fonction &#39;&#39;options()&#39;&#39; Si vous n&#39;avez pas</span></span>
+<span id="cb157-4"><a href="test-de-t-et-anova.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="co"># complété la section avancée sur les contrastes, ignorez</span></span>
+<span id="cb157-5"><a href="test-de-t-et-anova.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="co"># la première ligne du script.</span></span>
+<span id="cb157-6"><a href="test-de-t-et-anova.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.treatment&quot;</span>, <span class="st">&quot;contr.poly&quot;</span>))</span>
+<span id="cb157-7"><a href="test-de-t-et-anova.html#cb157-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-8"><a href="test-de-t-et-anova.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="co"># solution</span></span>
+<span id="cb157-9"><a href="test-de-t-et-anova.html#cb157-9" aria-hidden="true" tabindex="-1"></a>ancov1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> logMass <span class="sc">*</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb157-10"><a href="test-de-t-et-anova.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancov1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -1517,7 +1541,7 @@ Variables prédictrices:
 ## Residuals    44 99.971  2.2721                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="test-de-t-et-anova.html#cb159-1"></a><span class="kw">summary</span>(ancov1)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="test-de-t-et-anova.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ancov1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logMaxAbund ~ logMass * Diet, data = bird)
@@ -1548,8 +1572,8 @@ Variables prédictrices:
 que l’effet de la masse sur l’abondance maximale est le même peu
 importe la diète. L’interaction est retirée du modèle et l’ANCOVA
 devient :</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="test-de-t-et-anova.html#cb161-1"></a>ancov2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">data =</span> bird)</span>
-<span id="cb161-2"><a href="test-de-t-et-anova.html#cb161-2"></a><span class="kw">anova</span>(ancov2)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="test-de-t-et-anova.html#cb161-1" aria-hidden="true" tabindex="-1"></a>ancov2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> logMass <span class="sc">+</span> Diet, <span class="at">data =</span> bird)</span>
+<span id="cb161-2"><a href="test-de-t-et-anova.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancov2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: logMaxAbund
@@ -1562,8 +1586,8 @@ devient :</p>
 <p>R nous indique que la diète n’est pas significative non plus, donc ce
 terme est retiré du modèle. Notre modèle final devient donc une
 régression linéaire simple :</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="test-de-t-et-anova.html#cb163-1"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird)</span>
-<span id="cb163-2"><a href="test-de-t-et-anova.html#cb163-2"></a><span class="kw">summary</span>(lm2)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="test-de-t-et-anova.html#cb163-1" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logMaxAbund <span class="sc">~</span> logMass, <span class="at">data =</span> bird)</span>
+<span id="cb163-2"><a href="test-de-t-et-anova.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logMaxAbund ~ logMass, data = bird)
@@ -1589,7 +1613,7 @@ différents niveaux de la variable catégorique.</p>
 <p>Nous pouvons aussi tracez un diagramme représentant les pentes et
 ordonnées à l’origine d’une ANCOVA (le modèle ancov1 plus haut) à
 l’aide des fonctions <code>abline()</code> et <code>coef()</code>.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="test-de-t-et-anova.html#cb165-1"></a><span class="kw">coef</span>(ancov1)</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="test-de-t-et-anova.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ancov1)</span></code></pre></div>
 <pre><code>##             (Intercept)                 logMass          DietInsectVert 
 ##               3.7384247              -0.2864726              -4.4598537 
 ##               DietPlant         DietPlantInsect          DietVertebrate 
@@ -1598,18 +1622,18 @@ l’aide des fonctions <code>abline()</code> et <code>coef()</code>.</p>
 ##               0.6744893              -0.2631444               0.1114568 
 ##  logMass:DietVertebrate 
 ##               1.1665348</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="test-de-t-et-anova.html#cb167-1"></a><span class="kw">plot</span>(logMaxAbund <span class="op">~</span><span class="st"> </span>logMass, <span class="dt">data =</span> bird, <span class="dt">col =</span> Diet, <span class="dt">pch =</span> <span class="dv">19</span>,</span>
-<span id="cb167-2"><a href="test-de-t-et-anova.html#cb167-2"></a>    <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span><span class="st"> &quot;(Maximum Abundance)&quot;</span>), <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="op">*</span></span>
-<span id="cb167-3"><a href="test-de-t-et-anova.html#cb167-3"></a><span class="st">        &quot;(Mass)&quot;</span>))</span>
-<span id="cb167-4"><a href="test-de-t-et-anova.html#cb167-4"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">1</span>], <span class="dt">b =</span> <span class="kw">coef</span>(ancov1)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">&quot;deepskyblue1&quot;</span>)</span>
-<span id="cb167-5"><a href="test-de-t-et-anova.html#cb167-5"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">3</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb167-6"><a href="test-de-t-et-anova.html#cb167-6"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">7</span>]), <span class="dt">col =</span> <span class="st">&quot;green2&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb167-7"><a href="test-de-t-et-anova.html#cb167-7"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">4</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb167-8"><a href="test-de-t-et-anova.html#cb167-8"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">8</span>]), <span class="dt">col =</span> <span class="st">&quot;orange1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb167-9"><a href="test-de-t-et-anova.html#cb167-9"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">5</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb167-10"><a href="test-de-t-et-anova.html#cb167-10"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">9</span>]), <span class="dt">col =</span> <span class="st">&quot;lightsteelblue1&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb167-11"><a href="test-de-t-et-anova.html#cb167-11"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(ancov1)[<span class="dv">6</span>]), <span class="dt">b =</span> <span class="kw">sum</span>(<span class="kw">coef</span>(ancov1)[<span class="dv">2</span>] <span class="op">+</span></span>
-<span id="cb167-12"><a href="test-de-t-et-anova.html#cb167-12"></a><span class="st">    </span><span class="kw">coef</span>(ancov1)[<span class="dv">10</span>]), <span class="dt">col =</span> <span class="st">&quot;darkcyan&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="test-de-t-et-anova.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(logMaxAbund <span class="sc">~</span> logMass, <span class="at">data =</span> bird, <span class="at">col =</span> Diet, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb167-2"><a href="test-de-t-et-anova.html#cb167-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="sc">*</span> <span class="st">&quot;(Maximum Abundance)&quot;</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;log&quot;</span>[<span class="dv">10</span>] <span class="sc">*</span></span>
+<span id="cb167-3"><a href="test-de-t-et-anova.html#cb167-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;(Mass)&quot;</span>))</span>
+<span id="cb167-4"><a href="test-de-t-et-anova.html#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">coef</span>(ancov1)[<span class="dv">1</span>], <span class="at">b =</span> <span class="fu">coef</span>(ancov1)[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;deepskyblue1&quot;</span>)</span>
+<span id="cb167-5"><a href="test-de-t-et-anova.html#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(ancov1)[<span class="dv">3</span>]), <span class="at">b =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">2</span>] <span class="sc">+</span></span>
+<span id="cb167-6"><a href="test-de-t-et-anova.html#cb167-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>(ancov1)[<span class="dv">7</span>]), <span class="at">col =</span> <span class="st">&quot;green2&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb167-7"><a href="test-de-t-et-anova.html#cb167-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(ancov1)[<span class="dv">4</span>]), <span class="at">b =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">2</span>] <span class="sc">+</span></span>
+<span id="cb167-8"><a href="test-de-t-et-anova.html#cb167-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>(ancov1)[<span class="dv">8</span>]), <span class="at">col =</span> <span class="st">&quot;orange1&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb167-9"><a href="test-de-t-et-anova.html#cb167-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(ancov1)[<span class="dv">5</span>]), <span class="at">b =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">2</span>] <span class="sc">+</span></span>
+<span id="cb167-10"><a href="test-de-t-et-anova.html#cb167-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>(ancov1)[<span class="dv">9</span>]), <span class="at">col =</span> <span class="st">&quot;lightsteelblue1&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb167-11"><a href="test-de-t-et-anova.html#cb167-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(ancov1)[<span class="dv">6</span>]), <span class="at">b =</span> <span class="fu">sum</span>(<span class="fu">coef</span>(ancov1)[<span class="dv">2</span>] <span class="sc">+</span></span>
+<span id="cb167-12"><a href="test-de-t-et-anova.html#cb167-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>(ancov1)[<span class="dv">10</span>]), <span class="at">col =</span> <span class="st">&quot;darkcyan&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
 </details>
 
@@ -1688,7 +1712,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

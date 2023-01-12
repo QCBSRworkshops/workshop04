@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapitre 6 Régression multiple | Atelier 4: Modèles linéaires</title>
   <meta name="description" content="Modèles linéaires" />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapitre 6 Régression multiple | Atelier 4: Modèles linéaires" />
   <meta property="og:type" content="book" />
@@ -48,25 +48,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,100 +135,119 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <link rel="icon" type="image/png" href="assets/images/favicon.ico"/>
 
 <li class="divider"></li>
-<li class="part"><span><b>Série d’ateliers R du CSBQ<span></span></b></span></li>
-<li><a href="index.html#préface">Préface<span></span></a><ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>0.1</b> Code de conduite<span></span></a><ul>
-<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#comportement-attendu"><i class="fa fa-check"></i><b>0.1.1</b> Comportement attendu<span></span></a></li>
-<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#comportements-inacceptables"><i class="fa fa-check"></i><b>0.1.2</b> Comportements inacceptables<span></span></a></li>
+<li class="part"><span><b>Série d’ateliers R du CSBQ</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Préface</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#code-de-conduite"><i class="fa fa-check"></i><b>0.1</b> Code de conduite</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#comportement-attendu"><i class="fa fa-check"></i><b>0.1.1</b> Comportement attendu</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#comportements-inacceptables"><i class="fa fa-check"></i><b>0.1.2</b> Comportements inacceptables</a></li>
 </ul></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributeurs-et-contributrices"><i class="fa fa-check"></i><b>0.2</b> Contributeurs et contributrices<span></span></a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contribuez-à-la-série"><i class="fa fa-check"></i><b>0.3</b> Contribuez à la série!<span></span></a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#contributeurs-et-contributrices"><i class="fa fa-check"></i><b>0.2</b> Contributeurs et contributrices</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#contribuez-à-la-série"><i class="fa fa-check"></i><b>0.3</b> Contribuez à la série!</a></li>
 </ul></li>
-<li class="part"><span><b>Modèles linéaires en <code>R</code><span></span></b></span></li>
-<li class="chapter" data-level="1" data-path="objectifs-dapprentissage.html"><a href="objectifs-dapprentissage.html"><i class="fa fa-check"></i><b>1</b> Objectifs d’apprentissage<span></span></a></li>
-<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier<span></span></a></li>
-<li class="chapter" data-level="3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html"><i class="fa fa-check"></i><b>3</b> Le modèle linéaire<span></span></a><ul>
-<li class="chapter" data-level="3.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#quest-ce-quun-modèle-linéaire"><i class="fa fa-check"></i><b>3.1</b> Qu’est-ce qu’un modèle linéaire ?<span></span></a><ul>
-<li class="chapter" data-level="3.1.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#exemple-abondance-et-masse-des-espèces-doiseaux"><i class="fa fa-check"></i><b>3.1.1</b> Exemple : Abondance et masse des espèces d’oiseaux<span></span></a></li>
+<li class="part"><span><b>Modèles linéaires en <code>R</code></b></span></li>
+<li class="chapter" data-level="1" data-path="objectifs-dapprentissage.html"><a href="objectifs-dapprentissage.html"><i class="fa fa-check"></i><b>1</b> Objectifs d’apprentissage</a></li>
+<li class="chapter" data-level="2" data-path="préparez-vous-pour-cet-atelier.html"><a href="préparez-vous-pour-cet-atelier.html"><i class="fa fa-check"></i><b>2</b> Préparez-vous pour cet atelier</a></li>
+<li class="chapter" data-level="3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html"><i class="fa fa-check"></i><b>3</b> Le modèle linéaire</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#quest-ce-quun-modèle-linéaire"><i class="fa fa-check"></i><b>3.1</b> Qu’est-ce qu’un modèle linéaire ?</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#exemple-abondance-et-masse-des-espèces-doiseaux"><i class="fa fa-check"></i><b>3.1.1</b> Exemple : Abondance et masse des espèces d’oiseaux</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#formulation-dun-modèle-linéaire"><i class="fa fa-check"></i><b>3.2</b> Formulation d’un modèle linéaire<span></span></a></li>
-<li class="chapter" data-level="3.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#évaluation-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.3</b> Évaluation du modèle linéaire<span></span></a></li>
-<li class="chapter" data-level="3.4" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#conditions-dapplication-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.4</b> Conditions d’application du modèle linéaire<span></span></a><ul>
-<li class="chapter" data-level="3.4.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#normalité-des-résidus"><i class="fa fa-check"></i><b>3.4.1</b> Normalité des résidus<span></span></a></li>
-<li class="chapter" data-level="3.4.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#homoscédasticité"><i class="fa fa-check"></i><b>3.4.2</b> Homoscédasticité<span></span></a></li>
-<li class="chapter" data-level="3.4.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#indépendance-des-résidus"><i class="fa fa-check"></i><b>3.4.3</b> Indépendance des résidus<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#formulation-dun-modèle-linéaire"><i class="fa fa-check"></i><b>3.2</b> Formulation d’un modèle linéaire</a></li>
+<li class="chapter" data-level="3.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#évaluation-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.3</b> Évaluation du modèle linéaire</a></li>
+<li class="chapter" data-level="3.4" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#conditions-dapplication-du-modèle-linéaire"><i class="fa fa-check"></i><b>3.4</b> Conditions d’application du modèle linéaire</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#normalité-des-résidus"><i class="fa fa-check"></i><b>3.4.1</b> Normalité des résidus</a></li>
+<li class="chapter" data-level="3.4.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#homoscédasticité"><i class="fa fa-check"></i><b>3.4.2</b> Homoscédasticité</a></li>
+<li class="chapter" data-level="3.4.3" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#indépendance-des-résidus"><i class="fa fa-check"></i><b>3.4.3</b> Indépendance des résidus</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-des-modèles-linéaires"><i class="fa fa-check"></i><b>3.5</b> Notation des modèles linéaires<span></span></a><ul>
-<li class="chapter" data-level="3.5.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-mathématique"><i class="fa fa-check"></i><b>3.5.1</b> Notation mathématique<span></span></a></li>
-<li class="chapter" data-level="3.5.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-en-r"><i class="fa fa-check"></i><b>3.5.2</b> Notation en R<span></span></a></li>
+<li class="chapter" data-level="3.5" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-des-modèles-linéaires"><i class="fa fa-check"></i><b>3.5</b> Notation des modèles linéaires</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-mathématique"><i class="fa fa-check"></i><b>3.5.1</b> Notation mathématique</a></li>
+<li class="chapter" data-level="3.5.2" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#notation-en-r"><i class="fa fa-check"></i><b>3.5.2</b> Notation en R</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>3.6</b> Effectuer un modèle linéaire<span></span></a><ul>
-<li class="chapter" data-level="3.6.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#estimation-du-modèle"><i class="fa fa-check"></i><b>3.6.1</b> Estimation du modèle<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#effectuer-un-modèle-linéaire"><i class="fa fa-check"></i><b>3.6</b> Effectuer un modèle linéaire</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#estimation-du-modèle"><i class="fa fa-check"></i><b>3.6.1</b> Estimation du modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#modèles-linéaires"><i class="fa fa-check"></i><b>3.7</b> Modèles linéaires<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="le-modèle-linéaire.html"><a href="le-modèle-linéaire.html#modèles-linéaires"><i class="fa fa-check"></i><b>3.7</b> Modèles linéaires</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html"><i class="fa fa-check"></i><b>4</b> Régression linéaire avec R<span></span></a><ul>
-<li class="chapter" data-level="4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#formulation-du-modèle"><i class="fa fa-check"></i><b>4.1</b> Formulation du modèle<span></span></a><ul>
-<li class="chapter" data-level="4.1.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#équation-du-modèle"><i class="fa fa-check"></i><b>4.1.1</b> Équation du modèle<span></span></a></li>
+<li class="chapter" data-level="4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html"><i class="fa fa-check"></i><b>4</b> Régression linéaire avec R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#formulation-du-modèle"><i class="fa fa-check"></i><b>4.1</b> Formulation du modèle</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#équation-du-modèle"><i class="fa fa-check"></i><b>4.1.1</b> Équation du modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-1"><i class="fa fa-check"></i><b>4.2</b> Régression linéaire avec R<span></span></a><ul>
-<li class="chapter" data-level="4.2.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-1.-formuler-et-exécuter-un-modèle-linéaire"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Étape 1.</strong> Formuler et exécuter un modèle linéaire<span></span></a></li>
-<li class="chapter" data-level="4.2.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-avec-les-graphiques-diagnostics"><i class="fa fa-check"></i><b>4.2.2</b> <strong>Étape 2.</strong> Vérifier les conditions d’application avec les graphiques diagnostics<span></span></a></li>
-<li class="chapter" data-level="4.2.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-pour-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Étape 2</strong>. Vérifier les conditions d’application pour <code>lm1</code><span></span></a></li>
-<li class="chapter" data-level="4.2.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---quelle-est-la-cause"><i class="fa fa-check"></i><b>4.2.4</b> Conditions non respectées - Quelle est la cause ?<span></span></a></li>
-<li class="chapter" data-level="4.2.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---comment-procéder"><i class="fa fa-check"></i><b>4.2.5</b> Conditions non respectées - Comment procéder ?<span></span></a></li>
-<li class="chapter" data-level="4.2.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-3.-analyser-les-paramètres"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Étape 3.</strong> Analyser les paramètres<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-1"><i class="fa fa-check"></i><b>4.2</b> Régression linéaire avec R</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-1.-formuler-et-exécuter-un-modèle-linéaire"><i class="fa fa-check"></i><b>4.2.1</b> <strong>Étape 1.</strong> Formuler et exécuter un modèle linéaire</a></li>
+<li class="chapter" data-level="4.2.2" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-avec-les-graphiques-diagnostics"><i class="fa fa-check"></i><b>4.2.2</b> <strong>Étape 2.</strong> Vérifier les conditions d’application avec les graphiques diagnostics</a></li>
+<li class="chapter" data-level="4.2.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-2.-vérifier-les-conditions-dapplication-pour-lm1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>Étape 2</strong>. Vérifier les conditions d’application pour <code>lm1</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---quelle-est-la-cause"><i class="fa fa-check"></i><b>4.2.4</b> Conditions non respectées - Quelle est la cause ?</a></li>
+<li class="chapter" data-level="4.2.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#conditions-non-respectées---comment-procéder"><i class="fa fa-check"></i><b>4.2.5</b> Conditions non respectées - Comment procéder ?</a></li>
+<li class="chapter" data-level="4.2.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#étape-3.-analyser-les-paramètres"><i class="fa fa-check"></i><b>4.2.6</b> <strong>Étape 3.</strong> Analyser les paramètres</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#interprétation-du-modèle"><i class="fa fa-check"></i><b>4.3</b> Interprétation du modèle<span></span></a><ul>
-<li class="chapter" data-level="4.3.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#trouver-un-meilleur-modèle-oiseaux-terrestres"><i class="fa fa-check"></i><b>4.3.1</b> Trouver un meilleur modèle: oiseaux terrestres<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#interprétation-du-modèle"><i class="fa fa-check"></i><b>4.3</b> Interprétation du modèle</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#trouver-un-meilleur-modèle-oiseaux-terrestres"><i class="fa fa-check"></i><b>4.3.1</b> Trouver un meilleur modèle: oiseaux terrestres</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#défi-2"><i class="fa fa-check"></i><b>4.4</b> Défi 2<span></span></a><ul>
-<li class="chapter" data-level="4.4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#défi-2"><i class="fa fa-check"></i><b>4.4</b> Défi 2</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#solutions"><i class="fa fa-check"></i><b>4.4.1</b> Solutions</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-2"><i class="fa fa-check"></i><b>4.5</b> Régression linéaire avec R<span></span></a></li>
-<li class="chapter" data-level="4.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#noms-de-variables"><i class="fa fa-check"></i><b>4.6</b> Noms de variables<span></span></a></li>
+<li class="chapter" data-level="4.5" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#régression-linéaire-avec-r-2"><i class="fa fa-check"></i><b>4.5</b> Régression linéaire avec R</a></li>
+<li class="chapter" data-level="4.6" data-path="régression-linéaire-avec-r.html"><a href="régression-linéaire-avec-r.html#noms-de-variables"><i class="fa fa-check"></i><b>4.6</b> Noms de variables</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>5</b> Test de t et ANOVA<span></span></a><ul>
-<li class="chapter" data-level="5.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>5.1</b> ANOVA<span></span></a><ul>
-<li class="chapter" data-level="5.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>5.1.1</b> Types d’ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>5.1.2</b> Test de t<span></span></a></li>
-<li class="chapter" data-level="5.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>5.1.3</b> Effectuer une ANOVA<span></span></a></li>
-<li class="chapter" data-level="5.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-dapplication"><i class="fa fa-check"></i><b>5.1.4</b> Vérification des conditions d’application<span></span></a></li>
-<li class="chapter" data-level="5.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#exemple-avec-le-jeu-de-données-bird"><i class="fa fa-check"></i><b>5.1.5</b> Exemple avec le jeu de données <code>bird</code><span></span></a></li>
-<li class="chapter" data-level="5.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle"><i class="fa fa-check"></i><b>5.1.6</b> Sortie du modèle<span></span></a></li>
-<li class="chapter" data-level="5.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#tests-complémentaires"><i class="fa fa-check"></i><b>5.1.7</b> Tests complémentaires<span></span></a></li>
-<li class="chapter" data-level="5.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>5.1.8</b> Visualisation des résultats<span></span></a></li>
-<li class="chapter" data-level="5.1.9" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>5.1.9</b> Allons plus loin: Contrastes<span></span></a></li>
+<li class="chapter" data-level="5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html"><i class="fa fa-check"></i><b>5</b> Test de t et ANOVA</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova"><i class="fa fa-check"></i><b>5.1</b> ANOVA</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-danova"><i class="fa fa-check"></i><b>5.1.1</b> Types d’ANOVA</a></li>
+<li class="chapter" data-level="5.1.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#test-de-t"><i class="fa fa-check"></i><b>5.1.2</b> Test de t</a></li>
+<li class="chapter" data-level="5.1.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova"><i class="fa fa-check"></i><b>5.1.3</b> Effectuer une ANOVA</a></li>
+<li class="chapter" data-level="5.1.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#vérification-des-conditions-dapplication"><i class="fa fa-check"></i><b>5.1.4</b> Vérification des conditions d’application</a></li>
+<li class="chapter" data-level="5.1.5" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#exemple-avec-le-jeu-de-données-bird"><i class="fa fa-check"></i><b>5.1.5</b> Exemple avec le jeu de données <code>bird</code></a></li>
+<li class="chapter" data-level="5.1.6" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#sortie-du-modèle"><i class="fa fa-check"></i><b>5.1.6</b> Sortie du modèle</a></li>
+<li class="chapter" data-level="5.1.7" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#tests-complémentaires"><i class="fa fa-check"></i><b>5.1.7</b> Tests complémentaires</a></li>
+<li class="chapter" data-level="5.1.8" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#visualisation-des-résultats"><i class="fa fa-check"></i><b>5.1.8</b> Visualisation des résultats</a></li>
+<li class="chapter" data-level="5.1.9" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#allons-plus-loin-contrastes"><i class="fa fa-check"></i><b>5.1.9</b> Allons plus loin: Contrastes</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2</b> ANOVA à deux critères de classification<span></span></a><ul>
-<li class="chapter" data-level="5.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2.1</b> Effectuer une ANOVA à deux critères de classification<span></span></a></li>
-<li class="chapter" data-level="5.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>5.2.2</b> Diagramme d’interaction<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2</b> ANOVA à deux critères de classification</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-anova-à-deux-critères-de-classification"><i class="fa fa-check"></i><b>5.2.1</b> Effectuer une ANOVA à deux critères de classification</a></li>
+<li class="chapter" data-level="5.2.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#diagramme-dinteraction"><i class="fa fa-check"></i><b>5.2.2</b> Diagramme d’interaction</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>5.3</b> ANOVA non-équilibrée (section avancée/facultative)<span></span></a></li>
-<li class="chapter" data-level="5.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>5.4</b> 6. ANCOVA<span></span></a><ul>
-<li class="chapter" data-level="5.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>5.4.1</b> 6.1 Conditions de base<span></span></a></li>
-<li class="chapter" data-level="5.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>5.4.2</b> 6.2 Types d’ANCOVA<span></span></a></li>
-<li class="chapter" data-level="5.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>5.4.3</b> 6.3 Effectuer une ANCOVA<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#anova-non-équilibrée-section-avancéefacultative"><i class="fa fa-check"></i><b>5.3</b> ANOVA non-équilibrée (section avancée/facultative)</a></li>
+<li class="chapter" data-level="5.4" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#ancova"><i class="fa fa-check"></i><b>5.4</b> 6. ANCOVA</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#conditions-de-base-1"><i class="fa fa-check"></i><b>5.4.1</b> 6.1 Conditions de base</a></li>
+<li class="chapter" data-level="5.4.2" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#types-dancova"><i class="fa fa-check"></i><b>5.4.2</b> 6.2 Types d’ANCOVA</a></li>
+<li class="chapter" data-level="5.4.3" data-path="test-de-t-et-anova.html"><a href="test-de-t-et-anova.html#effectuer-une-ancova"><i class="fa fa-check"></i><b>5.4.3</b> 6.3 Effectuer une ANCOVA</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>6</b> Régression multiple<span></span></a><ul>
-<li class="chapter" data-level="6.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#formulation-du-modèle-1"><i class="fa fa-check"></i><b>6.0.1</b> Formulation du modèle<span></span></a></li>
-<li class="chapter" data-level="6.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-dapplication"><i class="fa fa-check"></i><b>6.1</b> Conditions d’application<span></span></a><ul>
-<li class="chapter" data-level="6.1.1" data-path="régression-multiple.html"><a href="régression-multiple.html#en-cas-de-colinéarité"><i class="fa fa-check"></i><b>6.1.1</b> En cas de colinéarité<span></span></a></li>
+<li class="chapter" data-level="6" data-path="régression-multiple.html"><a href="régression-multiple.html"><i class="fa fa-check"></i><b>6</b> Régression multiple</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="régression-multiple.html"><a href="régression-multiple.html#formulation-du-modèle-1"><i class="fa fa-check"></i><b>6.0.1</b> Formulation du modèle</a></li>
+<li class="chapter" data-level="6.1" data-path="régression-multiple.html"><a href="régression-multiple.html#conditions-dapplication"><i class="fa fa-check"></i><b>6.1</b> Conditions d’application</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="régression-multiple.html"><a href="régression-multiple.html#en-cas-de-colinéarité"><i class="fa fa-check"></i><b>6.1.1</b> En cas de colinéarité</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire-multiple-dans-r"><i class="fa fa-check"></i><b>6.2</b> Régression linéaire multiple dans R<span></span></a><ul>
-<li class="chapter" data-level="6.2.1" data-path="régression-multiple.html"><a href="régression-multiple.html#les-données"><i class="fa fa-check"></i><b>6.2.1</b> Les données<span></span></a></li>
-<li class="chapter" data-level="6.2.2" data-path="régression-multiple.html"><a href="régression-multiple.html#vérification-des-conditions-dapplication-1"><i class="fa fa-check"></i><b>6.2.2</b> Vérification des conditions d’application<span></span></a></li>
-<li class="chapter" data-level="6.2.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire"><i class="fa fa-check"></i><b>6.2.3</b> Régression linéaire<span></span></a></li>
-<li class="chapter" data-level="6.2.4" data-path="régression-multiple.html"><a href="régression-multiple.html#définir-le-meilleur-modèle"><i class="fa fa-check"></i><b>6.2.4</b> Définir le meilleur modèle<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire-multiple-dans-r"><i class="fa fa-check"></i><b>6.2</b> Régression linéaire multiple dans R</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="régression-multiple.html"><a href="régression-multiple.html#les-données"><i class="fa fa-check"></i><b>6.2.1</b> Les données</a></li>
+<li class="chapter" data-level="6.2.2" data-path="régression-multiple.html"><a href="régression-multiple.html#vérification-des-conditions-dapplication-1"><i class="fa fa-check"></i><b>6.2.2</b> Vérification des conditions d’application</a></li>
+<li class="chapter" data-level="6.2.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-linéaire"><i class="fa fa-check"></i><b>6.2.3</b> Régression linéaire</a></li>
+<li class="chapter" data-level="6.2.4" data-path="régression-multiple.html"><a href="régression-multiple.html#définir-le-meilleur-modèle"><i class="fa fa-check"></i><b>6.2.4</b> Définir le meilleur modèle</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-polynomiale-matériel-facultatif"><i class="fa fa-check"></i><b>6.3</b> Régression polynomiale (matériel facultatif)<span></span></a></li>
-<li class="chapter" data-level="6.4" data-path="régression-multiple.html"><a href="régression-multiple.html#partitionnement-de-la-variation-matériel-facultatif"><i class="fa fa-check"></i><b>6.4</b> Partitionnement de la variation (matériel facultatif)<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="régression-multiple.html"><a href="régression-multiple.html#régression-polynomiale-matériel-facultatif"><i class="fa fa-check"></i><b>6.3</b> Régression polynomiale (matériel facultatif)</a></li>
+<li class="chapter" data-level="6.4" data-path="régression-multiple.html"><a href="régression-multiple.html#partitionnement-de-la-variation-matériel-facultatif"><i class="fa fa-check"></i><b>6.4</b> Partitionnement de la variation (matériel facultatif)</a></li>
 </ul></li>
-<li class="part"><span><b>Considérations finales<span></span></b></span></li>
-<li class="chapter" data-level="7" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>7</b> Résumé<span></span></a></li>
-<li class="chapter" data-level="8" data-path="ressources-additionnelles.html"><a href="ressources-additionnelles.html"><i class="fa fa-check"></i><b>8</b> Ressources additionnelles<span></span></a></li>
-<li class="chapter" data-level="9" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>9</b> Réferences<span></span></a></li>
+<li class="part"><span><b>Considérations finales</b></span></li>
+<li class="chapter" data-level="7" data-path="résumé.html"><a href="résumé.html"><i class="fa fa-check"></i><b>7</b> Résumé</a></li>
+<li class="chapter" data-level="8" data-path="ressources-additionnelles.html"><a href="ressources-additionnelles.html"><i class="fa fa-check"></i><b>8</b> Ressources additionnelles</a></li>
+<li class="chapter" data-level="9" data-path="réferences.html"><a href="réferences.html"><i class="fa fa-check"></i><b>9</b> Réferences</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/qcbsRworkshops" target="blank">QCBS R Workshop Series</a></li>
 
@@ -265,11 +283,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <img class= "hero-image" src="assets/images/jean-philippe-delberghe-75xPHEQBmvA-unsplash_hero_image.jpg">
 </div>
 --!>
-<div id="régression-multiple" class="section level1 hasAnchor">
+<div id="régression-multiple" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapitre 6</span> Régression multiple<a href="régression-multiple.html#régression-multiple" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="images/schema_multReg.png" /></p>
 <p>Une régression multiple teste les effets de plusieurs variables explicatives continues sur une variable réponse continue. Elle se distingue de la régression linéaire simple en ayant <em>plusieurs variables explicatives</em>.</p>
-<div id="formulation-du-modèle-1" class="section level3 hasAnchor">
+<div id="formulation-du-modèle-1" class="section level3 hasAnchor" number="6.0.1">
 <h3><span class="header-section-number">6.0.1</span> Formulation du modèle<a href="régression-multiple.html#formulation-du-modèle-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Les variables</strong></p>
 <p>La régression linéaire multiple sont définies par les variables <span class="math inline">\(y\)</span> représentant la variable réponse (<strong>continue</strong>) et <span class="math inline">\(x\)</span> pour les variables explicatives (<strong>continues</strong> ou <strong>catégoriques</strong>).</p>
@@ -285,11 +303,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <p>La variation non expliquée ou l’erreur demeure distribuée normalement, centrée sur zéro avec une variance de <span class="math inline">\(\sigma^2\)</span> :</p>
 <p><span class="math display">\[\epsilon_i \sim \mathcal{N}(0,\,\sigma^2)\]</span></p>
 </div>
-<div id="conditions-dapplication" class="section level2 hasAnchor">
+<div id="conditions-dapplication" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Conditions d’application<a href="régression-multiple.html#conditions-dapplication" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <hr />
 <p>Dans le cas des régressions linéaires multiples, deux conditions d’application s’ajoutent conditions habituelles des modèles linéaires. Premièrement, il doit y avoir une <strong>relation linéaire</strong> entre <strong>chaque</strong> variable explicative et la variable réponse. Deuxièmement, les variables explicatives sont indépendantes les unes des autres (il n’y a pas de <strong>colinéarité</strong>).</p>
-<div id="en-cas-de-colinéarité" class="section level3 hasAnchor">
+<div id="en-cas-de-colinéarité" class="section level3 hasAnchor" number="6.1.1">
 <h3><span class="header-section-number">6.1.1</span> En cas de colinéarité<a href="régression-multiple.html#en-cas-de-colinéarité" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En cas de colinéarité, il existe quelques solutions :</p>
 <ul>
@@ -299,14 +317,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 </div>
-<div id="régression-linéaire-multiple-dans-r" class="section level2 hasAnchor">
+<div id="régression-linéaire-multiple-dans-r" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Régression linéaire multiple dans R<a href="régression-multiple.html#régression-linéaire-multiple-dans-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <hr />
-<div id="les-données" class="section level3 hasAnchor">
+<div id="les-données" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Les données<a href="régression-multiple.html#les-données" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>En utilisant le jeu de données <code>Dickcissel</code> nous comparerons l’importance relative du climat (<code>clTma</code>), de la productivité (<code>NDVI</code>) et de la couverture du sol (<code>grass</code>) comme prédicteurs de l’abondance de dickcissels (<code>abund</code>).</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="régression-multiple.html#cb168-1"></a>Dickcissel =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/dickcissel.csv&quot;</span>)</span>
-<span id="cb168-2"><a href="régression-multiple.html#cb168-2"></a><span class="kw">str</span>(Dickcissel)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="régression-multiple.html#cb168-1" aria-hidden="true" tabindex="-1"></a>Dickcissel <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/dickcissel.csv&quot;</span>)</span>
+<span id="cb168-2"><a href="régression-multiple.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Dickcissel)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    646 obs. of  15 variables:
 ##  $ abund    : num  5 0.2 0.4 0 0 0 0 0 0 0 ...
 ##  $ Present  : chr  &quot;Absent&quot; &quot;Absent&quot; &quot;Absent&quot; &quot;Present&quot; ...
@@ -324,25 +342,25 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ##  $ urban    : num  0.2396 0 0 0 0.0157 ...
 ##  $ wetland  : num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
-<div id="vérification-des-conditions-dapplication-1" class="section level3 hasAnchor">
+<div id="vérification-des-conditions-dapplication-1" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Vérification des conditions d’application<a href="régression-multiple.html#vérification-des-conditions-dapplication-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Il faut d’abord vérifier la présence de <strong>colinéarité</strong> entre toutes les variables explicatives et d’intérêt :</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="régression-multiple.html#cb170-1"></a><span class="co"># Sélectionner lesvariables</span></span>
-<span id="cb170-2"><a href="régression-multiple.html#cb170-2"></a>var &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;NDVI&quot;</span>, <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;abund&quot;</span>)</span>
-<span id="cb170-3"><a href="régression-multiple.html#cb170-3"></a></span>
-<span id="cb170-4"><a href="régression-multiple.html#cb170-4"></a><span class="co"># Graphiques des relations entre variables</span></span>
-<span id="cb170-5"><a href="régression-multiple.html#cb170-5"></a><span class="kw">plot</span>(Dickcissel[, var])</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="régression-multiple.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sélectionner lesvariables</span></span>
+<span id="cb170-2"><a href="régression-multiple.html#cb170-2" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;NDVI&quot;</span>, <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;abund&quot;</span>)</span>
+<span id="cb170-3"><a href="régression-multiple.html#cb170-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb170-4"><a href="régression-multiple.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Graphiques des relations entre variables</span></span>
+<span id="cb170-5"><a href="régression-multiple.html#cb170-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Dickcissel[, var])</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <div class="explanation">
 <p>Un patron observable entre deux variables explicatives peut indiquer qu’elles sont <strong>colinéaires</strong> ! Vous devez éviter ceci, sinon leurs effets sur la variable réponse seront confondus.</p>
 </div>
 </div>
-<div id="régression-linéaire" class="section level3 hasAnchor">
+<div id="régression-linéaire" class="section level3 hasAnchor" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> Régression linéaire<a href="régression-multiple.html#régression-linéaire" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Maintenant, exécutons la régression multiple de l’abondance (<code>abund</code>) en fonction des variables <code>clTma + NDVI + grass</code> :</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="régression-multiple.html#cb171-1"></a><span class="co"># Régression multiple</span></span>
-<span id="cb171-2"><a href="régression-multiple.html#cb171-2"></a>lm.mult &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clTma <span class="op">+</span><span class="st"> </span>NDVI <span class="op">+</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb171-3"><a href="régression-multiple.html#cb171-3"></a><span class="kw">summary</span>(lm.mult)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="régression-multiple.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Régression multiple</span></span>
+<span id="cb171-2"><a href="régression-multiple.html#cb171-2" aria-hidden="true" tabindex="-1"></a>lm.mult <span class="ot">&lt;-</span> <span class="fu">lm</span>(abund <span class="sc">~</span> clTma <span class="sc">+</span> NDVI <span class="sc">+</span> grass, <span class="at">data =</span> Dickcissel)</span>
+<span id="cb171-3"><a href="régression-multiple.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.mult)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = abund ~ clTma + NDVI + grass, data = Dickcissel)
@@ -364,16 +382,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.117,  Adjusted R-squared:  0.1128 
 ## F-statistic: 28.35 on 3 and 642 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Puis, vérifions les autres conditions d’application, comme pour la régression linéaire simple :</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="régression-multiple.html#cb173-1"></a><span class="co"># Conditions d&#39;application</span></span>
-<span id="cb173-2"><a href="régression-multiple.html#cb173-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">3.9</span>, <span class="dv">4</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb173-3"><a href="régression-multiple.html#cb173-3"></a>    <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb173-4"><a href="régression-multiple.html#cb173-4"></a><span class="kw">plot</span>(lm.mult)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="régression-multiple.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conditions d&#39;application</span></span>
+<span id="cb173-2"><a href="régression-multiple.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">3.9</span>, <span class="dv">4</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>), <span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb173-3"><a href="régression-multiple.html#cb173-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb173-4"><a href="régression-multiple.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm.mult)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-105-1.png" width="768" /></p>
 </div>
-<div id="définir-le-meilleur-modèle" class="section level3 hasAnchor">
+<div id="définir-le-meilleur-modèle" class="section level3 hasAnchor" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> Définir le meilleur modèle<a href="régression-multiple.html#définir-le-meilleur-modèle" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Il existe un principe de première importance dans la sélection de modèles. Il s’agit du <strong>principe de parcimonie</strong>. C’est-à-dire, expliquer le plus de variation avec le plus petit nombre de termes. Nous pourrions donc enlever la variable la moins significative.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="régression-multiple.html#cb174-1"></a><span class="kw">summary</span>(lm.mult)<span class="op">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="régression-multiple.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.mult)<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>##                Estimate Std. Error   t value     Pr(&gt;|t|)
 ## (Intercept) -83.6081274 11.5774529 -7.221634 1.458749e-12
 ## clTma         3.2729872  0.4067706  8.046272 4.135118e-15
@@ -385,14 +403,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <p>Toutefois, ces informations ne sont pas valables, car les conditions d’application du modèle linéaire ne sont pas respectées.</p>
 </div>
 <p>Il est important de noter que la variable réponse ne varie pas de façon linéaire avec les variables explicatives :</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="régression-multiple.html#cb176-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="dt">cex =</span> <span class="dv">1</span>)</span>
-<span id="cb176-2"><a href="régression-multiple.html#cb176-2"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>clTma, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb176-3"><a href="régression-multiple.html#cb176-3"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>NDVI, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb176-4"><a href="régression-multiple.html#cb176-4"></a><span class="kw">plot</span>(abund <span class="op">~</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="régression-multiple.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">cex =</span> <span class="dv">1</span>)</span>
+<span id="cb176-2"><a href="régression-multiple.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(abund <span class="sc">~</span> clTma, <span class="at">data =</span> Dickcissel)</span>
+<span id="cb176-3"><a href="régression-multiple.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(abund <span class="sc">~</span> NDVI, <span class="at">data =</span> Dickcissel)</span>
+<span id="cb176-4"><a href="régression-multiple.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(abund <span class="sc">~</span> grass, <span class="at">data =</span> Dickcissel)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-107-1.png" width="1056" /></p>
 </div>
 </div>
-<div id="régression-polynomiale-matériel-facultatif" class="section level2 hasAnchor">
+<div id="régression-polynomiale-matériel-facultatif" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Régression polynomiale (matériel facultatif)<a href="régression-multiple.html#régression-polynomiale-matériel-facultatif" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Comme nous l’avons remarqué dans la section sur la <strong>régression linéaire multiple</strong>, certaines variables semblent avoir des relations non-linéaires avec la variable <code>abund</code>.</p>
 <p>Pour tester des relations non-linéaires, des régressions polynomiales de différents degrés sont comparées</p>
@@ -487,11 +505,11 @@ Quintique
 </tbody>
 </table>
 <p>Nous pouvson maintenant règler notre problème avec le jeu de données <code>Dickcissel</code>en testant la relation non-linéaire entre l’abondance et la température en comparant trois modèles polynômiaux groupés (de degrés 0, 1, and 3) :</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="régression-multiple.html#cb177-1"></a>lm.linear &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb177-2"><a href="régression-multiple.html#cb177-2"></a>lm.quad &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb177-3"><a href="régression-multiple.html#cb177-3"></a>lm.cubic &lt;-<span class="st"> </span><span class="kw">lm</span>(abund <span class="op">~</span><span class="st"> </span>clDD <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(clDD<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> Dickcissel)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="régression-multiple.html#cb177-1" aria-hidden="true" tabindex="-1"></a>lm.linear <span class="ot">&lt;-</span> <span class="fu">lm</span>(abund <span class="sc">~</span> clDD, <span class="at">data =</span> Dickcissel)</span>
+<span id="cb177-2"><a href="régression-multiple.html#cb177-2" aria-hidden="true" tabindex="-1"></a>lm.quad <span class="ot">&lt;-</span> <span class="fu">lm</span>(abund <span class="sc">~</span> clDD <span class="sc">+</span> <span class="fu">I</span>(clDD<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> Dickcissel)</span>
+<span id="cb177-3"><a href="régression-multiple.html#cb177-3" aria-hidden="true" tabindex="-1"></a>lm.cubic <span class="ot">&lt;-</span> <span class="fu">lm</span>(abund <span class="sc">~</span> clDD <span class="sc">+</span> <span class="fu">I</span>(clDD<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(clDD<span class="sc">^</span><span class="dv">3</span>), <span class="at">data =</span> Dickcissel)</span></code></pre></div>
 <p>En comparant les modèles polynomiaux, nous pouvons déterminer quel modèle niché nous devrions sélectionner:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="régression-multiple.html#cb178-1"></a><span class="kw">summary</span>(lm.linear)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="régression-multiple.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.linear)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = abund ~ clDD, data = Dickcissel)
@@ -510,7 +528,7 @@ Quintique
 ## Residual standard error: 23.81 on 644 degrees of freedom
 ## Multiple R-squared:  0.01546,    Adjusted R-squared:  0.01393 
 ## F-statistic: 10.11 on 1 and 644 DF,  p-value: 0.001545</code></pre>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="régression-multiple.html#cb180-1"></a><span class="kw">summary</span>(lm.quad)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="régression-multiple.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.quad)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = abund ~ clDD + I(clDD^2), data = Dickcissel)
@@ -530,7 +548,7 @@ Quintique
 ## Residual standard error: 23.53 on 643 degrees of freedom
 ## Multiple R-squared:  0.04018,    Adjusted R-squared:  0.0372 
 ## F-statistic: 13.46 on 2 and 643 DF,  p-value: 1.876e-06</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="régression-multiple.html#cb182-1"></a><span class="kw">summary</span>(lm.cubic)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="régression-multiple.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.cubic)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = abund ~ clDD + I(clDD^2) + I(clDD^3), data = Dickcissel)
@@ -551,23 +569,23 @@ Quintique
 ## F-statistic:  9.04 on 3 and 642 DF,  p-value: 7.202e-06</code></pre>
 <p><em>Quel modèle devriez-vous choisir</em></p>
 </div>
-<div id="partitionnement-de-la-variation-matériel-facultatif" class="section level2 hasAnchor">
+<div id="partitionnement-de-la-variation-matériel-facultatif" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Partitionnement de la variation (matériel facultatif)<a href="régression-multiple.html#partitionnement-de-la-variation-matériel-facultatif" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Certaines variables explicatives de la <strong>régression linéaire multiple</strong> étaient fortement corrélées (c.-à-d.multicolinéarité)</p>
 <p>La colinéarité entre variables explicatives peut être détectée à l’aide de critères d’inflation de la variance (fonction <code>vif()</code> du package <code>car</code>).</p>
 <p>Les valeurs supérieures à 5 sont considérées colinéaires:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="régression-multiple.html#cb184-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(clDD <span class="op">~</span><span class="st"> </span>clFD <span class="op">+</span><span class="st"> </span>clTmi <span class="op">+</span><span class="st"> </span>clTma <span class="op">+</span><span class="st"> </span>clP <span class="op">+</span><span class="st"> </span>grass, <span class="dt">data =</span> Dickcissel)</span>
-<span id="cb184-2"><a href="régression-multiple.html#cb184-2"></a>car<span class="op">::</span><span class="kw">vif</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="régression-multiple.html#cb184-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(clDD <span class="sc">~</span> clFD <span class="sc">+</span> clTmi <span class="sc">+</span> clTma <span class="sc">+</span> clP <span class="sc">+</span> grass, <span class="at">data =</span> Dickcissel)</span>
+<span id="cb184-2"><a href="régression-multiple.html#cb184-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(mod)</span></code></pre></div>
 <pre><code>##      clFD     clTmi     clTma       clP     grass 
 ## 13.605855  9.566169  4.811837  3.196599  1.165775</code></pre>
 <p>Dans cet exemple, <code>clFD</code>,<code>clTmi</code> et<code>clTma</code> sont colinéaires avec <code>clDD</code>.<br />
 </p>
 <p>Plutôt que d’enlever des variables à notre modèle, il est possible réduire l’effet de colinéarité en regroupant certaines variables entre elles. Vous pouvez utiliser <code>varpart()</code> afin de partitionner la variation de la variable <code>abund</code> avec toutes les variables de la couverture du paysage groupées ensemble (<code>"broadleaf"</code>,<code>"conif"</code>,<code>"grass"</code>,<code>"crop"</code>, <code>"urban"</code>,<code>"wetland"</code>) et toutes les variables du climat groupées ensemble (<code>"clDD"</code>,<code>"clFD"</code>,<code>"clTmi"</code>,<code>"clTma"</code>,<code>"clP"</code>). Laissez NDVI à part</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="régression-multiple.html#cb186-1"></a><span class="kw">library</span>(vegan)</span>
-<span id="cb186-2"><a href="régression-multiple.html#cb186-2"></a>part.lm =<span class="st"> </span><span class="kw">varpart</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
-<span id="cb186-3"><a href="régression-multiple.html#cb186-3"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
-<span id="cb186-4"><a href="régression-multiple.html#cb186-4"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span>
-<span id="cb186-5"><a href="régression-multiple.html#cb186-5"></a>part.lm</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="régression-multiple.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb186-2"><a href="régression-multiple.html#cb186-2" aria-hidden="true" tabindex="-1"></a>part.lm <span class="ot">=</span> <span class="fu">varpart</span>(Dickcissel<span class="sc">$</span>abund, Dickcissel[, <span class="fu">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
+<span id="cb186-3"><a href="régression-multiple.html#cb186-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="fu">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
+<span id="cb186-4"><a href="régression-multiple.html#cb186-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span>
+<span id="cb186-5"><a href="régression-multiple.html#cb186-5" aria-hidden="true" tabindex="-1"></a>part.lm</span></code></pre></div>
 <pre><code>## 
 ## Partition of variance in RDA 
 ## 
@@ -586,13 +604,13 @@ Quintique
 ## 
 ## Partition table:
 ##                      Df R.squared Adj.R.squared Testable
-## [a+b] = X1            5   0.31414       0.30878     TRUE
+## [a+c] = X1            5   0.31414       0.30878     TRUE
 ## [b+c] = X2            6   0.03654       0.02749     TRUE
 ## [a+b+c] = X1+X2      11   0.32378       0.31205     TRUE
 ## Individual fractions                                    
 ## [a] = X1|X2           5                 0.28456     TRUE
-## [b]                   0                 0.02423    FALSE
-## [c] = X2|X1           6                 0.00327     TRUE
+## [b] = X2|X1           6                 0.00327     TRUE
+## [c]                   0                 0.02423    FALSE
 ## [d] = Residuals                         0.68795    FALSE
 ## ---
 ## Use function &#39;rda&#39; to test significance of fractions of interest</code></pre>
@@ -600,17 +618,17 @@ Quintique
 </p>
 <p>Avec <code>showvarpart()</code>, il est possible de visualiser comment ces deux groupes (climat et paysage) expliquent la variation de la variable <code>abund</code>.</p>
 <p>Par exemple:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="régression-multiple.html#cb188-1"></a><span class="kw">showvarparts</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="régression-multiple.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showvarparts</span>(<span class="dv">2</span>)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="régression-multiple.html#cb189-1"></a><span class="st">`</span><span class="dt">?</span><span class="st">`</span>(showvarparts)</span>
-<span id="cb189-2"><a href="régression-multiple.html#cb189-2"></a><span class="co"># With two explanatory tables, the fractions explained</span></span>
-<span id="cb189-3"><a href="régression-multiple.html#cb189-3"></a><span class="co"># uniquely by each of the two tables are ‘[a]’ and ‘[c]’,</span></span>
-<span id="cb189-4"><a href="régression-multiple.html#cb189-4"></a><span class="co"># and their joint effect is ‘[b]’ following Borcard et al.</span></span>
-<span id="cb189-5"><a href="régression-multiple.html#cb189-5"></a><span class="co"># (1992).</span></span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="régression-multiple.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">?</span><span class="st">`</span>(showvarparts)</span>
+<span id="cb189-2"><a href="régression-multiple.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="co"># With two explanatory tables, the fractions explained</span></span>
+<span id="cb189-3"><a href="régression-multiple.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="co"># uniquely by each of the two tables are ‘[a]’ and ‘[c]’,</span></span>
+<span id="cb189-4"><a href="régression-multiple.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="co"># and their joint effect is ‘[b]’ following Borcard et al.</span></span>
+<span id="cb189-5"><a href="régression-multiple.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (1992).</span></span></code></pre></div>
 <p>Essayons avec nos données <code>Dickcissel</code> et notre modèle.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="régression-multiple.html#cb190-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">rep</span>(<span class="fl">0.5</span>, <span class="dv">4</span>))</span>
-<span id="cb190-2"><a href="régression-multiple.html#cb190-2"></a><span class="kw">plot</span>(part.lm, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">bg =</span> <span class="kw">rgb</span>(<span class="dv">48</span>, <span class="dv">225</span>, <span class="dv">210</span>, <span class="dv">80</span>, <span class="dt">maxColorValue =</span> <span class="dv">225</span>),</span>
-<span id="cb190-3"><a href="régression-multiple.html#cb190-3"></a>    <span class="dt">col =</span> <span class="st">&quot;turquoise4&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="régression-multiple.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="fl">0.5</span>, <span class="dv">4</span>))</span>
+<span id="cb190-2"><a href="régression-multiple.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(part.lm, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">bg =</span> <span class="fu">rgb</span>(<span class="dv">48</span>, <span class="dv">225</span>, <span class="dv">210</span>, <span class="dv">80</span>, <span class="at">maxColorValue =</span> <span class="dv">225</span>),</span>
+<span id="cb190-3"><a href="régression-multiple.html#cb190-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;turquoise4&quot;</span>)</span></code></pre></div>
 <p><img src="book-fr_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <p>La proportion de la variation de la variable <code>abund</code> expliquée par:
 - Le climat est de 28.5% (obtenu par X1|X2)<br />
@@ -622,17 +640,17 @@ Quintique
 <ul>
 <li>Climat seul</li>
 </ul>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="régression-multiple.html#cb191-1"></a>out<span class="fl">.1</span> =<span class="st"> </span><span class="kw">rda</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
-<span id="cb191-2"><a href="régression-multiple.html#cb191-2"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
-<span id="cb191-3"><a href="régression-multiple.html#cb191-3"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="régression-multiple.html#cb191-1" aria-hidden="true" tabindex="-1"></a>out<span class="fl">.1</span> <span class="ot">=</span> <span class="fu">rda</span>(Dickcissel<span class="sc">$</span>abund, Dickcissel[, <span class="fu">c</span>(<span class="st">&quot;clDD&quot;</span>, <span class="st">&quot;clFD&quot;</span>,</span>
+<span id="cb191-2"><a href="régression-multiple.html#cb191-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)], Dickcissel[, <span class="fu">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
+<span id="cb191-3"><a href="régression-multiple.html#cb191-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)])</span></code></pre></div>
 <ul>
 <li>Couverture du paysage seul</li>
 </ul>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="régression-multiple.html#cb192-1"></a>out<span class="fl">.2</span> =<span class="st"> </span><span class="kw">rda</span>(Dickcissel<span class="op">$</span>abund, Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
-<span id="cb192-2"><a href="régression-multiple.html#cb192-2"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)], Dickcissel[, <span class="kw">c</span>(<span class="st">&quot;clDD&quot;</span>,</span>
-<span id="cb192-3"><a href="régression-multiple.html#cb192-3"></a>    <span class="st">&quot;clFD&quot;</span>, <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)])</span></code></pre></div>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="régression-multiple.html#cb193-1"></a><span class="co"># Climat seul</span></span>
-<span id="cb193-2"><a href="régression-multiple.html#cb193-2"></a><span class="kw">anova</span>(out<span class="fl">.1</span>, <span class="dt">step =</span> <span class="dv">1000</span>, <span class="dt">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="régression-multiple.html#cb192-1" aria-hidden="true" tabindex="-1"></a>out<span class="fl">.2</span> <span class="ot">=</span> <span class="fu">rda</span>(Dickcissel<span class="sc">$</span>abund, Dickcissel[, <span class="fu">c</span>(<span class="st">&quot;broadleaf&quot;</span>, <span class="st">&quot;conif&quot;</span>,</span>
+<span id="cb192-2"><a href="régression-multiple.html#cb192-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;crop&quot;</span>, <span class="st">&quot;urban&quot;</span>, <span class="st">&quot;wetland&quot;</span>)], Dickcissel[, <span class="fu">c</span>(<span class="st">&quot;clDD&quot;</span>,</span>
+<span id="cb192-3"><a href="régression-multiple.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;clFD&quot;</span>, <span class="st">&quot;clTmi&quot;</span>, <span class="st">&quot;clTma&quot;</span>, <span class="st">&quot;clP&quot;</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="régression-multiple.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Climat seul</span></span>
+<span id="cb193-2"><a href="régression-multiple.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(out<span class="fl">.1</span>, <span class="at">step =</span> <span class="dv">1000</span>, <span class="at">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## Permutation test for rda under reduced model
 ## Permutation: free
 ## Number of permutations: 999
@@ -643,8 +661,8 @@ Quintique
 ## Residual 634   388.72                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="régression-multiple.html#cb195-1"></a><span class="co"># Couverture du paysage seul</span></span>
-<span id="cb195-2"><a href="régression-multiple.html#cb195-2"></a><span class="kw">anova</span>(out<span class="fl">.2</span>, <span class="dt">step =</span> <span class="dv">1000</span>, <span class="dt">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="régression-multiple.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Couverture du paysage seul</span></span>
+<span id="cb195-2"><a href="régression-multiple.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(out<span class="fl">.2</span>, <span class="at">step =</span> <span class="dv">1000</span>, <span class="at">perm.max =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>## Permutation test for rda under reduced model
 ## Permutation: free
 ## Number of permutations: 999
@@ -738,7 +756,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
